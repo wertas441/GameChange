@@ -8,9 +8,10 @@ export const loginSchema = z.object({
   password: z
     .string()
     .min(6, 'Минимальная длина пароля — 6 символов'),
-  remember: z.boolean().default(true),
+  remember: z.boolean().default(false),
 });
 
 export type LoginFormValues = z.infer<typeof loginSchema>;
+
 
 
