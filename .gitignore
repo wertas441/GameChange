@@ -1,0 +1,33 @@
+# Общие игнорируемые файлы
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+.DS_Store
+
+# IDE / редакторы
+.vscode
+.idea
+*.iml
+
+# Переменные окружения
+.env
+.env.*.local
+
+# Сборки backend
+backend/dist
+
+# Prisma
+backend/prisma/dev.db
+backend/prisma/*.db-journal
+backend/prisma/migrations
+
+# Next.js / frontend
+.next
+out
+
+
