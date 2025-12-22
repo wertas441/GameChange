@@ -6,7 +6,7 @@ export default function ServerFormError({error}: {error: string | null}) {
     }
 
     return (
-        <div className="mb-4 rounded-2xl border border-red-500/40 bg-red-950/40 px-4 py-3 text-sm text-red-100">
+        <div className="my-5 rounded-2xl  bg-red-400/50 px-4 py-3 text-sm text-slate-50">
             {error}
         </div>
     )

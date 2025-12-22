@@ -2,11 +2,10 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { baseBackendUrl } from '@/lib';
+import {api, getServerErrorMessage, showErrorMessage} from '@/lib';
 import { usePageUtils } from '@/lib/hooks/usePageUtils';
 import MainInput from '@/components/inputs/MainInput';
-import { loginSchema, type LoginFormValues } from './validation';
+import { loginSchema, LoginFormValues } from './validation';
 import {BackendApiResponse} from "@/types";
 import ServerFormError from "@/components/errors/ServerFormError";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
@@ -24,7 +23,6 @@ export default function Login() {
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
-
     const onSubmit = async (values: LoginFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
@@ -35,56 +33,41 @@ export default function Login() {
             remember: values.remember,
         };
 
-        const config = {
-            withCredentials: true,
-        };
-
         try {
-            const response = await axios.post<BackendApiResponse>(
-                `${baseBackendUrl}/api/auth/login`,
-                payload,
-                config
-            );
+            await api.post<BackendApiResponse>(`/auth/login`, payload);
 
-            const data = response.data;
+            router.replace('/');
+        } catch (err) {
+            const message:string = getServerErrorMessage(err)
 
-            if (response.status >= 200 && response.status < 300) {
-                router.replace('/');
-                return;
-            }
+            setServerError(message);
+            if (showErrorMessage) console.error('Login error:', err);
 
-            setServerError(data.error || data.message || 'Ошибка авторизации. Проверьте правильность введенных данных.');
-            setIsSubmitting(false);
-        } catch (error) {
-            const data = error?.response?.data as BackendApiResponse | undefined;
-            setServerError(data?.error || data?.message || 'Не удалось связаться с сервером. Пожалуйста, проверьте ваше интернет-соединение или попробуйте позже.');
-            console.error('Login error:', error);
-            setIsSubmitting(false);
+            setIsSubmitting(false)
         }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-50 flex items-center justify-center px-4 py-8">
-            <div className="relative z-10 w-full max-w-4xl grid grid-cols-1 lg:grid-cols-[1.1fr,0.9fr] gap-10 lg:gap-14 items-center">
-                <section className="relative rounded-3xl bg-slate-950/80 border border-sky-500/30 shadow-[0_0_40px_rgba(56,189,248,0.25)] px-6 py-8 sm:px-8 sm:py-10 backdrop-blur-xl">
+        <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center px-4 py-8">
+            <div className="relative z-10 w-full max-w-4xl items-center">
+                <section className="relative rounded-3xl bg-slate-900 border border-slate-800 px-6 py-8 sm:px-8 sm:py-10 backdrop-blur-xl">
                     <header className="mb-6">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Вход в аккаунт
                         </p>
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Добро пожаловать в{' '}
-                            <span className="bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                            <span className="bg-amber-400 bg-clip-text text-transparent">
                                 GameChange
                             </span>
                         </h2>
                         <p className="mt-2 text-sm text-slate-400">
-                            Введите данные аккаунта, чтобы продолжить покупки и управлять
-                            своими цифровыми продуктами.
+                            Введите данные аккаунта, чтобы продолжить покупки и управлять своими цифровыми продуктами
                         </p>
                     </header>
 
                     <ServerFormError error={serverError} />
 
-                    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
                             id="email"
                             type="email"
@@ -110,7 +93,7 @@ export default function Login() {
                                     className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400"
                                     {...register('remember')}
                                 />
-                                <span>Запомнить меня на этом устройстве</span>
+                                <span>Запомнить меня</span>
                             </label>
 
                             <button
@@ -127,7 +110,7 @@ export default function Login() {
                         />
                     </form>
 
-                    <p className="mt-5 text-center text-xs text-slate-400">
+                    <p className="mt-10 text-center text-sm text-slate-400">
                         Нет аккаунта?{' '}
                         <a
                             href="/auth/registration"
