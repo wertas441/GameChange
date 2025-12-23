@@ -1,12 +1,6 @@
-import React from 'react';
 import InputError from "@/components/errors/InputError";
-
-interface MainInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    id: string;
-    label: string;
-    error?: string;
-    className?: string;
-}
+import {inputColorTheme} from "@/styles/styles";
+import {MainInputProps} from "@/types";
 
 export default function MainInput(
     {
@@ -32,8 +26,8 @@ export default function MainInput(
                     id={id}
                     type={type}
                     placeholder={placeholder}
-                    className={`block w-full rounded-2xl border border-slate-700  px-4 py-3 text-sm text-slate-50 
-                    outline-none ring-0 transition placeholder:text-slate-500 
+                    className={`${inputColorTheme} block w-full rounded-2xl border
+                    px-4 py-3 text-sm outline-none ring-0 transition 
                     ${error ? 'border-red-500/60 focus:border-red-400' : ''} ${className}`}
                     {...rest}
                 />

@@ -1,3 +1,4 @@
+import {InputHTMLAttributes} from "react";
 
 
 export interface BackendApiResponse<T = any> {
@@ -10,5 +11,12 @@ export interface BackendApiResponse<T = any> {
 export interface SubmitButtonTypes {
     label: string;
     disabled?: boolean;
+    className?: string;
+}
+
+export interface MainInputProps extends InputHTMLAttributes<HTMLInputElement> {
+    id: string;
+    label: string;
+    error?: string;
     className?: string;
 }

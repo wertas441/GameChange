@@ -9,6 +9,7 @@ import { loginSchema, LoginFormValues } from './validation';
 import {BackendApiResponse} from "@/types";
 import ServerFormError from "@/components/errors/ServerFormError";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import {firstColorTheme, secondColorTheme} from "@/styles/styles";
 
 export default function Login() {
 
@@ -48,9 +49,9 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-50 flex items-center justify-center px-4 py-8">
-            <div className="relative z-10 w-full max-w-4xl items-center">
-                <section className="relative rounded-3xl bg-slate-900 border border-slate-800 px-6 py-8 sm:px-8 sm:py-10 backdrop-blur-xl">
+        <div className={`${firstColorTheme} min-h-screen  text-slate-50 flex items-center justify-center px-4 py-8`}>
+            <div className="relative z-10 w-full max-w-3xl items-center">
+                <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Вход в аккаунт
@@ -110,7 +111,7 @@ export default function Login() {
                         />
                     </form>
 
-                    <p className="mt-10 text-center text-sm text-slate-400">
+                    <p className="mt-7 text-center text-sm text-slate-400">
                         Нет аккаунта?{' '}
                         <a
                             href="/auth/registration"
