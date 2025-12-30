@@ -1,5 +1,4 @@
 
-
 export const firstColorTheme:string = `bg-slate-950`;
 
 export const secondColorTheme:string = `bg-slate-900 border-slate-800`;
