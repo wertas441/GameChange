@@ -6,6 +6,30 @@ import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
 import {useCallback, useState} from "react";
 import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
+import ShopNavBarItem from "@/components/items/ShopNavBarItem";
+
+const catalogItems = [
+    {
+        text: 'Игровые ключи',
+        href: '/',
+    },
+    {
+        text: 'Пополнение сервисов',
+        href: '/',
+    },
+    {
+        text: 'Гарантии',
+        href: '/',
+    },
+    {
+        text: 'Отзывы',
+        href: '/',
+    },
+    {
+        text: 'О нас',
+        href: '/',
+    },
+] as const;
 
 export default function MainHeader() {
 
@@ -27,7 +51,7 @@ export default function MainHeader() {
 
     return (
         <header className={`${secondColorTheme} sticky top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
-            <div className="w-full px-6 md:px-10 py-3">
+            <div className="w-full mx-auto px-6 md:px-12 py-3">
                 <div className="mx-auto flex items-center justify-between gap-4">
                     <Link href="/" className="shrink-0">
                         <h1 className="text-amber-400 font-semibold text-2xl tracking-wide leading-none">
@@ -75,32 +99,14 @@ export default function MainHeader() {
                                 <button
                                     type="button"
                                     onClick={toggleShopModalWindow}
-                                    className="inline-flex items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-3 py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
+                                    className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-3 py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
                                     aria-label="Открыть меню"
                                 >
                                     <TextAlignJustify className="h-5 w-5" aria-hidden="true"/>
                                 </button>
-
-                                {modalShopWindowOpen && (
-                                    <div className="absolute right-0 mt-2 w-72 rounded-2xl border border-slate-800 bg-slate-900 p-2 shadow-lg shadow-black/30">
-                                        <div className="px-3 py-2 text-xs text-slate-300">
-                                            Разделы (в разработке)
-                                        </div>
-                                        <div className="grid grid-cols-1 gap-1">
-                                            {['Популярное', 'Новинки', 'Скидки', 'Подписки'].map((label) => (
-                                                <button
-                                                    key={label}
-                                                    type="button"
-                                                    className="w-full rounded-xl px-3 py-2 text-left text-sm text-slate-100 transition hover:bg-slate-800/60"
-                                                    onClick={() => setModalShopWindowOpen(false)}
-                                                >
-                                                    {label}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
                             </div>
+
+
                         </div>
                     </div>
 
@@ -143,6 +149,19 @@ export default function MainHeader() {
                         )}
                     </div>
                 </div>
+                {modalShopWindowOpen && (
+                    <div className="w-full mt-1 mx-auto px-6 md:px-12 py-3">
+                        <div className="flex items-center gap-5 justify-center">
+                            {catalogItems.map((item, index) => (
+                                <ShopNavBarItem
+                                    key={index}
+                                    text={item.text}
+                                    href={item.href}
+                                />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </header>
     )

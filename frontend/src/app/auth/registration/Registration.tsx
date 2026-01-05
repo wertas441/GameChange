@@ -55,7 +55,7 @@ export default function Registration(){
     };
 
     return (
-        <div className={`min-h-screen  text-slate-50 flex items-center justify-center px-4 py-8`}>
+        <div className={`min-h-screen  text-slate-50 flex items-center justify-center py-8`}>
             <div className="relative z-10 w-full max-w-3xl items-center">
                 <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">

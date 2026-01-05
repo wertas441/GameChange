@@ -42,9 +42,9 @@ export default function HideInput(
                     aria-label={showText ? 'Скрыть пароль' : 'Показать пароль'}
                 >
                     {showText ? (
-                        <EyeOff className="h-6 w-6 text-slate-50 mr-1" aria-hidden="true" />
+                        <EyeOff className="h-5 w-5 md:h-6 md:w-6 text-slate-50 mr-1" aria-hidden="true" />
                     ) : (
-                        <Eye className="h-6 w-6 text-slate-50 mr-1" aria-hidden="true" />
+                        <Eye className="h-5 w-5 md:h-6 md:w-6 text-slate-50 mr-1" aria-hidden="true" />
                     )}
                 </button>
             </div>

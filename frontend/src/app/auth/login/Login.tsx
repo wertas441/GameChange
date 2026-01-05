@@ -53,7 +53,7 @@ export default function Login() {
     };
 
     return (
-        <div className={`min-h-screen  text-slate-50 flex items-center justify-center px-4 py-8`}>
+        <div className={`min-h-screen  text-slate-50 flex items-center justify-center py-8`}>
             <div className="relative z-10 w-full max-w-3xl items-center">
                 <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">
@@ -90,10 +90,10 @@ export default function Login() {
                         />
 
                         <div className="flex items-center justify-between gap-4 pt-1">
-                            <label className="inline-flex items-center gap-2 text-xs text-slate-300">
+                            <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-slate-300">
                                 <input
                                     type="checkbox"
-                                    className="h-4 w-4 rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400"
+                                    className="h-4 w-4 cursor-pointer rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400"
                                     {...register('rememberMe')}
                                 />
                                 <span>Запомнить меня</span>

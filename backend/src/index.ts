@@ -5,12 +5,15 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { toNodeHandler } from 'better-auth/node';
-import apiRoutes from './routes/index.js';
+import { config } from './config';
 
-import { config } from './config/index.js';
-import { auth } from './lib/auth.js';
-import { testConnection, closePool } from './lib/db.js';
+import apiRoutes from './routes/index.js';
+import {testConnection} from "./config/database.js";
+import {initDatabase} from "./database/init.js";
+
+
+const shouldInit = process.env.DB_AUTO_INIT === 'true';
+const shouldSeed = process.env.DB_AUTO_SEED === 'true' && config.nodeEnv === 'development';
 
 // Загружаем переменные окружения
 dotenv.config();
@@ -29,17 +32,16 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
-})); // CORS для фронтенда с поддержкой credentials
+}));
 
 app.use(morgan('combined')); // Логирование
 app.use(express.json()); // Парсинг JSON
 app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded данных
 app.use(cookieParser()); // Куки
 
-// Better Auth обработчик - все auth роуты (/api/auth/*)
-app.all('/api/auth/*', toNodeHandler(auth));
-
 app.use('/api', apiRoutes);
+
+
 
 app.use((req, res) => {
     res.status(404).json({
@@ -67,11 +69,14 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Инициализация и запуск сервера
 const startServer = async () => {
     try {
-        // Проверяем подключение к базе данных
         const dbConnected = await testConnection();
         if (!dbConnected) {
             console.error('Не удалось подключиться к базе данных');
             process.exit(1);
+        }
+
+        if (shouldInit) {
+            await initDatabase();
         }
 
         // Запускаем HTTP сервер
@@ -79,8 +84,6 @@ const startServer = async () => {
 
         server.listen(PORT, () => {
             console.log(`Сервер запущен на порту ${PORT}`);
-            console.log(`API доступно по адресу: http://localhost:${PORT}`);
-            console.log(`Better Auth: http://localhost:${PORT}/api/auth`);
             console.log(`Проверка здоровья: http://localhost:${PORT}/api/health`);
         });
     } catch (error) {
@@ -112,8 +115,6 @@ const gracefulShutdown = async (signal: string) => {
             });
         }
 
-        // Закрываем пул подключений к БД
-        await closePool();
     } catch (error) {
         console.error('Ошибка при корректном завершении работы:', error);
     } finally {
