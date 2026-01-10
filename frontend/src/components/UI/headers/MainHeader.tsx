@@ -11,7 +11,7 @@ import ShopNavBarItem from "@/components/items/ShopNavBarItem";
 const catalogItems = [
     {
         text: 'Игровые ключи',
-        href: '/',
+        href: '/keys/catalog',
     },
     {
         text: 'Пополнение сервисов',
@@ -50,7 +50,7 @@ export default function MainHeader() {
 
 
     return (
-        <header className={`${secondColorTheme} sticky top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
+        <header className={`${secondColorTheme} top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
             <div className="w-full mx-auto px-6 md:px-12 py-3">
                 <div className="mx-auto flex items-center justify-between gap-4">
                     <Link href="/" className="shrink-0">
@@ -121,7 +121,7 @@ export default function MainHeader() {
                             {!isAuthenticated ? (
                                 <LinkYellowBtn
                                     label="Войти"
-                                    href="auth/login"
+                                    href={'/auth/login'}
                                     className="mt-0 w-auto px-5 py-3"
                                 />
                             ) : (
