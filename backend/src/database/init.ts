@@ -7,8 +7,19 @@ export const initDatabase = async (): Promise<void> => {
     try {
         console.log('Инициализация базы данных...');
 
-        // Читаем SQL файл со схемой
-        const schemaPath = path.join(__dirname, 'schema.sql');
+        // Читаем SQL файл со схемой.
+        // В dev (tsx) __dirname указывает на src/database, в build/start — на dist/database.
+        const schemaCandidates = [
+            path.join(__dirname, 'schema.sql'),
+            path.join(process.cwd(), 'src', 'database', 'schema.sql'),
+            path.join(process.cwd(), 'backend', 'src', 'database', 'schema.sql'),
+        ];
+
+        const schemaPath = schemaCandidates.find((p) => fs.existsSync(p));
+        if (!schemaPath) {
+            throw new Error(`Не найден schema.sql. Проверенные пути: ${schemaCandidates.join(', ')}`);
+        }
+
         const schema = fs.readFileSync(schemaPath, 'utf8');
 
         // Выполняем SQL скрипт
