@@ -4,7 +4,7 @@ export const operationSystemOptions = [
     { value: 'Windows', label: 'Windows' },
     { value: 'macOS', label: 'macOS' },
     { value: 'Linux', label: 'Linux' },
-] as const;
+];
 
 export const activationPlatformOptions = [
     { value: 'Steam', label: 'Steam' },
@@ -13,7 +13,7 @@ export const activationPlatformOptions = [
     { value: 'GOG', label: 'GOG' },
     { value: 'Bethesda.net', label: 'Bethesda.net' },
     { value: 'Ubisoft', label: 'Ubisoft' },
-] as const;
+];
 
 export const genreOptions = [
     { value: 'action', label: 'Экшен' },
@@ -24,7 +24,7 @@ export const genreOptions = [
     { value: 'simulator', label: 'Симулятор' },
     { value: 'horror', label: 'Хоррор' },
     { value: 'indie', label: 'Инди' },
-] as const;
+];
 
 export const activationPlatformIcons = {
     'Steam': '/steamIcon.svg',
