@@ -13,7 +13,6 @@ import apiRoutes from './routes/index.js';
 import authRoutes from './routes/auth.js';
 
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
-const shouldSeed = process.env.DB_AUTO_SEED === 'true' && config.nodeEnv === 'development';
 
 // Загружаем переменные окружения
 dotenv.config();

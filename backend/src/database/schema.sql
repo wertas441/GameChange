@@ -48,13 +48,13 @@ CREATE TABLE IF NOT EXISTS key_images (
 CREATE TABLE IF NOT EXISTS operation_systems (
     key_id INT NOT NULL REFERENCES keys(id) ON DELETE CASCADE,
     os VARCHAR(100) NOT NULL,
-    PRIMARY KEY (key_id)
+    PRIMARY KEY (key_id, os)
 );
 
 CREATE TABLE IF NOT EXISTS activation_platforms (
     key_id INT NOT NULL REFERENCES keys(id) ON DELETE CASCADE,
     platform VARCHAR(100) NOT NULL,
-    PRIMARY KEY (key_id)
+    PRIMARY KEY (key_id, platform)
 );
 
 CREATE TABLE IF NOT EXISTS key_genres (

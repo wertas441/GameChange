@@ -1,14 +1,13 @@
 import fs from 'fs';
 import path from 'path';
-import {seedShopData} from "./seedData.js";
 import pool from "../config/database.js";
+import {seedAdmin} from "./seedAdmin";
+import {seedKeysData} from "./seedKeysData";
 
 export const initDatabase = async (): Promise<void> => {
     try {
         console.log('Инициализация базы данных...');
 
-        // Читаем SQL файл со схемой.
-        // В dev (tsx) __dirname указывает на src/database, в build/start — на dist/database.
         const schemaCandidates = [
             path.join(__dirname, 'schema.sql'),
             path.join(process.cwd(), 'src', 'database', 'schema.sql'),
@@ -25,7 +24,8 @@ export const initDatabase = async (): Promise<void> => {
         // Выполняем SQL скрипт
         await pool.query(schema);
 
-        await seedShopData();
+        await seedAdmin();
+        await seedKeysData();
 
         console.log('База данных успешно инициализирована и заполнена данными');
     } catch (error) {

@@ -1,9 +1,9 @@
 import pool from "../config/database";
 import bcrypt from "bcryptjs";
 
-export async function seedShopData(): Promise<void> {
+export async function seedAdmin(): Promise<void> {
 
-    console.log('Start seeding...');
+    console.log('Admin start seeding...');
     const client = await pool.connect();
 
     try {
@@ -29,23 +29,23 @@ export async function seedShopData(): Promise<void> {
             [email, userName, hashedPassword, true],
         );
 
-        console.log(`Seeding finished`);
+        console.log(`Admin seeding finished`);
     } catch (err) {
-        console.error('Error while seeding:', err);
+        console.error('Error while seeding admin data:', err);
     } finally {
         client.release();
     }
 }
 
-// Позволяем запускать файл напрямую: `ts-node src/database/seedExercises.ts` или через скомпилированный JS
+// Позволяем запускать файл напрямую или через скомпилированный JS
 if (require.main === module) {
-    seedShopData()
+    seedAdmin()
         .then(() => {
-            console.log('Seed script completed successfully');
+            console.log('Admin seed script completed successfully');
             process.exit(0);
         })
         .catch((err) => {
-            console.error('Error while seeding exercises:', err);
+            console.error('Error while seeding admin data:', err);
             process.exit(1);
         });
 }
