@@ -9,6 +9,7 @@ import ServerFormError from "@/components/errors/ServerFormError";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
+import {makeInitUserData, useUserStore} from "@/lib/store/userStore";
 
 interface LoginFormValues {
     email: string;
@@ -26,6 +27,7 @@ export default function Login() {
         },
     });
 
+    const initUserData = useUserStore(makeInitUserData)
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
     const onSubmit = async (values: LoginFormValues) => {
@@ -41,7 +43,19 @@ export default function Login() {
         try {
             await api.post<BackendApiResponse>(`/auth/login`, payload);
 
-            router.replace('/');
+
+            setTimeout(async () => {
+                await initUserData();
+                const userData = useUserStore.getState().userData;
+                if (!userData) {
+                    setServerError("Не удалось получить данные пользователя после входа. Попробуйте обновить страницу.");
+                    setIsSubmitting(false);
+                    return;
+                }
+
+                router.replace('/');
+            }, 3000)
+
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 

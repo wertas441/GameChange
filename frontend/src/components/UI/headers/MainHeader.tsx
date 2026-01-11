@@ -7,6 +7,7 @@ import {useCallback, useState} from "react";
 import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
 import ShopNavBarItem from "@/components/items/ShopNavBarItem";
+import {checkAuth, useUserStore} from "@/lib/store/userStore";
 
 const catalogItems = [
     {
@@ -33,7 +34,7 @@ const catalogItems = [
 
 export default function MainHeader() {
 
-    const isAuthenticated = false;
+    const isAuth = useUserStore(checkAuth);
     const [modalUserWindowOpen, setModalUserWindowOpen] = useState<boolean>(false);
     const [modalShopWindowOpen, setModalShopWindowOpen] = useState(false);
     const [query, setQuery] = useState<string>('');
@@ -118,7 +119,7 @@ export default function MainHeader() {
                                 className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                             />
 
-                            {!isAuthenticated ? (
+                            {!isAuth ? (
                                 <LinkYellowBtn
                                     label="Войти"
                                     href={'/auth/login'}
@@ -133,7 +134,7 @@ export default function MainHeader() {
                             )}
                         </div>
 
-                        {isAuthenticated && modalUserWindowOpen && (
+                        {isAuth && modalUserWindowOpen && (
                             <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-slate-800 bg-slate-900 p-2 shadow-lg shadow-black/30">
                                 <div className="px-3 py-2 text-xs text-slate-300">
                                     Профиль: <span className="text-slate-100">в разработке</span>

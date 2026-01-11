@@ -6,11 +6,11 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { config } from './config';
-
-import apiRoutes from './routes/index.js';
 import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
 
+import apiRoutes from './routes/index.js';
+import authRoutes from './routes/auth.js';
 
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 const shouldSeed = process.env.DB_AUTO_SEED === 'true' && config.nodeEnv === 'development';
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded �
 app.use(cookieParser()); // Куки
 
 app.use('/api', apiRoutes);
-
+app.use('/api/auth', authRoutes)
 
 
 app.use((req, res) => {

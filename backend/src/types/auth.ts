@@ -18,6 +18,7 @@ export interface UserProfileResponse {
     email: string;
     userName: string;
     createdAt: Date;
+    isAdmin: boolean;
 }
 
 export interface LoginRequest {

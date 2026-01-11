@@ -5,7 +5,7 @@ import {BackendApiResponse} from "@/types";
 export const showErrorMessage:boolean = true;
 
 export const api = axios.create({
-    baseURL: 'http://localhost:3005/api', // или из env-переменной
+    baseURL: 'http://localhost:3003/api', // или из env-переменной
     withCredentials: true,           
     timeout: 5000,
   });

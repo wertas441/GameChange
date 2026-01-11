@@ -7,6 +7,7 @@ import {LoginRequest, RegisterRequest} from "../types/auth";
 import {UserModel} from "../models/User";
 import { config } from '../config';
 import jwt from 'jsonwebtoken';
+import {authMiddleware} from "../middleware/authMiddleware";
 
 const router = Router();
 
@@ -128,3 +129,32 @@ router.post('/login', async (req, res) => {
         res.status(500).json(response);
     }
 });
+
+router.get('/me', authMiddleware, async (req, res) => {
+    try {
+        const userId = (req as any).userId as number;
+        const userData = await UserModel.findById(userId);
+
+        if (!userData) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Пользователь не найден'
+            };
+            return res.status(404).json(response);
+        }
+
+        const response: ApiResponse = {
+            success: true,
+            message: 'success of getting user information',
+            data: { userData }
+        };
+
+        res.json(response);
+    } catch (error) {
+        const response = showBackendError(error, `Ошибка получения информации о текущем пользователе`);
+
+        res.status(500).json(response);
+    }
+});
+
+export default router;

@@ -61,7 +61,8 @@ export class UserModel {
         SELECT  public_id, 
                 email, 
                 username, 
-                created_at 
+                created_at,
+                is_admin AS "isAdmin"
         FROM users 
         WHERE id = $1
         `;
@@ -69,7 +70,6 @@ export class UserModel {
         const result = await pool.query(query, [id]);
 
         const row = result.rows[0];
-
         if (!row) return null;
 
         return {
@@ -77,6 +77,7 @@ export class UserModel {
             email: row.email,
             userName: row.username,
             createdAt: row.created_at,
+            isAdmin: row.isAdmin,
         } as UserProfileResponse;
     }
 

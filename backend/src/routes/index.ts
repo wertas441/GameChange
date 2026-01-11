@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiResponse } from '../types/index.js';
+import { ApiResponse } from '../types';
 
 const router = Router();
 
