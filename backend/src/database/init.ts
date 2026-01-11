@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {seedData} from "./seedData.js";
+import {seedShopData} from "./seedData.js";
 import pool from "../config/database.js";
 
 export const initDatabase = async (): Promise<void> => {
@@ -25,7 +25,7 @@ export const initDatabase = async (): Promise<void> => {
         // Выполняем SQL скрипт
         await pool.query(schema);
 
-        await seedData();
+        await seedShopData();
 
         console.log('База данных успешно инициализирована и заполнена данными');
     } catch (error) {
