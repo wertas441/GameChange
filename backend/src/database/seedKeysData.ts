@@ -1,25 +1,8 @@
 import pool from "../config/database";
 import fs from "fs";
 import path from "path";
+import {KeyDataStructure} from "../types/keysTypes";
 
-type KeysCatalogDataItem = {
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-    mainPicture: string;
-    releaseData: string; // DD.MM.YYYY
-    otherPictures: string[];
-    operationSystem: string[];
-    publisher: string;
-    activationPlatform: string[];
-    genres: string[];
-    developer: string;
-    systemRequirements: {
-        minimal: { CPU: string; GPU: string; RAM: string; memory: string };
-        recommended: { CPU: string; GPU: string; RAM: string; memory: string };
-    };
-};
 
 function parseDateDDMMYYYY(value: string): string {
     // Postgres DATE принимает YYYY-MM-DD
@@ -54,7 +37,8 @@ export async function seedKeysData(): Promise<void> {
     try {
         const jsonPath = findKeysDataPath();
         const raw = fs.readFileSync(jsonPath, "utf8");
-        const items = JSON.parse(raw) as KeysCatalogDataItem[];
+
+        const items: KeyDataStructure[] = JSON.parse(raw);
 
         await client.query("BEGIN");
 
