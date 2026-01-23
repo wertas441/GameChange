@@ -30,7 +30,7 @@ export interface KeysDataStructure {
     keyUrl: string;
     name: string,
     price: string,
-    picture: string,
+    mainPicture: string,
     releaseData: string,
     operationSystem: string[],
     activationPlatform: string[],

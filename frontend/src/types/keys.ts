@@ -8,6 +8,7 @@ interface SystemRequirements {
 }
 
 export interface KeyStructure {
+    id: number;
     name: string;
     keyUrl: string;
     price: string;
@@ -31,7 +32,7 @@ export interface KeysStructures {
     keyUrl: string,
     name: string,
     price: string,
-    picture: string,
+    mainPicture: string,
     releaseData: string,
     operationSystem: string[],
     activationPlatform: string[],

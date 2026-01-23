@@ -4,10 +4,19 @@ import {KeyStructure} from "@/types/keys";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {activationPlatformIcons, operationSystemIcon} from "@/lib/data";
 import Image from "next/image";
+import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 
 export default function KeyDetails({keyData}: {keyData: KeyStructure} ){
 
-    const addToCart = () => {}
+    const addData = {
+        id: keyData.id,
+        keyUrl: keyData.keyUrl,
+        name: keyData.name,
+        price: keyData.price,
+        mainPicture: keyData.mainPicture,
+    }
+
+    const addToCart = useCartStore(addNewItem)
     const minimalRequirements = Object.entries(keyData.systemRequirements?.minimal ?? {});
     const recommendedRequirements = Object.entries(keyData.systemRequirements?.recommended ?? {});
 
@@ -122,7 +131,7 @@ export default function KeyDetails({keyData}: {keyData: KeyStructure} ){
 
                                 <YellowBtn
                                     label={'Добавить в корзину'}
-                                    onClick={addToCart}
+                                    onClick={() => addToCart(addData)}
                                 />
 
                                 <div className="space-y-3 border-t border-slate-800/70 pt-5">

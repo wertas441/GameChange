@@ -9,6 +9,7 @@ import {
     OperationSystem
 } from "@/lib/data";
 import {KeysStructures} from "@/types/keys";
+import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 
 export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
 
@@ -17,20 +18,24 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
         keyUrl,
         name,
         price,
-        picture,
+        mainPicture,
         releaseData,
         operationSystem = [],
         activationPlatform = [],
         genres = []
     } = keyData;
 
-
-    const handleAddToCart = () => {
-
+    const addData = {
+        id: id,
+        keyUrl: keyData.keyUrl,
+        name: name,
+        price: price,
+        mainPicture: mainPicture,
     }
 
-    const isActivationPlatform = (value: string): value is ActivationPlatform => value in activationPlatformIcons;
+    const addToCart = useCartStore(addNewItem)
 
+    const isActivationPlatform = (value: string): value is ActivationPlatform => value in activationPlatformIcons;
     const isOperationSystem = (value: string): value is OperationSystem => value in operationSystemIcon;
 
     const linkUrl = `/keys/${keyUrl}`
@@ -45,7 +50,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
             <Link href={linkUrl} className="w-full md:w-48 lg:w-56 shrink-0">
                 <Image
                     className="rounded-md w-full object-cover aspect-video"
-                    src={picture}
+                    src={mainPicture}
                     width={1920}
                     height={1080}
                     alt={name}
@@ -100,7 +105,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
                     </h2>
 
                     <button
-                        onClick={handleAddToCart}
+                        onClick={() => addToCart(addData)}
                         className={`w-full lg:w-auto rounded-2xl bg-amber-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-md shadow-amber-400/20 transition
                         hover:bg-amber-500 cursor-pointer hover:shadow-amber-400/30 active:translate-y-px`}
                     >

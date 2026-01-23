@@ -10,7 +10,7 @@ export class KeyModel {
                 k.name AS name,
                 k.key_url AS "keyUrl",
                 k.price::text AS price,
-                k.main_picture_url AS "picture",
+                k.main_picture_url AS "mainPicture",
                 to_char(k.release_date, 'DD.MM.YYYY') AS "releaseData",
             
                 COALESCE(

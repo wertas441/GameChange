@@ -6,8 +6,9 @@ import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
 import {useCallback, useState} from "react";
 import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
-import ShopNavBarItem from "@/components/items/ShopNavBarItem";
+import ShopNavBarItem from "@/components/elements/ShopNavBarItem";
 import {checkAuth, useUserStore} from "@/lib/store/userStore";
+import {useRouter} from "next/navigation";
 
 const catalogItems = [
     {
@@ -35,32 +36,52 @@ const catalogItems = [
 export default function MainHeader() {
 
     const isAuth = useUserStore(checkAuth);
-    const [modalUserWindowOpen, setModalUserWindowOpen] = useState<boolean>(false);
     const [modalShopWindowOpen, setModalShopWindowOpen] = useState(false);
     const [query, setQuery] = useState<string>('');
 
-    const toggleUserModalWindow = useCallback(() => {
-        setModalUserWindowOpen(!modalUserWindowOpen);
-        setModalShopWindowOpen(false);
-    }, [modalUserWindowOpen]);
+    const router = useRouter();
+    const goToCartPage = useCallback(() => router.push('/cart'), [router]);
+    const goToUserPage = useCallback(() => router.push('/user'), [router]);
 
     const toggleShopModalWindow = useCallback(() => {
-        setModalShopWindowOpen(!modalShopWindowOpen);
-        setModalUserWindowOpen(false);
-    }, [modalShopWindowOpen]);
-
+        setModalShopWindowOpen(prevState => !prevState);
+    }, []);
 
     return (
         <header className={`${secondColorTheme} top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
-            <div className="w-full mx-auto px-6 md:px-12 py-3">
-                <div className="mx-auto flex items-center justify-between gap-4">
-                    <Link href="/" className="shrink-0">
-                        <h1 className="text-amber-400 font-semibold text-2xl tracking-wide leading-none">
-                            GameChange
-                        </h1>
-                    </Link>
+            <div className="mx-auto w-full px-4 py-3 sm:px-6 md:px-12">
+                <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                    <div className="flex items-center justify-between gap-3">
+                        <Link href="/" className="shrink-0">
+                            <h1 className="text-amber-400 font-semibold text-2xl tracking-wide leading-none">
+                                GameChange
+                            </h1>
+                        </Link>
 
-                    <div className="flex-1 mt-1.5 max-w-3xl">
+                        <div className="flex items-center gap-2 lg:hidden">
+                            <IconYellowBtn
+                                IconComponent={ShoppingCart}
+                                onClick={goToCartPage}
+                                className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                            />
+
+                            {!isAuth ? (
+                                <LinkYellowBtn
+                                    label="Войти"
+                                    href={'/auth/login'}
+                                    className="mt-0 w-auto px-4 py-2.5 text-sm"
+                                />
+                            ) : (
+                                <IconYellowBtn
+                                    IconComponent={CircleUser}
+                                    onClick={goToUserPage}
+                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                />
+                            )}
+                        </div>
+                    </div>
+
+                    <div className="w-full lg:max-w-3xl">
                         <div className="relative flex items-center gap-2">
                             <div className="relative flex-1">
                                 <Search
@@ -96,26 +117,23 @@ export default function MainHeader() {
                                 )}
                             </div>
 
-                            <div className="relative">
-                                <button
-                                    type="button"
-                                    onClick={toggleShopModalWindow}
-                                    className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-3 py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
-                                    aria-label="Открыть меню"
-                                >
-                                    <TextAlignJustify className="h-5 w-5" aria-hidden="true"/>
-                                </button>
-                            </div>
-
-
+                            <button
+                                type="button"
+                                onClick={toggleShopModalWindow}
+                                className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-2.5 py-2.5 md:px-3 md:py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
+                                aria-label="Открыть меню"
+                            >
+                                <TextAlignJustify className="h-5 w-5" aria-hidden="true"/>
+                            </button>
                         </div>
                     </div>
 
-                    <div className="relative shrink-0">
+
+                    <div className="relative shrink-0 hidden lg:flex">
                         <div className="flex items-center gap-3">
                             <IconYellowBtn
                                 IconComponent={ShoppingCart}
-                                onClick={() => {}}
+                                onClick={goToCartPage}
                                 className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                             />
 
@@ -128,36 +146,23 @@ export default function MainHeader() {
                             ) : (
                                 <IconYellowBtn
                                     IconComponent={CircleUser}
-                                    onClick={toggleUserModalWindow}
+                                    onClick={goToUserPage}
                                     className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
                             )}
                         </div>
-
-                        {isAuth && modalUserWindowOpen && (
-                            <div className="absolute right-0 mt-2 w-56 rounded-2xl border border-slate-800 bg-slate-900 p-2 shadow-lg shadow-black/30">
-                                <div className="px-3 py-2 text-xs text-slate-300">
-                                    Профиль: <span className="text-slate-100">в разработке</span>
-                                </div>
-                                <button
-                                    type="button"
-                                    className="w-full rounded-xl px-3 py-2 text-left text-sm text-slate-100 transition hover:bg-slate-800/60"
-                                    onClick={() => setModalUserWindowOpen(false)}
-                                >
-                                    Закрыть
-                                </button>
-                            </div>
-                        )}
                     </div>
                 </div>
+
                 {modalShopWindowOpen && (
-                    <div className="w-full mt-1 mx-auto px-6 md:px-12 py-3">
-                        <div className="flex items-center gap-5 justify-center">
+                    <div className="mt-3 rounded-2xl border border-slate-800/70 bg-slate-900/80 p-3 shadow-lg ">
+                        <div className="flex flex-wrap items-center gap-3 justify-start md:justify-center">
                             {catalogItems.map((item, index) => (
                                 <ShopNavBarItem
                                     key={index}
                                     text={item.text}
                                     href={item.href}
+                                    toggle={toggleShopModalWindow}
                                 />
                             ))}
                         </div>
