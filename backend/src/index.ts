@@ -8,7 +8,8 @@ import cookieParser from 'cookie-parser';
 import { config } from './config';
 import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
-
+import keysRoutes from './routes/keys';
+import authRoutes from './routes/auth';
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
 // Загружаем переменные окружения
@@ -35,6 +36,16 @@ app.use(express.json()); // Парсинг JSON
 app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded данных
 app.use(cookieParser()); // Куки
 
+
+app.use('/api/auth', authRoutes)
+app.use('/api/keys', keysRoutes);
+
+app.use((req, res) => {
+    res.status(404).json({
+        error: 'Маршрут не найден',
+        path: req.originalUrl
+    });
+});
 
 // Обработка ошибок
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

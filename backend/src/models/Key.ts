@@ -11,7 +11,7 @@ export class KeyModel {
                 k.price::text AS price,
                 k.main_picture_url AS "picture",
                 to_char(k.release_date, 'DD.MM.YYYY') AS "releaseData",
-                
+            
                 COALESCE(
                     (
                         SELECT json_agg(os.os ORDER BY os.os)
@@ -35,7 +35,7 @@ export class KeyModel {
                         WHERE kg.key_id = k.id
                     ),
                     '[]'::json
-                ) AS "genres",
+                ) AS "genres"
             FROM keys k
             ORDER BY k.id ASC
         `;

@@ -8,6 +8,13 @@ export interface BackendApiResponse<T = any> {
     error?: string;
 }
 
+export interface FuncButtonTypes {
+    label: string;
+    onClick?: () => void;
+    disabled?: boolean;
+    className?: string;
+}
+
 export interface SubmitButtonTypes {
     label: string;
     disabled?: boolean;
