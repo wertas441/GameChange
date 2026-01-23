@@ -25,3 +25,13 @@ export interface KeyStructure {
     }
 }
 
+export interface KeysStructures {
+    id: number,
+    name: string,
+    price: string,
+    picture: string,
+    releaseData: string,
+    operationSystem: string[],
+    activationPlatform: string[],
+    genres: string[],
+}

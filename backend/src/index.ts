@@ -9,9 +9,6 @@ import { config } from './config';
 import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
 
-import apiRoutes from './routes/index.js';
-import authRoutes from './routes/auth.js';
-
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
 // Загружаем переменные окружения
@@ -38,16 +35,6 @@ app.use(express.json()); // Парсинг JSON
 app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded данных
 app.use(cookieParser()); // Куки
 
-app.use('/api', apiRoutes);
-app.use('/api/auth', authRoutes)
-
-
-app.use((req, res) => {
-    res.status(404).json({
-        error: 'Маршрут не найден',
-        path: req.originalUrl
-    });
-});
 
 // Обработка ошибок
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -83,7 +70,6 @@ const startServer = async () => {
 
         server.listen(PORT, () => {
             console.log(`Сервер запущен на порту ${PORT}`);
-            console.log(`Проверка здоровья: http://localhost:${PORT}/api/health`);
         });
     } catch (error) {
         console.error('Ошибка при запуске сервера:', error);

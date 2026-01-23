@@ -2,20 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {applicationIcons, platformIcons} from "@/lib/data";
+import {activationPlatformIcons, operationSystemIcon} from "@/lib/data";
+import {KeysStructures} from "@/types/keys";
 
-interface IProps {
-    id: number,
-    name: string,
-    price: string,
-    picture: string,
-    releaseData: string,
-    platforms: string[],
-    applications: string[],
-    genres: string[],
-}
-
-export default function KeyCard({ keyData }:{keyData: IProps}) {
+export default function KeyCard({ keyData }:{keyData: KeysStructures}) {
 
     const {id, name, price, picture, releaseData, platforms, applications, genres = []} = keyData;
 
@@ -50,7 +40,7 @@ export default function KeyCard({ keyData }:{keyData: IProps}) {
 
                         <div className="flex items-center gap-3">
                             {applications.map(app => {
-                                const iconSrc = applicationIcons[app];
+                                const iconSrc = activationPlatformIcons[app];
                                 return iconSrc
                                     ? <Image key={app} src={iconSrc} width={23} height={23} alt={`${app} Icon`} title={app} />
                                     : null;
@@ -63,7 +53,7 @@ export default function KeyCard({ keyData }:{keyData: IProps}) {
 
                         <div className="flex items-center gap-2">
                             {platforms.map(platform => {
-                                const iconSrc = platformIcons[platform];
+                                const iconSrc = operationSystemIcon[platform];
                                 return iconSrc
                                     ? <Image key={platform} src={iconSrc} width={23} height={23} alt={`${platform} Icon`} title={platform} />
                                     : null;
@@ -83,7 +73,7 @@ export default function KeyCard({ keyData }:{keyData: IProps}) {
                         {price} ₽
                     </h2>
 
-                    <button onClick={handleAddToCart} className={`w-full lg:w-auto myButtonColor text-black cursor-pointer font-semibold py-2 px-4 rounded-md ${styles.addButton}`}>
+                    <button onClick={handleAddToCart} className={`w-full lg:w-auto myButtonColor text-black cursor-pointer font-semibold py-2 px-4 rounded-md`}>
                         Добавить в корзину
                     </button>
                 </div>

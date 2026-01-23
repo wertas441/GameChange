@@ -1,9 +1,8 @@
 'use client'
 
-
-import {keysCatalogDataItems} from "@/lib/data";
 import KeyCard from "@/components/UI/cards/KeyCard";
 import {useForm} from "react-hook-form";
+import {KeysStructures} from "@/types/keys";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -13,7 +12,7 @@ interface KeysFilterFormValues {
     platforms: string[];
 }
 
-export default function KeysCatalog(){
+export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
 
     const { register, handleSubmit, formState: { errors } } = useForm<KeysFilterFormValues>({
         defaultValues: {
@@ -32,7 +31,12 @@ export default function KeysCatalog(){
             </div>
 
             <div className="">
-
+                {keysData.map(key => (
+                    <KeyCard
+                        key={key.id}
+                        keyData={key}
+                    />
+                ))}
             </div>
         </div>
     )

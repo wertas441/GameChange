@@ -1,7 +1,6 @@
 import axios from "axios";
 import {BackendApiResponse} from "@/types";
 
-
 export const showErrorMessage:boolean = true;
 
 export const api = axios.create({

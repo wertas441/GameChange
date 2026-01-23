@@ -23,3 +23,14 @@ export interface KeyDataStructure {
         recommended: SystemRequirements;
     }
 }
+
+export interface KeysDataStructure {
+    id: number,
+    name: string,
+    price: string,
+    picture: string,
+    releaseData: string,
+    operationSystem: string[],
+    activationPlatform: string[],
+    genres: string[],
+}

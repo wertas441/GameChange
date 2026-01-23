@@ -1,14 +1,7 @@
-import {Router} from 'express';
-import bcrypt from 'bcryptjs';
-import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/userValidation";
-import {ApiResponse} from "../types";
-import {showBackendError} from "../lib/indexUtils";
-import {LoginRequest, RegisterRequest} from "../types/auth";
-import {UserModel} from "../models/User";
-import { config } from '../config';
-import jwt from 'jsonwebtoken';
-import {authMiddleware} from "../middleware/authMiddleware";
-import {KeyModel} from "../models/Key";
+import { Router } from 'express';
+import { ApiResponse } from "../types";
+import { showBackendError } from "../lib/indexUtils";
+import { KeyModel } from "../models/Key";
 
 const router = Router();
 
@@ -16,16 +9,17 @@ router.post('/key', async (req, res) => {
     // const { requestBody } : {requestData: } = req.body;
 });
 
-router.get('/keys', async (req, res) => {
+router.get('/', async (req, res) => {
    try {
-       const keys = KeyModel.getKeys()
+       const keys = await KeyModel.getKeys();
+
        if (!keys) {
            const response: ApiResponse = {
                success: false,
-               error: 'Произошла сетевая ошибка, нам не удалось получить данные с сервера'
+               message: 'Ошибка со стороны сервера при получении данных'
            };
 
-           return res.status(409).json(response);
+            return res.status(500).json(response);
        }
 
        const response: ApiResponse = {
@@ -41,11 +35,15 @@ router.get('/keys', async (req, res) => {
    }
 });
 
-router.delete('/key', async (req, res) => {
+router.get('/key:id', async (req, res) => {
 
 });
 
-router.get('/key:id', async (req, res) => {
+router.put('/key', async (req, res) => {
+
+});
+
+router.delete('/key', async (req, res) => {
 
 });
 

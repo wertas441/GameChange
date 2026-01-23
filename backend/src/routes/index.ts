@@ -1,20 +1,18 @@
 import { Router } from 'express';
-import { ApiResponse } from '../types';
+import keysRoutes from './keys.js';
+import authRoutes from "./auth";
+import app from "../index";
 
 const router = Router();
 
-router.get('/health', (req, res) => {
-    const response: ApiResponse = {
-        success: true,
-        message: 'API работает корректно',
-        data: {
-            status: 'OK',
-            timestamp: new Date().toISOString(),
-            uptime: process.uptime(),
-            memory: process.memoryUsage()
-        }
-    };
-    res.json(response);
+app.use((req, res) => {
+    res.status(404).json({
+        error: 'Маршрут не найден',
+        path: req.originalUrl
+    });
 });
+
+app.use('/api/auth', authRoutes)
+app.use('/api/keys', keysRoutes);
 
 export default router;
