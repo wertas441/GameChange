@@ -19,3 +19,14 @@ export function getServerErrorMessage(err: unknown){
 
     return message;
 }
+
+export function generateMetadataKeyName(keyUrl: string) {
+    return keyUrl
+        .split(/[-_]+/)
+        .filter(Boolean)
+        .map((part) => {
+            const lower = part.toLowerCase();
+            return lower.charAt(0).toUpperCase() + lower.slice(1);
+        })
+        .join(' ');
+}

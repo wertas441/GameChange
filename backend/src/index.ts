@@ -10,6 +10,7 @@ import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
 import keysRoutes from './routes/keys';
 import authRoutes from './routes/auth';
+
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
 // Загружаем переменные окружения

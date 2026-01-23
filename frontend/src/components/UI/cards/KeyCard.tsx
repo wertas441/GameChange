@@ -14,6 +14,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
 
     const {
         id,
+        keyUrl,
         name,
         price,
         picture,
@@ -23,6 +24,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
         genres = []
     } = keyData;
 
+
     const handleAddToCart = () => {
 
     }
@@ -31,6 +33,8 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
 
     const isOperationSystem = (value: string): value is OperationSystem => value in operationSystemIcon;
 
+    const linkUrl = `/keys/${keyUrl}`
+
     return (
         <div
             key={id}
@@ -38,7 +42,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
             hover:border-amber-400/40 hover:bg-slate-900/80`}
         >
 
-            <Link href={`/keys/${id}`} className="w-full md:w-48 lg:w-56 shrink-0">
+            <Link href={linkUrl} className="w-full md:w-48 lg:w-56 shrink-0">
                 <Image
                     className="rounded-md w-full object-cover aspect-video"
                     src={picture}
@@ -51,7 +55,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
             <div className="flex flex-col lg:flex-row grow items-center justify-between w-full gap-4">
 
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full">
-                    <Link href={`/shop/catalog/keys/${id}`}>
+                    <Link href={linkUrl}>
                         <h1 className="text-white text-lg md:text-xl font-semibold hover:text-amber-400 transition-colors">
                             {name}
                         </h1>

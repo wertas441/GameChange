@@ -7,6 +7,7 @@ interface SystemRequirements {
 
 export interface KeyDataStructure {
     id: number;
+    keyUrl: string;
     name: string;
     price: string;
     description: string;
@@ -26,6 +27,7 @@ export interface KeyDataStructure {
 
 export interface KeysDataStructure {
     id: number,
+    keyUrl: string;
     name: string,
     price: string,
     picture: string,

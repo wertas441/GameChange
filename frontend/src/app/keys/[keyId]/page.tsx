@@ -1,12 +1,28 @@
-import {Metadata} from "next";
-import KeyInformation from "@/app/keys/[keyId]/KeyInformation";
+import KeyDetails from "@/app/keys/[keyId]/KeyDetails";
+import {KeyMetadataParams} from "@/types/keys";
+import {generateMetadataKeyName} from "@/lib";
+import {getKeyInformation} from "@/lib/controllers/keysController";
 
-export const metadata: Metadata = {
-    title: 'KeysCatalog',
-    description: '',
+export async function generateMetadata({params}: KeyMetadataParams) {
+    const {keyId} = await params;
+    const keyName = generateMetadataKeyName(keyId);
+
+    return {
+        title: `Купить ${keyName} | GameChange`,
+        description: `Подробности о ключе ${keyName} представленной в нашем магазине товаров`,
+    }
 }
 
-export default function KeyInformationPage(){
+export default async function KeyDetailsPage({params}: KeyMetadataParams) {
+    const {keyId} = await params;
 
-    return <KeyInformation />
+    const keyDetails = await getKeyInformation(keyId);
+
+    if (!keyDetails) {
+        return (
+            <h1>error</h1>
+        )
+    }
+
+    return <KeyDetails keyData={keyDetails} />
 }

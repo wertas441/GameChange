@@ -52,6 +52,7 @@ export async function seedKeysData(): Promise<void> {
                 `
                 INSERT INTO keys (
                     name,
+                    key_url,
                     description,
                     price,
                     release_date,
@@ -59,11 +60,12 @@ export async function seedKeysData(): Promise<void> {
                     developer,
                     publisher
                 )
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING id
                 `,
                 [
                     item.name,
+                    item.keyUrl,
                     item.description,
                     item.price,
                     releaseDate,

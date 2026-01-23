@@ -9,6 +9,7 @@ interface SystemRequirements {
 
 export interface KeyStructure {
     name: string;
+    keyUrl: string;
     price: string;
     description: string;
     releaseData: string;
@@ -27,6 +28,7 @@ export interface KeyStructure {
 
 export interface KeysStructures {
     id: number,
+    keyUrl: string,
     name: string,
     price: string,
     picture: string,
@@ -34,4 +36,10 @@ export interface KeysStructures {
     operationSystem: string[],
     activationPlatform: string[],
     genres: string[],
+}
+
+export interface KeyMetadataParams {
+    params: Promise<{
+        keyId: string;
+    }>
 }

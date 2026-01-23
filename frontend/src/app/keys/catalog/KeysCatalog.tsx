@@ -13,6 +13,7 @@ import {
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {useRouter} from "next/navigation";
 import {useCallback, useState} from "react";
+import {getUserStatus, useUserStore} from "@/lib/store/userStore";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -22,20 +23,21 @@ interface KeysFilterFormValues {
     operationSystem: string[];
 }
 
-export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
+const defaultFilters: KeysFilterFormValues = {
+    minPrice: '',
+    maxPrice: '',
+    genres: [],
+    activationPlatform: [],
+    operationSystem: [],
+} as const;
 
-    const defaultFilters: KeysFilterFormValues = {
-        minPrice: '',
-        maxPrice: '',
-        genres: [],
-        activationPlatform: [],
-        operationSystem: [],
-    };
+export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
 
     const { control, register, reset, handleSubmit } = useForm<KeysFilterFormValues>({
         defaultValues: defaultFilters,
     });
 
+    const isAdmin = useUserStore(getUserStatus)
     const router = useRouter();
     const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
 
@@ -163,7 +165,10 @@ export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
 
                     <div className="space-y-2 mt-4">
                         <YellowBtn label={`Применить фильтры`} onClick={handleSubmit(handleApplyFilters)} />
-                        <YellowBtn label={`Добавить игру`} onClick={addKeyPage} />
+
+                        {isAdmin && (
+                            <YellowBtn label={`Добавить игру`} onClick={addKeyPage} />
+                        )}
                     </div>
                 </div>
             </aside>
