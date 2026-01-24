@@ -1,9 +1,9 @@
 import { pool } from '../config/database';
-import {KeyDataStructure, KeysDataStructure} from "../types/keysTypes";
+import {AddKeyData, KeyDetailsData, KeyListData,} from "../types/keysTypes";
 
 export class KeyModel {
 
-    static async getKeys(): Promise<KeysDataStructure[] | undefined> {
+    static async getKeys(): Promise<KeyListData[] | undefined> {
         const query = `
             SELECT
                 k.id AS id,
@@ -11,7 +11,7 @@ export class KeyModel {
                 k.key_url AS "keyUrl",
                 k.price::text AS price,
                 k.main_picture_url AS "mainPicture",
-                to_char(k.release_date, 'DD.MM.YYYY') AS "releaseData",
+                to_char(k.release_date, 'DD.MM.YYYY') AS "releaseDate",
             
                 COALESCE(
                     (
@@ -46,7 +46,7 @@ export class KeyModel {
         return result.rows ?? undefined;
     }
 
-    static async getKeyDetails(keyUrl: string): Promise<KeyDataStructure | undefined> {
+    static async getKeyDetails(keyUrl: string): Promise<KeyDetailsData | undefined> {
         const query = `
             SELECT
                 k.id AS id,
@@ -54,7 +54,7 @@ export class KeyModel {
                 k.name AS name,
                 k.price::text AS price,
                 k.description AS description,
-                to_char(k.release_date, 'DD.MM.YYYY') AS "releaseData",
+                to_char(k.release_date, 'DD.MM.YYYY') AS "releaseDate",
                 k.main_picture_url AS "mainPicture",
                 k.developer AS developer,
                 k.publisher AS publisher,
@@ -115,5 +115,9 @@ export class KeyModel {
         const result = await pool.query(query, [keyUrl]);
 
         return result.rows?.[0] ?? undefined;
+    }
+
+    static async addNewKey(keyData: AddKeyData) {
+
     }
 }

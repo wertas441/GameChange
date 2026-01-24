@@ -2,7 +2,7 @@
 
 import KeyCard from "@/components/UI/cards/KeyCard";
 import {useForm, Controller} from "react-hook-form";
-import {KeysStructures} from "@/types/keys";
+import {KeyListData} from "@/types/keys";
 import MainInput from "@/components/inputs/MainInput";
 import MultiSelectInput, {OptionType} from "@/components/inputs/MultiSelectInput";
 import {
@@ -14,6 +14,7 @@ import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {useRouter} from "next/navigation";
 import {useCallback, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
+import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -31,7 +32,7 @@ const defaultFilters: KeysFilterFormValues = {
     operationSystem: [],
 } as const;
 
-export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
+export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
 
     const { control, register, reset, handleSubmit } = useForm<KeysFilterFormValues>({
         defaultValues: defaultFilters,
@@ -86,14 +87,8 @@ export default function KeysCatalog({keysData} : {keysData: KeysStructures[]}){
                 <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-lg shadow-black/25">
                     <div className="mb-4 flex items-center justify-between">
                         <h2 className="text-lg font-semibold text-slate-50">Фильтры</h2>
-                        <button
-                            type="button"
-                            onClick={handleReset}
-                            className="rounded-2xl cursor-pointer border border-slate-700/80 bg-slate-950/40 px-3 py-2
-                            text-xs font-medium text-slate-200 transition hover:bg-slate-800/60"
-                        >
-                            Сбросить
-                        </button>
+
+                        <GrayBtn label={`Сбросить`} onClick={handleReset} />
                     </div>
 
                     <div className="space-y-4">

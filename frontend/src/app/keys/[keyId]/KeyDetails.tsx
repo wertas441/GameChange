@@ -1,12 +1,12 @@
 'use client'
 
-import {KeyStructure} from "@/types/keys";
+import {KeyDetailsData} from "@/types/keys";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {activationPlatformIcons, operationSystemIcon} from "@/lib/data";
 import Image from "next/image";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 
-export default function KeyDetails({keyData}: {keyData: KeyStructure} ){
+export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
     const addData = {
         id: keyData.id,
@@ -146,7 +146,7 @@ export default function KeyDetails({keyData}: {keyData: KeyStructure} ){
                                         </div>
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Дата выхода</dt>
-                                            <dd className="font-medium text-slate-100">{keyData.releaseData}</dd>
+                                            <dd className="font-medium text-slate-100">{keyData.releaseDate}</dd>
                                         </div>
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Платформы</dt>

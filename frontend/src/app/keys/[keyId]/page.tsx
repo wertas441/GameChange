@@ -1,7 +1,7 @@
 import KeyDetails from "@/app/keys/[keyId]/KeyDetails";
 import {KeyMetadataParams} from "@/types/keys";
 import {generateMetadataKeyName} from "@/lib";
-import {getKeyInformation} from "@/lib/controllers/keysController";
+import {getKeyDetails} from "@/lib/controllers/keysController";
 
 export async function generateMetadata({params}: KeyMetadataParams) {
     const {keyId} = await params;
@@ -16,7 +16,7 @@ export async function generateMetadata({params}: KeyMetadataParams) {
 export default async function KeyDetailsPage({params}: KeyMetadataParams) {
     const {keyId} = await params;
 
-    const keyDetails = await getKeyInformation(keyId);
+    const keyDetails = await getKeyDetails(keyId);
 
     if (!keyDetails) {
         return (

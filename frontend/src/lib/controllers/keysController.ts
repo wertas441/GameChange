@@ -1,11 +1,11 @@
 import {api, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import {KeysStructures, KeyStructure} from "@/types/keys";
+import {KeyDetailsData, KeyListData} from "@/types/keys";
 
 
 export async function getKeysList() {
     try {
-        const response = await api.get<BackendApiResponse<{ keys: KeysStructures[] }>>(`/keys`);
+        const response = await api.get<BackendApiResponse<{ keys: KeyListData[] }>>(`/keys`);
 
        return  response.data.data?.keys ?? undefined;
     } catch (error){
@@ -16,9 +16,9 @@ export async function getKeysList() {
 }
 
 
-export async function getKeyInformation(keyUrl: string) {
+export async function getKeyDetails(keyUrl: string) {
     try {
-        const response = await api.get<BackendApiResponse<{ keyDetails: KeyStructure }>>(
+        const response = await api.get<BackendApiResponse<{ keyDetails: KeyDetailsData }>>(
             `/keys/key?keyUrl=${encodeURIComponent(keyUrl)}`);
 
         return  response.data.data?.keyDetails ?? undefined;

@@ -2,6 +2,15 @@ import { Router } from 'express';
 import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import { KeyModel } from "../models/Key";
+import {AddKeyData} from "../types/keysTypes";
+import {
+    validateKeyActivationPlatform, validateKeyCPU, validateKeyDescription, validateKeyDeveloper, validateKeyGenres,
+    validateKeyGPU,
+    validateKeyMainPicture, validateKeyMemory,
+    validateKeyName, validateKeyOperationSystem, validateKeyOtherPictures, validateKeyPublisher, validateKeyRAM,
+    validateKeyReleaseDate,
+    validateKeyUrl
+} from "../lib/validators/keyValidation";
 
 const router = Router();
 
@@ -70,7 +79,57 @@ router.get('/key', async (req, res) => {
 });
 
 router.post('/key', async (req, res) => {
-    // const { requestBody } : {requestData: } = req.body;
+    try {
+        const { requestData }:{requestData: AddKeyData} = req.body;
+
+        const validateKeyData = () => {
+            const { minimal, recommended } = requestData.systemRequirements;
+
+            const checks = [
+                validateKeyName(requestData.name),
+                validateKeyUrl(requestData.keyUrl),
+                validateKeyMainPicture(requestData.mainPicture),
+                validateKeyReleaseDate(requestData.releaseDate),
+                validateKeyOperationSystem(requestData.operationSystem),
+                validateKeyActivationPlatform(requestData.activationPlatform),
+                validateKeyGenres(requestData.genres),
+                validateKeyDescription(requestData.description),
+                validateKeyOtherPictures(requestData.otherPictures),
+                validateKeyDeveloper(requestData.developer),
+                validateKeyPublisher(requestData.publisher),
+                validateKeyCPU(minimal.CPU),
+                validateKeyGPU(minimal.GPU),
+                validateKeyRAM(minimal.RAM),
+                validateKeyMemory(minimal.memory),
+                validateKeyCPU(recommended.CPU),
+                validateKeyGPU(recommended.GPU),
+                validateKeyRAM(recommended.RAM),
+                validateKeyMemory(recommended.memory),
+            ].flat();
+
+            return checks.every(Boolean);
+        };
+
+        const validationResult = validateKeyData();
+
+        if (!validationResult) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Ошибка добавления нового ключа, пожалуйста проверьте введенные вами данные.'
+            };
+            return res.status(400).json(response);
+        }
+
+        await KeyModel.addNewKey(requestData);
+
+        const response: ApiResponse = { success: true };
+
+        return res.status(200).json(response);
+    } catch (error){
+        const response = showBackendError(error, 'Ошибка при добавлении нового ключа');
+
+        res.status(500).json(response);
+    }
 });
 
 router.put('/key', async (req, res) => {

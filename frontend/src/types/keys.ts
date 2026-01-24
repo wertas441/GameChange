@@ -7,36 +7,34 @@ interface SystemRequirements {
     memory: string;
 }
 
-export interface KeyStructure {
-    id: number;
-    name: string;
+export interface KeyBaseData {
+    name: string,
     keyUrl: string;
-    price: string;
+    price: string,
+    mainPicture: string,
+    releaseDate: string,
+    operationSystem: OperationSystem[],
+    activationPlatform: ActivationPlatform[],
+    genres: string[],
+}
+
+export interface KeyListData extends KeyBaseData {
+    id: number,
+}
+
+export interface AddKeyData extends KeyBaseData {
     description: string;
-    releaseData: string;
-    mainPicture: string;
     otherPictures: string[];
     developer: string;
     publisher: string;
-    operationSystem: OperationSystem[];
-    activationPlatform: ActivationPlatform[];
-    genres: string[];
     systemRequirements: {
         minimal: SystemRequirements;
         recommended: SystemRequirements;
     }
 }
 
-export interface KeysStructures {
-    id: number,
-    keyUrl: string,
-    name: string,
-    price: string,
-    mainPicture: string,
-    releaseData: string,
-    operationSystem: string[],
-    activationPlatform: string[],
-    genres: string[],
+export interface KeyDetailsData extends AddKeyData {
+    id: number;
 }
 
 export interface KeyMetadataParams {

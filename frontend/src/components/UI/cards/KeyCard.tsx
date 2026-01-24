@@ -8,10 +8,10 @@ import {
     ActivationPlatform,
     OperationSystem
 } from "@/lib/data";
-import {KeysStructures} from "@/types/keys";
+import {KeyListData} from "@/types/keys";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 
-export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
+export default function KeyCard ({ keyData }:{ keyData: KeyListData }) {
 
     const {
         id,
@@ -19,7 +19,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
         name,
         price,
         mainPicture,
-        releaseData,
+        releaseDate,
         operationSystem = [],
         activationPlatform = [],
         genres = []
@@ -65,7 +65,7 @@ export default function KeyCard ({ keyData }:{ keyData: KeysStructures }) {
                             {name}
                         </h1>
                     </Link>
-                    <p className="mt-1 text-sm text-slate-400">Дата выхода: {releaseData}</p>
+                    <p className="mt-1 text-sm text-slate-400">Дата выхода: {releaseDate}</p>
 
                     <div className="flex flex-wrap justify-center lg:justify-start items-center gap-x-4 gap-y-2 mt-3">
 
