@@ -5,13 +5,16 @@ export function usePageUtils() {
 
     const [serverError, setServerError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const router = useRouter();
 
     return {
         serverError,
         setServerError,
         isSubmitting,
+        isDeleting,
         setIsSubmitting,
+        setIsDeleting,
         router
     }
 }

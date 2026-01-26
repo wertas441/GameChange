@@ -6,7 +6,7 @@ import {
     activationPlatformIcons,
     operationSystemIcon,
     ActivationPlatform,
-    OperationSystem
+    OperationSystem, genreOptions
 } from "@/lib/data";
 import {KeyListData} from "@/types/keys";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
@@ -98,11 +98,14 @@ export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; is
                             })}
                         </div>
 
-                        {genres.map(genre => (
-                            <p key={genre} className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-1 text-xs text-slate-300">
-                                {genre}
-                            </p>
-                        ))}
+                        {genres.map(genre => {
+                            const matchedGenre = genreOptions.find((option) => option.value === genre);
+                            return (
+                                <p key={genre} className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-1 text-xs text-slate-300">
+                                    {matchedGenre?.label}
+                                </p>
+                            );
+                        })}
                     </div>
                 </div>
 
@@ -116,13 +119,14 @@ export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; is
                             <IconYellowBtn
                                 IconComponent={Pencil}
                                 onClick={goToChangePage}
-                                className="bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                className="w-auto! mt-0! bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                             />
                         )}
 
                         <YellowBtn
                             label={`Добавить в корзину`}
                             onClick={() => addToCart(addData)}
+                            className="w-auto! mt-0!"
                         />
                     </div>
                 </div>

@@ -16,6 +16,17 @@ export const activationPlatformOptions = [
 
 export const genreOptions = [
     { value: 'action', label: 'Экшен' },
+    { value: 'openWorld', label: 'Открытый мир' },
+    { value: 'fantasy', label: 'Фэнтези'},
+    { value: 'cyberpunk', label: 'Киберпанк' },
+    { value: 'western', label: 'Вестерн' },
+    { value: 'hardcore', label: 'Хардкор' },
+    { value: 'metroidvania', label: 'Метроидвания' },
+    { value: 'platformer', label: 'Платформер' },
+    { value: 'stepByStep', label: 'Пошаговая' },
+    { value: 'roguelike', label: 'Рогалик' },
+    { value: 'sandBox', label: 'Песочница' },
+    { value: 'survival', label: 'Выживание' },
     { value: 'rpg', label: 'RPG' },
     { value: 'strategy', label: 'Стратегия' },
     { value: 'shooter', label: 'Шутер' },

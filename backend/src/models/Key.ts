@@ -227,4 +227,129 @@ export class KeyModel {
             client.release();
         }
     }
+
+    static async changeKey(keyData: KeyDetailsData) {
+        const client = await pool.connect();
+
+        try {
+            await client.query('BEGIN');
+
+            const updateKeyQuery = `
+                UPDATE keys
+                SET
+                    key_url = $1,
+                    name = $2,
+                    description = $3,
+                    price = $4,
+                    release_date = $5,
+                    main_picture_url = $6,
+                    developer = $7,
+                    publisher = $8,
+                    updated_at = NOW()
+                WHERE id = $9
+                RETURNING id
+            `;
+
+            const values = [
+                keyData.keyUrl,
+                keyData.name,
+                keyData.description,
+                keyData.price,
+                keyData.releaseDate,
+                keyData.mainPicture,
+                keyData.developer,
+                keyData.publisher,
+                keyData.id,
+            ];
+
+            const updateResult = await client.query(updateKeyQuery, values);
+            const keyId: number | undefined = updateResult.rows?.[0]?.id;
+
+            if (!keyId) {
+                throw new Error('Ключ не найден');
+            }
+
+            await client.query('DELETE FROM key_images WHERE key_id = $1', [keyId]);
+            await client.query('DELETE FROM operation_systems WHERE key_id = $1', [keyId]);
+            await client.query('DELETE FROM activation_platforms WHERE key_id = $1', [keyId]);
+            await client.query('DELETE FROM key_genres WHERE key_id = $1', [keyId]);
+            await client.query('DELETE FROM key_system_requirements WHERE key_id = $1', [keyId]);
+
+            for (const [idx, url] of keyData.otherPictures.entries()) {
+                await client.query(
+                    `
+                    INSERT INTO key_images (key_id, url, sort_order)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (key_id, url) DO NOTHING
+                    `,
+                    [keyId, url, idx],
+                );
+            }
+
+            for (const os of keyData.operationSystem) {
+                await client.query(
+                    `
+                    INSERT INTO operation_systems (key_id, os)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, os) DO NOTHING
+                    `,
+                    [keyId, os],
+                );
+            }
+
+            for (const platform of keyData.activationPlatform) {
+                await client.query(
+                    `
+                    INSERT INTO activation_platforms (key_id, platform)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, platform) DO NOTHING
+                    `,
+                    [keyId, platform],
+                );
+            }
+
+            for (const genre of keyData.genres) {
+                await client.query(
+                    `
+                    INSERT INTO key_genres (key_id, genre)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, genre) DO NOTHING
+                    `,
+                    [keyId, genre],
+                );
+            }
+
+            const minimal = keyData.systemRequirements.minimal;
+            await client.query(
+                `
+                INSERT INTO key_system_requirements (key_id, profile, cpu, gpu, ram, memory)
+                VALUES ($1, 'minimal', $2, $3, $4, $5)
+                ON CONFLICT (key_id, profile) DO NOTHING
+                `,
+                [keyId, minimal.CPU, minimal.GPU, minimal.RAM, minimal.memory],
+            );
+
+            const recommended = keyData.systemRequirements.recommended;
+            await client.query(
+                `
+                INSERT INTO key_system_requirements (key_id, profile, cpu, gpu, ram, memory)
+                VALUES ($1, 'recommended', $2, $3, $4, $5)
+                ON CONFLICT (key_id, profile) DO NOTHING
+                `,
+                [keyId, recommended.CPU, recommended.GPU, recommended.RAM, recommended.memory],
+            );
+
+            await client.query('COMMIT');
+        } catch (error) {
+            try {
+                await client.query('ROLLBACK');
+            } catch (_) {
+                // ignore rollback errors
+            }
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
+
 }

@@ -46,7 +46,7 @@ export default function ChangeKey({keyData}: {keyData: KeyDetailsData }) {
         }
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, isDeleting, setIsDeleting, setIsSubmitting, router } = usePageUtils();
 
     const onSubmit = async (values: AddKeyData) => {
         setServerError(null);
@@ -86,13 +86,12 @@ export default function ChangeKey({keyData}: {keyData: KeyDetailsData }) {
             console.log(payload);
             await api.put<BackendApiResponse>(`/keys/key`, payload);
 
-
             router.push('/keys/catalog');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
             setServerError(message);
-            if (showErrorMessage) console.error('Change Key error:', err);
+            if (showErrorMessage) console.error('ChangeKey error:', err);
 
             setIsSubmitting(false)
         }
@@ -107,7 +106,7 @@ export default function ChangeKey({keyData}: {keyData: KeyDetailsData }) {
                             Изменение
                         </p>
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
-                            Изменить уже существующий ключ в магазин
+                            Изменить уже существующий ключ в магазине
                         </h2>
                     </header>
 
@@ -293,10 +292,17 @@ export default function ChangeKey({keyData}: {keyData: KeyDetailsData }) {
                             )}
                         />
 
-                        <SubmitYellowBtn
-                            label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
-                            disabled={isSubmitting}
-                        />
+                        <div className="flex-row md:flex gap-4 space-y-3 md:space-y-0 ">
+                            <SubmitYellowBtn
+                                label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
+                                disabled={isSubmitting || isDeleting}
+                            />
+
+                            <SubmitYellowBtn
+                                label={!isDeleting ? 'Удалить ключ' : 'Удаление…'}
+                                disabled={isSubmitting || isDeleting}
+                            />
+                        </div>
                     </form>
                 </section>
             </div>

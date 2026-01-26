@@ -15,7 +15,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam"],
-    "genres": ["Экшен", "Открытый мир"],
+    "genres": ["action", "openWorld"],
     "developer": "Rockstar Games",
     "systemRequirements": {
       "minimal": {
@@ -48,7 +48,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam"],
-    "genres": ["Экшен", "Открытый мир"],
+    "genres": ["action", "openWorld"],
     "developer": "Rockstar Games",
     "systemRequirements": {
       "minimal": {
@@ -81,7 +81,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "GOG", "Epic Games"],
-    "genres": ["RPG", "Открытый мир", "Фэнтези"],
+    "genres": ["rpg", "openWorld", "fantasy"],
     "developer": "CD PROJEKT RED",
     "systemRequirements": {
       "minimal": {
@@ -114,7 +114,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["GOG", "Steam"],
-    "genres": ["RPG", "Экшен", "Открытый мир", "Киберпанк"],
+    "genres": ["rpg", "action", "openWorld", "cyberpunk"],
     "developer": "CD PROJEKT RED",
     "systemRequirements": {
       "minimal": {
@@ -147,7 +147,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "Epic Games"],
-    "genres": ["Экшен", "Приключения", "Вестерн"],
+    "genres": ["action", "adventure", "western"],
     "developer": "Rockstar Games",
     "systemRequirements": {
       "minimal": {
@@ -180,7 +180,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam"],
-    "genres": ["RPG", "Экшен", "Хардкор", "Фэнтези", "Открытый мир"],
+    "genres": ["rpg", "action", "hardcore", "fantasy", "openWorld"],
     "developer": "FromSoftware Inc.",
     "systemRequirements": {
       "minimal": {
@@ -213,7 +213,7 @@
     "operationSystem": ["Windows", "macOS", "Linux"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam"],
-    "genres": ["Метроидвания", "Платформер", "Инди"],
+    "genres": ["metroidvania", "platformer", "indie"],
     "developer": "Team Cherry",
     "systemRequirements": {
       "minimal": {
@@ -246,7 +246,7 @@
     "operationSystem": ["Windows", "macOS", "Linux"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "GOG"],
-    "genres": ["Симулятор", "RPG", "Инди"],
+    "genres": ["simulator", "rpg", "indie"],
     "developer": "ConcernedApe",
     "systemRequirements": {
       "minimal": {
@@ -279,7 +279,7 @@
     "operationSystem": ["Windows", "macOS"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "GOG", "EA"],
-    "genres": ["RPG", "Пошаговая", "Фэнтези", "Приключения"],
+    "genres": ["rpg", "stepByStep", "fantasy", "adventure"],
     "developer": "Larian Studios",
     "systemRequirements": {
       "minimal": {
@@ -312,7 +312,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "Ubisoft Connect"],
-    "genres": ["RPG", "Открытый мир", "Фэнтези"],
+    "genres": ["rpg", "openWorld", "fantasy"],
     "developer": "Bethesda Game Studios",
     "systemRequirements": {
       "minimal": {
@@ -345,7 +345,7 @@
     "operationSystem": ["Windows"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "EA"],
-    "genres": ["Шутер", "Экшен"],
+    "genres": ["shooter", "action"],
     "developer": "id Software",
     "systemRequirements": {
       "minimal": {
@@ -378,7 +378,7 @@
     "operationSystem": ["Windows", "macOS"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "Epic Games"],
-    "genres": ["Экшен", "Roguelike", "Инди"],
+    "genres": ["action", "roguelike", "indie"],
     "developer": "Supergiant Games",
     "systemRequirements": {
       "minimal": {
@@ -411,7 +411,7 @@
     "operationSystem": ["Windows", "macOS", "Linux"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam"],
-    "genres": ["Стратегия", "Симулятор", "Выживание", "Автоматизация"],
+    "genres": ["strategy", "simulator", "survival"],
     "developer": "Wube Software LTD",
     "systemRequirements": {
       "minimal": {
@@ -444,7 +444,7 @@
     "operationSystem": ["Windows", "macOS", "Linux"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "GOG"],
-    "genres": ["Песочница", "Приключения", "Выживание"],
+    "genres": ["sandBox", "adventure", "survival"],
     "developer": "Re-Logic",
     "systemRequirements": {
       "minimal": {
@@ -477,7 +477,7 @@
     "operationSystem": ["Windows", "macOS", "Linux"],
     "publisher": "Rockstar North",
     "activationPlatform": ["Steam", "Epic Games"],
-    "genres": ["Глобальная стратегия", "Пошаговая стратегия"],
+    "genres": ["strategy", "stepByStep"],
     "developer": "Firaxis Games",
     "systemRequirements": {
       "minimal": {
