@@ -1,7 +1,7 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {KeyStructure} from "@/types/keys";
+import {AddKeyData} from "@/types/keys";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
@@ -15,19 +15,20 @@ import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@
 
 export default function AddNewKey(){
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<KeyStructure>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<AddKeyData>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
-    const onSubmit = async (values: KeyStructure) => {
+    const onSubmit = async (values: AddKeyData) => {
         setServerError(null);
         setIsSubmitting(true);
 
-        const payload: KeyStructure = {
+        const payload: AddKeyData = {
             name: values.name,
+            keyUrl: values.keyUrl,
             price: values.price,
             description: values.description,
-            releaseData: values.releaseData,
+            releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
             otherPictures: values.otherPictures,
             developer: values.developer,
@@ -52,7 +53,9 @@ export default function AddNewKey(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/`, payload);
+            console.log(payload);
+            await api.post<BackendApiResponse>(`/keys/key`, payload);
+
 
             router.push('/keys/catalog');
         } catch (err) {
@@ -91,6 +94,13 @@ export default function AddNewKey(){
                             />
 
                             <MainInput
+                                id={`keyUrl`}
+                                label={`URL для ключа`}
+                                error={errors.keyUrl?.message}
+                                {...register('keyUrl')}
+                            />
+
+                            <MainInput
                                 id={`price`}
                                 label={`Цена (руб)`}
                                 error={errors.price?.message}
@@ -108,8 +118,8 @@ export default function AddNewKey(){
                                 id={`releaseData`}
                                 type={'date'}
                                 label={`Дата релиза`}
-                                error={errors.releaseData?.message}
-                                {...register('releaseData')}
+                                error={errors.releaseDate?.message}
+                                {...register('releaseDate')}
                             />
 
                             <MainInput
@@ -123,7 +133,7 @@ export default function AddNewKey(){
                                 id={`publisher`}
                                 label={`Издатель`}
                                 error={errors.mainPicture?.message}
-                                {...register('mainPicture')}
+                                {...register('publisher')}
                             />
 
                         </DropDownContent>

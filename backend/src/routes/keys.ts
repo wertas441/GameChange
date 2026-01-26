@@ -17,7 +17,7 @@ const router = Router();
 
 router.get('/', async (req, res) => {
    try {
-       const keys = await KeyModel.getKeys();
+       const keys = await KeyModel.getList();
 
        if (!keys) {
            const response: ApiResponse = {
@@ -54,7 +54,7 @@ router.get('/key', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const keyDetails = await KeyModel.getKeyDetails(keyUrl);
+        const keyDetails = await KeyModel.getDetails(keyUrl);
 
         if (!keyDetails) {
             const response: ApiResponse = {
@@ -83,6 +83,11 @@ router.post('/key', async (req, res) => {
         const { requestData }:{requestData: AddKeyData} = req.body;
 
         const validateKeyData = () => {
+
+            if (!requestData || !requestData.systemRequirements) {
+                return false;
+            }
+
             const { minimal, recommended } = requestData.systemRequirements;
 
             const checks = [
@@ -110,7 +115,7 @@ router.post('/key', async (req, res) => {
             return checks.every(Boolean);
         };
 
-        const validationResult = validateKeyData();
+        const validationResult:boolean = validateKeyData();
 
         if (!validationResult) {
             const response: ApiResponse = {
@@ -120,7 +125,7 @@ router.post('/key', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        await KeyModel.addNewKey(requestData);
+        await KeyModel.addKey(requestData);
 
         const response: ApiResponse = { success: true };
 

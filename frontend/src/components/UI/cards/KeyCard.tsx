@@ -10,8 +10,12 @@ import {
 } from "@/lib/data";
 import {KeyListData} from "@/types/keys";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
+import {Pencil} from 'lucide-react'
+import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
+import {useRouter} from "next/navigation";
+import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 
-export default function KeyCard ({ keyData }:{ keyData: KeyListData }) {
+export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
 
     const {
         id,
@@ -27,12 +31,15 @@ export default function KeyCard ({ keyData }:{ keyData: KeyListData }) {
 
     const addData = {
         id: id,
-        keyUrl: keyData.keyUrl,
+        keyUrl: keyUrl,
         name: name,
         price: price,
         mainPicture: mainPicture,
     }
 
+    const router = useRouter();
+
+    const goToChangePage = () => router.push(`/keys/${keyData.keyUrl}/change`);
     const addToCart = useCartStore(addNewItem)
 
     const isActivationPlatform = (value: string): value is ActivationPlatform => value in activationPlatformIcons;
@@ -104,13 +111,20 @@ export default function KeyCard ({ keyData }:{ keyData: KeyListData }) {
                         {price} ₽
                     </h2>
 
-                    <button
-                        onClick={() => addToCart(addData)}
-                        className={`w-full lg:w-auto rounded-2xl bg-amber-400 px-5 py-3 text-sm font-semibold text-slate-950 shadow-md shadow-amber-400/20 transition
-                        hover:bg-amber-500 cursor-pointer hover:shadow-amber-400/30 active:translate-y-px`}
-                    >
-                        Добавить в корзину
-                    </button>
+                    <div className="flex gap-3">
+                        {isAdmin && (
+                            <IconYellowBtn
+                                IconComponent={Pencil}
+                                onClick={goToChangePage}
+                                className="bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                            />
+                        )}
+
+                        <YellowBtn
+                            label={`Добавить в корзину`}
+                            onClick={() => addToCart(addData)}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

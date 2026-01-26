@@ -1,12 +1,28 @@
-import {Metadata} from "next";
 import ChangeKey from "@/app/keys/[keyId]/change/ChangeKey";
+import {KeyMetadataParams} from "@/types/keys";
+import {generateMetadataKeyName} from "@/lib";
+import {getKeyDetails} from "@/lib/controllers/keysController";
 
-export const metadata: Metadata = {
-    title: 'Key',
-    description: '',
+export async function generateMetadata({params}: KeyMetadataParams) {
+    const {keyId} = await params;
+    const keyName = generateMetadataKeyName(keyId);
+
+    return {
+        title: `Изменить ${keyName} | GameChange`,
+        description: `Изменить данные о ключе ${keyName} представленной в нашем магазине товаров`,
+    }
 }
 
-export default function ChangeKeyPage(){
+export default async function ChangeKeyPage({params}: KeyMetadataParams){
+    const {keyId} = await params;
 
-    return <ChangeKey />
+    const keyData = await getKeyDetails(keyId);
+
+    if (!keyData) {
+        return (
+            <h1>error</h1>
+        )
+    }
+
+    return <ChangeKey keyData={keyData} />
 }

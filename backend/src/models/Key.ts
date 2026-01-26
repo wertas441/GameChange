@@ -3,7 +3,7 @@ import {AddKeyData, KeyDetailsData, KeyListData,} from "../types/keysTypes";
 
 export class KeyModel {
 
-    static async getKeys(): Promise<KeyListData[] | undefined> {
+    static async getList(): Promise<KeyListData[] | undefined> {
         const query = `
             SELECT
                 k.id AS id,
@@ -46,7 +46,7 @@ export class KeyModel {
         return result.rows ?? undefined;
     }
 
-    static async getKeyDetails(keyUrl: string): Promise<KeyDetailsData | undefined> {
+    static async getDetails(keyUrl: string): Promise<KeyDetailsData | undefined> {
         const query = `
             SELECT
                 k.id AS id,
@@ -117,7 +117,114 @@ export class KeyModel {
         return result.rows?.[0] ?? undefined;
     }
 
-    static async addNewKey(keyData: AddKeyData) {
+    static async addKey(keyData: AddKeyData) {
+        const client = await pool.connect();
 
+        try {
+            await client.query('BEGIN');
+
+            const insertKeyQuery = `
+                INSERT INTO keys (key_url, name, description, price, release_date, main_picture_url, developer, publisher)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                RETURNING id
+            `;
+
+            const values = [
+                keyData.keyUrl,
+                keyData.name,
+                keyData.description,
+                keyData.price,
+                keyData.releaseDate,
+                keyData.mainPicture,
+                keyData.developer,
+                keyData.publisher,
+            ];
+
+            const insertResult = await client.query(insertKeyQuery, values);
+            const keyId: number | undefined = insertResult.rows?.[0]?.id;
+
+            if (!keyId) {
+                throw new Error('Не удалось добавить ключ');
+            }
+
+            for (const [idx, url] of keyData.otherPictures.entries()) {
+                await client.query(
+                    `
+                    INSERT INTO key_images (key_id, url, sort_order)
+                    VALUES ($1, $2, $3)
+                    ON CONFLICT (key_id, url) DO NOTHING
+                    `,
+                    [keyId, url, idx],
+                );
+            }
+
+            for (const os of keyData.operationSystem) {
+                await client.query(
+                    `
+                    INSERT INTO operation_systems (key_id, os)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, os) DO NOTHING
+                    `,
+                    [keyId, os],
+                );
+            }
+
+            for (const platform of keyData.activationPlatform) {
+                await client.query(
+                    `
+                    INSERT INTO activation_platforms (key_id, platform)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, platform) DO NOTHING
+                    `,
+                    [keyId, platform],
+                );
+            }
+
+            for (const genre of keyData.genres) {
+                await client.query(
+                    `
+                    INSERT INTO key_genres (key_id, genre)
+                    VALUES ($1, $2)
+                    ON CONFLICT (key_id, genre) DO NOTHING
+                    `,
+                    [keyId, genre],
+                );
+            }
+
+            const minimal = keyData.systemRequirements.minimal;
+            if (minimal) {
+                await client.query(
+                    `
+                    INSERT INTO key_system_requirements (key_id, profile, cpu, gpu, ram, memory)
+                    VALUES ($1, 'minimal', $2, $3, $4, $5)
+                    ON CONFLICT (key_id, profile) DO NOTHING
+                    `,
+                    [keyId, minimal.CPU, minimal.GPU, minimal.RAM, minimal.memory],
+                );
+            }
+
+            const recommended = keyData.systemRequirements.recommended;
+            if (recommended) {
+                await client.query(
+                    `
+                    INSERT INTO key_system_requirements (key_id, profile, cpu, gpu, ram, memory)
+                    VALUES ($1, 'recommended', $2, $3, $4, $5)
+                    ON CONFLICT (key_id, profile) DO NOTHING
+                    `,
+                    [keyId, recommended.CPU, recommended.GPU, recommended.RAM, recommended.memory],
+                );
+            }
+
+            await client.query('COMMIT');
+        } catch (error) {
+            try {
+                await client.query('ROLLBACK');
+            } catch (_) {
+                // ignore rollback errors
+            }
+            throw error;
+        } finally {
+            client.release();
+        }
     }
 }

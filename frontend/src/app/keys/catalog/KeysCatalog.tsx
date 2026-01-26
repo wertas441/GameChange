@@ -187,6 +187,7 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
                             <KeyCard
                                 key={key.id}
                                 keyData={key}
+                                isAdmin={isAdmin}
                             />
                         ))}
                     </div>
