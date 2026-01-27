@@ -41,7 +41,7 @@ export default function MainHeader() {
 
     const router = useRouter();
     const goToCartPage = useCallback(() => router.push('/cart'), [router]);
-    const goToUserPage = useCallback(() => router.push('/user'), [router]);
+    const goToUserPage = useCallback(() => router.push('/user/profile'), [router]);
 
     const toggleShopModalWindow = useCallback(() => {
         setModalShopWindowOpen(prevState => !prevState);
