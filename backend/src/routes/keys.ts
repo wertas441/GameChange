@@ -3,17 +3,10 @@ import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import { KeyModel } from "../models/Key";
 import {AddKeyData, KeyDetailsData} from "../types/keysTypes";
-import {
-    validateKeyActivationPlatform, validateKeyCPU, validateKeyDescription, validateKeyDeveloper, validateKeyGenres,
-    validateKeyGPU,
-    validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOperationSystem, validateKeyOtherPictures, validateKeyPublisher, validateKeyRAM,
-    validateKeyReleaseDate,
-    validateKeyUrl
-} from "../lib/validators/keyValidation";
+import {validateKeyData} from "../lib/validators/keyValidation";
+import {adminMiddleware} from "../middleware/adminMiddleware";
 
 const router = Router();
-
 
 router.get('/', async (req, res) => {
    try {
@@ -78,44 +71,11 @@ router.get('/key', async (req, res) => {
     }
 });
 
-router.post('/key', async (req, res) => {
+router.post('/key', adminMiddleware, async (req, res) => {
     try {
         const requestData: AddKeyData = req.body;
 
-        const validateKeyData = () => {
-
-            if (!requestData || !requestData.systemRequirements) {
-                return false;
-            }
-
-            const { minimal, recommended } = requestData.systemRequirements;
-
-            const checks = [
-                validateKeyName(requestData.name),
-                validateKeyUrl(requestData.keyUrl),
-                validateKeyMainPicture(requestData.mainPicture),
-                validateKeyReleaseDate(requestData.releaseDate),
-                validateKeyOperationSystem(requestData.operationSystem),
-                validateKeyActivationPlatform(requestData.activationPlatform),
-                validateKeyGenres(requestData.genres),
-                validateKeyDescription(requestData.description),
-                validateKeyOtherPictures(requestData.otherPictures),
-                validateKeyDeveloper(requestData.developer),
-                validateKeyPublisher(requestData.publisher),
-                validateKeyCPU(minimal.CPU),
-                validateKeyGPU(minimal.GPU),
-                validateKeyRAM(minimal.RAM),
-                validateKeyMemory(minimal.memory),
-                validateKeyCPU(recommended.CPU),
-                validateKeyGPU(recommended.GPU),
-                validateKeyRAM(recommended.RAM),
-                validateKeyMemory(recommended.memory),
-            ].flat();
-
-            return checks.every(Boolean);
-        };
-
-        const validationResult:boolean = validateKeyData();
+        const validationResult:boolean = validateKeyData(requestData);
 
         if (!validationResult) {
             const response: ApiResponse = {
@@ -125,7 +85,7 @@ router.post('/key', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        await KeyModel.addKey(requestData);
+        await KeyModel.add(requestData);
 
         const response: ApiResponse = { success: true };
 
@@ -137,44 +97,11 @@ router.post('/key', async (req, res) => {
     }
 });
 
-router.put('/key', async (req, res) => {
+router.put('/key', adminMiddleware, async (req, res) => {
     try {
         const requestData: KeyDetailsData = req.body;
 
-        const validateKeyData = () => {
-
-            if (!requestData || !requestData.systemRequirements) {
-                return false;
-            }
-
-            const { minimal, recommended } = requestData.systemRequirements;
-
-            const checks = [
-                validateKeyName(requestData.name),
-                validateKeyUrl(requestData.keyUrl),
-                validateKeyMainPicture(requestData.mainPicture),
-                validateKeyReleaseDate(requestData.releaseDate),
-                validateKeyOperationSystem(requestData.operationSystem),
-                validateKeyActivationPlatform(requestData.activationPlatform),
-                validateKeyGenres(requestData.genres),
-                validateKeyDescription(requestData.description),
-                validateKeyOtherPictures(requestData.otherPictures),
-                validateKeyDeveloper(requestData.developer),
-                validateKeyPublisher(requestData.publisher),
-                validateKeyCPU(minimal.CPU),
-                validateKeyGPU(minimal.GPU),
-                validateKeyRAM(minimal.RAM),
-                validateKeyMemory(minimal.memory),
-                validateKeyCPU(recommended.CPU),
-                validateKeyGPU(recommended.GPU),
-                validateKeyRAM(recommended.RAM),
-                validateKeyMemory(recommended.memory),
-            ].flat();
-
-            return checks.every(Boolean);
-        };
-
-        const validationResult:boolean = validateKeyData();
+        const validationResult:boolean = validateKeyData(requestData);
 
         if (!validationResult) {
             const response: ApiResponse = {
@@ -184,7 +111,7 @@ router.put('/key', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        await KeyModel.changeKey(requestData);
+        await KeyModel.change(requestData);
 
         const response: ApiResponse = { success: true };
 
@@ -196,8 +123,36 @@ router.put('/key', async (req, res) => {
     }
 });
 
-router.delete('/key', async (req, res) => {
+router.delete('/key', adminMiddleware, async (req, res) => {
+    try {
+        const { keyId } = req.body;
 
+        if (!Number.isInteger(keyId) || keyId <= 0) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Некорректный id ключа.'
+            };
+            return res.status(400).json(response);
+        }
+
+        const deleted = await KeyModel.delete(keyId);
+
+        if (!deleted) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Ключ не найден'
+            };
+            return res.status(404).json(response);
+        }
+
+        const response: ApiResponse = { success: true };
+
+        return res.status(200).json(response);
+    } catch (error){
+        const response = showBackendError(error, 'Ошибка при удалении существующего ключа');
+
+        res.status(500).json(response);
+    }
 });
 
 export default router;

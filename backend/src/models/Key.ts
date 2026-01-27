@@ -117,7 +117,7 @@ export class KeyModel {
         return result.rows?.[0] ?? undefined;
     }
 
-    static async addKey(keyData: AddKeyData) {
+    static async add(keyData: AddKeyData) {
         const client = await pool.connect();
 
         try {
@@ -228,7 +228,7 @@ export class KeyModel {
         }
     }
 
-    static async changeKey(keyData: KeyDetailsData) {
+    static async change(keyData: KeyDetailsData) {
         const client = await pool.connect();
 
         try {
@@ -351,5 +351,14 @@ export class KeyModel {
             client.release();
         }
     }
+
+    static async delete(keyId: number): Promise<boolean> {
+        const query = `DELETE FROM keys WHERE id = $1 RETURNING id`;
+
+        const { rowCount } = await pool.query(query, [keyId]);
+
+        return (rowCount ?? 0) > 0;
+    }
+
 
 }
