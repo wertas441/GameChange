@@ -1,7 +1,8 @@
 import {SubmitButtonTypes} from "@/types";
 import {goldColorTheme} from "@/styles/styles";
+import {memo} from "react";
 
-export default function SubmitYellowBtn({label, disabled = false, className = ''}:SubmitButtonTypes) {
+function SubmitYellowBtn({label, disabled = false, className = ''}:SubmitButtonTypes) {
 
     return (
         <button
@@ -15,3 +16,5 @@ export default function SubmitYellowBtn({label, disabled = false, className = ''
         </button>
     )
 }
+
+export default memo(SubmitYellowBtn);

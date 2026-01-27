@@ -1,8 +1,9 @@
 import InputError from "@/components/errors/InputError";
 import {inputColorTheme} from "@/styles/styles";
 import {MainInputProps} from "@/types";
+import {memo} from "react";
 
-export default function MainInput(
+function MainInput(
     {
         label,
         error,
@@ -38,5 +39,6 @@ export default function MainInput(
     )
 }
 
+export default memo(MainInput);
 
 

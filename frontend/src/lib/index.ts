@@ -20,6 +20,13 @@ export function getServerErrorMessage(err: unknown){
     return message;
 }
 
+export const formatDateForProfile = (value: string) => {
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return value;
+    return parsed.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
+};
+
+
 export function getDateInputFormat(date: string | Date | null | undefined): string {
     if (!date) return '';
 

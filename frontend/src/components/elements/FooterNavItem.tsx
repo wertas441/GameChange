@@ -1,4 +1,5 @@
 import Link from "next/link";
+import {memo} from "react";
 
 interface FooterNavItemProps {
     text: string,
@@ -6,7 +7,7 @@ interface FooterNavItemProps {
     className?: string,
 }
 
-export default function FooterNavItem({text, link, className = ''}: FooterNavItemProps) {
+function FooterNavItem({text, link, className = ''}: FooterNavItemProps) {
 
     return (
         <li>
@@ -16,3 +17,5 @@ export default function FooterNavItem({text, link, className = ''}: FooterNavIte
         </li>
     )
 }
+
+export default memo(FooterNavItem);

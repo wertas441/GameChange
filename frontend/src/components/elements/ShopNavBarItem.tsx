@@ -1,4 +1,5 @@
 import {useRouter} from "next/navigation";
+import {memo} from "react";
 
 interface IProps {
     text: string,
@@ -7,7 +8,7 @@ interface IProps {
     className?: string,
 }
 
-export default function ShopNavBarItem({text, toggle, href = '/', className = ''}: IProps) {
+function ShopNavBarItem({text, toggle, href = '/', className = ''}: IProps) {
 
     const router = useRouter();
 
@@ -26,3 +27,5 @@ export default function ShopNavBarItem({text, toggle, href = '/', className = ''
         </button>
     )
 }
+
+export default memo(ShopNavBarItem);

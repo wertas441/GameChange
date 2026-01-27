@@ -9,7 +9,7 @@ export default function UserLayout({children}:{children: ReactNode}) {
     const pathname = usePathname()
 
     return (
-        <div className={`max-w-full mx-auto`}>
+        <div className={`mt-7 max-w-full mx-auto`}>
             <div className="w-full flex flex-col lg:flex-row gap-6">
                 <UserSideBar pathname={pathname} />
 
