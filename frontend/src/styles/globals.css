@@ -1,2 +1,6 @@
 @import "tailwindcss";
+@import "./animation.css";
 
+html, body {
+    background-color: #020617;
+}

@@ -1,0 +1,497 @@
+[
+  {
+    "id": 1,
+    "name": "Grand Theft Auto V",
+    "price": 899,
+    "keyUrl": "grand-theft-auto-5",
+    "description": "Grand Theft Auto V — культовый криминальный экшен в открытом мире Лос-Сантоса и округа Блэйн. В сюжетной кампании вы играете сразу за трёх героев и переключаетесь между ними прямо во время миссий и ограблений. Город живёт своей жизнью: гонки, перестрелки, побочные задания, активности и исследование карты легко затягивают на десятки часов. Развитие персонажей, кастомизация транспорта и разнообразие оружия позволяют играть агрессивно или более тактично. После прохождения основного сюжета можно продолжать исследовать мир, выполнять задания и собирать коллекционные предметы. Также доступен GTA Online — отдельный режим для совместной игры, соревнований и кооперативных активностей.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+    "releaseData": "14.04.2015",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/271590/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam"],
+    "genres": ["action", "openWorld"],
+    "developer": "Rockstar Games",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 2,
+    "name": "Grand Theft Auto IV: The Complete Edition",
+    "price": 599,
+    "keyUrl": "grand-theft-auto-4-the-complete-edition",
+    "description": "Grand Theft Auto IV: The Complete Edition переносит вас в Либерти-Сити — мрачный, плотный и очень “живой” мегаполис с упором на реалистичную физику и атмосферу. Главный герой Нико Беллик пытается начать новую жизнь, но быстро оказывается втянут в криминальные разборки и опасные сделки. История подаётся взросло и драматично, а побочные активности и исследование города добавляют глубины между сюжетными миссиями. В набор входит базовая GTA IV и два сюжетных дополнения Episodes from Liberty City, расширяющих мир и показывающих события с разных сторон. Вас ждут погони, перестрелки, задания от знакомых и случайные встречи на улицах. Отличный выбор, если хочется более приземлённого тона по сравнению с GTA V.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
+    "releaseData": "02.12.2008",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/12210/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam"],
+    "genres": ["action", "openWorld"],
+    "developer": "Rockstar Games",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 3,
+    "name": "The Witcher 3: Wild Hunt",
+    "price": 1199,
+    "keyUrl": "the-witcher-3-wild-hunt",
+    "description": "The Witcher 3: Wild Hunt — масштабная сюжетная RPG в открытом мире, где охотник на чудовищ Геральт ищет Цири и сталкивается с Дикой Охотой. Игра делает акцент на квестах: даже небольшие задания часто имеют последствия и запоминающихся персонажей. Путешествуйте по регионам, охотьтесь на монстров по контрактам, прокачивайте навыки, используйте эликсиры и знаки в бою. Миру есть что показать: города, деревни, руины, острова, подземелья и множество секретов. Снаряжение можно улучшать и собирать сетами, подстраивая стиль игры под себя. Дополнительно есть Гвинт и другие активности, которые помогают отвлечься от основного сюжета и углубиться в лор.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+    "releaseData": "19.05.2015",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "GOG", "Epic Games"],
+    "genres": ["rpg", "openWorld", "fantasy"],
+    "developer": "CD PROJEKT RED",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 4,
+    "name": "Cyberpunk 2077",
+    "price": 1999,
+    "keyUrl": "cyberpunk-2077",
+    "description": "Cyberpunk 2077 — сюжетная RPG в Найт-Сити, мегаполисе будущего, где корпорации правят улицами, а импланты меняют правила игры. Вы играете за V и строите персонажа под себя: от скрытного нетраннера и хакера до бойца с тяжёлым оружием или ловкого убийцы ближнего боя. В диалогах и заданиях регулярно встречаются выборы, влияющие на отношения, развитие истории и финальные исходы. Помимо основной линии есть десятки побочных контрактов, районных историй и событий в открытом мире. Прокачка, киберимпланты и подбор экипировки позволяют экспериментировать со сборками и стилем прохождения. Найт-Сити приятно исследовать пешком и на транспорте — город наполнен деталями, контрастами и атмосферой неона.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
+    "releaseData": "10.12.2020",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["GOG", "Steam"],
+    "genres": ["rpg", "action", "openWorld", "cyberpunk"],
+    "developer": "CD PROJEKT RED",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 5,
+    "name": "Red Dead Redemption 2",
+    "price": 2499,
+    "keyUrl": "red-dead-redemption-2",
+    "description": "Red Dead Redemption 2 — кинематографичный вестерн в открытом мире, рассказывающий историю Артура Моргана и банды Ван дер Линде на закате эпохи Дикого Запада. Игра сочетает сюжетные миссии с медитативным исследованием огромной карты: города, фермы, горы, болота и заснеженные перевалы. Вас ждут перестрелки, ограбления, охота, рыбалка и случайные события, которые часто становятся маленькими историями. Система чести и принятые решения отражаются на том, как мир и персонажи реагируют на героя. Лагерь банды — важная часть опыта: улучшайте быт, общайтесь с товарищами и наблюдайте за развитием отношений. Это игра про атмосферу, детали и сильный сюжет, который раскрывается неспешно, но мощно.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+    "releaseData": "05.11.2019",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "Epic Games"],
+    "genres": ["action", "adventure", "western"],
+    "developer": "Rockstar Games",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 6,
+    "name": "Elden Ring",
+    "price": 3999,
+    "keyUrl": "elden-ring",
+    "description": "Elden Ring — большая action-RPG от FromSoftware, где вы исследуете Междуземье и собираете силу, чтобы стать Повелителем Элдена. Это “соулслайк” с открытым миром: можно уходить с трудных боссов, искать новые области, улучшения, заклинания и оружие. Боевая система поощряет внимательность и эксперименты — сборки через магию, силу, ловкость или гибридные варианты ощущаются по-разному. В мире много подземелий, секретов и сильных врагов, а лор раскрывается через окружение, предметы и встречи. Духи-призывы помогают в сражениях и добавляют тактическую глубину. Также есть сетевые механики: кооперативные призывы и вторжения для тех, кто хочет больше вызова и взаимодействия.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
+    "releaseData": "25.02.2022",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam"],
+    "genres": ["rpg", "action", "hardcore", "fantasy", "openWorld"],
+    "developer": "FromSoftware Inc.",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 7,
+    "name": "Hollow Knight",
+    "price": 360,
+    "keyUrl": "hollow-knight",
+    "description": "Hollow Knight — атмосферная метроидвания с рисованной графикой и глубоким исследованием подземного королевства Халлоунест. Карта постепенно раскрывается: новые способности открывают доступ к ранее недостижимым зонам и секретным проходам. Бои требуют точности, а боссы проверяют реакцию и понимание механик, но награда — ощущение роста мастерства. Система амулетов позволяет собрать удобный билд под себя: больше урона, выживаемости, контроля или мобильности. В игре много скрытых локаций, необязательных испытаний и кусочков лора, которые складываются в цельную, но загадочную историю. Это отличный выбор, если хочется атмосферного приключения с хардкорными элементами и большой продолжительностью.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
+    "releaseData": "24.02.2017",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/367520/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS", "Linux"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam"],
+    "genres": ["metroidvania", "platformer", "indie"],
+    "developer": "Team Cherry",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 8,
+    "name": "Stardew Valley",
+    "price": 349,
+    "keyUrl": "stardew-valley",
+    "description": "Stardew Valley — уютный симулятор фермы с элементами RPG, где вы уезжаете из мегаполиса и начинаете новую жизнь в Пеликан-Тауне. Выращивайте сезонные культуры, разводите животных, готовьте, крафтите предметы и улучшайте дом и хозяйство. Городок живёт по расписанию: знакомьтесь с жителями, дарите подарки, участвуйте в фестивалях и развивайте отношения. Для любителей приключений есть шахты с монстрами и ресурсами, а также рыбалка и сбор предметов по всему миру. Прогресс ощущается постоянно: инструменты улучшаются, открываются новые зоны и возможности заработка. Игра отлично подходит для спокойного прохождения и для кооператива, если хочется развивать ферму вместе.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+    "releaseData": "26.02.2016",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS", "Linux"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "GOG"],
+    "genres": ["simulator", "rpg", "indie"],
+    "developer": "ConcernedApe",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 9,
+    "name": "Baldur's Gate 3",
+    "price": 1999,
+    "keyUrl": "baldur's-gate-3",
+    "description": "Baldur’s Gate 3 — партийная RPG по мотивам Dungeons & Dragons, где история реагирует на решения, реплики и поступки на каждом шагу. Вам предстоит собрать отряд спутников, развивать классы и умения, а также подстраивать тактику под сильные и слабые стороны команды. Бои пошаговые и очень вариативные: позиционирование, высота, поверхность, заклинания и взаимодействие с окружением дают десятки подходов к одной и той же схватке. Вне боя игра поощряет творческие решения — скрытность, убеждение, взлом, магию и неожиданные комбинации предметов. Диалоги и отношения с персонажами занимают важное место, а личные квесты спутников добавляют драматизма и выбора. Можно играть в одиночку, а можно проходить в кооперативе, принимая решения вместе.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
+    "releaseData": "03.08.2023",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1086940/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "GOG", "EA"],
+    "genres": ["rpg", "stepByStep", "fantasy", "adventure"],
+    "developer": "Larian Studios",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 10,
+    "name": "The Elder Scrolls V: Skyrim Special Edition",
+    "price": 1599,
+    "keyUrl": "the-elder-scrolls 5-skyrim-special-edition",
+    "description": "The Elder Scrolls V: Skyrim Special Edition — легендарная RPG в открытом мире, где вы становитесь Драконорождённым и противостоите древней угрозе. Исследуйте Скайрим: заснеженные горы, подземелья, крепости, города и сотни побочных историй по пути. Свобода развития почти без ограничений: используйте мечи, луки, магию, скрытность, алхимию и кузнечное дело, собирая персонажа под свой стиль. Можно вступать в гильдии, покупать дом, крафтить снаряжение и охотиться на легендарных существ. Special Edition включает улучшения графики и контента, а также удобную основу для модификаций, которые могут сильно расширить игру. Отличный вариант для тех, кто любит исследование, атмосферу фэнтези и “свою” историю, рождающуюся из приключений.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
+    "releaseData": "28.10.2016",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "Ubisoft Connect"],
+    "genres": ["rpg", "openWorld", "fantasy"],
+    "developer": "Bethesda Game Studios",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 11,
+    "name": "DOOM Eternal",
+    "price": 1999,
+    "keyUrl": "doom-eternal",
+    "description": "DOOM Eternal — крайне динамичный шутер, где каждая арена превращается в агрессивную головоломку на скорость, позиционирование и управление ресурсами. Комбинируйте оружие и модификации, используйте крюк, рывки и платформинг, чтобы постоянно оставаться в движении. Механики добиваний и специальных атак завязаны на восстановление здоровья и боеприпасов, поэтому бой здесь — это ритм и грамотные решения, а не просто стрельба. Кампания ведёт через разные миры и локации, повышая сложность и требуя всё более точной игры. Есть прокачка снаряжения и испытания, которые мотивируют проходить уровни более эффективно. Отличный выбор для тех, кто любит “тяжёлую” музыку, адреналин и чистую механику боя.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+    "releaseData": "20.03.2020",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg"
+    ],
+    "operationSystem": ["Windows"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "EA"],
+    "genres": ["shooter", "action"],
+    "developer": "id Software",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 12,
+    "name": "Hades",
+    "price": 899,
+    "keyUrl": "hades",
+    "description": "Hades — экшен-рогалик, где вы играете за Загрея, сына Аида, и снова и снова пытаетесь выбраться из Подземного мира. Каждый забег — новая комбинация улучшений: божественные благословения меняют стиль боя и позволяют собирать мощные синергии. Оружие имеет разные аспекты и варианты прокачки, поэтому игра поощряет эксперименты и поиск “своего” темпа. Даже после поражения вы не откатываетесь назад по сюжету: открываются новые диалоги, события и отношения с персонажами. Темп боёв высокий, управление отзывчивое, а визуальный стиль и музыка делают каждую попытку ещё более драйвовой. Это редкий рогалик, где прогрессия и история идут рука об руку и не надоедают десятки часов.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+    "releaseData": "17.09.2020",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "Epic Games"],
+    "genres": ["action", "roguelike", "indie"],
+    "developer": "Supergiant Games",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 13,
+    "name": "Factorio",
+    "price": 1000,
+    "keyUrl": "factorio",
+    "description": "Factorio — игра про строительство и оптимизацию фабрики, где вы начинаете с простых печей и конвейеров и постепенно приходите к огромным автоматизированным комплексам. Продумывайте цепочки производства, настраивайте логистику через ленты, манипуляторы, поезда и сети роботов, чтобы всё работало без остановок. Исследования открывают новые технологии и расширяют возможности, но вместе с масштабом растёт и сложность управления системой. Планируйте энергетику, добычу ресурсов и защиту периметра — местная фауна не любит промышленность и будет атаковать. Игра даёт мощное чувство прогресса, когда хаос превращается в идеально отлаженную линию. Подходит и для одиночной “медитации”, и для мультиплеера, где можно разделить задачи и строить мегабазу вместе.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
+    "releaseData": "14.08.2020",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/427520/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS", "Linux"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam"],
+    "genres": ["strategy", "simulator", "survival"],
+    "developer": "Wube Software LTD",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 14,
+    "name": "Terraria",
+    "price": 249,
+    "keyUrl": "terraria",
+    "description": "Terraria — 2D-песочница, которая сочетает строительство, исследование, выживание и прогрессию через сражения с боссами. Мир генерируется заново каждый раз, поэтому биомы, пещеры и находки могут сильно отличаться между прохождениями. Копайте и добывайте ресурсы, создавайте оружие, броню и инструменты, улучшайте базу и приглашайте NPC, чтобы получить новые услуги. По мере развития вы открываете новые материалы, события и всё более сложных противников, а бои становятся заметно разнообразнее. Игра отлично ощущается в кооперативе: вместе проще строить, делить роли и проходить боссов. Подходит тем, кто любит свободу, крафт и длинную “лестницу” прогресса от новичка до героя.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+    "releaseData": "16.05.2011",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS", "Linux"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "GOG"],
+    "genres": ["sandBox", "adventure", "survival"],
+    "developer": "Re-Logic",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  },
+  {
+    "id": 15,
+    "name": "Sid Meier's Civilization VI",
+    "price": 1999,
+    "keyUrl": "sid-meier's-civilization-6",
+    "description": "Sid Meier’s Civilization VI — пошаговая стратегия, в которой вы ведёте цивилизацию от древности до будущего, выбирая лидера с уникальными бонусами. Развивайте города и районы, добывайте ресурсы, исследуйте технологии и социальные институты, формируя собственный путь развития. В дипломатии важны договоры, союзы и давление, но при желании можно пойти через военную экспансию и доминирование. Вариантов победы несколько: научная, культурная, религиозная, дипломатическая или через силу — и каждая требует своего подхода и приоритетов. Карты генерируются заново, поэтому партии отличаются, а тактика адаптируется под соседей, местность и стартовые условия. Это игра “ещё на один ход”, которая легко затягивает, если вы любите планирование, долгосрочные решения и постепенный рост империи.",
+    "mainPicture": "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",
+    "releaseData": "21.10.2016",
+    "otherPictures": [
+      "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg",
+      "https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg"
+    ],
+    "operationSystem": ["Windows", "macOS", "Linux"],
+    "publisher": "Rockstar North",
+    "activationPlatform": ["Steam", "Epic Games"],
+    "genres": ["strategy", "stepByStep"],
+    "developer": "Firaxis Games",
+    "systemRequirements": {
+      "minimal": {
+        "CPU": "AMD Ryzen 5 3600",
+        "GPU": "Nvidia GTX 1050 Ti",
+        "RAM": 8,
+        "memory": 60
+      },
+      "recommended": {
+        "CPU": "AMD Ryzen 7 5700",
+        "GPU": "Nvidia RTX 2070 Ti",
+        "RAM": 16,
+        "memory": 60
+      }
+    }
+  }
+]
