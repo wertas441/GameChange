@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS key_system_requirements (
     profile TEXT NOT NULL CHECK (profile IN ('minimal', 'recommended')),
     cpu TEXT NOT NULL,
     gpu TEXT NOT NULL,
-    ram TEXT NOT NULL,
-    memory TEXT NOT NULL,
+    ram INT NOT NULL,
+    memory INT NOT NULL,
     PRIMARY KEY (key_id, profile)
 );

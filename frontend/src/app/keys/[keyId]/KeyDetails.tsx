@@ -2,9 +2,10 @@
 
 import {KeyDetailsData} from "@/types/keys";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
-import {activationPlatformIcons, operationSystemIcon} from "@/lib/data";
+import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/lib/data";
 import Image from "next/image";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
+import PCRequirements from "@/components/elements/PCRequirements";
 
 export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
@@ -17,8 +18,6 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
     }
 
     const addToCart = useCartStore(addNewItem)
-    const minimalRequirements = Object.entries(keyData.systemRequirements?.minimal ?? {});
-    const recommendedRequirements = Object.entries(keyData.systemRequirements?.recommended ?? {});
 
     return (
         <div className="mx-auto w-full py-8 md:py-12">
@@ -48,18 +47,20 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                     {keyData.description}
                                 </p>
                                 <div className="flex flex-wrap gap-2">
-                                    {keyData.genres.map(genre => (
-                                        <span
-                                            key={genre}
-                                            className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-sm font-medium text-slate-200"
-                                        >
-                                            {genre}
+                                    {keyData.genres.map(genre => {
+                                        const matchedGenre = genreOptions.find((option) => option.value === genre);
+                                        return (
+                                            <span
+                                                key={genre}
+                                                className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-sm font-medium text-slate-200"
+                                            >
+                                            {matchedGenre?.label}
                                         </span>
-                                    ))}
+                                        )
+                                    })}
                                 </div>
                             </div>
 
-                            {/* ---  ГАЛЕРЕЯ СКРИНШОТОВ --- */}
                             <div>
                                 <h2 className="mb-4 text-2xl font-bold text-slate-50">Галерея</h2>
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -80,46 +81,16 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                 </div>
                             </div>
 
-                            {/* --- СИСТЕМНЫЕ ТРЕБОВАНИЯ --- */}
                             <div>
                                 <h2 className="mb-4 text-2xl font-bold text-slate-50">Системные требования</h2>
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                    <div className="rounded-xl border border-slate-800/80 bg-slate-950/40 p-5">
-                                        <h3 className="mb-4 text-lg font-semibold text-slate-50">Минимальные</h3>
-                                        {minimalRequirements.length > 0 ? (
-                                            <dl className="space-y-3">
-                                                {minimalRequirements.map(([key, value]) => (
-                                                    <div key={key} className="flex justify-between text-sm">
-                                                        <dt className="text-slate-400">{key}</dt>
-                                                        <dd className="text-right font-medium text-slate-100">{value}</dd>
-                                                    </div>
-                                                ))}
-                                            </dl>
-                                        ) : (
-                                            <p className="text-sm text-slate-400">Данные уточняются</p>
-                                        )}
-                                    </div>
-                                    <div className="rounded-xl border border-slate-800/80 bg-slate-950/40 p-5">
-                                        <h3 className="mb-4 text-lg font-semibold text-slate-50">Рекомендуемые</h3>
-                                        {recommendedRequirements.length > 0 ? (
-                                            <dl className="space-y-3">
-                                                {recommendedRequirements.map(([key, value]) => (
-                                                    <div key={key} className="flex justify-between text-sm">
-                                                        <dt className="text-slate-400">{key}</dt>
-                                                        <dd className="text-right font-medium text-slate-100">{value}</dd>
-                                                    </div>
-                                                ))}
-                                            </dl>
-                                        ) : (
-                                            <p className="text-sm text-slate-400">Данные уточняются</p>
-                                        )}
-                                    </div>
+                                    <PCRequirements label={`Минимальные`} requirements={keyData.systemRequirements.minimal}/>
+
+                                    <PCRequirements label={`Рекомендуемые`} requirements={keyData.systemRequirements.recommended}/>
                                 </div>
                             </div>
-
                         </div>
 
-                        {/* --- ПРАВАЯ КОЛОНКА: ПОКУПКА --- */}
                         <div className="lg:col-span-1">
                             <div className="flex flex-col gap-5 rounded-2xl border border-slate-800/80 bg-slate-950/40 p-6">
                                 <div className="text-center">
@@ -129,13 +100,10 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                     </p>
                                 </div>
 
-                                <YellowBtn
-                                    label={'Добавить в корзину'}
-                                    onClick={() => addToCart(addData)}
-                                />
+                                <YellowBtn label={'Добавить в корзину'} onClick={() => addToCart(addData)} />
 
-                                <div className="space-y-3 border-t border-slate-800/70 pt-5">
-                                    <dl>
+                                <div className="border-t border-slate-800/70 pt-5">
+                                    <dl className={`space-y-2`}>
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Разработчик</dt>
                                             <dd className="font-medium text-slate-100">{keyData.developer}</dd>

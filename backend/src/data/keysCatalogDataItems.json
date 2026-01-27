@@ -21,14 +21,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -54,14 +54,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -87,14 +87,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -120,14 +120,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -153,14 +153,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -186,14 +186,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -219,14 +219,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -252,14 +252,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -285,14 +285,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -318,14 +318,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -351,14 +351,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -384,14 +384,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -417,14 +417,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -450,14 +450,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   },
@@ -483,14 +483,14 @@
       "minimal": {
         "CPU": "AMD Ryzen 5 3600",
         "GPU": "Nvidia GTX 1050 Ti",
-        "RAM": "8 GB",
-        "memory": "60 GB"
+        "RAM": 8,
+        "memory": 60
       },
       "recommended": {
         "CPU": "AMD Ryzen 7 5700",
         "GPU": "Nvidia RTX 2070 Ti",
-        "RAM": "16 GB",
-        "memory": "60 GB"
+        "RAM": 16,
+        "memory": 60
       }
     }
   }

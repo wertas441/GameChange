@@ -1,8 +1,8 @@
 interface SystemRequirements {
     CPU: string;
     GPU: string;
-    RAM: string;
-    memory: string;
+    RAM: number;
+    memory: number;
 }
 
 export interface KeyBaseData {
