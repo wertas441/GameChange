@@ -14,8 +14,9 @@ import {Pencil} from 'lucide-react'
 import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
 import {useRouter} from "next/navigation";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
+import {memo} from "react";
 
-export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
+function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
 
     const {
         id,
@@ -35,6 +36,7 @@ export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; is
         name: name,
         price: price,
         mainPicture: mainPicture,
+        count: 0,
     }
 
     const router = useRouter();
@@ -134,3 +136,5 @@ export default function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; is
         </div>
     );
 }
+
+export default memo(KeyCard)

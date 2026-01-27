@@ -54,6 +54,17 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
     const { serverError, setServerError, isSubmitting, isDeleting, setIsDeleting, setIsSubmitting, router } = usePageUtils();
     const {isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef} = useSimpleModalWindow();
 
+    const toPicturesArray = (value: AddKeyData['otherPictures']) => {
+        if (Array.isArray(value)) {
+            return value;
+        }
+
+        return String(value ?? '')
+            .split(/[\n,]+/g)
+            .map((item) => item.trim())
+            .filter((item) => item.length > 0);
+    };
+
     const onSubmit = async (values: AddKeyData) => {
         setServerError(null);
         setIsSubmitting(true);
@@ -66,7 +77,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
-            otherPictures: values.otherPictures,
+            otherPictures: toPicturesArray(values.otherPictures),
             developer: values.developer,
             publisher: values.publisher,
             operationSystem: values.operationSystem,

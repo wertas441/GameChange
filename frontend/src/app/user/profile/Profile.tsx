@@ -1,11 +1,11 @@
 'use client'
 
-import {useMemo} from "react";
 import Link from "next/link";
 import {Calendar, IdCard, Mail, Shield, User , KeyRound} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
+import ServerErrorState from "@/components/errors/ServerErrorState";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();
@@ -22,9 +22,7 @@ export default function Profile() {
     const userData = useUserStore(getUserData);
 
     if (!userData) {
-        return (
-            <h1>error</h1>
-        )
+        return <ServerErrorState />
     }
 
     const {userName, email, createdAt, isAdmin, publicId} = userData;

@@ -8,6 +8,7 @@ import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-reac
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
 import ShopNavBarItem from "@/components/elements/ShopNavBarItem";
 import {checkAuth, useUserStore} from "@/lib/store/userStore";
+import {useCartStore} from "@/lib/store/cartStore";
 import {useRouter} from "next/navigation";
 
 const catalogItems = [
@@ -36,6 +37,7 @@ const catalogItems = [
 export default function MainHeader() {
 
     const isAuth = useUserStore(checkAuth);
+    const cartItemsCount = useCartStore((state) => state.cartItemsCount);
     const [modalShopWindowOpen, setModalShopWindowOpen] = useState(false);
     const [query, setQuery] = useState<string>('');
 
@@ -46,6 +48,8 @@ export default function MainHeader() {
     const toggleShopModalWindow = useCallback(() => {
         setModalShopWindowOpen(prevState => !prevState);
     }, []);
+
+    const cartBadgeValue = cartItemsCount > 99 ? '99+' : String(cartItemsCount);
 
     return (
         <header className={`${secondColorTheme} top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
@@ -59,11 +63,18 @@ export default function MainHeader() {
                         </Link>
 
                         <div className="flex items-center gap-2 lg:hidden">
-                            <IconYellowBtn
-                                IconComponent={ShoppingCart}
-                                onClick={goToCartPage}
-                                className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
-                            />
+                            <div className="relative">
+                                <IconYellowBtn
+                                    IconComponent={ShoppingCart}
+                                    onClick={goToCartPage}
+                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                />
+                                {cartItemsCount > 0 && (
+                                    <span className="absolute -right-1.5 -top-1.5 min-w-[1.35rem] rounded-full bg-amber-400 px-1.5 py-0.5 text-center text-[0.65rem] font-semibold leading-none text-slate-900">
+                                        {cartBadgeValue}
+                                    </span>
+                                )}
+                            </div>
 
                             {!isAuth ? (
                                 <LinkYellowBtn
@@ -131,11 +142,18 @@ export default function MainHeader() {
 
                     <div className="relative shrink-0 hidden lg:flex">
                         <div className="flex items-center gap-3">
-                            <IconYellowBtn
-                                IconComponent={ShoppingCart}
-                                onClick={goToCartPage}
-                                className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
-                            />
+                            <div className="relative">
+                                <IconYellowBtn
+                                    IconComponent={ShoppingCart}
+                                    onClick={goToCartPage}
+                                    className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                />
+                                {cartItemsCount > 0 && (
+                                    <span className="absolute -right-1.5 top-1 min-w-[1.35rem] rounded-full bg-amber-400 px-1 py-1 text-center text-bold text-xs font-semibold leading-none text-slate-900">
+                                        {cartBadgeValue}
+                                    </span>
+                                )}
+                            </div>
 
                             {!isAuth ? (
                                 <LinkYellowBtn

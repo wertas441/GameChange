@@ -72,10 +72,10 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
         return true;
     });
 
-    const handleReset = () => {
+    const handleReset = useCallback(() => {
         reset(defaultFilters);
         setAppliedFilters(defaultFilters);
-    };
+    }, [reset]);
 
     const handleApplyFilters = useCallback((values: KeysFilterFormValues) => setAppliedFilters(values), []);
 
@@ -172,14 +172,9 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
                 {filteredKeys.length === 0 ? (
                     <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-8 text-center">
                         <p className="text-base font-semibold text-slate-100">Ничего не найдено</p>
-                        <p className="mt-2 text-sm text-slate-400">Попробуйте изменить фильтры.</p>
-                        <button
-                            type="button"
-                            onClick={handleReset}
-                            className="mt-4 rounded-2xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950 transition hover:bg-amber-500"
-                        >
-                            Сбросить фильтры
-                        </button>
+                        <p className="mt-2 text-sm text-slate-400">Попробуйте изменить фильтры</p>
+
+                        <YellowBtn label={`Сбросить фильтры`} onClick={handleReset} className={`!max-w-sm mt-5`} />
                     </div>
                 ) : (
                     <div className="space-y-4">

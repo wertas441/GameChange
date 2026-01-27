@@ -1,6 +1,7 @@
 import {Metadata} from "next";
 import KeysCatalog from "@/app/keys/catalog/KeysCatalog";
 import {getKeysList} from "@/lib/controllers/keysController";
+import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export const metadata: Metadata = {
     title: 'Игровые ключи | GameChange',
@@ -12,9 +13,7 @@ export default async function KeysCatalogPage() {
     const keysData = await getKeysList()
 
     if (!keysData) {
-        return (
-            <h1 className={`text-2xl text-white`}>error</h1>
-        )
+        return <ServerErrorState />
     }
 
     return <KeysCatalog keysData={keysData} />

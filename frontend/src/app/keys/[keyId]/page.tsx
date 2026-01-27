@@ -2,6 +2,7 @@ import KeyDetails from "@/app/keys/[keyId]/KeyDetails";
 import {KeyMetadataParams} from "@/types/keys";
 import {generateMetadataKeyName} from "@/lib";
 import {getKeyDetails} from "@/lib/controllers/keysController";
+import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export async function generateMetadata({params}: KeyMetadataParams) {
     const {keyId} = await params;
@@ -19,9 +20,7 @@ export default async function KeyDetailsPage({params}: KeyMetadataParams) {
     const keyDetails = await getKeyDetails(keyId);
 
     if (!keyDetails) {
-        return (
-            <h1>error</h1>
-        )
+        return <ServerErrorState />
     }
 
     return <KeyDetails keyData={keyDetails} />
