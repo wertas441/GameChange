@@ -82,7 +82,7 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
     const addKeyPage = useCallback(() => router.push(`/keys/add`), [router]);
 
     return (
-        <div className="flex flex-col gap-6 lg:flex-row mt-5">
+        <div className="flex flex-col gap-6 lg:flex-row">
             <aside className="w-full lg:w-80 xl:w-96">
                 <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-5 shadow-lg shadow-black/25">
                     <div className="mb-4 flex items-center justify-between">

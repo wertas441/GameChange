@@ -48,4 +48,3 @@ export interface PurchaseCreateItem {
     price: number;
     count: number;
 }
-

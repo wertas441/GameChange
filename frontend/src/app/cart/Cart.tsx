@@ -35,7 +35,7 @@ export default function Cart(){
 
     return (
         <>
-            <div className="mx-auto w-full py-8 md:py-12">
+            <div className="mx-auto w-full">
                 <h1 className="mb-6 text-2xl font-bold text-slate-50 md:mb-8 md:text-3xl">Ваша корзина</h1>
 
                 {cartItems.length !== 0 ? (

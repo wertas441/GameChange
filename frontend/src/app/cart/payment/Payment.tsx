@@ -63,7 +63,7 @@ export default function Payment({token}: {token: string}) {
     }
 
     return (
-        <div className="space-y-6 mt-7">
+        <div className="space-y-6">
             <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
                 <div>
                     <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Оплата заказа</p>

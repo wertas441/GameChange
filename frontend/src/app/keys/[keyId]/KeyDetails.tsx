@@ -21,7 +21,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
     const addToCart = useCartStore(addNewItem)
 
     return (
-        <div className="mx-auto w-full py-8 md:py-12">
+        <div className="mx-auto w-full ">
             <main className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-2xl shadow-black/40">
                 <div className="relative w-full aspect-video md:aspect-[2.6/0.8]">
                     <Image
