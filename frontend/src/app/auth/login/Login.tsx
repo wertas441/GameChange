@@ -10,6 +10,7 @@ import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
 import {makeInitUserData, useUserStore} from "@/lib/store/userStore";
+import {validateUserEmail, validateUserPassword} from "@/lib/validators/userValidators";
 
 interface LoginFormValues {
     email: string;
@@ -85,7 +86,7 @@ export default function Login() {
                             type="email"
                             label="E-mail"
                             error={errors.email?.message}
-                            {...register('email')}
+                            {...register('email', {validate: (value) => validateUserEmail(value) || true })}
                         />
 
                         <MainInput
@@ -93,7 +94,7 @@ export default function Login() {
                             type="password"
                             label="Пароль"
                             error={errors.password?.message}
-                            {...register('password')}
+                            {...register('password', {validate: (value) => validateUserPassword(value) || true })}
                         />
 
                         <div className="flex items-center justify-between gap-4 pt-1">

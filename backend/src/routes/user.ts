@@ -1,6 +1,6 @@
 import {Router} from 'express';
 import bcrypt from 'bcryptjs';
-import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/userValidation";
+import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/user";
 import {ApiResponse} from "../types";
 import {showBackendError} from "../lib/indexUtils";
 import {LoginRequest, PurchaseCreateItem, RegisterRequest} from "../types/user";
