@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
-import {getCartItems, useCartStore} from "@/lib/store/cartStore";
+import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
@@ -14,8 +14,9 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 export default function Cart(){
 
     const cartItems = useCartStore(getCartItems);
-    const clearCart = useCartStore((s) => s.clearCart);
+    const makeClearCart = useCartStore(clearCart);
     const removeItem = useCartStore((s) => s.removeKey);
+
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
@@ -24,7 +25,7 @@ export default function Cart(){
     const { router } = usePageUtils();
 
     const clearCartBtn = () => {
-        clearCart();
+        makeClearCart();
         toggleModalWindow();
     }
 

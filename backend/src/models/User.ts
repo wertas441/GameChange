@@ -1,6 +1,7 @@
 import { pool } from '../config/database';
 import {
-    PurchasesResponse,
+    PurchaseCreateItem,
+    PurchasesItem,
     User,
     UserCreateRequest,
     UserProfileResponse
@@ -109,7 +110,7 @@ export class UserModel {
         } as User;
     }
 
-    static async getPurchases(userId: number): Promise<PurchasesResponse[]> {
+    static async getPurchases(userId: number): Promise<PurchasesItem[]> {
         const query = `
             SELECT
                 p.key_id AS "keyId",
@@ -130,4 +131,35 @@ export class UserModel {
         return result.rows ?? [];
     }
 
+
+    static async addPurchases(userId: number, items: PurchaseCreateItem[]): Promise<void> {
+        const client = await pool.connect();
+
+        try {
+            await client.query('BEGIN');
+
+            const insertQuery = `
+                INSERT INTO purchases (user_id, key_id, price, count, date)
+                VALUES ($1, $2, $3, $4, NOW())
+            `;
+
+            for (const item of items) {
+                if (!item?.keyId || !item.count || item.count <= 0) {
+                    continue;
+                }
+                await client.query(insertQuery, [userId, item.keyId, item.price, item.count]);
+            }
+
+            await client.query('COMMIT');
+        } catch (error) {
+            try {
+                await client.query('ROLLBACK');
+            } catch (_) {
+                // ignore rollback errors
+            }
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
 }

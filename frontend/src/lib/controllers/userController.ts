@@ -1,6 +1,6 @@
 import {api, getTokenHeaders, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import {PurchaseItem} from "@/types/purchases";
+import {PurchaseItem} from "@/types";
 import {CartItem} from "@/lib/store/cartStore";
 
 export async function getPurchases(tokenValue: string) {
@@ -23,17 +23,21 @@ export async function getPurchases(tokenValue: string) {
     }
 }
 
-export async function addPurchases(tokenValue: string, cert: CartItem[]) {
-
-    const payload = {
-        headers: getTokenHeaders(tokenValue),
-        data: { cert },
-    };
+export async function addPurchases(tokenValue: string, cartItems: CartItem[]) {
+    const items = cartItems.map((item) => ({
+        keyId: item.id,
+        price: Number(item.price || 0),
+        count: item.count,
+    }));
 
     try {
-        await api.post<BackendApiResponse>(`/user/purchases`, payload);
+        const response = await api.post<BackendApiResponse>(
+            `/user/purchases`,
+            { items },
+            { headers: getTokenHeaders(tokenValue) }
+        );
 
-        return true;
+        return response.data.success;
     } catch (error) {
         if (showErrorMessage) console.error('add purchases error:', error);
 

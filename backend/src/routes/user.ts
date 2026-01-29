@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/userValidation";
 import {ApiResponse} from "../types";
 import {showBackendError} from "../lib/indexUtils";
-import {LoginRequest, RegisterRequest} from "../types/user";
+import {LoginRequest, PurchaseCreateItem, RegisterRequest} from "../types/user";
 import {UserModel} from "../models/User";
 import { config } from '../config';
 import jwt from 'jsonwebtoken';
@@ -174,18 +174,25 @@ router.get('/purchases', authMiddleware, async (req, res) => {
 router.post('/purchases', authMiddleware, async (req, res) => {
     try {
         const userId:number = (req as any).userId;
-        // const
+        const requestData = Array.isArray(req.body)
+            ? req.body
+            : (req.body as { items?: PurchaseCreateItem[] })?.items;
 
-        const purchasesList = await UserModel.getPurchases(userId);
+        if (!Array.isArray(requestData) || requestData.length === 0) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Список покупок пуст'
+            };
+            return res.status(400).json(response);
+        }
 
-        const response: ApiResponse = {
-            success: true,
-            data: { purchasesList }
-        };
+        await UserModel.addPurchases(userId, requestData);
+
+        const response: ApiResponse = { success: true };
 
         res.status(200).json(response);
     } catch (error) {
-        const response = showBackendError(error, `Ошибка получения информации об истории покупок пользователя`);
+        const response = showBackendError(error, `Ошибка добавления покупок пользователя`);
 
         res.status(500).json(response);
     }

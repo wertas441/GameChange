@@ -15,6 +15,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
         name: keyData.name,
         price: keyData.price,
         mainPicture: keyData.mainPicture,
+        count: 0,
     }
 
     const addToCart = useCartStore(addNewItem)

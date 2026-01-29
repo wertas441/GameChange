@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {getCartItems, useCartStore} from "@/lib/store/cartStore";
+import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
 import {useForm} from "react-hook-form";
 import MainInput from "@/components/inputs/MainInput";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
 import {addPurchases} from "@/lib/controllers/userController";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import ServerFormError from "@/components/errors/ServerFormError";
 
 interface PaymentFormValues {
     email: string;
@@ -18,21 +20,32 @@ interface PaymentFormValues {
 
 export default function Payment({token}: {token: string}) {
 
-    const {register, handleSubmit, formState: { errors, isSubmitting }} = useForm<PaymentFormValues>();
+    const {register, handleSubmit, formState: { errors }} = useForm<PaymentFormValues>();
 
     const cartItems = useCartStore(getCartItems);
+    const makeClearCart = useCartStore(clearCart);
 
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
-    const onSubmit = async (values: PaymentFormValues) => {
-        const response = await addPurchases(token, cartItems);
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
-        if (!response) {
-            return alert(`Failed to add cart ${response}`);
+
+    const onSubmit = async () => {
+
+        if (cartItems.length === 0) {
+            setServerError('На данный момент ваша корзина пуста, выберите товары для продолжения оплаты')
+            return;
         }
 
-        return alert(`Success to add cart ${response}`);
+        const response = await addPurchases(token, cartItems);
+
+        if (response) {
+            makeClearCart();
+            return alert(`Покупка успешно оформлена`);
+        }
+
+        return alert(`Не удалось оформить покупку`);
     };
 
     if (cartItems.length === 0) {
@@ -69,6 +82,8 @@ export default function Payment({token}: {token: string}) {
                             Мы не сохраняем данные карты — платеж проходит через защищённый шлюз.
                         </p>
                     </div>
+
+                    <ServerFormError error={serverError} />
 
                     <form className="mt-6 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput

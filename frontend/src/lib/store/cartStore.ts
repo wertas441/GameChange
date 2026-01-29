@@ -89,4 +89,5 @@ export const useCartStore = create<CartStore>()(
 );
 
 export const addNewItem = (state: CartStore) => state.addKey;
-export const getCartItems = (state: CartStore) => state.cartState
+export const getCartItems = (state: CartStore) => state.cartState;
+export const clearCart = (state: CartStore) => state.clearCart;

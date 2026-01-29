@@ -33,7 +33,7 @@ export interface RegisterRequest {
     password: string;
 }
 
-export interface PurchasesResponse {
+export interface PurchasesItem {
     keyId: number;
     keyUrl: string;
     name: string;
@@ -43,4 +43,9 @@ export interface PurchasesResponse {
     date: string;
 }
 
+export interface PurchaseCreateItem {
+    keyId: number;
+    price: number;
+    count: number;
+}
 
