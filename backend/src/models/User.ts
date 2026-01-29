@@ -1,9 +1,10 @@
 import { pool } from '../config/database';
 import {
+    PurchasesResponse,
     User,
     UserCreateRequest,
     UserProfileResponse
-} from "../types/auth";
+} from "../types/user";
 
 export class UserModel {
 
@@ -106,6 +107,27 @@ export class UserModel {
             createdAt: row.created_at,
             updatedAt: row.updated_at,
         } as User;
+    }
+
+    static async getPurchases(userId: number): Promise<PurchasesResponse[]> {
+        const query = `
+            SELECT
+                p.key_id AS "keyId",
+                k.key_url AS "keyUrl",
+                k.name AS name,
+                k.main_picture_url AS "mainImage",
+                p.price AS price,
+                p.count AS count,
+                to_char(COALESCE(p.date, p.created_at), 'DD.MM.YYYY') AS date
+            FROM purchases p
+            JOIN keys k ON k.id = p.key_id
+            WHERE p.user_id = $1
+            ORDER BY COALESCE(p.date, p.created_at) DESC, p.id DESC
+        `;
+
+        const result = await pool.query(query, [userId]);
+
+        return result.rows ?? [];
     }
 
 }

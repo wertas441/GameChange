@@ -19,13 +19,7 @@ interface LoginFormValues {
 
 export default function Login() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-        defaultValues: {
-            email: '',
-            password: '',
-            rememberMe: false,
-        },
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
 
     const initUserData = useUserStore(makeInitUserData)
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
@@ -41,8 +35,7 @@ export default function Login() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/auth/login`, payload);
-
+            await api.post<BackendApiResponse>(`/user/login`, payload);
 
             setTimeout(async () => {
                 await initUserData();

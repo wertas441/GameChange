@@ -6,7 +6,7 @@ import InputError from "@/components/errors/InputError";
 
 export type OptionType = { value: string; label: string };
 
-interface MainMultiSelectProps {
+interface IProps {
     id: string;
     label?: string;
     value: OptionType[];
@@ -29,7 +29,7 @@ function MultiSelectInput(
         error,
         noOptionsMessage = () => 'Нет опций',
         isMulti = true,
-    }: MainMultiSelectProps) {
+    }: IProps) {
 
     return (
         <div className="space-y-1.5">

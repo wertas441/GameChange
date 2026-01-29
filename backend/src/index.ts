@@ -9,7 +9,7 @@ import { config } from './config';
 import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
 import keysRoutes from './routes/keys';
-import authRoutes from './routes/auth';
+import userRoutes from './routes/user';
 
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded �
 app.use(cookieParser()); // Куки
 
 
-app.use('/api/auth', authRoutes)
+app.use('/api/user', userRoutes)
 app.use('/api/keys', keysRoutes);
 
 app.use((req, res) => {

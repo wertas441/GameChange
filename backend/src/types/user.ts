@@ -33,4 +33,14 @@ export interface RegisterRequest {
     password: string;
 }
 
+export interface PurchasesResponse {
+    keyId: number;
+    keyUrl: string;
+    name: string;
+    mainImage: string;
+    price: number;
+    count: number;
+    date: string;
+}
+
 

@@ -19,14 +19,7 @@ interface RegistrationFormValues {
 
 export default function Registration(){
 
-    const {register, handleSubmit, formState: { errors }} = useForm<RegistrationFormValues>({
-        defaultValues: {
-            userName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        }
-    });
+    const {register, handleSubmit, formState: { errors }} = useForm<RegistrationFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
@@ -41,7 +34,7 @@ export default function Registration(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/auth/registration`, payload);
+            await api.post<BackendApiResponse>(`/user/registration`, payload);
 
             router.push('/auth/login');
         } catch (err) {
