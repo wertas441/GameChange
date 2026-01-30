@@ -1,7 +1,7 @@
-import React from 'react';
 import InputError from "@/components/errors/InputError";
+import { InputHTMLAttributes } from "react";
 
-interface MainInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface MainInputProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string;
     label: string;
     error?: string;
