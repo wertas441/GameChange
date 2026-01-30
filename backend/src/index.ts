@@ -5,18 +5,19 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import apiRoutes from './routes/index.js';
+import { config } from './config';
+import {testConnection} from "./config/database.js";
+import {initDatabase} from "./database/init.js";
+import keysRoutes from './routes/keys';
+import userRoutes from './routes/user';
 
-import { config } from './config/index.js';
-import { testConnection, closePool } from './config/database.js';
-import { initDatabase } from './database/init.js';
+const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
 // Загружаем переменные окружения
 dotenv.config();
 
 const app = express();
 const PORT = config.port;
-const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
 // HTTP-сервер, чтобы можно было корректно его останавливать
 let server: http.Server | null = null;
@@ -29,14 +30,16 @@ app.use(cors({
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization']
-})); // CORS для фронтенда с поддержкой credentials
+}));
 
 app.use(morgan('combined')); // Логирование
 app.use(express.json()); // Парсинг JSON
 app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded данных
 app.use(cookieParser()); // Куки
 
-app.use('/api', apiRoutes);
+
+app.use('/api/user', userRoutes)
+app.use('/api/keys', keysRoutes);
 
 app.use((req, res) => {
     res.status(404).json({
@@ -64,14 +67,12 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Инициализация и запуск сервера
 const startServer = async () => {
     try {
-        // Тестируем подключение к базе данных
         const dbConnected = await testConnection();
         if (!dbConnected) {
             console.error('Не удалось подключиться к базе данных');
             process.exit(1);
         }
 
-        // Инициализация схемы и сидирование включаются флагами окружения
         if (shouldInit) {
             await initDatabase();
         }
@@ -81,8 +82,6 @@ const startServer = async () => {
 
         server.listen(PORT, () => {
             console.log(`Сервер запущен на порту ${PORT}`);
-            console.log(`API доступно по адресу: http://localhost:${PORT}`);
-            console.log(`Проверка здоровья: http://localhost:${PORT}/api/health`);
         });
     } catch (error) {
         console.error('Ошибка при запуске сервера:', error);
@@ -113,8 +112,6 @@ const gracefulShutdown = async (signal: string) => {
             });
         }
 
-        await closePool();
-        console.log('Пул соединений с БД корректно закрыт');
     } catch (error) {
         console.error('Ошибка при корректном завершении работы:', error);
     } finally {

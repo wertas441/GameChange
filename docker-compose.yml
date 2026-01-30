@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: game_change_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      # Внутри контейнера Postgres слушает 5432, наружу пробрасываем на 5436
+      # (под этот порт нужно выставить DB_PORT в .env backend)
+      - "5437:5432"
+    volumes:
+      - game_change_db_data:/var/lib/postgresql/data
+
+volumes:
+  game_change_db_data:
+    driver: local
+
+

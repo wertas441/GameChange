@@ -1,37 +1,35 @@
-import prisma from '../lib/prisma.js';
+import fs from 'fs';
+import path from 'path';
+import pool from "../config/database.js";
+import {seedAdmin} from "./seedAdmin";
+import {seedKeysData} from "./seedKeysData";
 
-/**
- * Базовая инициализация / сидирование базы данных.
- * Здесь вы можете создавать дефолтных пользователей, роли и т.п.
- * Сейчас функция ничего не «ломает» и просто убеждается, что Prisma работает.
- */
 export const initDatabase = async (): Promise<void> => {
-    console.log('Инициализация базы данных через Prisma...');
-
     try {
-        // Простой запрос для проверки работоспособности
-        await prisma.$queryRaw`SELECT 1`;
+        console.log('Инициализация базы данных...');
 
-        // Пример сидирования (закомментировано, чтобы не мешать):
-        // const adminEmail = 'admin@example.com';
-        // const existingAdmin = await prisma.user.findUnique({ where: { email: adminEmail } });
-        // if (!existingAdmin) {
-        //     await prisma.user.create({
-        //         data: {
-        //             email: adminEmail,
-        //             password: 'changeme', // замените на хешированный пароль
-        //         },
-        //     });
-        //     console.log('Создан дефолтный администратор.');
-        // }
+        const schemaCandidates = [
+            path.join(__dirname, 'schema.sql'),
+            path.join(process.cwd(), 'src', 'database', 'schema.sql'),
+            path.join(process.cwd(), 'backend', 'src', 'database', 'schema.sql'),
+        ];
 
-        console.log('Инициализация базы данных завершена.');
+        const schemaPath = schemaCandidates.find((p) => fs.existsSync(p));
+        if (!schemaPath) {
+            throw new Error(`Не найден schema.sql. Проверенные пути: ${schemaCandidates.join(', ')}`);
+        }
+
+        const schema = fs.readFileSync(schemaPath, 'utf8');
+
+        // Выполняем SQL скрипт
+        await pool.query(schema);
+
+        await seedAdmin();
+        await seedKeysData();
+
+        console.log('База данных успешно инициализирована и заполнена данными');
     } catch (error) {
         console.error('Ошибка при инициализации базы данных:', error);
         throw error;
     }
 };
-
-export default initDatabase;
-
-
