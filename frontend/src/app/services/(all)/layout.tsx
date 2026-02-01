@@ -5,7 +5,7 @@ export default function ServicesLayout({children}: {children: ReactNode}) {
 
     return (
         <section className="w-full">
-            <div className="mx-auto w-full px-4 pb-16 sm:px-6 lg:px-8">
+            <div className="mx-auto w-full pb-16 sm:px-6 lg:px-8">
                 <div className="flex flex-col gap-6 lg:flex-row">
                     <ServicesSideBar />
 
