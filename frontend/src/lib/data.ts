@@ -111,5 +111,14 @@ export const services = [
     },
 ] as const;
 
+export const reviewCategorys = [
+    { value: 'key', label: 'Покупка ключа' },
+    { value: 'chatGPT', label: 'Подписка ChatGPT' },
+    { value: 'ps-plus', label: 'Подписка PSPlus' },
+    { value: 'ps-store', label: 'Пополнение PSStore' },
+    { value: 'spotify', label: 'Подписка Spotify' },
+    { value: 'steam', label: 'Пополнение Steam' },
+    { value: 'xbox', label: 'Подписка Xbox Game Pass' },
+];
 
 

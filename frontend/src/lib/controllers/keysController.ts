@@ -1,6 +1,6 @@
 import {api, getTokenHeaders, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import {KeyDetailsData, KeyListData} from "@/types/keys";
+import {KeyDetailsData, KeyListData} from "@/types/key";
 
 export async function getKeysList() {
     try {

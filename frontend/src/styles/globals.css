@@ -4,3 +4,8 @@
 html, body {
     background-color: #020617;
 }
+
+.textDescriptionArea{
+    min-height: 160px;
+    max-height: 280px;
+}

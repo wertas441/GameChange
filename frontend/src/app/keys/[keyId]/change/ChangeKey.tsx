@@ -1,6 +1,6 @@
 'use client'
 
-import {AddKeyData, KeyDetailsData} from "@/types/keys";
+import {AddKeyData, KeyDetailsData} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {api, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";

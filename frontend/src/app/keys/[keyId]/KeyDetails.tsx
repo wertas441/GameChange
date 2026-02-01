@@ -1,6 +1,6 @@
 'use client'
 
-import {KeyDetailsData} from "@/types/keys";
+import {KeyDetailsData} from "@/types/key";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/lib/data";
 import Image from "next/image";
