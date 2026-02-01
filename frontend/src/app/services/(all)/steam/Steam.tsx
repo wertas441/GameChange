@@ -66,8 +66,7 @@ export default function Steam() {
 
     return (
         <section className="w-full">
-            <div className="mx-auto w-full px-4 pb-16 sm:px-6 lg:px-8">
-                <div className="flex flex-col gap-4 text-center sm:text-left">
+            <div className="flex flex-col gap-4 text-center sm:text-left">
                     <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
                         <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/50">
                             <Image
@@ -90,7 +89,7 @@ export default function Steam() {
                     </p>
                 </div>
 
-                <div className="mt-10 grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+                <div className="mt-10 grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
                     <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
                         <div className="flex flex-col gap-2">
                             <h2 className="text-lg font-semibold text-slate-50">Форма пополнения</h2>
@@ -190,7 +189,6 @@ export default function Steam() {
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     )
 }
