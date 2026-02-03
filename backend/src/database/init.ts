@@ -3,6 +3,7 @@ import path from 'path';
 import pool from "../config/database.js";
 import {seedAdmin} from "./seedAdmin";
 import {seedKeysData} from "./seedKeysData";
+import {seedReviews} from "./seedReviews";
 
 export const initDatabase = async (): Promise<void> => {
     try {
@@ -26,6 +27,7 @@ export const initDatabase = async (): Promise<void> => {
 
         await seedAdmin();
         await seedKeysData();
+        await seedReviews();
 
         console.log('База данных успешно инициализирована и заполнена данными');
     } catch (error) {

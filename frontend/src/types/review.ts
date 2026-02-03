@@ -7,7 +7,7 @@ export interface ReviewBaseStructure {
 }
 
 export interface ReviewListStructure extends ReviewBaseStructure {
-    id: string;
+    id: number;
     userName: string;
     date: string;
 }

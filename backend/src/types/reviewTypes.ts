@@ -1,6 +1,5 @@
 
 
-
 export interface ReviewBaseStructure {
     tag: string;
     rating: number;
@@ -9,7 +8,7 @@ export interface ReviewBaseStructure {
 
 export interface ReviewListStructure extends ReviewBaseStructure {
     userName: string;
-    id: string;
+    id: number;
     date: string;
 }
 

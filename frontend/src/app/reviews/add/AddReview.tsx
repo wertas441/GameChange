@@ -6,7 +6,6 @@ import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
-import MainInput from "@/components/inputs/MainInput";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {reviewCategorys} from "@/lib/data";
@@ -36,7 +35,7 @@ export default function AddReview() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/review/`, payload);
+            await api.post<BackendApiResponse>(`/review/review`, payload);
 
             router.push('/reviews');
         } catch (err) {

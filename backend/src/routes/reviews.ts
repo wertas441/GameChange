@@ -8,7 +8,7 @@ import {validateReviewData} from "../lib/validators/review";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/reviews', async (req, res) => {
     try {
         const reviews = await ReviewModel.getList();
 

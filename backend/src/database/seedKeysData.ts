@@ -2,15 +2,7 @@ import pool from "../config/database";
 import fs from "fs";
 import path from "path";
 import {KeyDetailsData} from "../types/keysTypes";
-
-function parseDateDDMMYYYY(value: string): string {
-    // Postgres DATE принимает YYYY-MM-DD
-    const parts = value.split(".");
-    if (parts.length !== 3) throw new Error(`Некорректная дата: "${value}"`);
-    const [dd, mm, yyyy] = parts;
-    if (!dd || !mm || !yyyy) throw new Error(`Некорректная дата: "${value}"`);
-    return `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
-}
+import {parseDateDDMMYYYY} from "../lib/indexUtils";
 
 function findKeysDataPath(): string {
     const candidates = [

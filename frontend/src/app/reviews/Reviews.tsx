@@ -1,6 +1,7 @@
 'use client'
 
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import {ReviewListStructure} from "@/types/review";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -8,45 +9,44 @@ const stats = [
     { label: "Повторные покупки", value: "72%" },
 ];
 
-
-const reviews = [
+const reviews: ReviewListStructure[] = [
     {
-        id: "review-1",
-        name: "Алексей М.",
+        id: 1,
+        userName: "Алексей М.",
         tag: "Пополнение Steam",
         rating: 5,
-        text: "Пополнение пришло за минуту, комиссия понятная, интерфейс удобный. Буду пользоваться ещё.",
+        description: "Пополнение пришло за минуту, комиссия понятная, интерфейс удобный. Буду пользоваться ещё.",
         date: "17.01.2025",
     },
     {
-        id: "review-2",
-        name: "Екатерина С.",
+        id: 2,
+        userName: "Екатерина С.",
         tag: "Подписка Spotify Premium",
         rating: 5,
-        text: "Подписка активировалась сразу, поддержка ответила быстро. Отличный сервис!",
+        description: "Подписка активировалась сразу, поддержка ответила быстро. Отличный сервис!",
         date: "12.12.2025",
     },
     {
-        id: "review-3",
-        name: "Руслан К.",
+        id: 3,
+        userName: "Руслан К.",
         tag: "Пополнение PS Store",
         rating: 4,
-        text: "Всё прошло хорошо, хотелось бы больше вариантов суммы. В целом очень доволен.",
+        description: "Всё прошло хорошо, хотелось бы больше вариантов суммы. В целом очень доволен.",
         date: "01.11.2025",
     },
     {
-        id: "review-4",
-        name: "Ирина В.",
+        id: 4,
+        userName: "Ирина В.",
         tag: "Подписка Xbox Game Pass",
         rating: 5,
-        text: "Оформление подписки без лишних шагов. Цена устроила, всё честно.",
+        description: "Оформление подписки без лишних шагов. Цена устроила, всё честно.",
         date: "08.01.2026",
     },
-] as const;
+];
 
 const ratings = [5, 4, 3, 2, 1] as const;
 
-export default function Reviews() {
+export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
 
     return (
         <section className="w-full">
@@ -79,15 +79,13 @@ export default function Reviews() {
 
                         <div className="mt-5 grid gap-4">
                             {reviews.map((review) => (
-                                <article
-                                    key={review.id}
-                                    className="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-5"
-                                >
+                                <article key={review.id} className="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-5">
                                     <div className="flex flex-wrap items-center justify-between gap-2">
                                         <div>
                                             <p className="text-sm font-semibold text-slate-100">
-                                                {review.name}
+                                                {review.userName}
                                             </p>
+
                                             <p className="text-xs text-slate-400">{review.date}</p>
                                         </div>
                                         <span className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-xs text-slate-300">
@@ -106,7 +104,7 @@ export default function Reviews() {
                                         </span>
                                     </div>
 
-                                    <p className="mt-3 text-sm text-slate-300">{review.text}</p>
+                                    <p className="mt-3 text-sm text-slate-300">{review.description}</p>
                                 </article>
                             ))}
                         </div>

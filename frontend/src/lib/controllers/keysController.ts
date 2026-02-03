@@ -4,9 +4,9 @@ import {KeyDetailsData, KeyListData} from "@/types/key";
 
 export async function getKeysList() {
     try {
-        const response = await api.get<BackendApiResponse<{ keys: KeyListData[] }>>(`/keys`);
+        const { data } = await api.get<BackendApiResponse<{ keys?: KeyListData[] }>>(`/keys`);
 
-       return  response.data.data?.keys ?? undefined;
+       return data.data?.keys ?? undefined;
     } catch (error){
         if (showErrorMessage) console.error('Get keysList error:', error);
 
