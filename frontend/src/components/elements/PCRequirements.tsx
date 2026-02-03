@@ -1,4 +1,4 @@
-import {SystemRequirements} from "@/types/keys";
+import {SystemRequirements} from "@/types/key";
 
 interface IProps {
     requirements: SystemRequirements;
@@ -15,14 +15,17 @@ export default function PCRequirements({requirements, label}: IProps) {
                     <dt className="text-slate-400">CPU</dt>
                     <dd className="text-right font-medium text-slate-100">{requirements.CPU}</dd>
                 </div>
+
                 <div className="flex justify-between text-sm">
                     <dt className="text-slate-400">GPU</dt>
                     <dd className="text-right font-medium text-slate-100">{requirements.GPU}</dd>
                 </div>
+
                 <div className="flex justify-between text-sm">
                     <dt className="text-slate-400">RAM</dt>
                     <dd className="text-right font-medium text-slate-100">{requirements.RAM} GB</dd>
                 </div>
+
                 <div className="flex justify-between text-sm">
                     <dt className="text-slate-400">Свободное место на диске</dt>
                     <dd className="text-right font-medium text-slate-100">{requirements.memory} GB</dd>

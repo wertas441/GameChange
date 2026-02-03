@@ -2,7 +2,7 @@
 
 import KeyCard from "@/components/UI/cards/KeyCard";
 import {useForm, Controller} from "react-hook-form";
-import {KeyListData} from "@/types/keys";
+import {KeyListData} from "@/types/key";
 import MainInput from "@/components/inputs/MainInput";
 import MultiSelectInput, {OptionType} from "@/components/inputs/MultiSelectInput";
 import {

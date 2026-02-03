@@ -8,7 +8,7 @@ import {
     ActivationPlatform,
     OperationSystem, genreOptions
 } from "@/lib/data";
-import {KeyListData} from "@/types/keys";
+import {KeyListData} from "@/types/key";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 import {Pencil} from 'lucide-react'
 import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";

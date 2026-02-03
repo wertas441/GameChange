@@ -1,5 +1,5 @@
 import ChangeKey from "@/app/keys/[keyId]/change/ChangeKey";
-import {KeyMetadataParams} from "@/types/keys";
+import {KeyMetadataParams} from "@/types/key";
 import {generateMetadataKeyName} from "@/lib";
 import {getKeyDetails} from "@/lib/controllers/keysController";
 import {cookies} from "next/headers";

@@ -1,7 +1,7 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData} from "@/types/keys";
+import {AddKeyData} from "@/types/key";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";

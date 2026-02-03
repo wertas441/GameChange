@@ -54,5 +54,71 @@ export const operationSystemIcon = {
 export type ActivationPlatform = keyof typeof activationPlatformIcons;
 export type OperationSystem = keyof typeof operationSystemIcon;
 
+export const services = [
+    {
+        id: "steam",
+        title: "Steam",
+        description: "Пополнение кошелька Steam и покупка игр напрямую.",
+        href: "/services/steam",
+        logo: "/steam-logo.jpg",
+        tag: "Кошелёк",
+        accent: "from-emerald-400/10 via-slate-900/30 to-transparent",
+    },
+    {
+        id: "ps-store",
+        title: "PlayStation Store",
+        description: "Быстрое пополнение кошелька PS Store для игр и подписок.",
+        href: "/services/ps-store",
+        logo: "/ps-store-logo.jpg",
+        tag: "Консоль",
+        accent: "from-sky-400/10 via-slate-900/30 to-transparent",
+    },
+    {
+        id: "ps-plus",
+        title: "PlayStation Plus",
+        description: "Активация и продление подписки PS Plus без ожиданий.",
+        href: "/services/ps-plus",
+        logo: "/ps-plus-logo.png",
+        tag: "Консоль",
+        accent: "from-indigo-400/10 via-slate-900/30 to-transparent",
+    },
+    {
+        id: "xbox",
+        title: "Xbox",
+        description: "Пополнение баланса Xbox и доступ к цифровому магазину.",
+        href: "/services/xbox",
+        logo: "/xbox-logo.jpg",
+        tag: "Консоль",
+        accent: "from-green-400/10 via-slate-900/30 to-transparent",
+    },
+    {
+        id: "spotify",
+        title: "Spotify",
+        description: "Продление подписки Spotify Premium с любым сроком.",
+        href: "/services/spotify",
+        logo: "/spotify-logo.png",
+        tag: "Подписка",
+        accent: "from-green-500/10 via-slate-900/30 to-transparent",
+    },
+    {
+        id: "chat-gpt",
+        title: "ChatGPT",
+        description: "Оплата подписки и доступ к расширенным возможностям.",
+        href: "/services/chat-gpt",
+        logo: "/chat-gpt-logo.png",
+        tag: "Нейросеть",
+        accent: "from-amber-400/10 via-slate-900/30 to-transparent",
+    },
+] as const;
+
+export const reviewCategorys = [
+    { value: 'key', label: 'Покупка ключа' },
+    { value: 'chatGPT', label: 'Подписка ChatGPT' },
+    { value: 'ps-plus', label: 'Подписка PSPlus' },
+    { value: 'ps-store', label: 'Пополнение PSStore' },
+    { value: 'spotify', label: 'Подписка Spotify' },
+    { value: 'steam', label: 'Пополнение Steam' },
+    { value: 'xbox', label: 'Подписка Xbox Game Pass' },
+];
 
 

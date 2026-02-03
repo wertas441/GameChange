@@ -18,19 +18,15 @@ const catalogItems = [
     },
     {
         text: 'Пополнение сервисов',
-        href: '/',
-    },
-    {
-        text: 'Гарантии',
-        href: '/',
+        href: '/services',
     },
     {
         text: 'Отзывы',
-        href: '/',
+        href: '/reviews',
     },
     {
         text: 'О нас',
-        href: '/',
+        href: '/about',
     },
 ] as const;
 
@@ -85,6 +81,7 @@ export default function MainHeader() {
                                     onClick={goToCartPage}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
+
                                 {cartItemsCount > 0 && (
                                     <span className="absolute -right-1.5 -top-1.5 min-w-[1.35rem] rounded-full bg-amber-400 px-1.5 py-0.5 text-center text-[0.65rem] font-semibold leading-none text-slate-900">
                                         {cartBadgeValue}
