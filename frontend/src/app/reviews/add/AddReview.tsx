@@ -13,7 +13,7 @@ import MainTextarea from "@/components/inputs/MainTextArea";
 import InputError from "@/components/errors/InputError";
 
 interface AddReviewFormValues {
-    category: string;
+    category: string[];
     rating: number;
     description: string;
 }
@@ -29,7 +29,7 @@ export default function AddReview() {
         setIsSubmitting(true);
 
         const payload = {
-            category: values.category,
+            tag: values.category[0],
             rating: values.rating,
             description: values.description,
         };

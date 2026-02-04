@@ -8,7 +8,7 @@ import {adminMiddleware} from "../middleware/adminMiddleware";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/keys', async (req, res) => {
    try {
        const keys = await KeyModel.getList();
 

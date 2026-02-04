@@ -10,12 +10,9 @@ export async function getPurchases(tokenValue: string) {
     };
 
     try {
-        const response = await api.get<BackendApiResponse<{ purchasesList: PurchaseItem[] }>>(
-            `/user/purchases`,
-            payload
-        );
+        const { data } = await api.get<BackendApiResponse<{ purchasesList: PurchaseItem[] }>>(`/user/purchases`, payload);
 
-        return response.data.data?.purchasesList ?? [];
+        return data.data?.purchasesList ?? [];
     } catch (error) {
         if (showErrorMessage) console.error('get purchasesList error:', error);
 
@@ -31,13 +28,9 @@ export async function addPurchases(tokenValue: string, cartItems: CartItem[]) {
     }));
 
     try {
-        const response = await api.post<BackendApiResponse>(
-            `/user/purchases`,
-            { items },
-            { headers: getTokenHeaders(tokenValue) }
-        );
+        const { data } = await api.post<BackendApiResponse>(`/user/purchases`, { items }, { headers: getTokenHeaders(tokenValue) });
 
-        return response.data.success;
+        return data.success;
     } catch (error) {
         if (showErrorMessage) console.error('add purchases error:', error);
 

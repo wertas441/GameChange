@@ -2,6 +2,7 @@
 
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
 import {ReviewListStructure} from "@/types/review";
+import {reviewCategorys} from "@/lib/data";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -9,44 +10,10 @@ const stats = [
     { label: "Повторные покупки", value: "72%" },
 ];
 
-const reviews: ReviewListStructure[] = [
-    {
-        id: 1,
-        userName: "Алексей М.",
-        tag: "Пополнение Steam",
-        rating: 5,
-        description: "Пополнение пришло за минуту, комиссия понятная, интерфейс удобный. Буду пользоваться ещё.",
-        date: "17.01.2025",
-    },
-    {
-        id: 2,
-        userName: "Екатерина С.",
-        tag: "Подписка Spotify Premium",
-        rating: 5,
-        description: "Подписка активировалась сразу, поддержка ответила быстро. Отличный сервис!",
-        date: "12.12.2025",
-    },
-    {
-        id: 3,
-        userName: "Руслан К.",
-        tag: "Пополнение PS Store",
-        rating: 4,
-        description: "Всё прошло хорошо, хотелось бы больше вариантов суммы. В целом очень доволен.",
-        date: "01.11.2025",
-    },
-    {
-        id: 4,
-        userName: "Ирина В.",
-        tag: "Подписка Xbox Game Pass",
-        rating: 5,
-        description: "Оформление подписки без лишних шагов. Цена устроила, всё честно.",
-        date: "08.01.2026",
-    },
-];
-
 const ratings = [5, 4, 3, 2, 1] as const;
 
 export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
+    const getCategoryLabel = (tag: string) => reviewCategorys.find((item) => item.value === tag)?.label;
 
     return (
         <section className="w-full">
@@ -89,7 +56,7 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                                             <p className="text-xs text-slate-400">{review.date}</p>
                                         </div>
                                         <span className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-xs text-slate-300">
-                                            {review.tag}
+                                            {getCategoryLabel(review.tag)}
                                         </span>
                                     </div>
 
@@ -135,11 +102,7 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                             </div>
                         </div>
 
-                        <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
-
-                            <LinkYellowBtn label={`Оставить отзыв`} href={`/reviews/add`} />
-
-                        </div>
+                        <LinkYellowBtn label={`Оставить отзыв`} href={`/reviews/add`} />
                     </div>
                 </div>
             </div>

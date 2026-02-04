@@ -64,7 +64,7 @@ export default function AddNewKey(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/keys/key`, payload);
+            await api.post<BackendApiResponse>(`/key/key`, payload);
 
             router.push('/keys/catalog');
         } catch (err) {

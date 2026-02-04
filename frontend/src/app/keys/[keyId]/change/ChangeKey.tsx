@@ -100,8 +100,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
         };
 
         try {
-            console.log(payload);
-            await api.put<BackendApiResponse>(`/keys/key`, payload);
+            await api.put<BackendApiResponse>(`/key/key`, payload);
 
             router.push('/keys/catalog');
         } catch (err) {

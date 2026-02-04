@@ -5,7 +5,7 @@ import {ReviewListStructure} from "@/types/review";
 export async function getReviewsList() {
 
     try {
-        const { data } = await api.get<BackendApiResponse<{ reviews: ReviewListStructure[] }>>(`/user/purchases`);
+        const { data } = await api.get<BackendApiResponse<{ reviews: ReviewListStructure[] }>>(`/review/reviews`);
 
         return data.data?.reviews ?? [];
     } catch (error) {

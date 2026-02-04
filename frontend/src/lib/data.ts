@@ -114,8 +114,8 @@ export const services = [
 export const reviewCategorys = [
     { value: 'key', label: 'Покупка ключа' },
     { value: 'chatGPT', label: 'Подписка ChatGPT' },
-    { value: 'ps-plus', label: 'Подписка PSPlus' },
-    { value: 'ps-store', label: 'Пополнение PSStore' },
+    { value: 'ps-plus', label: 'Подписка PS Plus' },
+    { value: 'ps-store', label: 'Пополнение PS Store' },
     { value: 'spotify', label: 'Подписка Spotify' },
     { value: 'steam', label: 'Пополнение Steam' },
     { value: 'xbox', label: 'Подписка Xbox Game Pass' },

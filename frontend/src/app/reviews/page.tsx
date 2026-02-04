@@ -1,6 +1,5 @@
 import Reviews from "@/app/reviews/Reviews";
 import {Metadata} from "next";
-import {reviewCategorys} from "@/lib/data";
 import {getReviewsList} from "@/lib/controllers/reviewController";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 
