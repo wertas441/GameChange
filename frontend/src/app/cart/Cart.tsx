@@ -4,34 +4,38 @@ import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
-import {useCartStore} from "@/lib/store/cartStore";
+import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 export default function Cart(){
 
-    const cartItems = useCartStore((s) => s.cartState);
-    const clearCart = useCartStore((s) => s.clearCart);
+    const cartItems = useCartStore(getCartItems);
+    const makeClearCart = useCartStore(clearCart);
     const removeItem = useCartStore((s) => s.removeKey);
+
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
     const {isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef} = useSimpleModalWindow();
 
+    const { router } = usePageUtils();
+
     const clearCartBtn = () => {
-        clearCart();
+        makeClearCart();
         toggleModalWindow();
     }
 
     const goToBuyPage = () => {
-
+        router.push(`/cart/payment`)
     }
 
     return (
         <>
-            <div className="mx-auto w-full py-8 md:py-12">
+            <div className="mx-auto w-full">
                 <h1 className="mb-6 text-2xl font-bold text-slate-50 md:mb-8 md:text-3xl">Ваша корзина</h1>
 
                 {cartItems.length !== 0 ? (

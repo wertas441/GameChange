@@ -40,3 +40,13 @@ export interface MainInputProps extends InputHTMLAttributes<HTMLInputElement> {
     error?: string;
     className?: string;
 }
+
+export interface PurchaseItem {
+    keyId: number;
+    keyUrl: string;
+    name: string;
+    mainImage: string;
+    price: number;
+    count: number;
+    date: string;
+}

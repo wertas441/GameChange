@@ -3,7 +3,7 @@
 import Link from "next/link";
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
 import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
 import ShopNavBarItem from "@/components/elements/ShopNavBarItem";
@@ -18,19 +18,15 @@ const catalogItems = [
     },
     {
         text: 'Пополнение сервисов',
-        href: '/',
-    },
-    {
-        text: 'Гарантии',
-        href: '/',
+        href: '/services',
     },
     {
         text: 'Отзывы',
-        href: '/',
+        href: '/reviews',
     },
     {
         text: 'О нас',
-        href: '/',
+        href: '/about',
     },
 ] as const;
 
@@ -51,8 +47,24 @@ export default function MainHeader() {
 
     const cartBadgeValue = cartItemsCount > 99 ? '99+' : String(cartItemsCount);
 
+    useEffect(() => {
+        const handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setModalShopWindowOpen(false);
+            }
+        };
+
+        if (modalShopWindowOpen) {
+            document.addEventListener('keydown', handleEscape);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleEscape);
+        };
+    }, [modalShopWindowOpen]);
+
     return (
-        <header className={`${secondColorTheme} top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
+        <header className={`${secondColorTheme} relative mb-23 top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
             <div className="mx-auto w-full px-4 py-3 sm:px-6 md:px-12">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between gap-3">
@@ -69,6 +81,7 @@ export default function MainHeader() {
                                     onClick={goToCartPage}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
+
                                 {cartItemsCount > 0 && (
                                     <span className="absolute -right-1.5 -top-1.5 min-w-[1.35rem] rounded-full bg-amber-400 px-1.5 py-0.5 text-center text-[0.65rem] font-semibold leading-none text-slate-900">
                                         {cartBadgeValue}
@@ -133,6 +146,7 @@ export default function MainHeader() {
                                 onClick={toggleShopModalWindow}
                                 className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-2.5 py-2.5 md:px-3 md:py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
                                 aria-label="Открыть меню"
+                                aria-expanded={modalShopWindowOpen}
                             >
                                 <TextAlignJustify className="h-5 w-5" aria-hidden="true"/>
                             </button>
@@ -171,10 +185,17 @@ export default function MainHeader() {
                         </div>
                     </div>
                 </div>
+            </div>
 
-                {modalShopWindowOpen && (
-                    <div className="mt-3 rounded-2xl border border-slate-800/70 bg-slate-900/80 p-3 shadow-lg ">
-                        <div className="flex flex-wrap items-center gap-3 justify-start md:justify-center">
+            <div className={`absolute left-0 right-0 top-full z-40 transition-opacity duration-200 ${modalShopWindowOpen ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+                 aria-hidden={!modalShopWindowOpen} onClick={toggleShopModalWindow}
+            >
+                <div className="h-screen">
+                    <div className={` ${secondColorTheme} w-full bg-slate-900/70 border-b border-slate-800/70 px-4 py-4 sm:px-6 md:px-12 shadow-xl shadow-black/30 
+                    transition-all duration-200 ease-out ${modalShopWindowOpen ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <div className="flex flex-wrap  items-center gap-3 justify-start md:justify-center">
                             {catalogItems.map((item, index) => (
                                 <ShopNavBarItem
                                     key={index}
@@ -185,7 +206,7 @@ export default function MainHeader() {
                             ))}
                         </div>
                     </div>
-                )}
+                </div>
             </div>
         </header>
     )

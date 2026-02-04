@@ -1,17 +1,8 @@
 import pool from "../config/database";
 import fs from "fs";
 import path from "path";
-import {KeyDataStructure} from "../types/keysTypes";
-
-
-function parseDateDDMMYYYY(value: string): string {
-    // Postgres DATE принимает YYYY-MM-DD
-    const parts = value.split(".");
-    if (parts.length !== 3) throw new Error(`Некорректная дата: "${value}"`);
-    const [dd, mm, yyyy] = parts;
-    if (!dd || !mm || !yyyy) throw new Error(`Некорректная дата: "${value}"`);
-    return `${yyyy}-${mm.padStart(2, "0")}-${dd.padStart(2, "0")}`;
-}
+import {KeyDetailsData} from "../types/keysTypes";
+import {parseDateDDMMYYYY} from "../lib/indexUtils";
 
 function findKeysDataPath(): string {
     const candidates = [
@@ -38,7 +29,7 @@ export async function seedKeysData(): Promise<void> {
         const jsonPath = findKeysDataPath();
         const raw = fs.readFileSync(jsonPath, "utf8");
 
-        const items: KeyDataStructure[] = JSON.parse(raw);
+        const items: KeyDetailsData[] = JSON.parse(raw);
 
         await client.query("BEGIN");
 
@@ -46,7 +37,7 @@ export async function seedKeysData(): Promise<void> {
         await client.query("TRUNCATE TABLE keys RESTART IDENTITY CASCADE");
 
         for (const item of items) {
-            const releaseDate = parseDateDDMMYYYY(item.releaseData);
+            const releaseDate = parseDateDDMMYYYY(item.releaseDate);
 
             const insertKeyRes = await client.query(
                 `

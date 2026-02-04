@@ -1,4 +1,4 @@
-export interface User {
+export interface UserTypes {
     id: string;
     email: string;
     userName: string;
@@ -33,4 +33,18 @@ export interface RegisterRequest {
     password: string;
 }
 
+export interface PurchasesItem {
+    keyId: number;
+    keyUrl: string;
+    name: string;
+    mainImage: string;
+    price: number;
+    count: number;
+    date: string;
+}
 
+export interface PurchaseCreateItem {
+    keyId: number;
+    price: number;
+    count: number;
+}

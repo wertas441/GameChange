@@ -1,9 +1,9 @@
 import {Router} from 'express';
 import bcrypt from 'bcryptjs';
-import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/userValidation";
+import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/user";
 import {ApiResponse} from "../types";
 import {showBackendError} from "../lib/indexUtils";
-import {LoginRequest, RegisterRequest} from "../types/auth";
+import {LoginRequest, PurchaseCreateItem, RegisterRequest} from "../types/userTypes";
 import {UserModel} from "../models/User";
 import { config } from '../config';
 import jwt from 'jsonwebtoken';
@@ -65,7 +65,6 @@ router.post('/registration', async (req, res) => {
     }
 });
 
-
 router.post('/login', async (req, res) => {
     try {
         const { email, password, rememberMe }: LoginRequest = req.body;
@@ -116,13 +115,10 @@ router.post('/login', async (req, res) => {
 
         const response: ApiResponse = {
             success: true,
-            message: 'Успешный вход в систему',
-            data: {
-                token
-            }
+            data: { token }
         };
 
-        res.json(response);
+        res.status(200).json(response);
     } catch (error) {
         const response = showBackendError(error, 'Ошибка при входе в систему');
 
@@ -132,7 +128,7 @@ router.post('/login', async (req, res) => {
 
 router.get('/me', authMiddleware, async (req, res) => {
     try {
-        const userId = (req as any).userId as number;
+        const userId:number = (req as any).userId;
         const userData = await UserModel.findById(userId);
 
         if (!userData) {
@@ -145,7 +141,6 @@ router.get('/me', authMiddleware, async (req, res) => {
 
         const response: ApiResponse = {
             success: true,
-            message: 'success of getting user information',
             data: { userData }
         };
 
@@ -156,5 +151,53 @@ router.get('/me', authMiddleware, async (req, res) => {
         res.status(500).json(response);
     }
 });
+
+router.get('/purchases', authMiddleware, async (req, res) => {
+    try {
+        const userId:number = (req as any).userId;
+
+        const purchasesList = await UserModel.getPurchases(userId);
+
+        const response: ApiResponse = {
+            success: true,
+            data: { purchasesList }
+        };
+
+        res.status(200).json(response);
+    } catch (error) {
+        const response = showBackendError(error, `Ошибка получения информации об истории покупок пользователя`);
+
+        res.status(500).json(response);
+    }
+});
+
+router.post('/purchases', authMiddleware, async (req, res) => {
+    try {
+        const userId:number = (req as any).userId;
+        const requestData = Array.isArray(req.body)
+            ? req.body
+            : (req.body as { items?: PurchaseCreateItem[] })?.items;
+
+        if (!Array.isArray(requestData) || requestData.length === 0) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Список покупок пуст'
+            };
+            return res.status(400).json(response);
+        }
+
+        await UserModel.addPurchases(userId, requestData);
+
+        const response: ApiResponse = { success: true };
+
+        res.status(200).json(response);
+    } catch (error) {
+        const response = showBackendError(error, `Ошибка добавления покупок пользователя`);
+
+        res.status(500).json(response);
+    }
+});
+
+
 
 export default router;

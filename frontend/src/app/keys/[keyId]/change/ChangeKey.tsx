@@ -1,6 +1,6 @@
 'use client'
 
-import {AddKeyData, KeyDetailsData} from "@/types/keys";
+import {AddKeyData, KeyDetailsData} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {api, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";
@@ -100,8 +100,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
         };
 
         try {
-            console.log(payload);
-            await api.put<BackendApiResponse>(`/keys/key`, payload);
+            await api.put<BackendApiResponse>(`/key/key`, payload);
 
             router.push('/keys/catalog');
         } catch (err) {

@@ -83,9 +83,11 @@ const cartStore: StateCreator<CartStore> = (set, get) => ({
 
 export const useCartStore = create<CartStore>()(
     persist(cartStore, {
-        name: 'cartStore',
+        name: 'GCCartStore',
         storage: createJSONStorage(() => localStorage),
     })
 );
 
 export const addNewItem = (state: CartStore) => state.addKey;
+export const getCartItems = (state: CartStore) => state.cartState;
+export const clearCart = (state: CartStore) => state.clearCart;

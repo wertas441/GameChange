@@ -1,12 +1,12 @@
 import {api, getTokenHeaders, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import {KeyDetailsData, KeyListData} from "@/types/keys";
+import {KeyDetailsData, KeyListData} from "@/types/key";
 
 export async function getKeysList() {
     try {
-        const response = await api.get<BackendApiResponse<{ keys: KeyListData[] }>>(`/keys`);
+        const { data } = await api.get<BackendApiResponse<{ keys?: KeyListData[] }>>(`/key/keys`);
 
-       return  response.data.data?.keys ?? undefined;
+       return data.data?.keys ?? undefined;
     } catch (error){
         if (showErrorMessage) console.error('Get keysList error:', error);
 
@@ -16,10 +16,9 @@ export async function getKeysList() {
 
 export async function getKeyDetails(keyUrl: string) {
     try {
-        const response = await api.get<BackendApiResponse<{ keyDetails: KeyDetailsData }>>(
-            `/keys/key?keyUrl=${encodeURIComponent(keyUrl)}`);
+        const { data } = await api.get<BackendApiResponse<{ keyDetails: KeyDetailsData }>>(`/key/key?keyUrl=${encodeURIComponent(keyUrl)}`);
 
-        return  response.data.data?.keyDetails ?? undefined;
+        return data.data?.keyDetails ?? undefined;
     } catch (error){
         if (showErrorMessage) console.error('get keyDetails error:', error);
 
@@ -35,7 +34,7 @@ export async function deleteKey(tokenValue: string, keyId: number):Promise<void>
     };
 
     try {
-        await api.delete<BackendApiResponse>(`/keys/key`, payload);
+        await api.delete<BackendApiResponse>(`/key/key`, payload);
 
         return;
     } catch (error) {

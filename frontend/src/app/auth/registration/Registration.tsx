@@ -9,6 +9,12 @@ import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import HideInput from "@/components/inputs/HideInput";
+import {
+    validateUserConfirmPassword,
+    validateUserEmail,
+    validateUserName,
+    validateUserPassword
+} from "@/lib/validators/userValidators";
 
 interface RegistrationFormValues {
     userName: string;
@@ -19,14 +25,7 @@ interface RegistrationFormValues {
 
 export default function Registration(){
 
-    const {register, handleSubmit, formState: { errors }} = useForm<RegistrationFormValues>({
-        defaultValues: {
-            userName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        }
-    });
+    const {register, handleSubmit, getValues, formState: { errors }} = useForm<RegistrationFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
@@ -41,7 +40,7 @@ export default function Registration(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/auth/registration`, payload);
+            await api.post<BackendApiResponse>(`/user/registration`, payload);
 
             router.push('/auth/login');
         } catch (err) {
@@ -77,9 +76,9 @@ export default function Registration(){
                     <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
                             id="userName"
-                            label="Имя аккаунта"
-                            error={errors.email?.message}
-                            {...register('userName')}
+                            label="Имя пользователя"
+                            error={errors.userName?.message}
+                            {...register('userName', {validate: (value) => validateUserName(value) || true})}
                         />
 
                         <MainInput
@@ -87,22 +86,25 @@ export default function Registration(){
                             type="email"
                             label="E-mail"
                             error={errors.email?.message}
-                            {...register('email')}
+                            {...register('email', {validate: (value) => validateUserEmail(value) || true})}
                         />
 
                         <HideInput
                             id="password"
                             label="Пароль"
                             error={errors.password?.message}
-                            {...register('password')}
+                            {...register('password', {validate: (value) => validateUserPassword(value) || true})}
                         />
 
                         <MainInput
                             id="confirmPassword"
                             type="password"
                             label="Подтверждение пароля"
-                            error={errors.password?.message}
-                            {...register('confirmPassword')}
+                            error={errors.confirmPassword?.message}
+                            {...register('confirmPassword', {
+                                validate: (value) =>
+                                    validateUserConfirmPassword(getValues("password"), value) || true,
+                            })}
                         />
 
                         <SubmitYellowBtn

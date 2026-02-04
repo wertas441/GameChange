@@ -1,14 +1,16 @@
 import { pool } from '../config/database';
 import {
-    User,
+    PurchaseCreateItem,
+    PurchasesItem,
+    UserTypes,
     UserCreateRequest,
     UserProfileResponse
-} from "../types/auth";
+} from "../types/userTypes";
 
 export class UserModel {
 
     // Создание нового пользователя
-    static async create(userData: UserCreateRequest): Promise<User> {
+    static async create(userData: UserCreateRequest): Promise<UserTypes> {
         const query = `
         INSERT INTO users (email, username, password_hash, created_at, updated_at)
         VALUES ($1, $2, $3, NOW(), NOW())
@@ -25,11 +27,11 @@ export class UserModel {
             userName: row.username,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as User;
+        } as UserTypes;
     }
 
     // Поиск пользователя по email
-    static async findByEmail(email: string): Promise<User | null> {
+    static async findByEmail(email: string): Promise<UserTypes | null> {
         const query = `
         SELECT  id, 
                 email, 
@@ -52,7 +54,7 @@ export class UserModel {
             password: row.password,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as User;
+        } as UserTypes;
     }
 
     // Поиск пользователя по ID
@@ -82,7 +84,7 @@ export class UserModel {
     }
 
     // Поиск пользователя по userName
-    static async findByUserName(userName: string): Promise<User | null> {
+    static async findByUserName(userName: string): Promise<UserTypes | null> {
         const query = `
         SELECT  id, 
                 email, 
@@ -105,7 +107,59 @@ export class UserModel {
             password: row.password,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as User;
+        } as UserTypes;
     }
 
+    static async getPurchases(userId: number): Promise<PurchasesItem[]> {
+        const query = `
+            SELECT
+                p.key_id AS "keyId",
+                k.key_url AS "keyUrl",
+                k.name AS name,
+                k.main_picture_url AS "mainImage",
+                p.price AS price,
+                p.count AS count,
+                to_char(COALESCE(p.date, p.created_at), 'DD.MM.YYYY') AS date
+            FROM purchases p
+            JOIN keys k ON k.id = p.key_id
+            WHERE p.user_id = $1
+            ORDER BY COALESCE(p.date, p.created_at) DESC, p.id DESC
+        `;
+
+        const result = await pool.query(query, [userId]);
+
+        return result.rows ?? [];
+    }
+
+
+    static async addPurchases(userId: number, items: PurchaseCreateItem[]): Promise<void> {
+        const client = await pool.connect();
+
+        try {
+            await client.query('BEGIN');
+
+            const insertQuery = `
+                INSERT INTO purchases (user_id, key_id, price, count, date)
+                VALUES ($1, $2, $3, $4, NOW())
+            `;
+
+            for (const item of items) {
+                if (!item?.keyId || !item.count || item.count <= 0) {
+                    continue;
+                }
+                await client.query(insertQuery, [userId, item.keyId, item.price, item.count]);
+            }
+
+            await client.query('COMMIT');
+        } catch (error) {
+            try {
+                await client.query('ROLLBACK');
+            } catch (_) {
+                // ignore rollback errors
+            }
+            throw error;
+        } finally {
+            client.release();
+        }
+    }
 }

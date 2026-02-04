@@ -3,12 +3,12 @@ import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import { KeyModel } from "../models/Key";
 import {AddKeyData, KeyDetailsData} from "../types/keysTypes";
-import {validateKeyData} from "../lib/validators/keyValidation";
+import {validateKeyData} from "../lib/validators/key";
 import {adminMiddleware} from "../middleware/adminMiddleware";
 
 const router = Router();
 
-router.get('/', async (req, res) => {
+router.get('/keys', async (req, res) => {
    try {
        const keys = await KeyModel.getList();
 

@@ -8,7 +8,7 @@ import {
     ActivationPlatform,
     OperationSystem, genreOptions
 } from "@/lib/data";
-import {KeyListData} from "@/types/keys";
+import {KeyListData} from "@/types/key";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 import {Pencil} from 'lucide-react'
 import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
@@ -50,8 +50,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
     const linkUrl = `/keys/${keyUrl}`
 
     return (
-        <div
-            key={id}
+        <div key={id}
             className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4 md:p-6 shadow-lg shadow-black/30 transition
             hover:border-amber-400/40 hover:bg-slate-900/80`}
         >

@@ -46,13 +46,11 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
 
     fetchUserData: async () => {
         try {
-            const response = await api.get<BackendApiResponse<{ userData: UserData }>>(
-                "/auth/me",
-            );
+            const { data } = await api.get<BackendApiResponse<{ userData: UserData }>>("/user/me",);
 
-            if (!response.data.success || !response.data.data?.userData) return undefined;
+            if (!data.success || !data.data?.userData) return undefined;
 
-            const userData = response.data.data.userData;
+            const userData = data.data.userData;
 
             set({
                 userData,
@@ -89,7 +87,7 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
 
 export const useUserStore = create<UserStore>()(
     persist(userStore, {
-        name: 'userStore',
+        name: 'GCUserStore',
         storage: createJSONStorage(() => (typeof window !== 'undefined' ? localStorage : noopStorage))
     })
 )
