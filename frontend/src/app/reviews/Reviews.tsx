@@ -10,7 +10,7 @@ const stats = [
     { label: "Повторные покупки", value: "72%" },
 ];
 
-const ratings = [5, 4, 3, 2, 1] as const;
+const ratings = [2, 5, 10, 24, 59] as const;
 
 export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
     const getCategoryLabel = (tag: string) => reviewCategorys.find((item) => item.value === tag)?.label;
@@ -85,17 +85,17 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                             </p>
 
                             <div className="mt-5 space-y-3">
-                                {ratings.map((rating) => (
+                                {ratings.map((rating, index) => (
                                     <div key={rating} className="flex items-center gap-3 text-sm text-slate-300">
-                                        <span className="w-6">{rating}</span>
+                                        <span className="w-6">{index + 1}</span>
                                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-800">
                                             <div
                                                 className="h-full rounded-full bg-amber-400/80"
-                                                style={{ width: `${rating * 18}%` }}
+                                                style={{ width: rating * 5 }}
                                             />
                                         </div>
                                         <span className="w-10 text-right text-xs text-slate-400">
-                                            {rating * 10}%
+                                            {rating}%
                                         </span>
                                     </div>
                                 ))}

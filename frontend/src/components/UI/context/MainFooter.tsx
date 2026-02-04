@@ -19,27 +19,26 @@ export default function MainFooter() {
                     <div>
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">Магазин</h3>
                         <ul className="mt-4 space-y-4">
-                            <FooterNavItem text={'Магазин игр'} link={'/keys/catalog'} />
-                            <FooterNavItem text={'Пополнение Steam'} link={'/steam-balance'} />
-                            <FooterNavItem text={'Корзина'} link={'/cart'} />
+                            <FooterNavItem text={'Игровые ключи'} link={'/keys/catalog'} />
+                            <FooterNavItem text={'Пополнение сервисов'} link={'/services'} />
+                            <FooterNavItem text={'Ваша корзина'} link={'/cart'} />
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">Информация</h3>
                         <ul className="mt-4 space-y-4">
-                            <FooterNavItem text={'Гарантии'} link={'/'} />
-                            <FooterNavItem text={'Поддержка'} link={'/support'} />
+                            <FooterNavItem text={'Отзывы'} link={'/reviews'} />
                             <FooterNavItem text={'О нас'} link={'/about'} />
+                            <FooterNavItem text={'История покупок'} link={'/user/purchases'} />
+
                         </ul>
                     </div>
 
                     <div>
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">Помощь</h3>
                         <ul className="mt-4 space-y-4">
-                            <FooterNavItem text={'FAQ'} link={'/faq'} />
-                            <FooterNavItem text={'Как сделать заказ?'} link={'/'} />
-                            <FooterNavItem text={'Контакты'} link={'/contact'} />
+                            <FooterNavItem text={'Поддержка'} link={'/support'} />
                         </ul>
                     </div>
 
