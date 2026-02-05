@@ -12,6 +12,15 @@ import {BackendApiResponse} from "@/types";
 import DropDownContent from "@/components/UI/DropDownContent";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
+import MainTextarea from "@/components/inputs/MainTextArea";
+import {validateUserName} from "@/lib/validators/userValidators";
+import {
+    validateKeyCPU,
+    validateKeyDescription, validateKeyDeveloper, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
+    validateKeyName, validateKeyOtherPicture,
+    validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
+    validateKeyUrl
+} from "@/lib/validators/keyValidators";
 
 export default function AddNewKey(){
 
@@ -99,28 +108,28 @@ export default function AddNewKey(){
                                 id={`name`}
                                 label={`Название игры`}
                                 error={errors.name?.message}
-                                {...register('name')}
+                                {...register('name', {validate: (value) => validateKeyName(value) || true})}
                             />
 
                             <MainInput
                                 id={`keyUrl`}
                                 label={`URL для ключа`}
                                 error={errors.keyUrl?.message}
-                                {...register('keyUrl')}
+                                {...register('keyUrl', {validate: (value) => validateKeyUrl(value) || true})}
                             />
 
                             <MainInput
                                 id={`price`}
                                 label={`Цена (руб)`}
                                 error={errors.price?.message}
-                                {...register('price')}
+                                {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                             />
 
-                            <MainInput
+                            <MainTextarea
                                 id={`description`}
                                 label={`Описание`}
                                 error={errors.description?.message}
-                                {...register('description')}
+                                {...register('description', {validate: (value) => validateKeyDescription(value) || true})}
                             />
 
                             <MainInput
@@ -128,21 +137,21 @@ export default function AddNewKey(){
                                 type={'date'}
                                 label={`Дата релиза`}
                                 error={errors.releaseDate?.message}
-                                {...register('releaseDate')}
+                                {...register('releaseData', {validate: (value) => validateKeyReleaseDate(value) || true})}
                             />
 
                             <MainInput
                                 id={`developer`}
                                 label={`Разработчик`}
                                 error={errors.developer?.message}
-                                {...register('developer')}
+                                {...register('developer', {validate: (value) => validateKeyDeveloper(value) || true})}
                             />
 
                             <MainInput
                                 id={`publisher`}
                                 label={`Издатель`}
                                 error={errors.mainPicture?.message}
-                                {...register('publisher')}
+                                {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
                             />
 
                         </DropDownContent>
@@ -152,14 +161,14 @@ export default function AddNewKey(){
                                 id={`mainPicture`}
                                 label={`Обложка игры (url)`}
                                 error={errors.mainPicture?.message}
-                                {...register('mainPicture')}
+                                {...register('mainPicture', {validate: (value) => validateKeyMainPicture(value) || true})}
                             />
 
                             <MainInput
                                 id={`otherPictures`}
                                 label={`Скриншоты из игры (url)`}
                                 error={errors.otherPictures?.message}
-                                {...register('otherPictures')}
+                                {...register('otherPictures', {validate: (value) => validateKeyOtherPicture(value) || true})}
                             />
                         </DropDownContent>
 
@@ -172,25 +181,26 @@ export default function AddNewKey(){
                                         id={`minimalCPU`}
                                         label={`Процессор`}
                                         error={errors.systemRequirements?.minimal?.CPU?.message}
-                                        {...register('systemRequirements.minimal.CPU')}
+                                        {...register('systemRequirements.minimal.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`minimalGPU`}
                                         label={`Видеокарта`}
                                         error={errors.systemRequirements?.minimal?.GPU?.message}
-                                        {...register('systemRequirements.minimal.GPU')}
+                                        {...register('systemRequirements.minimal.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`minimalRAM`}
                                         label={`ОЗУ`}
                                         error={errors.systemRequirements?.minimal?.RAM?.message}
-                                        {...register('systemRequirements.minimal.RAM')}
+                                        {...register('systemRequirements.minimal.RAM', {validate: (value) => validateKeyRAM(value) || true})}
+
                                     />
                                     <MainInput
                                         id={`minimalMemory`}
                                         label={`Память`}
                                         error={errors.systemRequirements?.minimal?.memory?.message}
-                                        {...register('systemRequirements.minimal.memory')}
+                                        {...register('systemRequirements.minimal.memory', {validate: (value) => validateKeyMemory(value) || true})}
                                     />
                                 </div>
 
@@ -200,25 +210,25 @@ export default function AddNewKey(){
                                         id={`recommendedCPU`}
                                         label={`Процессор`}
                                         error={errors.systemRequirements?.recommended?.CPU?.message}
-                                        {...register('systemRequirements.recommended.CPU')}
+                                        {...register('systemRequirements.recommended.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedGPU`}
                                         label={`Видеокарта`}
                                         error={errors.systemRequirements?.recommended?.GPU?.message}
-                                        {...register('systemRequirements.recommended.GPU')}
+                                        {...register('systemRequirements.recommended.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedRAM`}
                                         label={`ОЗУ`}
                                         error={errors.systemRequirements?.recommended?.RAM?.message}
-                                        {...register('systemRequirements.recommended.RAM')}
+                                        {...register('systemRequirements.recommended.RAM', {validate: (value) => validateKeyRAM(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedMemory`}
                                         label={`Память`}
                                         error={errors.systemRequirements?.recommended?.memory?.message}
-                                        {...register('systemRequirements.recommended.memory')}
+                                        {...register('systemRequirements.recommended.memory', {validate: (value) => validateKeyMemory(value) || true})}
                                     />
                                 </div>
                             </div>
