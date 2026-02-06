@@ -14,7 +14,7 @@ function FAQSection({faqData}: {faqData: FAQDataStructure[]}) {
         <div className="mx-auto max-w-4xl divide-y divide-white/10">
             {faqData.map((faq, index) => (
                 <div key={faq.question} className="py-6">
-                    <button onClick={() => toggleFaq(index)} className="flex cursor-pointer w-full items-start justify-between text-left text-white">
+                    <button onClick={() => toggleFaq(index)} className="flex cursor-pointer w-full items-start justify-between text-left text-slate-50 hover:text-amber-400 transition-colors">
                         <span className="text-base font-semibold leading-7">
                             {faq.question}
                         </span>
@@ -25,7 +25,7 @@ function FAQSection({faqData}: {faqData: FAQDataStructure[]}) {
                     </button>
 
                     <div className={`mt-4 pr-12 overflow-hidden transition-all duration-500 ease-in-out ${openFaq === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-                        <p className="text-base leading-7 text-gray-300">{faq.answer}</p>
+                        <p className="text-base leading-7 text-slate-300">{faq.answer}</p>
                     </div>
                 </div>
             ))}

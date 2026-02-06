@@ -14,20 +14,20 @@ export default function PrivilegeCard(
         IconComponent,
         title,
         text,
-        spotlightColor = "rgba(0, 254, 146, 0.2)",
+        spotlightColor = "rgba(251, 191, 36, 0.2)",
         className = ''
     }: IProps) {
 
     return (
         <SpotlightCard
-            className={`p-10 rounded-xl border border-white/10 text-center ${className}`}
+            className={`p-8 text-center ${className}`}
             spotlightColor={spotlightColor}
         >
-            <IconComponent className="h-12 w-12 text-[#00FE92] mx-auto mb-4" />
+            <IconComponent className="h-12 w-12 text-amber-400 mx-auto mb-4" />
 
-            <h3 className="text-2xl text-white font-bold mb-2">{title}</h3>
+            <h3 className="text-xl text-slate-50 font-semibold mb-2">{title}</h3>
 
-            <p className="text-gray-400">{text}</p>
+            <p className="text-sm text-slate-400">{text}</p>
         </SpotlightCard>
     )
 }
