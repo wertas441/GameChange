@@ -64,7 +64,7 @@ export default function Information() {
 
                 <LinkYellowBtn
                     label={`Перейти на GitHub`}
-                    href="https://github.com/wertas441"
+                    href="https://github.com/wertas441/GameChange"
                     className="mt-3 w-full px-4 py-2 sm:w-auto"
                 />
             </section>

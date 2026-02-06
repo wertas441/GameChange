@@ -17,6 +17,7 @@ yarn.lock
 # Переменные окружения
 .env
 .env.*.local
+.idea
 
 # Сборки backend
 backend/dist

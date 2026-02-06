@@ -50,3 +50,8 @@ export interface PurchaseItem {
     count: number;
     date: string;
 }
+
+export interface FAQDataStructure {
+    question: string;
+    answer: string;
+}
