@@ -4,7 +4,7 @@ import PrivilegeCard from "@/components/UI/cards/PrivilegeCard";
 export default function DashboardPrivileges() {
 
     return (
-        <div className="mx-auto w-full px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto w-full px-6 md:px-12">
             <div className="flex flex-col gap-3 text-center">
                 <h2 className="text-3xl font-semibold text-slate-50 sm:text-4xl">Почему GameChange</h2>
                 <p className="text-sm text-slate-400 sm:text-base">

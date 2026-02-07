@@ -5,11 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import {ArrowLeft, ArrowRight, ShoppingCart} from "lucide-react";
 
-
 export default function DashboardTopSell() {
 
     return (
-        <div className="">
+        <div className="flex items-center justify-center px-3 md:px-15">
+
+            <div className="swiper-button-prev-sell mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
+                 text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block"
+            >
+                <ArrowLeft className="h-10 w-10"/>
+            </div>
+
             <div className="container mx-auto px-10">
                 <div className="flex flex-col gap-3 text-center">
                     <h2 className="text-3xl font-semibold text-slate-50 sm:text-4xl">
@@ -22,8 +28,8 @@ export default function DashboardTopSell() {
 
                 <Swiper modules={[Navigation]}
                         navigation={{
-                            nextEl: '.swiper-button-next-custom',
-                            prevEl: '.swiper-button-prev-custom',
+                            nextEl: '.swiper-button-next-sell',
+                            prevEl: '.swiper-button-prev-sell',
                         }}
                         loop={true}
                         spaceBetween={32}
@@ -32,11 +38,10 @@ export default function DashboardTopSell() {
                             768: {slidesPerView: 2, spaceBetween: 30},
                             1024: {slidesPerView: 4, spaceBetween: 32},
                         }}
-                        className="pb-12! mt-10"
                 >
                     {dashboardArrayOfData.map(game => (
                         <SwiperSlide key={game.id}>
-                            <div className="group relative h-full overflow-hidden rounded-2xl
+                            <div className="group relative h-full overflow-hidden rounded-2xl mt-10
                                                 border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
                                                 transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40">
                                 <Image src={game.picture} alt={game.name} width={1920} height={1080}
@@ -65,15 +70,9 @@ export default function DashboardTopSell() {
                 </Swiper>
             </div>
 
-            <div className="swiper-button-prev-custom absolute top-1/2 left-3 xl:left-12 2xl:left-24 transform
-                                z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                                text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block">
-                <ArrowLeft className="h-10 w-10"/>
-            </div>
-
-            <div className={`swiper-button-next-custom absolute top-1/2 right-4 xl:right-12 2xl:right-24 transform
-                                z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                                text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}>
+            <div className={`swiper-button-next-sell mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
+                   text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
+            >
                 <ArrowRight className="h-10 w-10"/>
             </div>
         </div>
