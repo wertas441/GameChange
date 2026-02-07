@@ -9,6 +9,7 @@ export default function LayoutWrapper({children}: {children: ReactNode}) {
 
     const pathname = usePathname();
     const isAuthPage: boolean = pathname.startsWith('/auth');
+    const isDashboardPage: boolean = pathname === '/';
 
     return (
         <div className={``}>
@@ -16,9 +17,15 @@ export default function LayoutWrapper({children}: {children: ReactNode}) {
                 <MainHeader />
             )}
 
-            <div className={`px-6 md:px-12`}>
-                {children}
-            </div>
+            {!isDashboardPage ? (
+                <div className={`px-6 md:px-12`}>
+                    {children}
+                </div>
+            ) : (
+                <div className={``}>
+                    {children}
+                </div>
+            )}
 
             {!isAuthPage && (
                 <MainFooter />

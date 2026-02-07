@@ -17,11 +17,11 @@ export default function RootLayout({children}: Readonly<{children: ReactNode}>) 
 
     return (
         <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LayoutWrapper>
-            {children}
-        </LayoutWrapper>
-        </body>
+            <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+                <LayoutWrapper>
+                    {children}
+                </LayoutWrapper>
+            </body>
         </html>
     );
 }
