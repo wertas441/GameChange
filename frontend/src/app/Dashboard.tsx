@@ -11,6 +11,9 @@ import DashboardHero from "@/components/UI/dashboardUI/DashboardHero";
 import DashboardFAQ from "@/components/UI/dashboardUI/DashboardFAQ";
 import DashboardPrivileges from "@/components/UI/dashboardUI/DashboardPrivileges";
 import DashboardTopSell from "@/components/UI/dashboardUI/DashboardTopSell";
+import useGameKeys from "@/lib/hooks/useGameKeys";
+import SpinnerLoader from "@/components/errors/SpinnerLoader";
+import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export default function Dashboard(){
 

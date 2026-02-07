@@ -1,11 +1,29 @@
+'use client'
+
 import {Swiper, SwiperSlide} from "swiper/react";
 import {Navigation} from "swiper/modules";
-import {dashboardArrayOfData} from "@/lib/dashboardData";
 import Image from "next/image";
 import Link from "next/link";
 import {ArrowLeft, ArrowRight, ShoppingCart} from "lucide-react";
+import useGameKeys from "@/lib/hooks/useGameKeys";
+import SpinnerLoader from "@/components/errors/SpinnerLoader";
+import ServerErrorState from "@/components/errors/ServerErrorState";
+import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 
 export default function DashboardTopSell() {
+
+    const {keysData, isLoading, isError, error} = useGameKeys();
+
+    const addToCart = useCartStore(addNewItem)
+
+    if (isLoading) {
+        return <SpinnerLoader />;
+    }
+
+    if (isError || keysData === undefined) {
+        console.log(error)
+        return <ServerErrorState />;
+    }
 
     return (
         <div className="flex items-center justify-center px-3 md:px-15">
@@ -39,34 +57,47 @@ export default function DashboardTopSell() {
                             1024: {slidesPerView: 4, spaceBetween: 32},
                         }}
                 >
-                    {dashboardArrayOfData.map(game => (
-                        <SwiperSlide key={game.id}>
-                            <div className="group relative h-full overflow-hidden rounded-2xl mt-10
+                    {keysData.map(game => {
+                        const addData = {
+                            id: game.id,
+                            keyUrl: game.keyUrl,
+                            name: game.name,
+                            price: game.price,
+                            mainPicture: game.mainPicture,
+                            count: 0,
+                        }
+
+                        return (
+                            <SwiperSlide key={game.id}>
+                                <div className="group relative h-full overflow-hidden rounded-2xl mt-10
                                                 border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
                                                 transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40">
-                                <Image src={game.picture} alt={game.name} width={1920} height={1080}
-                                       className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"/>
-                                <div
-                                    className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
-                                <div className="absolute bottom-0 left-0 w-full p-4">
-                                    <Link href={`/shop/catalog/keys/${game.id}`}>
-                                        <h1 className="text-xl font-semibold text-slate-50 transition-colors hover:text-amber-400">
-                                            {game.name}
-                                        </h1>
-                                    </Link>
+                                    <Image src={game.mainPicture} alt={game.name} width={1920} height={1080}
+                                           className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"/>
+                                    <div
+                                        className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
+                                    <div className="absolute bottom-0 left-0 w-full p-4">
+                                        <Link href={`/shop/catalog/keys/${game.keyUrl}`}>
+                                            <h1 className="text-xl font-semibold text-slate-50 transition-colors hover:text-amber-400">
+                                                {game.name}
+                                            </h1>
+                                        </Link>
 
-                                    <p className="text-2xl font-semibold text-amber-400">{game.price} ₽</p>
+                                        <p className="text-2xl font-semibold text-amber-400">{game.price} ₽</p>
 
-                                    <button className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950
-                                                             transition-all duration-300 hover:bg-amber-300
-                                                             flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100
-                                                             transform translate-y-4 group-hover:translate-y-0">
-                                        <ShoppingCart className="h-5 w-5"/> В корзину
-                                    </button>
+                                        <button className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950
+                                                transition-all duration-300 hover:bg-amber-300 flex items-center justify-center gap-2 opacity-0
+                                                group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
+                                                onClick={() => addToCart(addData)}
+                                        >
+                                            <ShoppingCart className="h-5 w-5"/>
+                                            В корзину
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
+                            </SwiperSlide>
+                        )
+                    })}
                 </Swiper>
             </div>
 
