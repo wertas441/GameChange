@@ -2,6 +2,7 @@
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import {
     dashboardFeedBackData
 } from "@/lib/dashboardData";
@@ -14,7 +15,7 @@ import DashboardTopSell from "@/components/UI/dashboardUI/DashboardTopSell";
 export default function Dashboard(){
 
     return (
-        <div className="w-full space-y-35">
+        <div className="w-full space-y-50">
             <DashboardHero />
 
             <DashboardTopSell />

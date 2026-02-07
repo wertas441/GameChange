@@ -11,6 +11,7 @@ export default function DashboardFAQ() {
                     Короткие ответы на то, что спрашивают чаще всего перед покупкой.
                 </p>
             </div>
+
             <div className="mt-10">
                 <FAQSection faqData={dashboardFaqData} />
             </div>
