@@ -63,7 +63,7 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                                     <div className="mt-3 flex items-center gap-1 text-amber-400">
                                         {Array.from({ length: 5 }).map((_, index) => (
                                             <span key={`${review.id}-star-${index}`}>
-                                                {index < review.rating ? "★" : "☆"}
+                                                {index < review.rating ? "★" : ""}
                                             </span>
                                         ))}
                                         <span className="ml-2 text-xs text-slate-400">

@@ -50,3 +50,16 @@ export interface PurchaseItem {
     count: number;
     date: string;
 }
+
+export interface FAQDataStructure {
+    question: string;
+    answer: string;
+}
+
+export interface FeedBackStructure {
+    id: number;
+    name: string;
+    game: string;
+    rating: number;
+    description: string;
+}

@@ -2,15 +2,15 @@ import { pool } from '../config/database';
 import {
     PurchaseCreateItem,
     PurchasesItem,
-    UserTypes,
+    User,
     UserCreateRequest,
     UserProfileResponse
-} from "../types/userTypes";
+} from "../types/user";
 
 export class UserModel {
 
     // Создание нового пользователя
-    static async create(userData: UserCreateRequest): Promise<UserTypes> {
+    static async create(userData: UserCreateRequest): Promise<User> {
         const query = `
         INSERT INTO users (email, username, password_hash, created_at, updated_at)
         VALUES ($1, $2, $3, NOW(), NOW())
@@ -27,11 +27,11 @@ export class UserModel {
             userName: row.username,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as UserTypes;
+        } as User;
     }
 
     // Поиск пользователя по email
-    static async findByEmail(email: string): Promise<UserTypes | null> {
+    static async findByEmail(email: string): Promise<User | null> {
         const query = `
         SELECT  id, 
                 email, 
@@ -54,7 +54,7 @@ export class UserModel {
             password: row.password,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as UserTypes;
+        } as User;
     }
 
     // Поиск пользователя по ID
@@ -84,7 +84,7 @@ export class UserModel {
     }
 
     // Поиск пользователя по userName
-    static async findByUserName(userName: string): Promise<UserTypes | null> {
+    static async findByUserName(userName: string): Promise<User | null> {
         const query = `
         SELECT  id, 
                 email, 
@@ -107,7 +107,7 @@ export class UserModel {
             password: row.password,
             createdAt: row.created_at,
             updatedAt: row.updated_at,
-        } as UserTypes;
+        } as User;
     }
 
     static async getPurchases(userId: number): Promise<PurchasesItem[]> {

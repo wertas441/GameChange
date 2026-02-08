@@ -10,7 +10,7 @@ export interface SystemRequirements {
 export interface KeyBaseData {
     name: string,
     keyUrl: string;
-    price: string,
+    price: number;
     mainPicture: string,
     releaseDate: string,
     operationSystem: OperationSystem[],
@@ -41,4 +41,26 @@ export interface KeyMetadataParams {
     params: Promise<{
         keyId: string;
     }>
+}
+
+
+export interface KeyFormValues {
+    name: string;
+    keyUrl: string;
+    price: string;
+    description: string;
+    releaseDate: string;
+    mainPicture: string;
+    firstOtherPicture: string;
+    secondOtherPicture: string;
+    thirdOtherPicture: string;
+    developer: string;
+    publisher: string;
+    operationSystem: OperationSystem[];
+    activationPlatform: ActivationPlatform[];
+    genres: string[];
+    systemRequirements: {
+        minimal: SystemRequirements;
+        recommended: SystemRequirements;
+    }
 }

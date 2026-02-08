@@ -11,10 +11,11 @@ import Features from "@/components/UI/servicesUI/Features";
 import HowItWork from "@/components/UI/servicesUI/HowItWork";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/lib/validators/service";
 
 interface PSStoreFormValues {
     psnLogin: string;
-    amount: string;
+    amount: number;
     promoCode: string;
 }
 
@@ -98,14 +99,14 @@ export default function PSStore() {
                             id="psnLogin"
                             label="PSN логин"
                             error={errors.psnLogin?.message}
-                            {...register('psnLogin')}
+                            {...register('psnLogin', {validate: (value) => validatePSNLogin(value) || true })}
                         />
 
                         <MainInput
                             id="amount"
                             label="Сумма пополнения"
                             error={errors.amount?.message}
-                            {...register('amount')}
+                            {...register('amount', {validate: (value) => validateServiceAmount(value) || true })}
                         />
 
                         <MainInput
@@ -113,7 +114,7 @@ export default function PSStore() {
                             label="Промокод"
                             placeholder="Если есть"
                             error={errors.promoCode?.message}
-                            {...register('promoCode')}
+                            {...register('promoCode', {validate: (value) => validatePromoCode(value) || true })}
                         />
 
                         <div className="rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3 text-xs text-slate-400">

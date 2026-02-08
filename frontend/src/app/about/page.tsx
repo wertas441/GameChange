@@ -53,9 +53,7 @@ const partnerLogos = [
     { src: "/epic.svg", alt: "Epic Games" },
     { src: "/gog.svg", alt: "GOG" },
     { src: "/xboxIcon.svg", alt: "Xbox" },
-    { src: "/ps-plus-logo.png", alt: "PlayStation Plus" },
 ];
-
 
 export default function AboutPage() {
 

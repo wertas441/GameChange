@@ -2,7 +2,6 @@
 
 import KeyCard from "@/components/UI/cards/KeyCard";
 import {useForm, Controller} from "react-hook-form";
-import {KeyListData} from "@/types/key";
 import MainInput from "@/components/inputs/MainInput";
 import MultiSelectInput, {OptionType} from "@/components/inputs/MultiSelectInput";
 import {
@@ -11,10 +10,13 @@ import {
     operationSystemOptions
 } from "@/lib/data";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
-import {useRouter} from "next/navigation";
 import {useCallback, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
 import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
+import ServerErrorState from "@/components/errors/ServerErrorState";
+import useGameKeys from "@/lib/hooks/useGameKeys";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import SpinnerLoader from "@/components/errors/SpinnerLoader";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -32,15 +34,36 @@ const defaultFilters: KeysFilterFormValues = {
     operationSystem: [],
 } as const;
 
-export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
+export default function KeysCatalog(){
+
+    const { keysData, isLoading, isError, error } = useGameKeys()
 
     const { control, register, reset, handleSubmit } = useForm<KeysFilterFormValues>({
         defaultValues: defaultFilters,
     });
 
+    const { router } = usePageUtils();
+
     const isAdmin = useUserStore(getUserStatus)
-    const router = useRouter();
     const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
+
+    const handleReset = useCallback(() => {
+        reset(defaultFilters);
+        setAppliedFilters(defaultFilters);
+    }, [reset]);
+
+    const handleApplyFilters = useCallback((values: KeysFilterFormValues) => setAppliedFilters(values), []);
+
+    const addKeyPage = useCallback(() => router.push(`/keys/add`), [router]);
+
+    if (isLoading) {
+        return <SpinnerLoader text="Загрузка списка игр..." />;
+    }
+
+    if (isError || keysData === undefined) {
+        console.log(error)
+        return <ServerErrorState />;
+    }
 
     const {
         minPrice,
@@ -59,7 +82,7 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
     const hasIntersection = (values: string[], target: string[]) => values.some((value) => target.includes(value));
 
     const filteredKeys = keysData.filter((key) => {
-        const keyPrice = normalizePrice(key.price);
+        const keyPrice = normalizePrice(String(key.price));
         const min = normalizePrice(minPrice ?? '');
         const max = normalizePrice(maxPrice ?? '');
 
@@ -71,15 +94,6 @@ export default function KeysCatalog({keysData} : {keysData: KeyListData[]}){
 
         return true;
     });
-
-    const handleReset = useCallback(() => {
-        reset(defaultFilters);
-        setAppliedFilters(defaultFilters);
-    }, [reset]);
-
-    const handleApplyFilters = useCallback((values: KeysFilterFormValues) => setAppliedFilters(values), []);
-
-    const addKeyPage = useCallback(() => router.push(`/keys/add`), [router]);
 
     return (
         <div className="flex flex-col gap-6 lg:flex-row">

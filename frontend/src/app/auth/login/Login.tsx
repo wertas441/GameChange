@@ -10,7 +10,7 @@ import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
 import {makeInitUserData, useUserStore} from "@/lib/store/userStore";
-import {validateUserEmail, validateUserPassword} from "@/lib/validators/userValidators";
+import {validateUserEmail, validateUserPassword} from "@/lib/validators/user";
 
 interface LoginFormValues {
     email: string;

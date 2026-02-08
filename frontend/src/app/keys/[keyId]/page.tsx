@@ -1,7 +1,7 @@
 import KeyDetails from "@/app/keys/[keyId]/KeyDetails";
 import {KeyMetadataParams} from "@/types/key";
 import {generateMetadataKeyName} from "@/lib";
-import {getKeyDetails} from "@/lib/controllers/keysController";
+import {getKeyDetails} from "@/lib/controllers/key";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export async function generateMetadata({params}: KeyMetadataParams) {

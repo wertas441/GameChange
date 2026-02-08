@@ -1,6 +1,6 @@
 'use client'
 
-import {AddKeyData, KeyDetailsData} from "@/types/key";
+import {KeyDetailsData, KeyFormValues} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {api, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";
@@ -16,19 +16,30 @@ import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
 import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
 import {useCallback} from "react";
-import {deleteKey} from "@/lib/controllers/keysController";
+import {deleteKey} from "@/lib/controllers/key";
+import {
+    validateKeyCPU,
+    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU,
+    validateKeyMainPicture, validateKeyMemory,
+    validateKeyName, validateKeyOS,
+    validateKeyOtherPicture, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
+    validateKeyPlatforms, validateKeyUrl
+} from "@/lib/validators/key";
+import MainTextarea from "@/components/inputs/MainTextArea";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddKeyData>({
+    const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>({
         defaultValues: {
             name: keyData.name,
             keyUrl: keyData.keyUrl,
-            price: keyData.price,
+            price: String(keyData.price),
             description: keyData.description,
             releaseDate: getDateInputFormat(keyData.releaseDate),
             mainPicture: keyData.mainPicture,
-            otherPictures: keyData.otherPictures,
+            firstOtherPicture: keyData.otherPictures[0],
+            secondOtherPicture: keyData.otherPictures[1],
+            thirdOtherPicture: keyData.otherPictures[2],
             developer: keyData.developer,
             publisher: keyData.publisher,
             operationSystem: keyData.operationSystem,
@@ -52,20 +63,10 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
     });
 
     const { serverError, setServerError, isSubmitting, isDeleting, setIsDeleting, setIsSubmitting, router } = usePageUtils();
-    const {isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef} = useSimpleModalWindow();
 
-    const toPicturesArray = (value: AddKeyData['otherPictures']) => {
-        if (Array.isArray(value)) {
-            return value;
-        }
+    const { isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef } = useSimpleModalWindow();
 
-        return String(value ?? '')
-            .split(/[\n,]+/g)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0);
-    };
-
-    const onSubmit = async (values: AddKeyData) => {
+    const onSubmit = async (values: KeyFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -73,11 +74,11 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
             id: keyData.id,
             name: values.name,
             keyUrl: values.keyUrl,
-            price: values.price,
+            price: Number(values.price),
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
-            otherPictures: toPicturesArray(values.otherPictures),
+            otherPictures: [values.firstOtherPicture, values.secondOtherPicture, values.thirdOtherPicture],
             developer: values.developer,
             publisher: values.publisher,
             operationSystem: values.operationSystem,
@@ -116,7 +117,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
     const deleteKeyBtn = useCallback(async () => {
         setServerError(null);
         setIsDeleting(true);
-        
+
         try {
             await deleteKey(token, keyData.id);
 
@@ -131,231 +132,248 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
     }, [keyData.id, router, setIsDeleting, setServerError, token])
 
     return (
-       <>
-           <div className={`min-h-screen  text-slate-50 flex items-center justify-center py-8`}>
-               <div className="relative z-10 w-full max-w-3xl items-center">
-                   <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
-                       <header className="mb-6">
-                           <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
-                               Изменение
-                           </p>
-                           <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
-                               Изменить уже существующий ключ в магазине
-                           </h2>
-                       </header>
+        <>
+            <div className={`min-h-screen  text-slate-50 flex items-center justify-center py-8`}>
+                <div className="relative z-10 w-full max-w-3xl items-center">
+                    <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
+                        <header className="mb-6">
+                            <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
+                                Изменение
+                            </p>
 
-                       <ServerFormError error={serverError} />
+                            <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
+                                Изменить уже существующий ключ в магазине
+                            </h2>
+                        </header>
 
-                       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+                        <ServerFormError error={serverError} />
 
-                           <DropDownContent label={'Основная информация'}>
-                               <MainInput
-                                   id={`name`}
-                                   label={`Название игры`}
-                                   error={errors.name?.message}
-                                   {...register('name')}
-                               />
+                        <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
 
-                               <MainInput
-                                   id={`keyUrl`}
-                                   label={`URL для ключа`}
-                                   error={errors.keyUrl?.message}
-                                   {...register('keyUrl')}
-                               />
+                            <DropDownContent label={'Основная информация'}>
+                                <MainInput
+                                    id={`name`}
+                                    label={`Название игры`}
+                                    error={errors.name?.message}
+                                    {...register('name', {validate: (value) => validateKeyName(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`price`}
-                                   label={`Цена (руб)`}
-                                   error={errors.price?.message}
-                                   {...register('price')}
-                               />
+                                <MainInput
+                                    id={`keyUrl`}
+                                    label={`URL для ключа`}
+                                    error={errors.keyUrl?.message}
+                                    {...register('keyUrl', {validate: (value) => validateKeyUrl(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`description`}
-                                   label={`Описание`}
-                                   error={errors.description?.message}
-                                   {...register('description')}
-                               />
+                                <MainInput
+                                    id={`price`}
+                                    label={`Цена (руб)`}
+                                    error={errors.price?.message}
+                                    {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`releaseData`}
-                                   type={'date'}
-                                   label={`Дата релиза`}
-                                   error={errors.releaseDate?.message}
-                                   {...register('releaseDate')}
-                               />
+                                <MainTextarea
+                                    id={`description`}
+                                    label={`Описание`}
+                                    error={errors.description?.message}
+                                    {...register('description', {validate: (value) => validateKeyDescription(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`developer`}
-                                   label={`Разработчик`}
-                                   error={errors.developer?.message}
-                                   {...register('developer')}
-                               />
+                                <MainInput
+                                    id={`releaseDate`}
+                                    type={'date'}
+                                    label={`Дата релиза`}
+                                    error={errors.releaseDate?.message}
+                                    {...register('releaseDate', {validate: (value) => validateKeyReleaseDate(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`publisher`}
-                                   label={`Издатель`}
-                                   error={errors.mainPicture?.message}
-                                   {...register('publisher')}
-                               />
+                                <MainInput
+                                    id={`developer`}
+                                    label={`Разработчик`}
+                                    error={errors.developer?.message}
+                                    {...register('developer', {validate: (value) => validateKeyDeveloper(value) || true})}
+                                />
 
-                           </DropDownContent>
+                                <MainInput
+                                    id={`publisher`}
+                                    label={`Издатель`}
+                                    error={errors.publisher?.message}
+                                    {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
+                                />
+                            </DropDownContent>
 
-                           <DropDownContent label={`Изображения`}>
-                               <MainInput
-                                   id={`mainPicture`}
-                                   label={`Обложка игры (url)`}
-                                   error={errors.mainPicture?.message}
-                                   {...register('mainPicture')}
-                               />
+                            <DropDownContent label={`Изображения`}>
+                                <MainInput
+                                    id={`mainPicture`}
+                                    label={`Обложка игры (url)`}
+                                    error={errors.mainPicture?.message}
+                                    {...register('mainPicture', {validate: (value) => validateKeyMainPicture(value) || true})}
+                                />
 
-                               <MainInput
-                                   id={`otherPictures`}
-                                   label={`Скриншоты из игры (url)`}
-                                   error={errors.otherPictures?.message}
-                                   {...register('otherPictures')}
-                               />
-                           </DropDownContent>
+                                <MainInput
+                                    id={`firstOtherPicture`}
+                                    label={`Первый скриншот из игры (url)`}
+                                    error={errors.firstOtherPicture?.message}
+                                    {...register('firstOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                                />
 
-                           <DropDownContent label={`Системные требования`}>
+                                <MainInput
+                                    id={`secondOtherPicture`}
+                                    label={`Второй скриншот из игры (url)`}
+                                    error={errors.secondOtherPicture?.message}
+                                    {...register('secondOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                                />
 
-                               <div className="flex items-center justify-between gap-3">
-                                   <div className="w-full space-y-4">
-                                       <h1 className={`mb-3 ml-2 text-base`}>Минимальные</h1>
-                                       <MainInput
-                                           id={`minimalCPU`}
-                                           label={`Процессор`}
-                                           error={errors.systemRequirements?.minimal?.CPU?.message}
-                                           {...register('systemRequirements.minimal.CPU')}
-                                       />
-                                       <MainInput
-                                           id={`minimalGPU`}
-                                           label={`Видеокарта`}
-                                           error={errors.systemRequirements?.minimal?.GPU?.message}
-                                           {...register('systemRequirements.minimal.GPU')}
-                                       />
-                                       <MainInput
-                                           id={`minimalRAM`}
-                                           label={`ОЗУ`}
-                                           error={errors.systemRequirements?.minimal?.RAM?.message}
-                                           {...register('systemRequirements.minimal.RAM')}
-                                       />
-                                       <MainInput
-                                           id={`minimalMemory`}
-                                           label={`Память`}
-                                           error={errors.systemRequirements?.minimal?.memory?.message}
-                                           {...register('systemRequirements.minimal.memory')}
-                                       />
-                                   </div>
+                                <MainInput
+                                    id={`thirdOtherPicture`}
+                                    label={`Третий скриншот из игры (url)`}
+                                    error={errors.thirdOtherPicture?.message}
+                                    {...register('thirdOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                                />
+                            </DropDownContent>
 
-                                   <div className="w-full space-y-4">
-                                       <h1 className={`mb-3 ml-2 text-base`}>Рекомендованные</h1>
-                                       <MainInput
-                                           id={`recommendedCPU`}
-                                           label={`Процессор`}
-                                           error={errors.systemRequirements?.recommended?.CPU?.message}
-                                           {...register('systemRequirements.recommended.CPU')}
-                                       />
-                                       <MainInput
-                                           id={`recommendedGPU`}
-                                           label={`Видеокарта`}
-                                           error={errors.systemRequirements?.recommended?.GPU?.message}
-                                           {...register('systemRequirements.recommended.GPU')}
-                                       />
-                                       <MainInput
-                                           id={`recommendedRAM`}
-                                           label={`ОЗУ`}
-                                           error={errors.systemRequirements?.recommended?.RAM?.message}
-                                           {...register('systemRequirements.recommended.RAM')}
-                                       />
-                                       <MainInput
-                                           id={`recommendedMemory`}
-                                           label={`Память`}
-                                           error={errors.systemRequirements?.recommended?.memory?.message}
-                                           {...register('systemRequirements.recommended.memory')}
-                                       />
-                                   </div>
-                               </div>
-                           </DropDownContent>
+                            <DropDownContent label={`Системные требования`}>
+                                <div className="flex items-center justify-between gap-3">
+                                    <div className="w-full space-y-4">
+                                        <h1 className={`mb-3 ml-2 text-base`}>Минимальные</h1>
+                                        <MainInput
+                                            id={`minimalCPU`}
+                                            label={`Процессор`}
+                                            error={errors.systemRequirements?.minimal?.CPU?.message}
+                                            {...register('systemRequirements.minimal.CPU', {validate: (value) => validateKeyCPU(value) || true})}
+                                        />
+                                        <MainInput
+                                            id={`minimalGPU`}
+                                            label={`Видеокарта`}
+                                            error={errors.systemRequirements?.minimal?.GPU?.message}
+                                            {...register('systemRequirements.minimal.GPU', {validate: (value) => validateKeyGPU(value) || true})}
+                                        />
+                                        <MainInput
+                                            id={`minimalRAM`}
+                                            label={`ОЗУ`}
+                                            error={errors.systemRequirements?.minimal?.RAM?.message}
+                                            {...register('systemRequirements.minimal.RAM', {validate: (value) => validateKeyRAM(value) || true})}
 
-                           <Controller
-                               control={control}
-                               name="operationSystem"
-                               render={({field, fieldState}) => (
-                                   <MultiSelectInput
-                                       id="operationSystem"
-                                       label="Операционная система"
-                                       options={operationSystemOptions}
-                                       value={operationSystemOptions.filter(o => (field.value ?? []).includes(o.value as never))}
-                                       onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
-                                       isMulti={true}
-                                       error={fieldState.error?.message}
-                                   />
-                               )}
-                           />
+                                        />
+                                        <MainInput
+                                            id={`minimalMemory`}
+                                            label={`Память`}
+                                            error={errors.systemRequirements?.minimal?.memory?.message}
+                                            {...register('systemRequirements.minimal.memory', {validate: (value) => validateKeyMemory(value) || true})}
+                                        />
+                                    </div>
 
-                           <Controller
-                               control={control}
-                               name="activationPlatform"
-                               render={({field, fieldState}) => (
-                                   <MultiSelectInput
-                                       id="activationPlatform"
-                                       label="Платформы для активации"
-                                       options={activationPlatformOptions}
-                                       value={activationPlatformOptions.filter(o => (field.value ?? []).includes(o.value as never))}
-                                       onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
-                                       isMulti={true}
-                                       error={fieldState.error?.message}
-                                   />
-                               )}
-                           />
+                                    <div className="w-full space-y-4">
+                                        <h1 className={`mb-3 ml-2 text-base`}>Рекомендованные</h1>
+                                        <MainInput
+                                            id={`recommendedCPU`}
+                                            label={`Процессор`}
+                                            error={errors.systemRequirements?.recommended?.CPU?.message}
+                                            {...register('systemRequirements.recommended.CPU', {validate: (value) => validateKeyCPU(value) || true})}
+                                        />
+                                        <MainInput
+                                            id={`recommendedGPU`}
+                                            label={`Видеокарта`}
+                                            error={errors.systemRequirements?.recommended?.GPU?.message}
+                                            {...register('systemRequirements.recommended.GPU', {validate: (value) => validateKeyGPU(value) || true})}
+                                        />
+                                        <MainInput
+                                            id={`recommendedRAM`}
+                                            label={`ОЗУ`}
+                                            error={errors.systemRequirements?.recommended?.RAM?.message}
+                                            {...register('systemRequirements.recommended.RAM', {validate: (value) => validateKeyRAM(value) || true})}
+                                        />
+                                        <MainInput
+                                            id={`recommendedMemory`}
+                                            label={`Память`}
+                                            error={errors.systemRequirements?.recommended?.memory?.message}
+                                            {...register('systemRequirements.recommended.memory', {validate: (value) => validateKeyMemory(value) || true})}
+                                        />
+                                    </div>
+                                </div>
+                            </DropDownContent>
 
-                           <Controller
-                               control={control}
-                               name="genres"
-                               render={({field, fieldState}) => (
-                                   <MultiSelectInput
-                                       id="genres"
-                                       label="Жанры"
-                                       options={genreOptions}
-                                       value={genreOptions.filter(o => (field.value ?? []).includes(o.value as never))}
-                                       onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
-                                       isMulti={true}
-                                       error={fieldState.error?.message}
-                                   />
-                               )}
-                           />
+                            <Controller
+                                control={control}
+                                name="operationSystem"
+                                rules={{validate: (value) => validateKeyOS(value) || true}}
+                                render={({field, fieldState}) => (
+                                    <MultiSelectInput
+                                        id="operationSystem"
+                                        label="Операционная система"
+                                        options={operationSystemOptions}
+                                        value={operationSystemOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
+                                        isMulti={true}
+                                        error={fieldState.error?.message}
+                                    />
+                                )}
+                            />
 
-                           <div className="flex-row md:flex gap-4 space-y-3 md:space-y-0 ">
-                               <SubmitYellowBtn
-                                   label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
-                                   disabled={isSubmitting || isDeleting}
-                               />
+                            <Controller
+                                control={control}
+                                name="activationPlatform"
+                                rules={{validate: (value) => validateKeyPlatforms(value) || true}}
+                                render={({field, fieldState}) => (
+                                    <MultiSelectInput
+                                        id="activationPlatform"
+                                        label="Платформы для активации"
+                                        options={activationPlatformOptions}
+                                        value={activationPlatformOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
+                                        isMulti={true}
+                                        error={fieldState.error?.message}
+                                    />
+                                )}
+                            />
 
-                               <YellowBtn
-                                   label={!isDeleting ? 'Удалить ключ' : 'Удаление…'}
-                                   disabled={isSubmitting || isDeleting}
-                                   onClick={toggleModalWindow}
-                               />
-                           </div>
-                       </form>
-                   </section>
-               </div>
-           </div>
+                            <Controller
+                                control={control}
+                                name="genres"
+                                rules={{validate: (value) => validateKeyGenres(value) || true}}
+                                render={({field, fieldState}) => (
+                                    <MultiSelectInput
+                                        id="genres"
+                                        label="Жанры"
+                                        options={genreOptions}
+                                        value={genreOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
+                                        isMulti={true}
+                                        error={fieldState.error?.message}
+                                    />
+                                )}
+                            />
 
-           <SimpleModalWindow
-               isExiting={isExiting}
-               modalRef={windowModalRef}
-               windowLabel={'Подтверждение удаления'}
-               windowText={`Вы действительно хотите удалить ключ ${keyData.name}? Это действие необратимо.`}
-               error={serverError}
-               cancelButtonLabel={'Отмена'}
-               cancelFunction={toggleModalWindow}
-               confirmButtonLabel={'Удалить'}
-               confirmFunction={deleteKeyBtn}
-               isProcess={isProcess}
-               isRendered={isRendered}
-           />
-       </>
+                            <div className="flex-row md:flex gap-4 space-y-3 md:space-y-0 ">
+                                <SubmitYellowBtn
+                                    label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
+                                    disabled={isSubmitting || isDeleting}
+                                />
+
+                                <YellowBtn
+                                    label={!isDeleting ? 'Удалить ключ' : 'Удаление…'}
+                                    disabled={isSubmitting || isDeleting}
+                                    onClick={toggleModalWindow}
+                                />
+                            </div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+
+            <SimpleModalWindow
+                isExiting={isExiting}
+                modalRef={windowModalRef}
+                windowLabel={'Подтверждение удаления'}
+                windowText={`Вы действительно хотите удалить ключ ${keyData.name}? Это действие необратимо.`}
+                error={serverError}
+                cancelButtonLabel={'Отмена'}
+                cancelFunction={toggleModalWindow}
+                confirmButtonLabel={'Удалить'}
+                confirmFunction={deleteKeyBtn}
+                isProcess={isProcess}
+                isRendered={isRendered}
+            />
+        </>
     )
 }

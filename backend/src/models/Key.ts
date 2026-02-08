@@ -1,5 +1,5 @@
 import { pool } from '../config/database';
-import {AddKeyData, KeyDetailsData, KeyListData,} from "../types/keysTypes";
+import {AddKeyData, KeyDetailsData, KeyListData,} from "../types/key";
 
 export class KeyModel {
 

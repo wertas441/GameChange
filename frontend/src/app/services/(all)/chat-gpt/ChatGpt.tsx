@@ -13,6 +13,8 @@ import Receive from "@/components/UI/servicesUI/Receive";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {validatePromoCode, validatePSNLogin} from "@/lib/validators/service";
+import {validateUserEmail} from "@/lib/validators/user";
 
 interface ChatGptFormValues {
     email: string;
@@ -150,7 +152,7 @@ export default function ChatGpt() {
                             label="Почта от аккаунта"
                             type="email"
                             error={errors.email?.message}
-                            {...register('email')}
+                            {...register('email', {validate: (value) => validateUserEmail(value) || true })}
                         />
 
                         <div className="space-y-4">
@@ -189,7 +191,7 @@ export default function ChatGpt() {
                             label="Промокод"
                             placeholder="Если есть"
                             error={errors.promoCode?.message}
-                            {...register('promoCode')}
+                            {...register('promoCode', {validate: (value) => validatePromoCode(value) || true })}
                         />
 
                         <div className="rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3 text-xs text-slate-400">

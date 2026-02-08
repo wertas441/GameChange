@@ -1,7 +1,7 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData} from "@/types/key";
+import {AddKeyData, KeyFormValues} from "@/types/key";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
@@ -11,37 +11,38 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackendApiResponse} from "@/types";
 import DropDownContent from "@/components/UI/DropDownContent";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
+import {
+    activationPlatformOptions,
+    genreOptions,
+    operationSystemOptions
+} from "@/lib/data";
+import MainTextarea from "@/components/inputs/MainTextArea";
+import {
+    validateKeyCPU,
+    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
+    validateKeyName, validateKeyOS, validateKeyOtherPicture,
+    validateKeyPlatforms, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
+    validateKeyUrl
+} from "@/lib/validators/key";
 
 export default function AddNewKey(){
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddKeyData>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
-    const toPicturesArray = (value: AddKeyData['otherPictures']) => {
-        if (Array.isArray(value)) {
-            return value;
-        }
-
-        return String(value ?? '')
-            .split(/[\n,]+/g)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0);
-    };
-
-    const onSubmit = async (values: AddKeyData) => {
+    const onSubmit = async (values: KeyFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload: AddKeyData = {
             name: values.name,
             keyUrl: values.keyUrl,
-            price: values.price,
+            price: Number(values.price),
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
-            otherPictures: toPicturesArray(values.otherPictures),
+            otherPictures: [values.firstOtherPicture, values.secondOtherPicture, values.thirdOtherPicture],
             developer: values.developer,
             publisher: values.publisher,
             operationSystem: values.operationSystem,
@@ -85,6 +86,7 @@ export default function AddNewKey(){
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Добавить новый ключ в магазин
                         </h2>
@@ -99,52 +101,51 @@ export default function AddNewKey(){
                                 id={`name`}
                                 label={`Название игры`}
                                 error={errors.name?.message}
-                                {...register('name')}
+                                {...register('name', {validate: (value) => validateKeyName(value) || true})}
                             />
 
                             <MainInput
                                 id={`keyUrl`}
                                 label={`URL для ключа`}
                                 error={errors.keyUrl?.message}
-                                {...register('keyUrl')}
+                                {...register('keyUrl', {validate: (value) => validateKeyUrl(value) || true})}
                             />
 
                             <MainInput
                                 id={`price`}
                                 label={`Цена (руб)`}
                                 error={errors.price?.message}
-                                {...register('price')}
+                                {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                             />
 
-                            <MainInput
+                            <MainTextarea
                                 id={`description`}
                                 label={`Описание`}
                                 error={errors.description?.message}
-                                {...register('description')}
+                                {...register('description', {validate: (value) => validateKeyDescription(value) || true})}
                             />
 
                             <MainInput
-                                id={`releaseData`}
+                                id={`releaseDate`}
                                 type={'date'}
                                 label={`Дата релиза`}
                                 error={errors.releaseDate?.message}
-                                {...register('releaseDate')}
+                                {...register('releaseDate', {validate: (value) => validateKeyReleaseDate(value) || true})}
                             />
 
                             <MainInput
                                 id={`developer`}
                                 label={`Разработчик`}
                                 error={errors.developer?.message}
-                                {...register('developer')}
+                                {...register('developer', {validate: (value) => validateKeyDeveloper(value) || true})}
                             />
 
                             <MainInput
                                 id={`publisher`}
                                 label={`Издатель`}
-                                error={errors.mainPicture?.message}
-                                {...register('publisher')}
+                                error={errors.publisher?.message}
+                                {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
                             />
-
                         </DropDownContent>
 
                         <DropDownContent label={`Изображения`}>
@@ -152,19 +153,32 @@ export default function AddNewKey(){
                                 id={`mainPicture`}
                                 label={`Обложка игры (url)`}
                                 error={errors.mainPicture?.message}
-                                {...register('mainPicture')}
+                                {...register('mainPicture', {validate: (value) => validateKeyMainPicture(value) || true})}
                             />
 
                             <MainInput
-                                id={`otherPictures`}
-                                label={`Скриншоты из игры (url)`}
-                                error={errors.otherPictures?.message}
-                                {...register('otherPictures')}
+                                id={`firstOtherPicture`}
+                                label={`Первый скриншот из игры (url)`}
+                                error={errors.firstOtherPicture?.message}
+                                {...register('firstOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                            />
+
+                            <MainInput
+                                id={`secondOtherPicture`}
+                                label={`Второй скриншот из игры (url)`}
+                                error={errors.secondOtherPicture?.message}
+                                {...register('secondOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                            />
+
+                            <MainInput
+                                id={`thirdOtherPicture`}
+                                label={`Третий скриншот из игры (url)`}
+                                error={errors.thirdOtherPicture?.message}
+                                {...register('thirdOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
                             />
                         </DropDownContent>
 
                         <DropDownContent label={`Системные требования`}>
-
                             <div className="flex items-center justify-between gap-3">
                                 <div className="w-full space-y-4">
                                     <h1 className={`mb-3 ml-2 text-base`}>Минимальные</h1>
@@ -172,25 +186,26 @@ export default function AddNewKey(){
                                         id={`minimalCPU`}
                                         label={`Процессор`}
                                         error={errors.systemRequirements?.minimal?.CPU?.message}
-                                        {...register('systemRequirements.minimal.CPU')}
+                                        {...register('systemRequirements.minimal.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`minimalGPU`}
                                         label={`Видеокарта`}
                                         error={errors.systemRequirements?.minimal?.GPU?.message}
-                                        {...register('systemRequirements.minimal.GPU')}
+                                        {...register('systemRequirements.minimal.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`minimalRAM`}
                                         label={`ОЗУ`}
                                         error={errors.systemRequirements?.minimal?.RAM?.message}
-                                        {...register('systemRequirements.minimal.RAM')}
+                                        {...register('systemRequirements.minimal.RAM', {validate: (value) => validateKeyRAM(value) || true})}
+
                                     />
                                     <MainInput
                                         id={`minimalMemory`}
                                         label={`Память`}
                                         error={errors.systemRequirements?.minimal?.memory?.message}
-                                        {...register('systemRequirements.minimal.memory')}
+                                        {...register('systemRequirements.minimal.memory', {validate: (value) => validateKeyMemory(value) || true})}
                                     />
                                 </div>
 
@@ -200,33 +215,35 @@ export default function AddNewKey(){
                                         id={`recommendedCPU`}
                                         label={`Процессор`}
                                         error={errors.systemRequirements?.recommended?.CPU?.message}
-                                        {...register('systemRequirements.recommended.CPU')}
+                                        {...register('systemRequirements.recommended.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedGPU`}
                                         label={`Видеокарта`}
                                         error={errors.systemRequirements?.recommended?.GPU?.message}
-                                        {...register('systemRequirements.recommended.GPU')}
+                                        {...register('systemRequirements.recommended.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedRAM`}
                                         label={`ОЗУ`}
                                         error={errors.systemRequirements?.recommended?.RAM?.message}
-                                        {...register('systemRequirements.recommended.RAM')}
+                                        {...register('systemRequirements.recommended.RAM', {validate: (value) => validateKeyRAM(value) || true})}
                                     />
                                     <MainInput
                                         id={`recommendedMemory`}
                                         label={`Память`}
                                         error={errors.systemRequirements?.recommended?.memory?.message}
-                                        {...register('systemRequirements.recommended.memory')}
+                                        {...register('systemRequirements.recommended.memory', {validate: (value) => validateKeyMemory(value) || true})}
                                     />
                                 </div>
                             </div>
                         </DropDownContent>
 
+
                         <Controller
                             control={control}
                             name="operationSystem"
+                            rules={{validate: (value) => validateKeyOS(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="operationSystem"
@@ -243,6 +260,7 @@ export default function AddNewKey(){
                         <Controller
                             control={control}
                             name="activationPlatform"
+                            rules={{validate: (value) => validateKeyPlatforms(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="activationPlatform"
@@ -259,6 +277,7 @@ export default function AddNewKey(){
                         <Controller
                             control={control}
                             name="genres"
+                            rules={{validate: (value) => validateKeyGenres(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="genres"

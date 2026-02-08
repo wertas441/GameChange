@@ -8,9 +8,9 @@ import cookieParser from 'cookie-parser';
 import { config } from './config';
 import {testConnection} from "./config/database.js";
 import {initDatabase} from "./database/init.js";
-import keysRoute from './routes/keys';
+import keyRoute from './routes/key';
 import userRoute from './routes/user';
-import reviewRoutes from './routes/reviews';
+import reviewRoute from './routes/review';
 
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
@@ -39,8 +39,8 @@ app.use(express.urlencoded({ extended: true })); // Парсинг URL-encoded �
 app.use(cookieParser()); // Куки
 
 app.use('/api/user', userRoute)
-app.use('/api/key', keysRoute);
-app.use('/api/review', reviewRoutes);
+app.use('/api/key', keyRoute);
+app.use('/api/review', reviewRoute);
 
 app.use((req, res) => {
     res.status(404).json({

@@ -13,6 +13,7 @@ import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import Features from "@/components/UI/servicesUI/Features";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {validatePromoCode, validatePSNLogin} from "@/lib/validators/service";
 
 interface PSPlusFormValues {
     psnLogin: string;
@@ -162,7 +163,7 @@ export default function PSPlus() {
                             id="psnLogin"
                             label="PSN логин"
                             error={errors.psnLogin?.message}
-                            {...register('psnLogin')}
+                            {...register('psnLogin', {validate: (value) => validatePSNLogin(value) || true })}
                         />
 
                         <div className="space-y-4">
@@ -201,7 +202,7 @@ export default function PSPlus() {
                             label="Промокод"
                             placeholder="Если есть"
                             error={errors.promoCode?.message}
-                            {...register('promoCode')}
+                            {...register('promoCode', {validate: (value) => validatePromoCode(value) || true })}
                         />
 
                         <div className="rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3 text-xs text-slate-400">
