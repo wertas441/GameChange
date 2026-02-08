@@ -1,7 +1,7 @@
 import pool from "../config/database";
 import fs from "fs";
 import path from "path";
-import {KeyDetailsData} from "../types/keysTypes";
+import {KeyDetailsData} from "../types/key";
 import {parseDateDDMMYYYY} from "../lib/indexUtils";
 
 function findKeysDataPath(): string {

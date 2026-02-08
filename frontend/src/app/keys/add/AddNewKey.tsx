@@ -19,11 +19,11 @@ import {
 import MainTextarea from "@/components/inputs/MainTextArea";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOtherPicture,
-    validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
+    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
+    validateKeyName, validateKeyOS, validateKeyOtherPicture,
+    validateKeyPlatforms, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
     validateKeyUrl
-} from "@/lib/validators/keyValidators";
+} from "@/lib/validators/key";
 
 export default function AddNewKey(){
 
@@ -38,7 +38,7 @@ export default function AddNewKey(){
         const payload: AddKeyData = {
             name: values.name,
             keyUrl: values.keyUrl,
-            price: values.price,
+            price: Number(values.price),
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
@@ -143,7 +143,7 @@ export default function AddNewKey(){
                             <MainInput
                                 id={`publisher`}
                                 label={`Издатель`}
-                                error={errors.mainPicture?.message}
+                                error={errors.publisher?.message}
                                 {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
                             />
                         </DropDownContent>
@@ -243,6 +243,7 @@ export default function AddNewKey(){
                         <Controller
                             control={control}
                             name="operationSystem"
+                            rules={{validate: (value) => validateKeyOS(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="operationSystem"
@@ -259,6 +260,7 @@ export default function AddNewKey(){
                         <Controller
                             control={control}
                             name="activationPlatform"
+                            rules={{validate: (value) => validateKeyPlatforms(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="activationPlatform"
@@ -275,6 +277,7 @@ export default function AddNewKey(){
                         <Controller
                             control={control}
                             name="genres"
+                            rules={{validate: (value) => validateKeyGenres(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="genres"

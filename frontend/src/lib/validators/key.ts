@@ -1,14 +1,17 @@
+
 export function validateKeyName(keyName: string): string | null {
-    if(!keyName.trim()){
+    const trimmedValue = keyName.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите имя ключа')
     }
 
-    if(keyName.length < 3){
-        return (`Имя ключа должно содержать минимум 3 символов (сейчас ${keyName.length})`)
+    if(trimmedValue.length < 3){
+        return (`Имя ключа должно содержать минимум 3 символов (сейчас ${trimmedValue.length})`)
     }
 
-    if(keyName.length > 100){
-        return (`Имя ключа может содержать максимум 100 символов (сейчас ${keyName.length})`)
+    if(trimmedValue.length > 100){
+        return (`Имя ключа может содержать максимум 100 символов (сейчас ${trimmedValue.length})`)
     }
 
     return null;
@@ -19,17 +22,17 @@ export function validateKeyUrl(keyUrl: string): string | null {
         return ('Пожалуйста, введите url для ключа')
     }
 
-    /// дописать проверку на пробелы и тд
-
     return null;
 }
 
 export function validateKeyPrice(keyPrice: string): string | null {
-    if(!keyPrice.trim()){
-        return ('Пожалуйста, введите имя ключа')
+    const trimmedValue = keyPrice.trim();
+
+    if(!trimmedValue){
+        return ('Пожалуйста, введите цену для ключа')
     }
 
-    const keyNumberPrice = Number(keyPrice);
+    const keyNumberPrice = Number(trimmedValue);
 
     if(keyNumberPrice < 10){
         return (`Цена ключа должна быть минимум 10 рублей (сейчас ${keyNumberPrice})`)
@@ -43,28 +46,38 @@ export function validateKeyPrice(keyPrice: string): string | null {
 }
 
 export function validateKeyDescription(keyDescription: string): string | null {
-    if(!keyDescription.trim()){
+    const trimmedValue = keyDescription.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите описание для ключа')
     }
 
-    if(keyDescription.length < 3){
-        return (`Описание ключа должно содержать минимум 50 символов (сейчас ${keyDescription.length})`)
+    if(trimmedValue.length < 50){
+        return (`Описание ключа должно содержать минимум 50 символов (сейчас ${trimmedValue.length})`)
     }
 
-    if(keyDescription.length > 1000){
-        return (`Имя ключа может содержать максимум 1000 символов (сейчас ${keyDescription.length})`)
+    if(trimmedValue.length > 1000){
+        return (`Описание ключа может содержать максимум 1000 символов (сейчас ${trimmedValue.length})`)
     }
 
     return null;
 }
 
 export function validateKeyReleaseDate(releaseDate: string): string | null {
-    if(!releaseDate.trim()){
+    const trimmedValue = releaseDate.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите дату релиза продукта')
     }
 
-    /// додоавбить проверку на формат, чтобы он был нужный
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmedValue)) {
+        return 'Дата релиза должна быть в формате ГГГГ-ММ-ДД';
+    }
 
+    const parsedDate = new Date(trimmedValue);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return 'Некорректная дата релиза';
+    }
 
     return null;
 }
@@ -86,55 +99,59 @@ export function validateKeyOtherPicture(otherPicture: string): string | null {
 }
 
 export function validateKeyDeveloper(developer: string): string | null {
-    if(!developer.trim()){
+    const trimmedValue = developer.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите названия разработчика продукта')
     }
 
-    if(developer.length < 2){
-        return (`Название разработчика должно содержать минимум 2 символа (сейчас ${developer.length})`)
+    if(trimmedValue.length < 2){
+        return (`Название разработчика должно содержать минимум 2 символа (сейчас ${trimmedValue.length})`)
     }
 
-    if(developer.length > 40){
-        return (`Название разработчика может содержать максимум 40 символов (сейчас ${developer.length})`)
+    if(trimmedValue.length > 40){
+        return (`Название разработчика может содержать максимум 40 символов (сейчас ${trimmedValue.length})`)
     }
 
     return null;
 }
 
 export function validateKeyPublisher(publisher: string): string | null {
-    if(!publisher.trim()){
+    const trimmedValue = publisher.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите названия издателя продукта')
     }
 
-    if(publisher.length < 2){
-        return (`Название издателя должно содержать минимум 2 символа (сейчас ${publisher.length})`)
+    if(trimmedValue.length < 2){
+        return (`Название издателя должно содержать минимум 2 символа (сейчас ${trimmedValue.length})`)
     }
 
-    if(publisher.length > 40){
-        return (`Название издателя может содержать максимум 40 символов (сейчас ${publisher.length})`)
+    if(trimmedValue.length > 40){
+        return (`Название издателя может содержать максимум 40 символов (сейчас ${trimmedValue.length})`)
     }
 
     return null;
 }
 
-export function validateKeyOS(items: string[]): string | null {
-    if(items.length === 0){
+export function validateKeyOS(items: string[] | undefined): string | null {
+    if(!items || items.length === 0){
         return ('Пожалуйста, выберите хотя бы одну операционную систему для продукта')
     }
 
     return null;
 }
 
-export function validateKeyPlatforms(items: string[]): string | null {
-    if(items.length === 0){
+export function validateKeyPlatforms(items: string[] | undefined): string | null {
+    if(!items || items.length === 0){
         return ('Пожалуйста, выберите хотя бы одну платформу для продукта')
     }
 
     return null;
 }
 
-export function validateKeyGenres(items: string[]): string | null {
-    if(items.length === 0){
+export function validateKeyGenres(items: string[] | undefined): string | null {
+    if(!items || items.length === 0){
         return ('Пожалуйста, выберите хотя бы один жанр для продукта')
     }
 
@@ -142,16 +159,36 @@ export function validateKeyGenres(items: string[]): string | null {
 }
 
 export function validateKeyCPU(cpu: string): string | null {
-    if(!cpu.trim()){
+    const trimmedValue = cpu.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите название процессора')
+    }
+
+    if (trimmedValue.length < 2) {
+        return (`Название процессора должно содержать минимум 2 символа (сейчас ${trimmedValue.length})`);
+    }
+
+    if (trimmedValue.length > 100) {
+        return (`Название процессора может содержать максимум 100 символов (сейчас ${trimmedValue.length})`);
     }
 
     return null;
 }
 
 export function validateKeyGPU(gpu: string): string | null {
-    if(!gpu.trim()){
+    const trimmedValue = gpu.trim();
+
+    if(!trimmedValue){
         return ('Пожалуйста, введите название видеокарты')
+    }
+
+    if (trimmedValue.length < 2) {
+        return (`Название видеокарты должно содержать минимум 2 символа (сейчас ${trimmedValue.length})`);
+    }
+
+    if (trimmedValue.length > 100) {
+        return (`Название видеокарты может содержать максимум 100 символов (сейчас ${trimmedValue.length})`);
     }
 
     return null;

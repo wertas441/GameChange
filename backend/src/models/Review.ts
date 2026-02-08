@@ -1,5 +1,5 @@
 import { pool } from '../config/database';
-import {ReviewBaseStructure, ReviewListStructure} from "../types/reviewTypes";
+import {ReviewBaseStructure, ReviewListStructure} from "../types/review";
 
 export class ReviewModel {
 

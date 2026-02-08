@@ -19,12 +19,12 @@ import {useCallback} from "react";
 import {deleteKey} from "@/lib/controllers/key";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGPU,
+    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU,
     validateKeyMainPicture, validateKeyMemory,
-    validateKeyName,
+    validateKeyName, validateKeyOS,
     validateKeyOtherPicture, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
-    validateKeyUrl
-} from "@/lib/validators/keyValidators";
+    validateKeyPlatforms, validateKeyUrl
+} from "@/lib/validators/key";
 import MainTextarea from "@/components/inputs/MainTextArea";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
@@ -33,7 +33,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
         defaultValues: {
             name: keyData.name,
             keyUrl: keyData.keyUrl,
-            price: keyData.price,
+            price: String(keyData.price),
             description: keyData.description,
             releaseDate: getDateInputFormat(keyData.releaseDate),
             mainPicture: keyData.mainPicture,
@@ -74,7 +74,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
             id: keyData.id,
             name: values.name,
             keyUrl: values.keyUrl,
-            price: values.price,
+            price: Number(values.price),
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
@@ -197,7 +197,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                 <MainInput
                                     id={`publisher`}
                                     label={`Издатель`}
-                                    error={errors.mainPicture?.message}
+                                    error={errors.publisher?.message}
                                     {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
                                 />
                             </DropDownContent>
@@ -296,6 +296,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                             <Controller
                                 control={control}
                                 name="operationSystem"
+                                rules={{validate: (value) => validateKeyOS(value) || true}}
                                 render={({field, fieldState}) => (
                                     <MultiSelectInput
                                         id="operationSystem"
@@ -312,6 +313,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                             <Controller
                                 control={control}
                                 name="activationPlatform"
+                                rules={{validate: (value) => validateKeyPlatforms(value) || true}}
                                 render={({field, fieldState}) => (
                                     <MultiSelectInput
                                         id="activationPlatform"
@@ -328,6 +330,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                             <Controller
                                 control={control}
                                 name="genres"
+                                rules={{validate: (value) => validateKeyGenres(value) || true}}
                                 render={({field, fieldState}) => (
                                     <MultiSelectInput
                                         id="genres"

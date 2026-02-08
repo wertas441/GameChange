@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import { KeyModel } from "../models/Key";
-import {AddKeyData, KeyDetailsData} from "../types/keysTypes";
+import {AddKeyData, KeyDetailsData} from "../types/key";
 import {validateKeyData} from "../lib/validators/key";
 import {adminMiddleware} from "../middleware/adminMiddleware";
 

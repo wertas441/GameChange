@@ -8,7 +8,7 @@ interface SystemRequirements {
 export interface KeyBaseData {
     name: string,
     keyUrl: string;
-    price: string,
+    price: number,
     mainPicture: string,
     releaseDate: string,
     operationSystem: string[],

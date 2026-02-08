@@ -14,7 +14,7 @@ import {
     validateUserEmail,
     validateUserName,
     validateUserPassword
-} from "@/lib/validators/userValidators";
+} from "@/lib/validators/user";
 
 interface RegistrationFormValues {
     userName: string;

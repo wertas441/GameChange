@@ -3,7 +3,7 @@ import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import {authMiddleware} from "../middleware/authMiddleware";
 import {ReviewModel} from "../models/Review";
-import {ReviewBaseStructure} from "../types/reviewTypes";
+import {ReviewBaseStructure} from "../types/review";
 import {validateReviewData} from "../lib/validators/review";
 
 const router = Router();

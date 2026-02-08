@@ -13,6 +13,7 @@ import Receive from "@/components/UI/servicesUI/Receive";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {validatePromoCode, validateSpotifyLogin, validateXboxLogin} from "@/lib/validators/service";
 
 interface SpotifyFormValues {
     spotifyLogin: string;
@@ -125,7 +126,6 @@ export default function Spotify() {
                 imageSrc={`/spotify-logo.png`}
             />
 
-
             <div className="mt-10 grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
                 <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
                     <div className="flex flex-col gap-2">
@@ -143,7 +143,7 @@ export default function Spotify() {
                             id="spotifyLogin"
                             label="Логин Spotify"
                             error={errors.spotifyLogin?.message}
-                            {...register('spotifyLogin')}
+                            {...register('spotifyLogin', {validate: (value) => validateSpotifyLogin(value) || true })}
                         />
 
                         <div>
@@ -179,7 +179,7 @@ export default function Spotify() {
                             label="Промокод"
                             placeholder="Если есть"
                             error={errors.promoCode?.message}
-                            {...register('promoCode')}
+                            {...register('promoCode', {validate: (value) => validatePromoCode(value) || true })}
                         />
 
                         <div className="rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3 text-xs text-slate-400">

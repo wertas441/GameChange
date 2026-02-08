@@ -1,6 +1,5 @@
 'use client'
 
-import Image from "next/image";
 import {useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
 import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
@@ -14,6 +13,7 @@ import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import Features from "@/components/UI/servicesUI/Features";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {validatePromoCode, validateXboxLogin} from "@/lib/validators/service";
 
 interface XboxFormValues {
     xboxLogin: string;
@@ -164,7 +164,7 @@ export default function Xbox() {
                             id="xboxLogin"
                             label="Xbox логин"
                             error={errors.xboxLogin?.message}
-                            {...register('xboxLogin')}
+                            {...register('xboxLogin', {validate: (value) => validateXboxLogin(value) || true })}
                         />
 
                         <div className="space-y-4">
@@ -203,7 +203,7 @@ export default function Xbox() {
                             label="Промокод"
                             placeholder="Если есть"
                             error={errors.promoCode?.message}
-                            {...register('promoCode')}
+                            {...register('promoCode', {validate: (value) => validatePromoCode(value) || true })}
                         />
 
                         <div className="rounded-xl border border-slate-800/70 bg-slate-950/40 px-4 py-3 text-xs text-slate-400">

@@ -1,4 +1,4 @@
-import {ReviewBaseStructure} from "../../types/reviewTypes";
+import {ReviewBaseStructure} from "../../types/review";
 
 export const validateReviewData = (requestData: ReviewBaseStructure) => {
 

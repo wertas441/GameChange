@@ -82,7 +82,7 @@ export default function KeysCatalog(){
     const hasIntersection = (values: string[], target: string[]) => values.some((value) => target.includes(value));
 
     const filteredKeys = keysData.filter((key) => {
-        const keyPrice = normalizePrice(key.price);
+        const keyPrice = normalizePrice(String(key.price));
         const min = normalizePrice(minPrice ?? '');
         const max = normalizePrice(maxPrice ?? '');
 

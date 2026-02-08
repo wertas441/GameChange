@@ -1,4 +1,4 @@
-import {AddKeyData} from "../../types/keysTypes";
+import {AddKeyData} from "../../types/key";
 
 export const validateKeyData = (requestData: AddKeyData) => {
 
@@ -11,13 +11,14 @@ export const validateKeyData = (requestData: AddKeyData) => {
     const checks = [
         validateKeyName(requestData.name),
         validateKeyUrl(requestData.keyUrl),
+        validateKeyPrice(requestData.price),
         validateKeyMainPicture(requestData.mainPicture),
         validateKeyReleaseDate(requestData.releaseDate),
-        validateKeyOperationSystem(requestData.operationSystem),
-        validateKeyActivationPlatform(requestData.activationPlatform),
+        validateKeyOS(requestData.operationSystem),
+        validateKeyPlatforms(requestData.activationPlatform),
         validateKeyGenres(requestData.genres),
         validateKeyDescription(requestData.description),
-        validateKeyOtherPictures(requestData.otherPictures),
+        validateKeyOtherPicture(requestData.otherPictures),
         validateKeyDeveloper(requestData.developer),
         validateKeyPublisher(requestData.publisher),
         validateKeyCPU(minimal.CPU),
@@ -34,77 +35,210 @@ export const validateKeyData = (requestData: AddKeyData) => {
 };
 
 
-function validateKeyName(name: string): boolean {
 
-    return true
+export function validateKeyName(keyName: string): boolean {
+    const trimmedValue = keyName.trim();
+
+    if(!trimmedValue){
+        return false;
+    }
+
+    if(trimmedValue.length < 3){
+        return false;
+    }
+
+    if(trimmedValue.length > 100){
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyUrl(url: string): boolean {
-
-    return true
+export function validateKeyUrl(keyUrl: string): boolean {
+    return !!keyUrl.trim();
 }
 
-function validateKeyMainPicture(mainPicture: string): boolean {
+export function validateKeyPrice(keyPrice: number): boolean {
+    if(keyPrice < 10){
+        return false;
+    }
 
-    return true
+    if(keyPrice > 20000){
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyReleaseDate(date: string): boolean {
+export function validateKeyDescription(keyDescription: string): boolean {
+    const trimmedValue = keyDescription.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if(trimmedValue.length < 50){
+        return false;
+    }
+
+    if(trimmedValue.length > 1000){
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyOperationSystem(operationSystem: string[]): boolean {
+export function validateKeyReleaseDate(releaseDate: string): boolean {
+    const trimmedValue = releaseDate.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(trimmedValue)) {
+        return false;
+    }
+
+    const parsedDate = new Date(trimmedValue);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyActivationPlatform(activationPlatform: string[]): boolean {
+export function validateKeyMainPicture(mainPicture: string): boolean {
+    if(!mainPicture.trim()){
+        return false;
+    }
 
-    return true
+    return true;
 }
 
-function validateKeyGenres(genres: string[]): boolean {
+export function validateKeyOtherPicture(otherPicture: string[]): boolean {
+    if (otherPicture.length < 3){
+        return false;
+    }
 
-    return true
+    return true;
 }
 
-function validateKeyDescription(description: string): boolean {
+export function validateKeyDeveloper(developer: string): boolean {
+    const trimmedValue = developer.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if(trimmedValue.length < 2){
+        return false;
+    }
+
+    if(trimmedValue.length > 40){
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyOtherPictures(otherPictures: string[]): boolean {
+export function validateKeyPublisher(publisher: string): boolean {
+    const trimmedValue = publisher.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if(trimmedValue.length < 2){
+        return false;
+    }
+
+    if(trimmedValue.length > 40){
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyDeveloper(developer: string): boolean {
+export function validateKeyOS(items: string[]): boolean {
+    if(!items || items.length === 0){
+        return false;
+    }
 
-    return true
+    return true;
 }
 
-function validateKeyPublisher(publisher: string): boolean {
+export function validateKeyPlatforms(items: string[]): boolean {
+    if(!items || items.length === 0){
+        return false;
+    }
 
-    return true
+    return true;
 }
 
-function validateKeyCPU(CPU: string): boolean {
+export function validateKeyGenres(items: string[]): boolean {
+    if(!items || items.length === 0){
+        return false;
+    }
 
-    return true
+    return true;
 }
 
-function validateKeyGPU(GPU: string): boolean {
+export function validateKeyCPU(cpu: string): boolean {
+    const trimmedValue = cpu.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if (trimmedValue.length < 2) {
+        return false;
+    }
+
+    if (trimmedValue.length > 100) {
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyRAM(RAM: number): boolean {
+export function validateKeyGPU(gpu: string): boolean {
+    const trimmedValue = gpu.trim();
 
-    return true
+    if(!trimmedValue){
+        return false;
+    }
+
+    if (trimmedValue.length < 2) {
+        return false;
+    }
+
+    if (trimmedValue.length > 100) {
+        return false;
+    }
+
+    return true;
 }
 
-function validateKeyMemory(memory: number): boolean {
+export function validateKeyRAM(ram: number): boolean {
+    if(ram < 2){
+        return false;
+    }
 
-    return true
+    if(ram > 100){
+        return false;
+    }
+
+    return true;
+}
+
+export function validateKeyMemory(memory: number): boolean {
+    if(memory < 1){
+        return false;
+    }
+
+    if(memory > 1000){
+        return false;
+    }
+
+    return true;
 }

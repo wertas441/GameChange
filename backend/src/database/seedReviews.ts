@@ -1,7 +1,7 @@
 import pool from "../config/database";
 import fs from "fs";
 import path from "path";
-import {ReviewListStructure} from "../types/reviewTypes";
+import {ReviewListStructure} from "../types/review";
 import {parseDateDDMMYYYY} from "../lib/indexUtils";
 
 function findReviewsDataPath(): string {
