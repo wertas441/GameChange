@@ -1,5 +1,6 @@
+import {memo} from "react";
 
-export default function InputError({error}:{error: string | undefined}){
+function InputError({error}:{error: string | undefined}){
 
     return (
         <div className="error">
@@ -10,3 +11,4 @@ export default function InputError({error}:{error: string | undefined}){
     )
 }
 
+export default memo(InputError);

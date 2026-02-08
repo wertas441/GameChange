@@ -1,3 +1,4 @@
+import {memo} from "react";
 
 interface IProps {
     label: string;
@@ -7,7 +8,7 @@ interface IProps {
     }[];
 }
 
-export default function Receive({label, data} : IProps) {
+function Receive({label, data} : IProps) {
 
     return (
         <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
@@ -24,3 +25,5 @@ export default function Receive({label, data} : IProps) {
         </div>
     )
 }
+
+export default memo(Receive);

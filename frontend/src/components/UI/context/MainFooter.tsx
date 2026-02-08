@@ -1,6 +1,7 @@
 import FooterNavItem from "@/components/elements/FooterNavItem";
+import {memo} from "react";
 
-export default function MainFooter() {
+function MainFooter() {
 
     return (
         <footer className="mt-16 border-t border-slate-800/80 bg-slate-950/60 text-slate-300">
@@ -31,7 +32,6 @@ export default function MainFooter() {
                             <FooterNavItem text={'Отзывы'} link={'/reviews'} />
                             <FooterNavItem text={'О нас'} link={'/about'} />
                             <FooterNavItem text={'История покупок'} link={'/user/purchases'} />
-
                         </ul>
                     </div>
 
@@ -51,3 +51,5 @@ export default function MainFooter() {
         </footer>
     );
 }
+
+export default memo(MainFooter);

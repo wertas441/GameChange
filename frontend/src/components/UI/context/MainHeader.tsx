@@ -5,7 +5,7 @@ import Image from "next/image";
 import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
 import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
-import {CircleUser, Search, X, ShoppingCart, TextAlignJustify} from 'lucide-react'
+import {CircleUser, Search, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
 import ShopNavBarItem from "@/components/elements/ShopNavBarItem";
 import {checkAuth, useUserStore} from "@/lib/store/userStore";
@@ -36,6 +36,7 @@ export default function MainHeader() {
 
     const [modalWindow, setModalWindow] = useState(false);
     const [query, setQuery] = useState<string>('');
+
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const searchBoxRef = useRef<HTMLDivElement | null>(null);
 
@@ -45,16 +46,27 @@ export default function MainHeader() {
     const { router } = usePageUtils();
     const { keysData, isLoading, isError } = useGameKeys();
 
-    const goToCartPage = useCallback(() => router.push('/cart'), [router]);
-    const goToUserPage = useCallback(() => router.push('/user/profile'), [router]);
+    const goToPage = useCallback((url: string) => {
+        router.push(url);
+        setModalWindow(false);
+    }, [router]);
 
-    const toggleModalWindow = useCallback(() => {
-        setModalWindow(prevState => !prevState);
-    }, []);
+    const toggleModalWindow = useCallback(() => setModalWindow(prevState => !prevState), []);
+
+    const onSearchInputFocus = () => {
+        setIsSearchOpen(true);
+        setModalWindow(false);
+    }
+
+    const onModalButtonClick = () => {
+        toggleModalWindow();
+        setIsSearchOpen(false);
+    }
 
     const cartBadgeValue = cartItemsCount > 99 ? '99+' : String(cartItemsCount);
 
     const normalizedQuery = query.trim().toLowerCase();
+
     const filteredKeys = useMemo(() => {
         if (!keysData || normalizedQuery.length < 2) return [];
 
@@ -67,6 +79,7 @@ export default function MainHeader() {
         if (normalizedQuery.length === 0) {
             setIsSearchOpen(false);
         }
+
     }, [normalizedQuery]);
 
     useEffect(() => {
@@ -104,17 +117,18 @@ export default function MainHeader() {
             <div className="mx-auto w-full px-4 py-3 sm:px-6 md:px-12">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between gap-3">
-                        <Link href="/" className="shrink-0">
-                            <h1 className="text-amber-400 font-semibold text-2xl tracking-wide leading-none">
-                                GameChange
-                            </h1>
-                        </Link>
+                        <button
+                            onClick={() => goToPage('/')}
+                            className="text-amber-400 cursor-pointer font-semibold text-2xl tracking-wide leading-none"
+                        >
+                            GameChange
+                        </button>
 
                         <div className="flex items-center gap-2 lg:hidden">
                             <div className="relative">
                                 <IconYellowBtn
                                     IconComponent={ShoppingCart}
-                                    onClick={goToCartPage}
+                                    onClick={() => goToPage('/cart')}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
 
@@ -134,7 +148,7 @@ export default function MainHeader() {
                             ) : (
                                 <IconYellowBtn
                                     IconComponent={CircleUser}
-                                    onClick={goToUserPage}
+                                    onClick={() => goToPage('/user/profile')}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
                             )}
@@ -144,10 +158,7 @@ export default function MainHeader() {
                     <div className="w-full lg:max-w-3xl">
                         <div className="relative flex items-center gap-2" ref={searchBoxRef}>
                             <div className="relative flex-1">
-                                <Search
-                                    className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400"
-                                    aria-hidden="true"
-                                />
+                                {useMemo(() => <Search className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" aria-hidden="true"/> , [])}
 
                                 <input
                                     id="game-search"
@@ -160,7 +171,7 @@ export default function MainHeader() {
                                             setIsSearchOpen(true);
                                         }
                                     }}
-                                    onFocus={() => setIsSearchOpen(true)}
+                                    onFocus={onSearchInputFocus}
                                     onKeyDown={(e) => {
                                         if (e.key === 'Escape') {
                                             setQuery('');
@@ -170,21 +181,10 @@ export default function MainHeader() {
                                     placeholder="Поиск игр, сервисов, подписок..."
                                     aria-label="Поиск"
                                     className={`${inputColorTheme} block w-full rounded-2xl border bg-slate-950/40 shadow-sm shadow-black/20
-                                    pl-10 pr-10 py-3 text-sm text-slate-50 outline-none ring-0 transition
+                                    pl-10 pr-4 py-3 text-sm text-slate-50 outline-none ring-0 transition
                                     hover:bg-slate-950/55
                                     focus:border-amber-300/70 focus:ring-2 focus:ring-amber-400/20`}
                                 />
-
-                                {query.length > 0 && (
-                                    <button
-                                        type="button"
-                                        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-xl p-1.5 text-slate-300 transition hover:bg-slate-800/60 hover:text-slate-50"
-                                        onClick={() => setQuery('')}
-                                        aria-label="Очистить поиск"
-                                    >
-                                        <X className="h-4 w-4" aria-hidden="true"/>
-                                    </button>
-                                )}
 
                                 {isSearchOpen && normalizedQuery.length > 0 && (
                                     <div className="absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-slate-800/80 bg-slate-900/95 p-2 shadow-xl shadow-black/30">
@@ -253,23 +253,22 @@ export default function MainHeader() {
 
                             <button
                                 type="button"
-                                onClick={toggleModalWindow}
+                                onClick={onModalButtonClick}
                                 className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-2.5 py-2.5 md:px-3 md:py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
                                 aria-label="Открыть меню"
                                 aria-expanded={modalWindow}
                             >
-                                <TextAlignJustify className="h-5 w-5" aria-hidden="true"/>
+                                {useMemo(() => <TextAlignJustify className="h-5 w-5" aria-hidden="true"/> , [])}
                             </button>
                         </div>
                     </div>
-
 
                     <div className="relative shrink-0 hidden lg:flex">
                         <div className="flex items-center gap-3">
                             <div className="relative">
                                 <IconYellowBtn
                                     IconComponent={ShoppingCart}
-                                    onClick={goToCartPage}
+                                    onClick={() => goToPage('/cart')}
                                     className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
                                 {cartItemsCount > 0 && (
@@ -288,7 +287,7 @@ export default function MainHeader() {
                             ) : (
                                 <IconYellowBtn
                                     IconComponent={CircleUser}
-                                    onClick={goToUserPage}
+                                    onClick={() => goToPage('/user/profile')}
                                     className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                                 />
                             )}
@@ -297,7 +296,7 @@ export default function MainHeader() {
                 </div>
             </div>
 
-            <div className={`absolute left-0 right-0 top-full z-40 transition-opacity duration-200 ${modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+            <div className={`absolute left-0 right-0 top-full z-50 transition-opacity duration-200 ${modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
                  aria-hidden={!modalWindow} onClick={toggleModalWindow}
             >
                 <div className="h-screen">

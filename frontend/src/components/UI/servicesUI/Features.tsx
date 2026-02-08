@@ -1,6 +1,6 @@
+import {memo} from "react";
 
-
-export default function Features({data}: {data: string[]}) {
+function Features({data}: {data: string[]}) {
 
     return (
         <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
@@ -18,3 +18,5 @@ export default function Features({data}: {data: string[]}) {
         </div>
     )
 }
+
+export default memo(Features)

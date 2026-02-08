@@ -1,6 +1,6 @@
 'use client'
 
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
 import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
@@ -138,6 +138,11 @@ export default function PSPlus() {
         }
     };
 
+    const onClick = useCallback((id: string) => {
+        setActivePlanId(id);
+        setValue("planId", id, { shouldValidate: true });
+    }, [setValue])
+
     return (
         <section className="w-full">
             <ServiceHeader
@@ -174,23 +179,16 @@ export default function PSPlus() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {plans.filter((plan) => plan.label === tier).map((plan) => {
-                                            const onClick = () => {
-                                                setActivePlanId(plan.id);
-                                                setValue("planId", plan.id, { shouldValidate: true });
-                                            }
-
-                                            return (
-                                                <ProductBtn
-                                                    key={plan.id}
-                                                    label={plan.duration}
-                                                    onClick={onClick}
-                                                    isActive={plan.id === activePlanId}
-                                                    price={plan.price}
-                                                    description={plan.description}
-                                                />
-                                            );
-                                        })}
+                                        {plans.filter((plan) => plan.label === tier).map((plan) => (
+                                            <ProductBtn
+                                                key={plan.id}
+                                                label={plan.duration}
+                                                onClick={() => onClick(plan.id)}
+                                                isActive={plan.id === activePlanId}
+                                                price={plan.price}
+                                                description={plan.description}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             ))}
