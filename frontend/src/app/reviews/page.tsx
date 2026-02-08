@@ -1,6 +1,6 @@
 import Reviews from "@/app/reviews/Reviews";
 import {Metadata} from "next";
-import {getReviewsList} from "@/lib/controllers/reviewController";
+import {getReviewsList} from "@/lib/controllers/review";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export const metadata: Metadata = {

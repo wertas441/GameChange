@@ -1,7 +1,7 @@
 import ChangeKey from "@/app/keys/[keyId]/change/ChangeKey";
 import {KeyMetadataParams} from "@/types/key";
 import {generateMetadataKeyName} from "@/lib";
-import {getKeyDetails} from "@/lib/controllers/keysController";
+import {getKeyDetails} from "@/lib/controllers/key";
 import {cookies} from "next/headers";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 

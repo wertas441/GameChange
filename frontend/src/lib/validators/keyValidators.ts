@@ -79,7 +79,7 @@ export function validateKeyMainPicture(mainPicture: string): string | null {
 
 export function validateKeyOtherPicture(otherPicture: string): string | null {
     if(!otherPicture.trim()){
-        return ('Пожалуйста, введите url изображения для описания продукта')
+        return ('Пожалуйста, введите url изображения для галереи')
     }
 
     return null;
@@ -157,37 +157,25 @@ export function validateKeyGPU(gpu: string): string | null {
     return null;
 }
 
-export function validateKeyRAM(ram: string): string | null {
-    if(!ram.trim()){
-        return ('Пожалуйста, введите количество оперативной памяти')
+export function validateKeyRAM(ram: number): string | null {
+    if(ram < 2){
+        return (`Оперативная память не может быть меньше 2 гигабайт (сейчас ${ram})`)
     }
 
-    const ramNumber = Number(ram);
-
-    if(ramNumber < 2){
-        return (`Оперативная память не может быть меньше 2 гигабайт (сейчас ${ramNumber})`)
-    }
-
-    if(ramNumber > 100){
-        return (`Оперативная память не может быть больше 100 гигабайт (сейчас ${ramNumber})`)
+    if(ram > 100){
+        return (`Оперативная память не может быть больше 100 гигабайт (сейчас ${ram})`)
     }
 
     return null;
 }
 
-export function validateKeyMemory(memory: string): string | null {
-    if(!memory.trim()){
-        return ('Пожалуйста, введите количество памяти на диске')
+export function validateKeyMemory(memory: number): string | null {
+    if(memory < 1){
+        return (`Память не может быть меньше 1 гигабайта (сейчас ${memory})`)
     }
 
-    const memoryNumber = Number(memory);
-
-    if(memoryNumber < 1){
-        return (`Память не может быть меньше 1 гигабайта (сейчас ${memoryNumber})`)
-    }
-
-    if(memoryNumber > 1000){
-        return (`Память не может быть больше 1000 гигабайт (сейчас ${memoryNumber})`)
+    if(memory > 1000){
+        return (`Память не может быть больше 1000 гигабайт (сейчас ${memory})`)
     }
 
     return null;

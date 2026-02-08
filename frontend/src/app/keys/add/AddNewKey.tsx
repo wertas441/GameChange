@@ -1,7 +1,7 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData} from "@/types/key";
+import {AddKeyData, KeyFormValues} from "@/types/key";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
@@ -11,9 +11,12 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackendApiResponse} from "@/types";
 import DropDownContent from "@/components/UI/DropDownContent";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
+import {
+    activationPlatformOptions,
+    genreOptions,
+    operationSystemOptions
+} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
-import {validateUserName} from "@/lib/validators/userValidators";
 import {
     validateKeyCPU,
     validateKeyDescription, validateKeyDeveloper, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
@@ -24,22 +27,11 @@ import {
 
 export default function AddNewKey(){
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddKeyData>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
-    const toPicturesArray = (value: AddKeyData['otherPictures']) => {
-        if (Array.isArray(value)) {
-            return value;
-        }
-
-        return String(value ?? '')
-            .split(/[\n,]+/g)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0);
-    };
-
-    const onSubmit = async (values: AddKeyData) => {
+    const onSubmit = async (values: KeyFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -50,7 +42,7 @@ export default function AddNewKey(){
             description: values.description,
             releaseDate: values.releaseDate,
             mainPicture: values.mainPicture,
-            otherPictures: toPicturesArray(values.otherPictures),
+            otherPictures: [values.firstOtherPicture, values.secondOtherPicture, values.thirdOtherPicture],
             developer: values.developer,
             publisher: values.publisher,
             operationSystem: values.operationSystem,
@@ -94,6 +86,7 @@ export default function AddNewKey(){
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Добавить новый ключ в магазин
                         </h2>
@@ -133,11 +126,11 @@ export default function AddNewKey(){
                             />
 
                             <MainInput
-                                id={`releaseData`}
+                                id={`releaseDate`}
                                 type={'date'}
                                 label={`Дата релиза`}
                                 error={errors.releaseDate?.message}
-                                {...register('releaseData', {validate: (value) => validateKeyReleaseDate(value) || true})}
+                                {...register('releaseDate', {validate: (value) => validateKeyReleaseDate(value) || true})}
                             />
 
                             <MainInput
@@ -153,7 +146,6 @@ export default function AddNewKey(){
                                 error={errors.mainPicture?.message}
                                 {...register('publisher', {validate: (value) => validateKeyPublisher(value) || true})}
                             />
-
                         </DropDownContent>
 
                         <DropDownContent label={`Изображения`}>
@@ -165,15 +157,28 @@ export default function AddNewKey(){
                             />
 
                             <MainInput
-                                id={`otherPictures`}
-                                label={`Скриншоты из игры (url)`}
-                                error={errors.otherPictures?.message}
-                                {...register('otherPictures', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                                id={`firstOtherPicture`}
+                                label={`Первый скриншот из игры (url)`}
+                                error={errors.firstOtherPicture?.message}
+                                {...register('firstOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                            />
+
+                            <MainInput
+                                id={`secondOtherPicture`}
+                                label={`Второй скриншот из игры (url)`}
+                                error={errors.secondOtherPicture?.message}
+                                {...register('secondOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
+                            />
+
+                            <MainInput
+                                id={`thirdOtherPicture`}
+                                label={`Третий скриншот из игры (url)`}
+                                error={errors.thirdOtherPicture?.message}
+                                {...register('thirdOtherPicture', {validate: (value) => validateKeyOtherPicture(value) || true})}
                             />
                         </DropDownContent>
 
                         <DropDownContent label={`Системные требования`}>
-
                             <div className="flex items-center justify-between gap-3">
                                 <div className="w-full space-y-4">
                                     <h1 className={`mb-3 ml-2 text-base`}>Минимальные</h1>
@@ -233,6 +238,7 @@ export default function AddNewKey(){
                                 </div>
                             </div>
                         </DropDownContent>
+
 
                         <Controller
                             control={control}

@@ -42,3 +42,25 @@ export interface KeyMetadataParams {
         keyId: string;
     }>
 }
+
+
+export interface KeyFormValues {
+    name: string;
+    keyUrl: string;
+    price: string;
+    description: string;
+    releaseDate: string;
+    mainPicture: string;
+    firstOtherPicture: string;
+    secondOtherPicture: string;
+    thirdOtherPicture: string;
+    developer: string;
+    publisher: string;
+    operationSystem: OperationSystem[];
+    activationPlatform: ActivationPlatform[];
+    genres: string[];
+    systemRequirements: {
+        minimal: SystemRequirements;
+        recommended: SystemRequirements;
+    }
+}

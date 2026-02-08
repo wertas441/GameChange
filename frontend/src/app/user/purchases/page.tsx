@@ -1,6 +1,6 @@
 import {Metadata} from "next";
 import Purchases from "@/app/user/purchases/Purchases";
-import {getPurchases} from "@/lib/controllers/userController";
+import {getPurchases} from "@/lib/controllers/user";
 import {cookies} from "next/headers";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 
