@@ -23,6 +23,10 @@ const catalogItems = [
         href: '/services',
     },
     {
+        text: 'Поддержка',
+        href: '/support',
+    },
+    {
         text: 'Отзывы',
         href: '/reviews',
     },

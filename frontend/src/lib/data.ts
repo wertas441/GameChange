@@ -121,4 +121,16 @@ export const reviewCategorys = [
     { value: 'xbox', label: 'Подписка Xbox Game Pass' },
 ];
 
+export const ticketTypes = [
+    { value: 'question', label: 'Вопрос' },
+    { value: 'complaint', label: 'Жалоба' },
+];
 
+export const ticketCategorys = [
+    { value: 'services-balance', label: 'Пополнение сервисов' },
+    { value: 'subscription', label: 'Покупка подписки' },
+    { value: 'get-product', label: 'Получение товара' },
+    { value: 'payment', label: 'Оплата' },
+    { value: 'service', label: 'Сервис' },
+    { value: 'other', label: 'Другое' },
+];

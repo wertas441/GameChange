@@ -3,7 +3,6 @@ import {BackendApiResponse} from "@/types";
 import {ReviewListStructure} from "@/types/review";
 
 export async function getReviewsList() {
-
     try {
         const { data } = await api.get<BackendApiResponse<{ reviews: ReviewListStructure[] }>>(`/review/reviews`);
 

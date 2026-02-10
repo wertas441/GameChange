@@ -1,97 +1,38 @@
-'use client'
+ 'use client'
 
 import Link from "next/link";
 import {ArrowUpRight, Clock, History, MessageSquare, Plus, User} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
-
-interface Ticket {
-    id: string;
-    type: 'Вопрос' | 'Жалоба';
-    category: string;
-    title: string;
-    description: string;
-    status: 'Ожидает ответа' | 'Ответ получен';
-    createdAt: string;
-    answeredAt: string;
-    ownerName: string;
-}
-
-const tickets: Ticket[] = [
-    {
-        id: '1423',
-        title: 'Не приходит письмо с подтверждением',
-        category: 'Аккаунт',
-        status: 'Ожидает ответа',
-        createdAt: '08 фев 2026, 12:15',
-        answeredAt: '08 фев 2026, 13:02',
-        ownerName: 'Артем Г.',
-    },
-    {
-        id: '1424',
-        title: 'Ошибка при оплате заказа',
-        category: 'Оплата',
-        status: 'Ожидает ответа',
-        createdAt: '08 фев 2026, 18:41',
-        answeredAt: '09 фев 2026, 09:20',
-        ownerName: 'Мария К.',
-    },
-    {
-        id: '1427',
-        title: 'Не могу активировать ключ',
-        category: 'Ключи',
-        status: 'Ожидает ответа',
-        createdAt: '09 фев 2026, 10:05',
-        answeredAt: '09 фев 2026, 10:42',
-        ownerName: 'Иван П.',
-    },
-    {
-        id: '1429',
-        title: 'Вопрос по возврату',
-        category: 'Сервис',
-        status: 'Ожидает ответа',
-        createdAt: '09 фев 2026, 11:12',
-        answeredAt: '09 фев 2026, 11:30',
-        ownerName: 'Николай Т.',
-    }
-];
+ import {Ticket} from "@/types/support";
 
 const statusStyles = {
     'Ожидает ответа': 'border-amber-400/40 bg-amber-500/10 text-amber-300',
     'Ответ получен': 'border-sky-400/40 bg-sky-500/10 text-sky-300',
 };
 
-
-export default function Support() {
+export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
     const userData = useUserStore(getUserData);
 
     const { isAdmin, userName } = userData;
 
     const normalizedTickets = useMemo(() => {
-        if (isAdmin) return tickets;
-        return tickets.map((ticket, index) => {
+        if (isAdmin) return ticketList;
+        return ticketList.map((ticket, index) => {
             if (index > 1) return ticket;
             return {
                 ...ticket,
                 ownerName: userName,
             };
         });
-    }, [isAdmin, userName]);
+    }, [isAdmin, ticketList, userName]);
 
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
         return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
-
-    const waitingCount = useMemo(() => (
-        visibleTickets.filter((ticket) => ticket.status === 'Ожидает ответа').length
-    ), [visibleTickets]);
-
-    const inWorkCount = useMemo(() => (
-        visibleTickets.filter((ticket) => ticket.status === 'Ответ получен').length
-    ), [visibleTickets]);
 
     if (!userData) {
         return <ServerErrorState />
@@ -113,7 +54,6 @@ export default function Support() {
                         </p>
                     </div>
 
-                    {!isAdmin && (
                         <div className="flex flex-col sm:flex-row gap-3">
                             <Link
                                 href="/support/add"
@@ -131,7 +71,6 @@ export default function Support() {
                                 История ваших обращений
                             </Link>
                         </div>
-                    )}
                 </div>
             </section>
 

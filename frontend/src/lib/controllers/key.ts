@@ -38,7 +38,7 @@ export async function deleteKey(tokenValue: string, keyId: number):Promise<void>
 
         return;
     } catch (error) {
-        if (showErrorMessage) console.error('get keyDetails error:', error);
+        if (showErrorMessage) console.error('delete key error:', error);
 
         return ;
     }
