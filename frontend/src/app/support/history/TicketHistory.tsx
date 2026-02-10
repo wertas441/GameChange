@@ -1,21 +1,21 @@
 'use client'
 
 import Link from "next/link";
-import {ArrowUpRight, History, Mail, User} from "lucide-react";
+import {ArrowUpRight, History, User} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
 import {Ticket} from "@/types/support";
 
-
 export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
+
     const userData = useUserStore(getUserData);
 
     if (!userData) {
         return <ServerErrorState />
     }
 
-    const { isAdmin, email, userName } = userData;
+    const { isAdmin, userName } = userData;
 
     const normalizedTickets = useMemo(() => {
         if (isAdmin) return ticketData;

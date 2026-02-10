@@ -13,5 +13,5 @@ export interface Ticket {
     ownerName: string; /// имя пользователя который написал тикет
     createdAt: string; /// когда был созданн
     answer?: string; /// ответ от администратора
-    answeredAt?: string; /// когда на тикет был дан ответ админом
+    answeredAt: string; /// когда на тикет был дан ответ админом
 }
