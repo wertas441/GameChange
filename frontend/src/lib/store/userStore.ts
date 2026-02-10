@@ -24,9 +24,10 @@ interface UserStore {
     isAuthenticated: boolean;
 
     getUserData: () => UserData | null;
-
     initUserData: () => Promise<void>;
     fetchUserData: () => Promise<UserData | undefined>;
+
+    clearUserData: () => Promise<void>;
 
     changeEmail: (email: string) => void;
     logout: () => Promise<void>;
@@ -42,6 +43,12 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
         if (get().userData) return;
 
         await get().fetchUserData();
+    },
+
+    clearUserData: async () => {
+        if (!(get().userData)) return;
+
+        set({ userData: null })
     },
 
     fetchUserData: async () => {
@@ -97,3 +104,4 @@ export const getUserStatus = (s: UserStore) => (s.userData ? s.userData.isAdmin 
 export const getUserData = (s: UserStore) => s.userData;
 export const makeLogout = (s: UserStore) => s.logout;
 export const makeInitUserData = (s: UserStore) => s.initUserData;
+export const makeClear = (s: UserStore) => s.clearUserData

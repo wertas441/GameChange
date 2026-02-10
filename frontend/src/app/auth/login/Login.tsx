@@ -9,8 +9,9 @@ import ServerFormError from "@/components/errors/ServerFormError";
 import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
-import {makeInitUserData, useUserStore} from "@/lib/store/userStore";
+import {makeInitUserData, makeClear, useUserStore} from "@/lib/store/userStore";
 import {validateUserEmail, validateUserPassword} from "@/lib/validators/user";
+import {useEffect} from "react";
 
 interface LoginFormValues {
     email: string;
@@ -22,8 +23,14 @@ export default function Login() {
 
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
 
-    const initUserData = useUserStore(makeInitUserData)
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+
+    const initUserData = useUserStore(makeInitUserData)
+    const clearStore = useUserStore(makeClear);
+
+    useEffect(() => {
+        void clearStore();
+    }, [clearStore])
 
     const onSubmit = async (values: LoginFormValues) => {
         setServerError(null);

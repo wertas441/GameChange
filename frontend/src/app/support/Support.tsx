@@ -1,11 +1,11 @@
- 'use client'
+'use client'
 
 import Link from "next/link";
 import {ArrowUpRight, Clock, History, MessageSquare, Plus, User} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
- import {Ticket} from "@/types/support";
+import {Ticket} from "@/types/support";
 
 const statusStyles = {
     'Ожидает ответа': 'border-amber-400/40 bg-amber-500/10 text-amber-300',
@@ -15,6 +15,10 @@ const statusStyles = {
 export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
     const userData = useUserStore(getUserData);
+
+    if (!userData) {
+        return <ServerErrorState />
+    }
 
     const { isAdmin, userName } = userData;
 
@@ -34,9 +38,6 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
         return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
 
     return (
         <div className="space-y-6">
@@ -54,23 +55,23 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                         </p>
                     </div>
 
-                        <div className="flex flex-col sm:flex-row gap-3">
-                            <Link
-                                href="/support/add"
-                                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
-                            >
-                                <Plus className="h-4 w-4" />
-                                Создать обращение
-                            </Link>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                        <Link
+                            href="/support/add"
+                            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
+                        >
+                            <Plus className="h-4 w-4" />
+                            Создать обращение
+                        </Link>
 
-                            <Link
-                                href="/support/history"
-                                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                            >
-                                <History className="h-4 w-4 text-amber-300" />
-                                История ваших обращений
-                            </Link>
-                        </div>
+                        <Link
+                            href="/support/history"
+                            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
+                        >
+                            <History className="h-4 w-4 text-amber-300" />
+                            История ваших обращений
+                        </Link>
+                    </div>
                 </div>
             </section>
 
@@ -99,19 +100,12 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                                 ? 'Здесь появятся новые обращения пользователей.'
                                 : 'Создайте тикет, если вам нужна помощь.'}
                         </p>
-                        <Link
-                            href="/support/add"
-                            className="mt-4 inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
-                        >
-                            <Plus className="h-4 w-4" />
-                            Создать тикет
-                        </Link>
                     </div>
                 ) : (
                     <div className="space-y-5">
                         {visibleTickets.map((ticket) => (
                             <div key={ticket.id}
-                                className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 md:p-6 shadow-lg shadow-black/20"
+                                 className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 md:p-6 shadow-lg shadow-black/20"
                             >
                                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                                     <div className="space-y-4">
@@ -135,10 +129,12 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                                                 <Clock className="h-3.5 w-3.5 text-amber-300" />
                                                 Создан: {ticket.createdAt}
                                             </span>
-                                            <span className="inline-flex items-center gap-2">
-                                                <MessageSquare className="h-3.5 w-3.5 text-amber-300" />
+                                            {ticket.answeredAt !== '-' && (
+                                                <span className="inline-flex items-center gap-2">
+                                                    <MessageSquare className="h-3.5 w-3.5 text-amber-300" />
                                                 Ответ получен: {ticket.answeredAt}
                                             </span>
+                                            )}
                                             {isAdmin && (
                                                 <span className="inline-flex items-center gap-2">
                                                     <User className="h-3.5 w-3.5 text-amber-300" />

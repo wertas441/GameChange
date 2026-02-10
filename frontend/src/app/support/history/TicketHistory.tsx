@@ -5,48 +5,10 @@ import {ArrowUpRight, History, Mail, User} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
+import {Ticket} from "@/types/support";
 
-type HistoryTicket = {
-    id: string;
-    title: string;
-    category: string;
-    closedAt: string;
-    ownerName: string;
-    ownerEmail: string;
-    result: string;
-};
 
-const historyTickets: HistoryTicket[] = [
-    {
-        id: '1320',
-        title: 'Перепутал почту при регистрации',
-        category: 'Аккаунт',
-        closedAt: '06 фев 2026, 18:55',
-        ownerName: 'Илья С.',
-        ownerEmail: 'ilya@example.com',
-        result: 'Почта изменена, доступ восстановлен.',
-    },
-    {
-        id: '1332',
-        title: 'Не прошла оплата подписки',
-        category: 'Оплата',
-        closedAt: '07 фев 2026, 14:22',
-        ownerName: 'Юлия Р.',
-        ownerEmail: 'yulia@example.com',
-        result: 'Оплата принята вручную, подписка активна.',
-    },
-    {
-        id: '1338',
-        title: 'Нужно уточнить регион ключа',
-        category: 'Ключи',
-        closedAt: '08 фев 2026, 09:40',
-        ownerName: 'Максим Д.',
-        ownerEmail: 'maxim@example.com',
-        result: 'Подобран ключ по нужному региону.',
-    },
-];
-
-export default function TicketHistory() {
+export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
     const userData = useUserStore(getUserData);
 
     if (!userData) {
@@ -56,21 +18,22 @@ export default function TicketHistory() {
     const { isAdmin, email, userName } = userData;
 
     const normalizedTickets = useMemo(() => {
-        if (isAdmin) return historyTickets;
-        return historyTickets.map((ticket, index) => {
+        if (isAdmin) return ticketData;
+
+        return ticketData.map((ticket, index) => {
             if (index > 0) return ticket;
             return {
                 ...ticket,
-                ownerEmail: email,
-                ownerName: userName || ticket.ownerName,
+                ownerName: ticket.ownerName,
             };
         });
-    }, [isAdmin, email, userName]);
+    }, [isAdmin, ticketData]);
 
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
-        return normalizedTickets.filter((ticket) => ticket.ownerEmail === email);
-    }, [isAdmin, normalizedTickets, email]);
+
+        return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
+    }, [isAdmin, normalizedTickets, userName]);
 
     return (
         <div className="space-y-6">
@@ -130,16 +93,10 @@ export default function TicketHistory() {
                                                 Закрыт: {ticket.closedAt}
                                             </span>
                                             {isAdmin && (
-                                                <>
-                                                    <span className="inline-flex items-center gap-2">
-                                                        <User className="h-3.5 w-3.5 text-amber-300" />
-                                                        {ticket.ownerName}
-                                                    </span>
-                                                    <span className="inline-flex items-center gap-2">
-                                                        <Mail className="h-3.5 w-3.5 text-amber-300" />
-                                                        {ticket.ownerEmail}
-                                                    </span>
-                                                </>
+                                                <span className="inline-flex items-center gap-2">
+                                                    <User className="h-3.5 w-3.5 text-amber-300" />
+                                                    {ticket.ownerName}
+                                                </span>
                                             )}
                                         </div>
                                     </div>
