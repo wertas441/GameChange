@@ -3,14 +3,15 @@ import { ApiResponse } from "../types";
 import { showBackendError } from "../lib/indexUtils";
 import {authMiddleware} from "../middleware/authMiddleware";
 import {TicketModel} from "../models/Ticket";
-import {TicketBaseStructure} from "../types/support";
 import {validateTicketData} from "../lib/validators/ticket";
+import {UserModel} from "../models/User";
+import {TicketBackendBaseStructure, TicketBackendStructure} from "../types/support";
 
 const router = Router();
 
 router.post('/ticket', authMiddleware, async (req, res) => {
     try {
-        const requestData: TicketBaseStructure = req.body;
+        const requestData: TicketBackendBaseStructure = req.body;
         const userId:number = (req as any).userId;
 
         const validationResult = validateTicketData(requestData);
@@ -33,12 +34,7 @@ router.post('/ticket', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const response: ApiResponse = {
-            success: true,
-            data: {
-                ticketDetails: result
-            }
-        };
+        const response: ApiResponse = { success: true };
 
         return res.status(200).json(response);
     } catch (error){
@@ -51,7 +47,10 @@ router.post('/ticket', authMiddleware, async (req, res) => {
 router.get('/tickets', authMiddleware, async (req, res) => {
     try {
         const userId:number = (req as any).userId;
-        const tickets = await TicketModel.getList(userId);
+
+        const isAdmin = await UserModel.isAdmin(userId);
+
+        const tickets = await TicketModel.getList(userId, isAdmin);
 
         if (!tickets) {
             const response: ApiResponse = {
@@ -77,8 +76,10 @@ router.get('/tickets', authMiddleware, async (req, res) => {
 
 router.get('/ticket', authMiddleware, async (req, res) => {
     try {
-        const ticketId = String(req.query.ticketId ?? '').trim();
+        const ticketId = String(req.query.ticketId);
         const userId:number = (req as any).userId;
+
+        const isAdmin = await UserModel.isAdmin(userId);
 
         if (!ticketId) {
             const response: ApiResponse = {
@@ -89,9 +90,9 @@ router.get('/ticket', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const result = await TicketModel.getDetails(ticketId, userId);
+        const ticketDetails = await TicketModel.getDetails(ticketId, userId, isAdmin);
 
-        if (!result) {
+        if (!ticketDetails) {
             const response: ApiResponse = {
                 success: false,
                 error: 'Ошибка при получении данных обращения, пожалуйста попробуйте позже.'
@@ -101,9 +102,7 @@ router.get('/ticket', authMiddleware, async (req, res) => {
 
         const response: ApiResponse = {
             success: true,
-            data: {
-                ticketDetails: result
-            }
+            data: { ticketDetails }
         };
 
         return res.status(200).json(response);
@@ -118,11 +117,10 @@ router.get('/ticket', authMiddleware, async (req, res) => {
 
 router.post('/ticket/answer', authMiddleware, async (req, res) => {
     try {
-        const ticketId = String(req.body?.ticketId ?? '').trim();
-        const answer = String(req.body?.answer ?? '').trim();
+        const requestData = req.body;
         const userId:number = (req as any).userId;
 
-        if (!ticketId || !answer) {
+        if (!requestData) {
             const response: ApiResponse = {
                 success: false,
                 message: 'Параметры ticketId и answer обязательны'
@@ -131,7 +129,18 @@ router.post('/ticket/answer', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const result = await TicketModel.gaveAnswer(ticketId, userId, answer);
+        const isAdmin = await UserModel.isAdmin(userId);
+
+        if (!isAdmin) {
+            const response: ApiResponse = {
+                success: false,
+                message: 'Это действие может выполнить только администратор'
+            };
+
+            return res.status(403).json(response);
+        }
+
+        const result = await TicketModel.gaveAnswer(requestData.ticketId, requestData.answer);
 
         if (!result) {
             const response: ApiResponse = {
@@ -141,12 +150,7 @@ router.post('/ticket/answer', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const response: ApiResponse = {
-            success: true,
-            data: {
-                ticket: result
-            }
-        };
+        const response: ApiResponse = { success: true };
 
         return res.status(200).json(response);
     } catch (error){
@@ -158,7 +162,7 @@ router.post('/ticket/answer', authMiddleware, async (req, res) => {
 
 router.delete('/ticket', authMiddleware, async (req, res) => {
     try {
-        const ticketId = String(req.body?.ticketId ?? '').trim();
+        const ticketId = req.body.ticketId;
         const userId:number = (req as any).userId;
 
         if (!ticketId) {
@@ -170,7 +174,18 @@ router.delete('/ticket', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const result = await TicketModel.delete(ticketId, userId);
+        const isAdmin = await UserModel.isAdmin(userId);
+
+        if (!isAdmin) {
+            const response: ApiResponse = {
+                success: false,
+                message: 'Это действие может выполнить только администратор'
+            };
+
+            return res.status(403).json(response);
+        }
+
+        const result = await TicketModel.delete(ticketId);
 
         if (!result) {
             const response: ApiResponse = {

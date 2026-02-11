@@ -1,13 +1,11 @@
 'use client'
 
-import Link from "next/link";
 import {Calendar, IdCard, Mail, Shield, User , KeyRound} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
 import ServerErrorState from "@/components/errors/ServerErrorState";
-import {useCallback, useMemo} from "react";
-import {router} from "next/client";
+import {useCallback} from "react";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 const getInitials = (name?: string, email?: string) => {

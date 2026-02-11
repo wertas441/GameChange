@@ -1,27 +1,37 @@
 
-export type TicketType =  'question' | 'complaint';
-export type TicketCategory =  'services-balance' | 'subscription' | 'get-product' | 'payment' | 'service' | 'other';
-export type TicketTypeLabel = 'Вопрос' | 'Жалоба';
-export type TicketCategoryLabel = 'Пополнение сервисов' | 'Покупка подписки' | 'Получение товара' | 'Оплата' | 'Сервис' | 'Другое';
+export type TicketBackendType =  'question' | 'complaint';
+export type TicketBackendCategory =  'services-balance' | 'subscription' | 'get-product' | 'payment' | 'service' | 'other';
+export type TicketFrontendType = 'Вопрос' | 'Жалоба';
+export type TicketFrontendCategory = 'Пополнение сервисов' | 'Покупка подписки' | 'Получение товара' | 'Оплата' | 'Сервис' | 'Другое';
 export type TicketStatus = 'Ожидает ответа' | 'Ответ получен';
 
-export interface TicketBaseStructure {
-    type: TicketType; /// тип тикета, вопрос или жалоба
-    category: TicketCategory; /// категория где возникла проблема
-    title: string; /// заголовок тикета
-    description: string; // описание проблемы от пользователя
+export interface TicketBackendBaseStructure {
+    type: TicketBackendType;
+    category: TicketBackendCategory;
+    title: string;
+    description: string;
 }
 
-export interface TicketFullData {
-    id: string; // уникальный номер тикета
-    type: TicketTypeLabel; /// тип тикета, вопрос или жалоба
-    category: TicketCategoryLabel; /// категория где возникла проблема
-    title: string; /// заголовок тикета
-    description: string; // описание проблемы от пользователя
-    status: TicketStatus;  /// статус, или на тикет уже ответили или он ждет ответа
-    ownerName: string; /// имя пользователя который написал тикет
-    createdAt: string; /// когда был созданн
-    answer?: string; /// ответ от администратора
-    answeredAt?: string; /// когда на тикет был дан ответ админом
+export interface TicketBackendStructure extends TicketBackendBaseStructure {
+    id: string;
+    status: TicketStatus;
+    ownerName: string;
+    createdAt: string;
+    answer?: string;
+    answeredAt?: string;
+}
+
+
+export interface TicketFrontendData {
+    id: string;
+    type: TicketFrontendType;
+    category: TicketFrontendCategory;
+    title: string;
+    description: string;
+    status: TicketStatus;
+    ownerName: string;
+    createdAt: string;
+    answer?: string;
+    answeredAt?: string;
 }
 

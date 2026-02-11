@@ -27,6 +27,7 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
         setIsSubmitting(true);
 
         const payload = {
+            ticketId: ticketData.id,
             answer: values.answer,
         };
 
@@ -85,7 +86,6 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
                         label={!isSubmitting ? 'Ответить' : 'Процесс…'}
                         disabled={isSubmitting}
                     />
-
                 </form>
             </section>
         </div>

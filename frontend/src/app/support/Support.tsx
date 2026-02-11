@@ -73,7 +73,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
             <section className="space-y-4">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
-                        <h2 className="text-xl font-semibold text-slate-50">Активные тикеты</h2>
+                        <h2 className="text-xl font-semibold text-slate-50">Активные обращения</h2>
                         <p className="mt-1 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Все обращения, ожидающие действий.'
@@ -98,12 +98,12 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                 ) : (
                     <div className="rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/40 p-6 text-center">
                         <p className="text-lg font-semibold text-slate-200">
-                            Пока нет активных тикетов
+                            Пока нет активных обращений
                         </p>
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Здесь появятся новые обращения пользователей.'
-                                : 'Создайте тикет, если вам нужна помощь.'}
+                                : 'Создайте обращение, если вам нужна помощь.'}
                         </p>
                     </div>
                 )}
