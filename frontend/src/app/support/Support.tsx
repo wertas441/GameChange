@@ -7,12 +7,17 @@ import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
 import {Ticket} from "@/types/support";
 import SupportRow from "@/components/elements/SupportRow";
+import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
 
 export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
     const userData = useUserStore(getUserData);
 
     const { isAdmin, userName } = userData ?? { isAdmin: false, userName: '' };
+
+    const { goToPage } = usePageUtils();
 
     const normalizedTickets = useMemo(() => {
         if (isAdmin) return ticketList;
@@ -51,21 +56,17 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3">
-                        <Link
-                            href="/support/add"
-                            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
-                        >
-                            <Plus className="h-4 w-4" />
-                            Создать обращение
-                        </Link>
+                        <YellowGlassBtn
+                            label={`Создать обращение`}
+                            onClick={() => {goToPage('/support/add')}}
+                            IconComponent={Plus}
+                        />
 
-                        <Link
-                            href="/support/history"
-                            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                        >
-                            <History className="h-4 w-4 text-amber-300" />
-                            История ваших обращений
-                        </Link>
+                        <GrayBtn
+                            label={`История ваших обращений`}
+                            IconComponent={History}
+                            onClick={() => {goToPage('/support/history')}}
+                        />
                     </div>
                 </div>
             </section>

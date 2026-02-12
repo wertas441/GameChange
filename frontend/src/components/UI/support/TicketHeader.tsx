@@ -9,7 +9,7 @@ const statusStyles: Record<Ticket['status'], string> = {
 interface IProps {
     id: string;
     createdAt: string;
-    answeredAt: string;
+    answeredAt?: string;
     ownerName: string;
     category: string;
     status: string;
@@ -38,7 +38,7 @@ export default function TicketHeader({id, createdAt, answeredAt, ownerName,  cat
                         </div>
                         <div className="flex items-center gap-2">
                             <MessageSquare className="h-4 w-4 text-amber-300" />
-                            <span>{answeredAt !== '-' ? `Ответ: ${answeredAt}` : 'Ожидаем ответ от администраторов' }</span>
+                            {answeredAt ? `Ответ получен: ${answeredAt}` : 'Ожидает ответа администратора'}
                         </div>
                         <div className="flex items-center gap-2">
                             <UserCircle className="h-4 w-4 text-amber-300" />

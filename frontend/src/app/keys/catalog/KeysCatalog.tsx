@@ -9,14 +9,15 @@ import {
     genreOptions,
     operationSystemOptions
 } from "@/lib/data";
-import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
+import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {useCallback, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
-import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
+import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import useGameKeys from "@/lib/hooks/useGameKeys";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
+import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -102,7 +103,7 @@ export default function KeysCatalog(){
                     <div className="mb-4 flex items-center justify-between">
                         <h2 className="text-lg font-semibold text-slate-50">Фильтры</h2>
 
-                        <GrayBtn label={`Сбросить`} onClick={handleReset} />
+                        <GrayBtn label={`Сбросить`} onClick={handleReset} className={`!w-auto`} />
                     </div>
 
                     <div className="space-y-4">
@@ -172,11 +173,19 @@ export default function KeysCatalog(){
                         />
                     </div>
 
-                    <div className="space-y-2 mt-4">
-                        <YellowBtn label={`Применить фильтры`} onClick={handleSubmit(handleApplyFilters)} />
+                    <div className="space-y-4 mt-4">
+                        <YellowGlassBtn
+                            label={`Применить фильтры`}
+                            onClick={handleSubmit(handleApplyFilters)}
+                            className={`!w-full !py-3`}
+                        />
 
                         {isAdmin && (
-                            <YellowBtn label={`Добавить игру`} onClick={addKeyPage} />
+                            <YellowGlassBtn
+                                label={`Добавить игру`}
+                                onClick={addKeyPage}
+                                className={`!w-full !py-3`}
+                            />
                         )}
                     </div>
                 </div>

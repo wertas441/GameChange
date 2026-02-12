@@ -4,14 +4,14 @@ export type TicketCategory =  'Пополнение сервисов' | 'Пок�
 export type TicketStatus =  'Ожидает ответа' | 'Ответ получен';
 
 export interface Ticket {
-    id: string; // уникальный номер тикета
-    type: TicketType; /// тип тикета, вопрос или жалоба
-    category: TicketCategory; /// категория где возникла проблема
-    title: string; /// заголовок тикета
-    description: string; // описание проблемы от пользователя
-    status: TicketStatus;  /// статус, или на тикет уже ответили или он ждет ответа
-    ownerName: string; /// имя пользователя который написал тикет
-    createdAt: string; /// когда был созданн
-    answer?: string; /// ответ от администратора
-    answeredAt: string; /// когда на тикет был дан ответ админом
+    id: string;
+    type: TicketType;
+    category: TicketCategory;
+    title: string;
+    description: string;
+    status: TicketStatus;
+    ownerName: string;
+    createdAt: string;
+    answer?: string;
+    answeredAt?: string;
 }

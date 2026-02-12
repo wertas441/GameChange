@@ -3,7 +3,7 @@
 import {KeyDetailsData, KeyFormValues} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {api, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
@@ -11,10 +11,10 @@ import DropDownContent from "@/components/UI/DropDownContent";
 import MainInput from "@/components/inputs/MainInput";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
-import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
+import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {useCallback} from "react";
 import {deleteKey} from "@/lib/controllers/key";
 import {
@@ -101,7 +101,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
         };
 
         try {
-            await api.put<BackendApiResponse>(`/key/key`, payload);
+            await serverApi.put<BackendApiResponse>(`/key/key`, payload);
 
             router.push('/keys/catalog');
         } catch (err) {

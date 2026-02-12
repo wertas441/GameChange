@@ -71,11 +71,8 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
                 ) : (
                     <div className="space-y-4">
                         {visibleTickets.map((ticket) => (
-                            <div
-                                key={ticket.id}
-                                className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 md:p-6 shadow-lg shadow-black/20"
-                            >
-                                <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                            <div key={ticket.id} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 md:p-6 shadow-lg shadow-black/20">
+                                <div className="flex flex-col gap-4 lg:flex-row items-start md:items-center lg:justify-between">
                                     <div className="space-y-3">
                                         <div className="flex flex-wrap items-center gap-2">
                                             <span className="rounded-full border border-emerald-400/40 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-300">
@@ -86,11 +83,11 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
                                             </span>
                                         </div>
                                         <h3 className="text-lg font-semibold text-slate-50">{ticket.title}</h3>
-                                        <p className="text-sm text-slate-400">{ticket.result}</p>
+                                        <p className="text-sm text-slate-400">{ticket.description}</p>
                                         <div className="flex flex-wrap gap-4 text-xs text-slate-400">
                                             <span className="inline-flex items-center gap-2">
                                                 <History className="h-3.5 w-3.5 text-amber-300" />
-                                                Закрыт: {ticket.closedAt}
+                                                Закрыт: {ticket.answeredAt}
                                             </span>
                                             {isAdmin && (
                                                 <span className="inline-flex items-center gap-2">
@@ -105,7 +102,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
                                         href={`/support/${ticket.id}`}
                                         className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
                                     >
-                                        Открыть тикет
+                                        Подробности
                                         <ArrowUpRight className="h-4 w-4" />
                                     </Link>
                                 </div>

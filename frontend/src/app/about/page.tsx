@@ -1,5 +1,5 @@
 import {Metadata} from "next";
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import Image from "next/image";
 
 export const metadata: Metadata = {

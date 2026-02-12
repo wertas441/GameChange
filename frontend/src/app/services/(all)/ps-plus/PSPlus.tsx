@@ -2,11 +2,11 @@
 
 import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import Receive from "@/components/UI/servicesUI/Receive";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
@@ -125,7 +125,7 @@ export default function PSPlus() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/services/ps-plus`, payload);
+            await serverApi.post<BackendApiResponse>(`/services/ps-plus`, payload);
 
             router.push('/services');
         } catch (err) {

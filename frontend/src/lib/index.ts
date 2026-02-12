@@ -7,11 +7,25 @@ export function getTokenHeaders(token: string) {
     return {Cookie: `token=${token}`};
 }
 
-export const api = axios.create({
-    baseURL: 'http://localhost:3003/api', // или из env-переменной
-    withCredentials: true,           
-    timeout: 5000,
-  });
+
+export const serverApi = axios.create({
+    baseURL: 'http://localhost:3003/api',
+    withCredentials: true,
+    timeout: 9000,
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
+export const clientApi = axios.create({
+    baseURL: '/api',
+    withCredentials: true,
+    timeout: 9000,
+    headers: {
+        'Content-Type': 'application/json',
+    }
+});
+
 
 export function getServerErrorMessage(err: unknown){
     let message:string = 'Не удалось связаться с сервером. Пожалуйста, проверьте интернет или попробуйте позже.';

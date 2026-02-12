@@ -1,7 +1,7 @@
 'use client'
 
 import {KeyDetailsData} from "@/types/key";
-import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
+import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/lib/data";
 import Image from "next/image";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";

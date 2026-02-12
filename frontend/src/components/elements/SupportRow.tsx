@@ -38,12 +38,10 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                             <Clock className="h-3.5 w-3.5 text-amber-300" />
                             Создан: {ticket.createdAt}
                         </span>
-                        {ticket.answeredAt !== '-' && (
                             <span className="inline-flex items-center gap-2">
                                 <MessageSquare className="h-3.5 w-3.5 text-amber-300" />
-                                Ответ получен: {ticket.answeredAt}
+                                {ticket.answeredAt ? `Ответ получен: ${ticket.answeredAt}` : 'Ожидает ответа администратора'}
                             </span>
-                        )}
                         {isAdmin && (
                             <span className="inline-flex items-center gap-2">
                                 <User className="h-3.5 w-3.5 text-amber-300" />

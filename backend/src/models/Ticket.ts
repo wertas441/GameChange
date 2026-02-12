@@ -41,7 +41,32 @@ export class TicketModel {
                 u.username AS "ownerName"
             FROM support_tickets t
             JOIN users u ON u.id = t.user_id
-            ${isAdmin ? '' : 'WHERE t.user_id = $1'}
+            WHERE t.status = false ${isAdmin ? '' : 'AND t.user_id = $1'}
+            ORDER BY t.created_at DESC, t.id DESC
+        `;
+
+        const result = await pool.query(query, isAdmin ? [] : [userId]);
+
+        return TicketModel.mapRows(result.rows);
+    }
+
+    static async getHistoryList(userId: number, isAdmin: boolean): Promise<TicketFrontendData[] | undefined> {
+
+        const query = `
+            SELECT
+                t.public_id AS id,
+                t.type AS type,
+                t.category AS category,
+                t.title AS title,
+                t.description AS description,
+                t.answer AS answer,
+                t.answered_at AS "answeredAt",
+                to_char(t.created_at, 'DD.MM.YYYY') AS "createdAt",
+                to_char(t.answered_at, 'DD.MM.YYYY') AS "answeredAt",
+                u.username AS "ownerName"
+            FROM support_tickets t
+            JOIN users u ON u.id = t.user_id
+            WHERE t.status = true ${isAdmin ? '' : 'AND t.user_id = $1'}
             ORDER BY t.created_at DESC, t.id DESC
         `;
 
@@ -105,16 +130,18 @@ export class TicketModel {
 
         const query = `
             UPDATE support_tickets t
-            SET answer = $2,    
+            SET answer = $2, 
+                status = true,
                 answered_at = NOW(),
                 updated_at = NOW()
             FROM users u
             WHERE t.public_id = $1 AND u.id = t.user_id
+            RETURNING t.id
         `;
 
         const result = await pool.query(query, [ticketId, answer]);
 
-        return result.rows?.[0];
+        return !!result.rows?.length;
     }
 
     static async delete(ticketId: string): Promise<boolean> {
@@ -151,5 +178,4 @@ export class TicketModel {
             answeredAt: row.answeredAt ?? undefined,
         };
     }
-
 }

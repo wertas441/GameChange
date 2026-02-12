@@ -5,7 +5,6 @@ import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
 import ServerErrorState from "@/components/errors/ServerErrorState";
-import {useCallback} from "react";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 const getInitials = (name?: string, email?: string) => {
@@ -20,11 +19,7 @@ const getInitials = (name?: string, email?: string) => {
 
 export default function Profile() {
 
-    const { router } = usePageUtils();
-
-    const goToPage = useCallback((url: string) => {
-        router.push(url);
-    }, [router])
+    const { goToPage } = usePageUtils();
 
     const userData = useUserStore(getUserData);
 

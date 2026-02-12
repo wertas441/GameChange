@@ -1,5 +1,5 @@
 import Link from "next/link";
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 
 const cardBlocks = [
     {

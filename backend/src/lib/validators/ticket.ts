@@ -1,6 +1,6 @@
-import {TicketBaseStructure, TicketCategory, TicketType} from "../../types/support";
+import {TicketBackendBaseStructure, TicketBackendCategory, TicketBackendType} from "../../types/support";
 
-export const validateTicketData = (requestData: TicketBaseStructure) => {
+export const validateTicketData = (requestData: TicketBackendBaseStructure) => {
 
     if (!requestData) {
         return false;
@@ -16,13 +16,13 @@ export const validateTicketData = (requestData: TicketBaseStructure) => {
     return checks.every(Boolean);
 };
 
-function validateTicketType(type: TicketType): boolean {
-    const allowed: TicketType[] = ['question', 'complaint'];
+function validateTicketType(type: TicketBackendType): boolean {
+    const allowed: TicketBackendType[] = ['question', 'complaint'];
     return allowed.includes(type);
 }
 
-function validateTicketCategory(category: TicketCategory): boolean {
-    const allowed: TicketCategory[] = [
+function validateTicketCategory(category: TicketBackendCategory): boolean {
+    const allowed: TicketBackendCategory[] = [
         'services-balance',
         'subscription',
         'get-product',

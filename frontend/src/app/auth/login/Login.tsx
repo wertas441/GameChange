@@ -1,12 +1,12 @@
 'use client'
 
 import { useForm } from 'react-hook-form';
-import {api, getServerErrorMessage, showErrorMessage} from '@/lib';
+import {serverApi, getServerErrorMessage, showErrorMessage} from '@/lib';
 import { usePageUtils } from '@/lib/hooks/usePageUtils';
 import MainInput from '@/components/inputs/MainInput';
 import {BackendApiResponse} from "@/types";
 import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
 import {makeInitUserData, makeClear, useUserStore} from "@/lib/store/userStore";
@@ -43,7 +43,7 @@ export default function Login() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/user/login`, payload);
+            await serverApi.post<BackendApiResponse>(`/user/login`, payload);
 
             setTimeout(async () => {
                 await initUserData();

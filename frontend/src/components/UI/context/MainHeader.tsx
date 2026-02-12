@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
-import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
+import IconYellowBtn from "@/components/buttons/yellow/IconYellowBtn";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {CircleUser, Search, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";

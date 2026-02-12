@@ -2,7 +2,7 @@
 
 import {create, StateCreator} from 'zustand'
 import {BackendApiResponse} from "@/types";
-import {api, getServerErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, clientApi} from "@/lib";
 import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
 
 const noopStorage: StateStorage = {
@@ -53,7 +53,7 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
 
     fetchUserData: async () => {
         try {
-            const { data } = await api.get<BackendApiResponse<{ userData: UserData }>>("/user/me",);
+            const { data } = await serverApi.get<BackendApiResponse<{ userData: UserData }>>("/user/me",);
 
             if (!data.success || !data.data?.userData) return undefined;
 
@@ -78,7 +78,7 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
 
     logout: async () => {
         try {
-            const response = await api.post<BackendApiResponse>(`/auth/logout`);
+            const response = await clientApi.post<BackendApiResponse>(`/user/logout`);
 
             if (!response.data.success) return;
 

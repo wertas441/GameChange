@@ -5,7 +5,7 @@ import {authMiddleware} from "../middleware/authMiddleware";
 import {TicketModel} from "../models/Ticket";
 import {validateTicketData} from "../lib/validators/ticket";
 import {UserModel} from "../models/User";
-import {TicketBackendBaseStructure, TicketBackendStructure} from "../types/support";
+import {TicketBackendBaseStructure} from "../types/support";
 
 const router = Router();
 
@@ -74,6 +74,36 @@ router.get('/tickets', authMiddleware, async (req, res) => {
     }
 });
 
+router.get('/tickets/history', authMiddleware, async (req, res) => {
+    try {
+        const userId:number = (req as any).userId;
+
+        const isAdmin = await UserModel.isAdmin(userId);
+
+        const tickets = await TicketModel.getHistoryList(userId, isAdmin);
+
+        if (!tickets) {
+            const response: ApiResponse = {
+                success: false,
+                message: 'Ошибка со стороны сервера при получении данных'
+            };
+
+            return res.status(500).json(response);
+        }
+
+        const response: ApiResponse = {
+            success: true,
+            data: { tickets }
+        };
+
+        res.status(200).json(response);
+    } catch (error) {
+        const response = showBackendError(error, 'Ошибка при получении списка обращений');
+
+        res.status(500).json(response);
+    }
+});
+
 router.get('/ticket', authMiddleware, async (req, res) => {
     try {
         const ticketId = String(req.query.ticketId);
@@ -112,8 +142,6 @@ router.get('/ticket', authMiddleware, async (req, res) => {
         res.status(500).json(response);
     }
 });
-
-
 
 router.post('/ticket/answer', authMiddleware, async (req, res) => {
     try {

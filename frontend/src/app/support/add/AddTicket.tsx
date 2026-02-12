@@ -3,14 +3,14 @@
 import {Controller, useForm} from "react-hook-form";
 import {TicketCategory, TicketType} from "@/types/support";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {ticketCategorys, ticketTypes} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import MainInput from "@/components/inputs/MainInput";
 
 interface AddTicketFormValues {
@@ -38,7 +38,7 @@ export default function AddTicket() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/support/ticket`, payload);
+            await serverApi.post<BackendApiResponse>(`/support/ticket`, payload);
 
             router.push('/support');
         } catch (err) {

@@ -7,9 +7,9 @@ import {ShieldCheck} from "lucide-react";
 import {useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainTextarea from "@/components/inputs/MainTextArea";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 
 interface AnswerToTicketFormValues {
@@ -32,7 +32,7 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/support/ticket/answer`, payload);
+            await serverApi.post<BackendApiResponse>(`/support/ticket/answer`, payload);
 
             router.push('/support');
         } catch (err) {

@@ -2,12 +2,12 @@
 
 import {useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import HideInput from "@/components/inputs/HideInput";
 import {
     validateUserConfirmPassword,
@@ -40,7 +40,7 @@ export default function Registration(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/user/registration`, payload);
+            await serverApi.post<BackendApiResponse>(`/user/registration`, payload);
 
             router.push('/auth/login');
         } catch (err) {
