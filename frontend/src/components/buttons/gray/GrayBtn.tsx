@@ -1,5 +1,5 @@
 import {FuncButtonTypes} from "@/types";
-import {memo} from "react";
+import {memo, useMemo} from "react";
 
 function GrayBtn({label, className = '', IconComponent, onClick}: FuncButtonTypes) {
 
@@ -12,7 +12,7 @@ function GrayBtn({label, className = '', IconComponent, onClick}: FuncButtonType
             hover:bg-slate-800/60 cursor-pointer ${className}`}
         >
             {IconComponent && (
-                <IconComponent className="h-4 w-4 text-amber-300" />
+                useMemo(() => <IconComponent className="h-4 w-4 text-amber-300" />, [])
             )}
 
             {label}

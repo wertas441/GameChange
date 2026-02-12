@@ -7,6 +7,19 @@ export function validateUserEmail(email: string): string | null {
     return null;
 }
 
+export function validateUserConfirmEmail(newEmail: string, confirmEmail: string): string | null {
+    if (!confirmEmail.trim()){
+        return ('Пожалуйста, подтвердите ваш email');
+    }
+
+    if (confirmEmail.trim() !== newEmail.trim()){
+        return ('Почты не совпадают');
+    }
+
+    return null;
+}
+
+
 export function validateUserName(userName: string): string | null {
     if(!userName.trim()){
         return ('Пожалуйста, введите имя пользователя')

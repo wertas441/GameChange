@@ -5,6 +5,7 @@ import MainInput from "@/components/inputs/MainInput";
 import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import {validateUserConfirmEmail, validateUserEmail, validateUserPassword} from "@/lib/validators/user";
 
 interface ChangeEmailValues {
     newEmail: string;
@@ -13,13 +14,8 @@ interface ChangeEmailValues {
 }
 
 export default function ChangeEmail() {
-    const {register, handleSubmit, formState: {errors}} = useForm<ChangeEmailValues>({
-        defaultValues: {
-            newEmail: '',
-            confirmEmail: '',
-            password: ''
-        }
-    });
+
+    const {register, handleSubmit, getValues, formState: {errors}} = useForm<ChangeEmailValues>();
 
     const {serverError, setServerError, isSubmitting, setIsSubmitting} = usePageUtils();
 
@@ -56,7 +52,7 @@ export default function ChangeEmail() {
                             type="email"
                             label="Новый email"
                             error={errors.newEmail?.message}
-                            {...register('newEmail')}
+                            {...register('newEmail', {validate: (value) => validateUserEmail(value) || true})}
                         />
 
                         <MainInput
@@ -64,14 +60,17 @@ export default function ChangeEmail() {
                             type="email"
                             label="Подтверждение email"
                             error={errors.confirmEmail?.message}
-                            {...register('confirmEmail')}
+                            {...register('confirmEmail', {
+                                validate: (value) =>
+                                    validateUserConfirmEmail(getValues("newEmail"), value) || true,
+                            })}
                         />
 
                         <MainInput
                             id="password"
                             label="Пароль от аккаунта"
                             error={errors.password?.message}
-                            {...register('password')}
+                            {...register('password', {validate: (value) => validateUserPassword(value) || true})}
                         />
 
                         <SubmitYellowBtn

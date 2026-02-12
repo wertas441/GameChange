@@ -14,7 +14,7 @@ export default function LayoutWrapper({children}: {children: ReactNode}) {
     return (
         <div className={``}>
             {!isAuthPage && (
-                <MainHeader />
+                <MainHeader className={!isDashboardPage ? 'mb-23' : 'mb-0'} />
             )}
 
             {!isDashboardPage ? (

@@ -6,6 +6,7 @@ import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
+import {validateUserConfirmPassword, validateUserPassword} from "@/lib/validators/user";
 
 interface ChangePasswordValues {
     currentPassword: string;
@@ -14,13 +15,8 @@ interface ChangePasswordValues {
 }
 
 export default function ChangePassword() {
-    const {register, handleSubmit, formState: {errors}} = useForm<ChangePasswordValues>({
-        defaultValues: {
-            currentPassword: '',
-            newPassword: '',
-            confirmPassword: ''
-        }
-    });
+
+    const {register, handleSubmit, getValues, formState: {errors}} = useForm<ChangePasswordValues>();
 
     const {serverError, setServerError, isSubmitting, setIsSubmitting} = usePageUtils();
 
@@ -56,19 +52,24 @@ export default function ChangePassword() {
                             id="currentPassword"
                             label="Текущий пароль"
                             error={errors.currentPassword?.message}
-                            {...register('currentPassword')}
+                            {...register('currentPassword', {validate: (value) => validateUserPassword(value) || true})}
                         />
+
                         <HideInput
                             id="newPassword"
                             label="Новый пароль"
                             error={errors.newPassword?.message}
-                            {...register('newPassword')}
+                            {...register('newPassword', {validate: (value) => validateUserPassword(value) || true})}
                         />
+
                         <MainInput
                             id="confirmPassword"
                             label="Подтверждение пароля"
                             error={errors.confirmPassword?.message}
-                            {...register('confirmPassword')}
+                            {...register('confirmPassword', {
+                                validate: (value) =>
+                                    validateUserConfirmPassword(getValues("newPassword"), value) || true,
+                            })}
                         />
 
                         <SubmitYellowBtn
@@ -85,10 +86,12 @@ export default function ChangePassword() {
                             Используйте минимум 10–12 символов, добавьте цифры и разные регистры. Хороший пароль —
                             это не слово, а фраза с заменами, например: «GameChange_2026».
                         </li>
+
                         <li>
                             Не повторяйте пароль на других сервисах. Если где-то случится утечка, это защитит аккаунт
                             от автоматических подборов.
                         </li>
+
                         <li>
                             После смены пароля может потребоваться повторная авторизация на новых устройствах и
                             в браузерах. Это нормальная мера безопасности.

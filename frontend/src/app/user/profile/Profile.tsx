@@ -1,6 +1,6 @@
 'use client'
 
-import {Calendar, IdCard, Mail, Shield, User, KeyRound, History} from "lucide-react";
+import {Calendar, IdCard, Mail, Shield, User, KeyRound} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
