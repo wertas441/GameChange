@@ -12,6 +12,12 @@ import {ticketCategorys, ticketTypes} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
 import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import MainInput from "@/components/inputs/MainInput";
+import {
+    validateTicketCategory,
+    validateTicketDescription,
+    validateTicketTitle,
+    validateTicketType
+} from "@/lib/validators/ticket";
 
 interface AddTicketFormValues {
     type: TicketType;
@@ -71,6 +77,7 @@ export default function AddTicket() {
                         <Controller
                             control={control}
                             name="type"
+                            rules={{validate: (value) => validateTicketType(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="type"
@@ -87,6 +94,7 @@ export default function AddTicket() {
                         <Controller
                             control={control}
                             name="category"
+                            rules={{validate: (value) => validateTicketCategory(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="categorys"
@@ -104,14 +112,15 @@ export default function AddTicket() {
                             id="title"
                             label="Названпие вопроса / жалобы"
                             error={errors.title?.message}
-                            {...register('title')}
+                            {...register('title', {validate: (value) => validateTicketTitle(value) || true })}
+
                         />
 
                         <MainTextarea
                             id="description"
                             label="Описание"
                             error={errors.description?.message}
-                            {...register('description')}
+                            {...register('description', {validate: (value) => validateTicketDescription(value) || true })}
                         />
 
                         <SubmitYellowBtn

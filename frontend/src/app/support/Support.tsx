@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import {History, Plus} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import ServerErrorState from "@/components/errors/ServerErrorState";
@@ -50,22 +49,25 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                         </h1>
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
-                                ? 'Отслеживайте активные тикеты и отвечайте пользователям.'
-                                : 'Создайте тикет или следите за статусом уже открытых вопросов.'}
+                                ? 'Отслеживайте активные обращения и отвечайте пользователям'
+                                : 'Создайте обращение или следите за статусом уже открытых вопросов'}
                         </p>
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3">
-                        <YellowGlassBtn
-                            label={`Создать обращение`}
-                            onClick={() => {goToPage('/support/add')}}
-                            IconComponent={Plus}
-                        />
+
+                        {!isAdmin && (
+                            <YellowGlassBtn
+                                label={`Создать обращение`}
+                                onClick={() => goToPage('/support/add')}
+                                IconComponent={Plus}
+                            />
+                        )}
 
                         <GrayBtn
-                            label={`История ваших обращений`}
+                            label={!isAdmin ? `История ваших обращений` : 'История всех обращений'}
                             IconComponent={History}
-                            onClick={() => {goToPage('/support/history')}}
+                            onClick={() => goToPage('/support/history')}
                         />
                     </div>
                 </div>
@@ -77,8 +79,8 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                         <h2 className="text-xl font-semibold text-slate-50">Активные обращения</h2>
                         <p className="mt-1 text-sm text-slate-400">
                             {isAdmin
-                                ? 'Все обращения, ожидающие действий.'
-                                : 'Ваши открытые запросы в поддержку.'}
+                                ? 'Все обращения, ожидающие действий'
+                                : 'Ваши открытые запросы в поддержку'}
                         </p>
                     </div>
                     <p className="text-sm text-slate-400">

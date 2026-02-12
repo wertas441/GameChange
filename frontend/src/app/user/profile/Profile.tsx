@@ -1,11 +1,12 @@
 'use client'
 
-import {Calendar, IdCard, Mail, Shield, User , KeyRound} from "lucide-react";
+import {Calendar, IdCard, Mail, Shield, User, KeyRound, History} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import GrayBtn from "@/components/buttons/gray/GrayBtn";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();
@@ -49,21 +50,17 @@ export default function Profile() {
                     </div>
 
                     <div className="flex-row md:flex flex-wrap gap-3 space-y-3 md:space-y-0">
-                        <button
+                        <GrayBtn
+                            label={`Сменить пароль`}
+                            IconComponent={KeyRound}
                             onClick={() => goToPage('/user/change-password')}
-                            className="inline-flex w-full md:w-auto justify-center items-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                        >
-                            <KeyRound className="h-4 w-4 text-amber-300" />
-                            Сменить пароль
-                        </button>
+                        />
 
-                        <button
+                        <GrayBtn
+                            label={`Сменить почту`}
+                            IconComponent={Mail}
                             onClick={() => goToPage('/user/change-email')}
-                            className="inline-flex items-center w-full justify-center md:w-auto gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                        >
-                            <Mail className="h-4 w-4 text-amber-300" />
-                            Сменить почту
-                        </button>
+                        />
                     </div>
                 </div>
             </section>

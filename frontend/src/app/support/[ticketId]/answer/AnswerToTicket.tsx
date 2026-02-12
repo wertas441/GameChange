@@ -11,6 +11,7 @@ import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
+import {validateTicketAnswer} from "@/lib/validators/ticket";
 
 interface AnswerToTicketFormValues {
     answer: string;
@@ -79,7 +80,7 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
                         id="answer"
                         label="Ответ для пользовтеля"
                         error={errors.answer?.message}
-                        {...register('answer')}
+                        {...register('answer', {validate: (value) => validateTicketAnswer(value) || true })}
                     />
 
                     <SubmitYellowBtn

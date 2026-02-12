@@ -51,8 +51,8 @@ export default function TicketHeader({id, createdAt, answeredAt, ownerName,  cat
                     </div>
                 </div>
                 <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}>
-                        {status}
-                    </span>
+                    {status}
+                </span>
             </div>
         </section>
 

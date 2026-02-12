@@ -30,6 +30,7 @@ function validateTicketCategory(category: TicketBackendCategory): boolean {
         'service',
         'other',
     ];
+
     return allowed.includes(category);
 }
 
