@@ -11,6 +11,11 @@ import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {reviewCategorys} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
 import InputError from "@/components/errors/InputError";
+import {
+    validateReviewCategory,
+    validateReviewDescription,
+    validateReviewRating,
+} from "@/lib/validators/review";
 
 interface AddReviewFormValues {
     category: string[];
@@ -68,6 +73,7 @@ export default function AddReview() {
                         <Controller
                             control={control}
                             name="category"
+                            rules={{validate: (value) => validateReviewCategory(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="categorys"
@@ -84,6 +90,7 @@ export default function AddReview() {
                         <Controller
                             control={control}
                             name="rating"
+                            rules={{validate: (value) => validateReviewRating(value) || true}}
                             render={({field, fieldState}) => (
                                 <div className="space-y-2">
                                     <label
@@ -126,7 +133,7 @@ export default function AddReview() {
                             id="description"
                             label="Описание"
                             error={errors.description?.message}
-                            {...register('description')}
+                            {...register('description', {validate: (value) => validateReviewDescription(value) || true })}
                         />
 
                         <SubmitYellowBtn

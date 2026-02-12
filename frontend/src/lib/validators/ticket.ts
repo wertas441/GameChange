@@ -1,7 +1,7 @@
 import {TicketCategory, TicketType} from "@/types/support";
 
-export function validateTicketType(type: TicketType): string | null {
-    const allowed: TicketType[] = ['Вопрос', 'Жалоба'];
+export function validateTicketType(type: string): string | null {
+    const allowed = ['question', 'complaint'];
 
     const validateResult =  allowed.includes(type);
 
@@ -12,14 +12,14 @@ export function validateTicketType(type: TicketType): string | null {
     return null;
 }
 
-export function validateTicketCategory(category: TicketCategory): string | null {
-    const allowed: TicketCategory[] = [
-        'Пополнение сервисов',
-        'Покупка подписки',
-        'Получение товара',
-        'Оплата',
-        'Сервис',
-        'Другое',
+export function validateTicketCategory(category: string): string | null {
+    const allowed = [
+        'services-balance',
+        'subscription',
+        'get-product',
+        'payment',
+        'service',
+        'other',
     ];
 
     const validateResult =  allowed.includes(category);

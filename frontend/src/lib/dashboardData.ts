@@ -32,7 +32,7 @@ export const dashboardFaqData = [
         question: "Что означает 'Region: GLOBAL' или 'Region: RU/CIS'?",
         answer: "Это регион активации. GLOBAL — активация по всему миру, RU/CIS — в России и СНГ."
     }
-];
+] as const;
 
 export const dashboardPrivileges = [
     {
@@ -65,7 +65,7 @@ export const dashboardPrivileges = [
         title: 'Надежный сервис',
         text: 'Работаем с официальными поставщиками и проверяем ключи.'
     },
-];
+] as const;
 
 export const dashboardFeedBackData = [
     {
@@ -124,4 +124,4 @@ export const dashboardFeedBackData = [
         rating: 5,
         description: 'Отличный способ пополнить кошелек Steam. Комиссия адекватная, деньги зачисляются практически мгновенно. Теперь не нужно просить друзей из-за границы.'
     }
-];
+] as const;

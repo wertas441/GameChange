@@ -28,17 +28,19 @@ interface AddTicketFormValues {
 
 export default function AddTicket() {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddTicketFormValues>();
+    const { register, handleSubmit, watch, control, formState: { errors } } = useForm<AddTicketFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+
+    console.log(watch('type'))
 
     const onSubmit = async (values: AddTicketFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            type: values.type[0],
-            category: values.category[0],
+            type: values.type,
+            category: values.category,
             title: values.title,
             description: values.description,
         };
@@ -83,7 +85,7 @@ export default function AddTicket() {
                                     id="type"
                                     label="Тип обращения"
                                     options={ticketTypes}
-                                    value={ticketTypes.filter(o => (field.value ?? []).includes(o.value as never))}
+                                    value={ticketTypes}
                                     onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                     isMulti={false}
                                     error={fieldState.error?.message}

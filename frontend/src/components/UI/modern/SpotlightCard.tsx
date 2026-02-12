@@ -57,13 +57,13 @@ const SpotlightCard: React.FC<SpotlightCardProps> = (
             onMouseLeave={handleMouseLeave}
             className={`relative rounded-2xl border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30 overflow-hidden p-8 ${className}`}
         >
-            <div
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out"
+            <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 ease-in-out"
                 style={{
                     opacity,
                     background: `radial-gradient(circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 80%)`,
                 }}
             />
+
             {children}
         </div>
     );

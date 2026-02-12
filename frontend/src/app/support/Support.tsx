@@ -56,13 +56,13 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
                     <div className="flex flex-col sm:flex-row gap-3">
 
-                        {!isAdmin && (
+                        {/*{!isAdmin && (*/}
                             <YellowGlassBtn
                                 label={`Создать обращение`}
                                 onClick={() => goToPage('/support/add')}
                                 IconComponent={Plus}
                             />
-                        )}
+                        {/*)}*/}
 
                         <GrayBtn
                             label={!isAdmin ? `История ваших обращений` : 'История всех обращений'}

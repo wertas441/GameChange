@@ -17,7 +17,7 @@ const cardBlocks = [
         description: "Узнайте, что думают о GameChange другие пользователи.",
         href: "/reviews",
     },
-];
+] as const;
 
 export default function NotFound() {
 

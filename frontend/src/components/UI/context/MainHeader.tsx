@@ -57,15 +57,15 @@ export default function MainHeader() {
 
     const toggleModalWindow = useCallback(() => setModalWindow(prevState => !prevState), []);
 
-    const onSearchInputFocus = () => {
+    const onSearchInputFocus = useCallback(() => {
         setIsSearchOpen(true);
         setModalWindow(false);
-    }
+    }, [])
 
-    const onModalButtonClick = () => {
+    const onModalButtonClick = useCallback(() => {
         toggleModalWindow();
         setIsSearchOpen(false);
-    }
+    }, [toggleModalWindow])
 
     const cartBadgeValue = cartItemsCount > 99 ? '99+' : String(cartItemsCount);
 

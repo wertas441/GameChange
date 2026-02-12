@@ -12,9 +12,9 @@ import {KeyListData} from "@/types/key";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 import {Pencil} from 'lucide-react'
 import IconYellowBtn from "@/components/buttons/yellow/IconYellowBtn";
-import {useRouter} from "next/navigation";
 import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {memo} from "react";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
 
@@ -39,9 +39,8 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
         count: 0,
     }
 
-    const router = useRouter();
+    const { goToPage } = usePageUtils();
 
-    const goToChangePage = () => router.push(`/keys/${keyData.keyUrl}/change`);
     const addToCart = useCartStore(addNewItem)
 
     const isActivationPlatform = (value: string): value is ActivationPlatform => value in activationPlatformIcons;
@@ -50,8 +49,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
     const linkUrl = `/keys/${keyUrl}`
 
     return (
-        <div key={id}
-            className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4 md:p-6 shadow-lg shadow-black/30 transition
+        <div className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4 md:p-6 shadow-lg shadow-black/30 transition
             hover:border-amber-400/40 hover:bg-slate-900/80`}
         >
 
@@ -119,7 +117,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                         {isAdmin && (
                             <IconYellowBtn
                                 IconComponent={Pencil}
-                                onClick={goToChangePage}
+                                onClick={() => goToPage(`/keys/${keyData.keyUrl}/change`)}
                                 className="w-auto! mt-0! bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
                             />
                         )}

@@ -43,7 +43,7 @@ export default function KeysCatalog(){
         defaultValues: defaultFilters,
     });
 
-    const { router } = usePageUtils();
+    const { goToPage } = usePageUtils();
 
     const isAdmin = useUserStore(getUserStatus)
     const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
@@ -54,8 +54,6 @@ export default function KeysCatalog(){
     }, [reset]);
 
     const handleApplyFilters = useCallback((values: KeysFilterFormValues) => setAppliedFilters(values), []);
-
-    const addKeyPage = useCallback(() => router.push(`/keys/add`), [router]);
 
     if (isLoading) {
         return <SpinnerLoader text="Загрузка списка игр..." />;
@@ -183,7 +181,7 @@ export default function KeysCatalog(){
                         {isAdmin && (
                             <YellowGlassBtn
                                 label={`Добавить игру`}
-                                onClick={addKeyPage}
+                                onClick={() => goToPage(`/keys/add`)}
                                 className={`!w-full !py-3`}
                             />
                         )}
