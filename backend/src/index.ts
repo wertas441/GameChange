@@ -11,6 +11,7 @@ import {initDatabase} from "./database/init.js";
 import keyRoute from './routes/key';
 import userRoute from './routes/user';
 import reviewRoute from './routes/review';
+import supportRoute from './routes/support';
 
 const shouldInit = process.env.DB_AUTO_INIT === 'true';
 
@@ -41,6 +42,7 @@ app.use(cookieParser()); // Куки
 app.use('/api/user', userRoute)
 app.use('/api/key', keyRoute);
 app.use('/api/review', reviewRoute);
+app.use('/api/support', supportRoute);
 
 app.use((req, res) => {
     res.status(404).json({

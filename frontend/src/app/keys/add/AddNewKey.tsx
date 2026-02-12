@@ -5,8 +5,8 @@ import {AddKeyData, KeyFormValues} from "@/types/key";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {BackendApiResponse} from "@/types";
 import DropDownContent from "@/components/UI/DropDownContent";
@@ -65,7 +65,7 @@ export default function AddNewKey(){
         };
 
         try {
-            await api.post<BackendApiResponse>(`/key/key`, payload);
+            await serverApi.post<BackendApiResponse>(`/key/key`, payload);
 
             router.push('/keys/catalog');
         } catch (err) {

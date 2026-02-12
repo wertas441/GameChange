@@ -2,18 +2,18 @@
 
 import {useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import Features from "@/components/UI/servicesUI/Features";
 import Receive from "@/components/UI/servicesUI/Receive";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode, validateSpotifyLogin, validateXboxLogin} from "@/lib/validators/service";
+import {validatePromoCode, validateSpotifyLogin} from "@/lib/validators/service";
 
 interface SpotifyFormValues {
     spotifyLogin: string;
@@ -105,7 +105,7 @@ export default function Spotify() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/services/spotify`, payload);
+            await serverApi.post<BackendApiResponse>(`/services/spotify`, payload);
 
             router.push('/services');
         } catch (err) {

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import {memo} from "react";
 
 interface IProps {
     label: string;
@@ -8,7 +9,7 @@ interface IProps {
     imageClassName?: string;
 }
 
-export default function ServiceHeader({label, text, imageSrc, imageAlt, imageClassName = ''}: IProps) {
+function ServiceHeader({label, text, imageSrc, imageAlt, imageClassName = ''}: IProps) {
 
     return (
         <div className="flex flex-col gap-4 text-center sm:text-left">
@@ -34,3 +35,5 @@ export default function ServiceHeader({label, text, imageSrc, imageAlt, imageCla
         </div>
     )
 }
+
+export default memo(ServiceHeader);

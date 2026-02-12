@@ -1,6 +1,6 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 
 const stackInformation = [
     'Frontend: Next.js (App Router), React, TypeScript, Tailwind CSS.',

@@ -2,7 +2,7 @@
 
 import {useForm} from "react-hook-form";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 

@@ -1,11 +1,11 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import Features from "@/components/UI/servicesUI/Features";
 import HowItWork from "@/components/UI/servicesUI/HowItWork";
@@ -59,7 +59,7 @@ export default function Steam() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/services/steam`, payload);
+            await serverApi.post<BackendApiResponse>(`/services/steam`, payload);
 
             router.push('/services');
         } catch (err) {

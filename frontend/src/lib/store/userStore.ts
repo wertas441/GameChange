@@ -2,7 +2,7 @@
 
 import {create, StateCreator} from 'zustand'
 import {BackendApiResponse} from "@/types";
-import {api, getServerErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, clientApi} from "@/lib";
 import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
 
 const noopStorage: StateStorage = {
@@ -24,9 +24,10 @@ interface UserStore {
     isAuthenticated: boolean;
 
     getUserData: () => UserData | null;
-
     initUserData: () => Promise<void>;
     fetchUserData: () => Promise<UserData | undefined>;
+
+    clearUserData: () => Promise<void>;
 
     changeEmail: (email: string) => void;
     logout: () => Promise<void>;
@@ -44,9 +45,15 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
         await get().fetchUserData();
     },
 
+    clearUserData: async () => {
+        if (!(get().userData)) return;
+
+        set({ userData: null })
+    },
+
     fetchUserData: async () => {
         try {
-            const { data } = await api.get<BackendApiResponse<{ userData: UserData }>>("/user/me",);
+            const { data } = await serverApi.get<BackendApiResponse<{ userData: UserData }>>("/user/me",);
 
             if (!data.success || !data.data?.userData) return undefined;
 
@@ -71,7 +78,7 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
 
     logout: async () => {
         try {
-            const response = await api.post<BackendApiResponse>(`/auth/logout`);
+            const response = await clientApi.post<BackendApiResponse>(`/user/logout`);
 
             if (!response.data.success) return;
 
@@ -97,3 +104,4 @@ export const getUserStatus = (s: UserStore) => (s.userData ? s.userData.isAdmin 
 export const getUserData = (s: UserStore) => s.userData;
 export const makeLogout = (s: UserStore) => s.logout;
 export const makeInitUserData = (s: UserStore) => s.initUserData;
+export const makeClear = (s: UserStore) => s.clearUserData

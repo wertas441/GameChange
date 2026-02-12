@@ -3,10 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
-import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
-import GrayBtn from "@/components/buttons/grayButton/GrayBtn";
+import YellowBtn from "@/components/buttons/yellow/YellowBtn";
+import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";

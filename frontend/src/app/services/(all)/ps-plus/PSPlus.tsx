@@ -1,12 +1,12 @@
 'use client'
 
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import Receive from "@/components/UI/servicesUI/Receive";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
@@ -125,7 +125,7 @@ export default function PSPlus() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/services/ps-plus`, payload);
+            await serverApi.post<BackendApiResponse>(`/services/ps-plus`, payload);
 
             router.push('/services');
         } catch (err) {
@@ -137,6 +137,11 @@ export default function PSPlus() {
             setIsSubmitting(false);
         }
     };
+
+    const onClick = useCallback((id: string) => {
+        setActivePlanId(id);
+        setValue("planId", id, { shouldValidate: true });
+    }, [setValue])
 
     return (
         <section className="w-full">
@@ -174,23 +179,16 @@ export default function PSPlus() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {plans.filter((plan) => plan.label === tier).map((plan) => {
-                                            const onClick = () => {
-                                                setActivePlanId(plan.id);
-                                                setValue("planId", plan.id, { shouldValidate: true });
-                                            }
-
-                                            return (
-                                                <ProductBtn
-                                                    key={plan.id}
-                                                    label={plan.duration}
-                                                    onClick={onClick}
-                                                    isActive={plan.id === activePlanId}
-                                                    price={plan.price}
-                                                    description={plan.description}
-                                                />
-                                            );
-                                        })}
+                                        {plans.filter((plan) => plan.label === tier).map((plan) => (
+                                            <ProductBtn
+                                                key={plan.id}
+                                                label={plan.duration}
+                                                onClick={() => onClick(plan.id)}
+                                                isActive={plan.id === activePlanId}
+                                                price={plan.price}
+                                                description={plan.description}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             ))}

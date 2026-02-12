@@ -1,11 +1,12 @@
 'use client'
 
-import Link from "next/link";
-import {Calendar, IdCard, Mail, Shield, User , KeyRound} from "lucide-react";
+import {Calendar, IdCard, Mail, Shield, User, KeyRound, History} from "lucide-react";
 import {getUserData, useUserStore} from "@/lib/store/userStore";
 import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
 import ServerErrorState from "@/components/errors/ServerErrorState";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import GrayBtn from "@/components/buttons/gray/GrayBtn";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();
@@ -19,17 +20,17 @@ const getInitials = (name?: string, email?: string) => {
 
 export default function Profile() {
 
+    const { goToPage } = usePageUtils();
+
     const userData = useUserStore(getUserData);
 
     if (!userData) {
         return <ServerErrorState />
     }
 
-    const {userName, email, createdAt, isAdmin, publicId} = userData;
+    const { userName, email, createdAt, isAdmin, publicId } = userData;
 
     const createdAtLabel = formatDateForProfile(createdAt);
-
-    const initials = getInitials(userName, email);
 
     return (
         <div className="space-y-6">
@@ -37,7 +38,7 @@ export default function Profile() {
                 <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                     <div className="flex items-center gap-4">
                         <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-slate-800/70 bg-slate-950/40 text-xl font-semibold text-amber-300">
-                            {initials}
+                            {getInitials(userName, email)}
                         </div>
                         <div>
                             <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Ваш аккаунт</p>
@@ -49,20 +50,17 @@ export default function Profile() {
                     </div>
 
                     <div className="flex-row md:flex flex-wrap gap-3 space-y-3 md:space-y-0">
-                        <Link
-                            href="/user/change-password"
-                            className="inline-flex w-full md:w-auto justify-center items-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                        >
-                            <KeyRound className="h-4 w-4 text-amber-300" />
-                            Сменить пароль
-                        </Link>
-                        <Link
-                            href="/user/change-email"
-                            className="inline-flex items-center w-full justify-center md:w-auto gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
-                        >
-                            <Mail className="h-4 w-4 text-amber-300" />
-                            Сменить почту
-                        </Link>
+                        <GrayBtn
+                            label={`Сменить пароль`}
+                            IconComponent={KeyRound}
+                            onClick={() => goToPage('/user/change-password')}
+                        />
+
+                        <GrayBtn
+                            label={`Сменить почту`}
+                            IconComponent={Mail}
+                            onClick={() => goToPage('/user/change-email')}
+                        />
                     </div>
                 </div>
             </section>

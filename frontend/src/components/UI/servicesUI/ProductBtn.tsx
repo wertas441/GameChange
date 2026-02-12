@@ -1,3 +1,4 @@
+import {memo} from "react";
 
 interface IProps {
     onClick: () => void;
@@ -7,7 +8,7 @@ interface IProps {
     description: string;
 }
 
-export default function ProductBtn({onClick, isActive, label, price, description}: IProps) {
+function ProductBtn({onClick, isActive, label, price, description}: IProps) {
 
     return (
         <button
@@ -29,3 +30,5 @@ export default function ProductBtn({onClick, isActive, label, price, description
         </button>
     )
 }
+
+export default memo(ProductBtn);

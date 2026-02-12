@@ -2,11 +2,11 @@
 
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {api, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellowButton/SubmitYellowBtn";
+import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {reviewCategorys} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
@@ -35,7 +35,7 @@ export default function AddReview() {
         };
 
         try {
-            await api.post<BackendApiResponse>(`/review/review`, payload);
+            await serverApi.post<BackendApiResponse>(`/review/review`, payload);
 
             router.push('/reviews');
         } catch (err) {

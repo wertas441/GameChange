@@ -1,0 +1,86 @@
+import {TicketCategory, TicketType} from "@/types/support";
+
+export function validateTicketType(type: TicketType): string | null {
+    const allowed: TicketType[] = ['Вопрос', 'Жалоба'];
+
+    const validateResult =  allowed.includes(type);
+
+    if (!validateResult) {
+        return 'Пожалуйста, укажите правильный тип для обращения';
+    }
+
+    return null;
+}
+
+export function validateTicketCategory(category: TicketCategory): string | null {
+    const allowed: TicketCategory[] = [
+        'Пополнение сервисов',
+        'Покупка подписки',
+        'Получение товара',
+        'Оплата',
+        'Сервис',
+        'Другое',
+    ];
+
+    const validateResult =  allowed.includes(category);
+
+    if (!validateResult) {
+        return 'Пожалуйста, укажите правильную категорию для обращения';
+    }
+
+    return null;
+}
+
+export function validateTicketTitle(title: string): string | null {
+    const trimmedValue = title.trim();
+
+    if (!trimmedValue) {
+        return 'Пожалуйста, введите заголовок для обращения';
+    }
+
+    if (trimmedValue.length < 3) {
+        return (`Заголовок должен содержать минимум 3 символа (сейчас ${trimmedValue.length})`)
+    }
+
+    if (trimmedValue.length > 120) {
+        return (`Заголовок может содержать максимум 120 символов (сейчас ${trimmedValue.length})`)
+    }
+
+    return null;
+}
+
+export function validateTicketDescription(description: string): string | null {
+    const trimmedValue = description.trim();
+
+    if (!trimmedValue) {
+        return 'Пожалуйста, введите заголовок для обращения';
+    }
+
+    if (trimmedValue.length < 10) {
+        return (`Описание должно содержать минимум 10 символов (сейчас ${trimmedValue.length})`)
+    }
+
+    if (trimmedValue.length > 2000) {
+        return (`Описание может содержать максимум 2000 символов (сейчас ${trimmedValue.length})`)
+    }
+
+    return null;
+}
+
+export function validateTicketAnswer(answer: string): string | null {
+    const trimmedValue = answer.trim();
+
+    if (!trimmedValue) {
+        return 'Пожалуйста, введите ответ для обращения';
+    }
+
+    if (trimmedValue.length < 10) {
+        return (`Ответ должен содержать минимум 10 символов (сейчас ${trimmedValue.length})`)
+    }
+
+    if (trimmedValue.length > 2000) {
+        return (`Ответ может содержать максимум 2000 символов (сейчас ${trimmedValue.length})`)
+    }
+
+    return null;
+}

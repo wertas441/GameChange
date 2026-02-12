@@ -131,7 +131,6 @@ export class UserModel {
         return result.rows ?? [];
     }
 
-
     static async addPurchases(userId: number, items: PurchaseCreateItem[]): Promise<void> {
         const client = await pool.connect();
 
@@ -161,5 +160,16 @@ export class UserModel {
         } finally {
             client.release();
         }
+    }
+
+    static async isAdmin(userId: number): Promise<boolean> {
+        const result = await pool.query(
+            'SELECT is_admin FROM users WHERE id = $1',
+            [userId],
+        );
+
+        if (result.rows.length > 0) return result.rows[0].is_admin;
+
+        return false;
     }
 }

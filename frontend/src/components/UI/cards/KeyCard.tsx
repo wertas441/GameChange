@@ -11,9 +11,9 @@ import {
 import {KeyListData} from "@/types/key";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 import {Pencil} from 'lucide-react'
-import IconYellowBtn from "@/components/buttons/yellowButton/IconYellowBtn";
+import IconYellowBtn from "@/components/buttons/yellow/IconYellowBtn";
 import {useRouter} from "next/navigation";
-import YellowBtn from "@/components/buttons/yellowButton/YellowBtn";
+import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {memo} from "react";
 
 function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {

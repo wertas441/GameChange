@@ -10,6 +10,7 @@ export interface BackendApiResponse<T = any> {
 
 export interface FuncButtonTypes {
     label: string;
+    IconComponent?: ElementType;
     onClick?: () => void;
     disabled?: boolean;
     className?: string;

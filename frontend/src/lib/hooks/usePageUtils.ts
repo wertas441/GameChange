@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {useRouter} from "next/navigation";
 
 export function usePageUtils() {
@@ -8,6 +8,10 @@ export function usePageUtils() {
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
     const router = useRouter();
 
+    const goToPage = useCallback((url: string) => {
+        router.push(url);
+    }, [router])
+
     return {
         serverError,
         setServerError,
@@ -15,6 +19,7 @@ export function usePageUtils() {
         isDeleting,
         setIsSubmitting,
         setIsDeleting,
-        router
+        router,
+        goToPage
     }
 }

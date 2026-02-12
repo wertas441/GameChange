@@ -1,6 +1,6 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellowButton/LinkYellowBtn";
+import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {ReviewListStructure} from "@/types/review";
 import {reviewCategorys} from "@/lib/data";
 
