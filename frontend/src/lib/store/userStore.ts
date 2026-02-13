@@ -104,4 +104,5 @@ export const getUserStatus = (s: UserStore) => (s.userData ? s.userData.isAdmin 
 export const getUserData = (s: UserStore) => s.userData;
 export const makeLogout = (s: UserStore) => s.logout;
 export const makeInitUserData = (s: UserStore) => s.initUserData;
-export const makeClear = (s: UserStore) => s.clearUserData
+export const makeClear = (s: UserStore) => s.clearUserData;
+export const changeEmail = (s: UserStore) => s.changeEmail;

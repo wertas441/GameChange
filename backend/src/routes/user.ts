@@ -174,9 +174,7 @@ router.get('/purchases', authMiddleware, async (req, res) => {
 router.post('/purchases', authMiddleware, async (req, res) => {
     try {
         const userId:number = (req as any).userId;
-        const requestData = Array.isArray(req.body)
-            ? req.body
-            : (req.body as { items?: PurchaseCreateItem[] })?.items;
+        const requestData = req.body;
 
         if (!Array.isArray(requestData) || requestData.length === 0) {
             const response: ApiResponse = {
@@ -198,6 +196,114 @@ router.post('/purchases', authMiddleware, async (req, res) => {
     }
 });
 
+
+router.post('/change-password', authMiddleware, async (req, res) => {
+    try {
+        const { currentPassword, newPassword } = req.body;
+        const userId = (req as any).userId as number;
+
+        const currentPasswordError:boolean = validateUserPassword(currentPassword);
+        const newPasswordError:boolean = validateUserPassword(newPassword);
+
+        if (!currentPasswordError || !newPasswordError) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Ошибка смены пароля, пожалуйста проверьте введенные вами данные.'
+            };
+            return res.status(400).json(response);
+        }
+
+        await UserModel.changePassword(userId, currentPassword, newPassword);
+
+        const response: ApiResponse = { success: true };
+
+        res.status(200).json(response);
+    } catch (error){
+        const err: any = error;
+
+        if (err?.code === 'INVALID_CURRENT_PASSWORD') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Текущий пароль указан неверно.'
+            };
+            return res.status(400).json(response);
+        }
+
+        if (err?.code === 'USER_NOT_FOUND') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Пользователь не найден.'
+            };
+            return res.status(404).json(response);
+        }
+
+        const response = showBackendError(error, 'Ошибка при смене пароля');
+
+        res.status(500).json(response);
+    }
+});
+
+router.post('/change-email', authMiddleware, async (req, res) => {
+    try {
+        const { newEmail, password } = req.body;
+        const userId:number = (req as any).userId;
+
+        const currentEmailError:boolean = validateUserEmail(newEmail);
+        const passwordError:boolean = validateUserPassword(password);
+
+        if (!currentEmailError || !passwordError) {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Ошибка смены почты, пожалуйста проверьте введенные вами данные.'
+            };
+            return res.status(400).json(response);
+        }
+
+        await UserModel.changeEmail(userId, newEmail, password);
+
+        const response: ApiResponse = { success: true };
+
+        res.status(200).json(response);
+    } catch (error) {
+        const err: any = error;
+
+        if (err?.code === 'INVALID_CURRENT_PASSWORD') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Текущий пароль указан неверно.'
+            };
+            return res.status(400).json(response);
+        }
+
+        if (err?.code === 'USER_NOT_FOUND') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Пользователь не найден.'
+            };
+            return res.status(404).json(response);
+        }
+
+        if (err?.code === 'EMAIL_ALREADY_IN_USE') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Указанная почта уже используется другим аккаунтом.'
+            };
+            return res.status(400).json(response);
+        }
+
+        if (err?.code === 'EMAIL_SAME_AS_CURRENT') {
+            const response: ApiResponse = {
+                success: false,
+                error: 'Новый email совпадает с текущим.'
+            };
+            return res.status(400).json(response);
+        }
+
+        const response = showBackendError(error, 'Ошибка при смене почты');
+
+        res.status(500).json(response);
+    }
+});
 
 
 export default router;

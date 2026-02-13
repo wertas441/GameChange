@@ -6,6 +6,9 @@ import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {validateUserConfirmEmail, validateUserEmail, validateUserPassword} from "@/lib/validators/user";
+import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
+import {BackendApiResponse} from "@/types";
+import {changeEmail, useUserStore} from "@/lib/store/userStore";
 
 interface ChangeEmailValues {
     newEmail: string;
@@ -17,12 +20,32 @@ export default function ChangeEmail() {
 
     const {register, handleSubmit, getValues, formState: {errors}} = useForm<ChangeEmailValues>();
 
-    const {serverError, setServerError, isSubmitting, setIsSubmitting} = usePageUtils();
+    const {serverError, setServerError, router, isSubmitting, setIsSubmitting} = usePageUtils();
 
-    const onSubmit = async () => {
+    const makeChangeEmail = useUserStore(changeEmail)
+
+    const onSubmit = async (values: ChangeEmailValues) => {
         setServerError(null);
         setIsSubmitting(true);
-        setTimeout(() => setIsSubmitting(false), 600);
+
+        const payload = {
+            newEmail: values.newEmail,
+            password: values.password,
+        };
+
+        try {
+            await serverApi.post<BackendApiResponse>(`/user/change-email`, payload);
+
+            makeChangeEmail(values.newEmail)
+            router.replace('/user/profile');
+        } catch (err) {
+            const message:string = getServerErrorMessage(err)
+
+            setServerError(message);
+            if (showErrorMessage) console.error('change-email error:', err);
+
+            setIsSubmitting(false)
+        }
     };
 
     return (

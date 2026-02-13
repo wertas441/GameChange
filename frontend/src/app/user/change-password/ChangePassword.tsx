@@ -6,7 +6,9 @@ import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import {validateUserConfirmPassword, validateUserPassword} from "@/lib/validators/user";
+import {validateNewPassword, validateUserConfirmPassword, validateUserPassword} from "@/lib/validators/user";
+import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
+import {BackendApiResponse} from "@/types";
 
 interface ChangePasswordValues {
     currentPassword: string;
@@ -18,12 +20,29 @@ export default function ChangePassword() {
 
     const {register, handleSubmit, getValues, formState: {errors}} = useForm<ChangePasswordValues>();
 
-    const {serverError, setServerError, isSubmitting, setIsSubmitting} = usePageUtils();
+    const {serverError, setServerError, router, isSubmitting, setIsSubmitting} = usePageUtils();
 
-    const onSubmit = async () => {
+    const onSubmit = async (values: ChangePasswordValues) => {
         setServerError(null);
         setIsSubmitting(true);
-        setTimeout(() => setIsSubmitting(false), 600);
+
+        const payload = {
+            currentPassword: values.currentPassword,
+            newPassword: values.newPassword,
+        };
+
+        try {
+            await serverApi.post<BackendApiResponse>(`/user/change-password`, payload);
+
+            router.replace('/user/profile');
+        } catch (err) {
+            const message:string = getServerErrorMessage(err)
+
+            setServerError(message);
+            if (showErrorMessage) console.error('change-password error:', err);
+
+            setIsSubmitting(false)
+        }
     };
 
     return (
@@ -59,7 +78,10 @@ export default function ChangePassword() {
                             id="newPassword"
                             label="Новый пароль"
                             error={errors.newPassword?.message}
-                            {...register('newPassword', {validate: (value) => validateUserPassword(value) || true})}
+                            {...register('newPassword', {
+                                validate: (value) =>
+                                    validateNewPassword(value, getValues("currentPassword")) || true,
+                            })}
                         />
 
                         <MainInput
