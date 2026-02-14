@@ -11,11 +11,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 
     const userData = useUserStore(getUserData);
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
-
-    const { isAdmin, userName } = userData;
+    const { isAdmin, userName } = userData ?? { isAdmin: false, userName: '' };
 
     const normalizedTickets = useMemo(() => {
         if (isAdmin) return ticketData;
@@ -34,6 +30,10 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 
         return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
+
+    if (!userData) {
+        return <ServerErrorState />
+    }
 
     return (
         <div className="space-y-6">

@@ -1,10 +1,4 @@
 import {Clock, MessageSquare, Tag, UserCircle} from "lucide-react";
-import {Ticket} from "@/types/support";
-
-const statusStyles: Record<Ticket['status'], string> = {
-    'Ожидает ответа': 'border-amber-400/40 bg-amber-500/10 text-amber-300',
-    'Ответ получен': 'border-sky-400/40 bg-sky-500/10 text-sky-300',
-};
 
 interface IProps {
     id: string;
@@ -16,6 +10,14 @@ interface IProps {
 }
 
 export default function TicketHeader({id, createdAt, answeredAt, ownerName,  category, status}: IProps) {
+
+    const getCorrectStyle = () : string => {
+        if (status == 'Ожидает ответа') {
+            return 'border-amber-400/40 bg-amber-500/10 text-amber-300'
+        }
+
+        return 'border-sky-400/40 bg-sky-500/10 text-sky-300'
+    }
 
     return (
         <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
@@ -50,7 +52,7 @@ export default function TicketHeader({id, createdAt, answeredAt, ownerName,  cat
                         </div>
                     </div>
                 </div>
-                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusStyles[status]}`}>
+                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${getCorrectStyle()}`}>
                     {status}
                 </span>
             </div>
