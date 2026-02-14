@@ -47,11 +47,11 @@ function SimpleModalWindow(
                 aria-labelledby="delete-modal-title"
                 aria-describedby="delete-modal-description"
             >
-                <h3 id="delete-modal-title" className="text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                <h3 id="delete-modal-title" className="text-lg font-semibold leading-6 text-white">
                     {windowLabel}
                 </h3>
                 <div className="mt-3">
-                    <p id="delete-modal-description" className="text-sm text-gray-600 dark:text-gray-400">
+                    <p id="delete-modal-description" className="text-sm text-gray-400">
                         {windowText}
                     </p>
                 </div>

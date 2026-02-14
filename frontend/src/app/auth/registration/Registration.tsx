@@ -15,6 +15,7 @@ import {
     validateUserName,
     validateUserPassword
 } from "@/lib/validators/user";
+import PixelBlast from "@/components/PixelBlast";
 
 interface RegistrationFormValues {
     userName: string;
@@ -54,7 +55,25 @@ export default function Registration(){
     };
 
     return (
-        <div className={`min-h-screen  text-slate-50 flex items-center justify-center py-8`}>
+        <div className={`min-h-screen  text-slate-50 flex items-center justify-center`}>
+
+            <div className="absolute inset-0 z-0">
+                <PixelBlast
+                    variant="square"
+                    pixelSize={3}
+                    color="#d2e826"
+                    patternScale={2}
+                    patternDensity={1}
+                    enableRipples
+                    rippleSpeed={0.5}
+                    rippleThickness={0.1}
+                    rippleIntensityScale={1}
+                    speed={0.7}
+                    transparent
+                    edgeFade={0.5}
+                />
+            </div>
+
             <div className="relative z-10 w-full max-w-3xl items-center">
                 <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">

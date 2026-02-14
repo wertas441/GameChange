@@ -99,7 +99,7 @@ export default function Cart(){
                             <div className="flex items-center justify-between border-b border-slate-800/70 pb-4">
                                 <h2 className="text-lg font-medium text-slate-50">Итоги заказа</h2>
 
-                                <GrayBtn label={`Очистить корзину`} onClick={toggleModalWindow} />
+                                <GrayBtn label={`Очистить корзину`} onClick={toggleModalWindow} className={`!w-auto`} />
                             </div>
                             <div className="mt-6 space-y-4">
                                 <div className="flex items-center justify-between">

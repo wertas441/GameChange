@@ -44,7 +44,7 @@ router.post('/review', authMiddleware, async (req, res) => {
         if (!validationResult) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка добавления нового отзыва, пожалуйста проверьте введенные вами данные.'
+                error: `Ошибка добавления нового отзыва, пожалуйста проверьте введенные вами данные`
             };
             return res.status(400).json(response);
         }

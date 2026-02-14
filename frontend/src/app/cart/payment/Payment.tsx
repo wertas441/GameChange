@@ -10,6 +10,8 @@ import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {addPurchases} from "@/lib/controllers/user";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import ServerFormError from "@/components/errors/ServerFormError";
+import {validateUserEmail} from "@/lib/validators/user";
+import {validateCardCVC, validateCardDate, validateCardNumber} from "@/lib/validators/purchases";
 
 interface PaymentFormValues {
     email: string;
@@ -28,8 +30,7 @@ export default function Payment({token}: {token: string}) {
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
-
+    const { serverError, setServerError, isSubmitting } = usePageUtils();
 
     const onSubmit = async () => {
 
@@ -90,9 +91,8 @@ export default function Payment({token}: {token: string}) {
                             id="email"
                             type="email"
                             label="Email для чека"
-                            placeholder="you@example.com"
                             error={errors.email?.message}
-                            {...register('email')}
+                            {...register('email', {validate: (value) => validateUserEmail(value) || true })}
                         />
 
                         <MainInput
@@ -100,7 +100,8 @@ export default function Payment({token}: {token: string}) {
                             label="Номер карты"
                             placeholder="0000 0000 0000 0000"
                             error={errors.cardNumber?.message}
-                            {...register('cardNumber')}
+                            {...register('cardNumber', {validate: (value) => validateCardNumber(value) || true })}
+
                         />
 
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -109,14 +110,15 @@ export default function Payment({token}: {token: string}) {
                                 label="Срок действия"
                                 placeholder="MM/YY"
                                 error={errors.cardDate?.message}
-                                {...register('cardDate')}
+                                {...register('cardDate', {validate: (value) => validateCardDate(value) || true })}
+
                             />
                             <MainInput
                                 id="cardCVC"
                                 label="CVC / CVV"
                                 placeholder="123"
                                 error={errors.cardCVC?.message}
-                                {...register('cardCVC')}
+                                {...register('cardCVC', {validate: (value) => validateCardCVC(value) || true })}
                             />
                         </div>
 

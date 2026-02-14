@@ -16,7 +16,7 @@ export const validateReviewData = (requestData: ReviewBaseStructure) => {
 };
 
 
-function validateReviewCategory(category: string | null | undefined): boolean {
+function validateReviewCategory(category: string): boolean {
     const allowed = [
         'key',
         'chatGPT',
@@ -27,12 +27,11 @@ function validateReviewCategory(category: string | null | undefined): boolean {
         'xbox',
     ];
 
-    if (!category || category.length === 0) {
+    if (!category) {
         return false;
     }
 
-    const selected = category[0];
-    const validateResult =  allowed.includes(selected);
+    const validateResult =  allowed.includes(category);
 
     if (!validateResult) {
         return false;
@@ -51,7 +50,6 @@ function validateReviewRating(rating: number | undefined): boolean {
     }
 
     return true
-
 }
 
 function validateReviewDescription(description: string): boolean {

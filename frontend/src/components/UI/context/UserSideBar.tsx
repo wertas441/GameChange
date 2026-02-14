@@ -1,3 +1,5 @@
+'use client'
+
 import {
     User,
     Lock,
@@ -11,6 +13,7 @@ import {makeLogout, useUserStore} from "@/lib/store/userStore";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
 import UserSideBarBtn from "@/components/buttons/UserSideBarBtn";
+import {usePathname} from "next/navigation";
 
 const settingsMenuItems = [
     { id: 'profile', link: '/user/profile',  label: 'Профиль', icon: User },
@@ -20,7 +23,10 @@ const settingsMenuItems = [
     { id: 'projectInformation', link: '/user/information', label: 'Информация о проекте', icon: Info },
 ] as const;
 
-export default function UserSideBar({pathname}: {pathname: string}) {
+export default function UserSideBar() {
+
+    const pathname = usePathname()
+
     const { router } = usePageUtils();
 
     const { isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef } = useSimpleModalWindow()

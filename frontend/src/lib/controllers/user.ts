@@ -21,14 +21,19 @@ export async function getPurchases(tokenValue: string) {
 }
 
 export async function addPurchases(tokenValue: string, cartItems: CartItem[]) {
+
     const items = cartItems.map((item) => ({
         keyId: item.id,
         price: Number(item.price || 0),
         count: item.count,
     }));
 
+    const payload = {
+        headers: getTokenHeaders(tokenValue),
+    };
+
     try {
-        const { data } = await serverApi.post<BackendApiResponse>(`/user/purchases`, { items }, { headers: getTokenHeaders(tokenValue) });
+        const { data } = await serverApi.post<BackendApiResponse>(`/user/purchases`, items, payload);
 
         return data.success;
     } catch (error) {
