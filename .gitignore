@@ -17,15 +17,9 @@ yarn.lock
 # Переменные окружения
 .env
 .env.*.local
-.idea
 
 # Сборки backend
 backend/dist
-
-# Prisma
-backend/prisma/dev.db
-backend/prisma/*.db-journal
-backend/prisma/migrations
 
 # Next.js / frontend
 .next
