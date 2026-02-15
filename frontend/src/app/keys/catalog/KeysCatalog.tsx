@@ -10,7 +10,7 @@ import {
     operationSystemOptions
 } from "@/lib/data";
 import YellowBtn from "@/components/buttons/yellow/YellowBtn";
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
 import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import ServerErrorState from "@/components/errors/ServerErrorState";
@@ -18,6 +18,8 @@ import useGameKeys from "@/lib/hooks/useGameKeys";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
+import usePagination from "@/lib/hooks/usePagination";
+import Pagination from "@/components/UI/Pagination";
 
 interface KeysFilterFormValues {
     minPrice: string;
@@ -37,7 +39,7 @@ const defaultFilters: KeysFilterFormValues = {
 
 export default function KeysCatalog(){
 
-    const { keysData, isLoading, isError, error } = useGameKeys()
+    const { keysData, isLoading, isError } = useGameKeys()
 
     const { control, register, reset, handleSubmit } = useForm<KeysFilterFormValues>({
         defaultValues: defaultFilters,
@@ -46,23 +48,8 @@ export default function KeysCatalog(){
     const { goToPage } = usePageUtils();
 
     const isAdmin = useUserStore(getUserStatus)
+
     const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
-
-    const handleReset = useCallback(() => {
-        reset(defaultFilters);
-        setAppliedFilters(defaultFilters);
-    }, [reset]);
-
-    const handleApplyFilters = useCallback((values: KeysFilterFormValues) => setAppliedFilters(values), []);
-
-    if (isLoading) {
-        return <SpinnerLoader text="Загрузка списка игр..." />;
-    }
-
-    if (isError || keysData === undefined) {
-        console.log(error)
-        return <ServerErrorState />;
-    }
 
     const {
         minPrice,
@@ -74,25 +61,69 @@ export default function KeysCatalog(){
 
     const normalizePrice = (value: string) => {
         const trimmed = value.trim();
+
         if (!trimmed) return NaN;
-        return Number(trimmed.replace(',', '.'));
+
+        return Number(trimmed);
     };
 
     const hasIntersection = (values: string[], target: string[]) => values.some((value) => target.includes(value));
 
-    const filteredKeys = keysData.filter((key) => {
-        const keyPrice = normalizePrice(String(key.price));
-        const min = normalizePrice(minPrice ?? '');
-        const max = normalizePrice(maxPrice ?? '');
+    const filteredKeys = useMemo(() => {
+        if (!keysData) return [];
 
-        if (!Number.isNaN(min) && keyPrice < min) return false;
-        if (!Number.isNaN(max) && keyPrice > max) return false;
-        if (genres.length > 0 && !hasIntersection(genres, key.genres)) return false;
-        if (activationPlatform.length > 0 && !hasIntersection(activationPlatform, key.activationPlatform)) return false;
-        if (operationSystem.length > 0 && !hasIntersection(operationSystem, key.operationSystem)) return false;
+        return keysData.filter((key) => {
+            const keyPrice = key.price;
+            const min = normalizePrice(minPrice ?? '');
+            const max = normalizePrice(maxPrice ?? '');
 
-        return true;
+            if (keyPrice < min) return false;
+            if (keyPrice > max) return false;
+
+            if (genres.length > 0 && !hasIntersection(genres, key.genres)) return false;
+
+            if (activationPlatform.length > 0 && !hasIntersection(activationPlatform, key.activationPlatform)) return false;
+
+            if (operationSystem.length > 0 && !hasIntersection(operationSystem, key.operationSystem)) return false;
+
+            return true;
+        });
+    }, [activationPlatform, genres, keysData, maxPrice, minPrice, operationSystem]);
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems,
+        goToPage: goToListPage,
+        resetPage,
+        listRef
+    } = usePagination({
+        items: filteredKeys,
+        itemsPerPage: 8,
+        scrollOnPageChange: true,
     });
+
+    const handleReset = useCallback(() => {
+        reset(defaultFilters);
+
+        setAppliedFilters(defaultFilters);
+
+        resetPage();
+    }, [reset, resetPage]);
+
+    const handleApplyFilters = useCallback((values: KeysFilterFormValues) => {
+        setAppliedFilters(values);
+
+        resetPage();
+    }, [resetPage]);
+
+    if (isLoading) {
+        return <SpinnerLoader text="Загрузка списка игр..." />;
+    }
+
+    if (isError || keysData === undefined) {
+        return <ServerErrorState />;
+    }
 
     return (
         <div className="flex flex-col gap-6 lg:flex-row">
@@ -189,8 +220,8 @@ export default function KeysCatalog(){
                 </div>
             </aside>
 
-            <div className="flex-1">
-                {filteredKeys.length === 0 ? (
+            <div ref={listRef} className="flex-1">
+                {paginatedItems.length === 0 ? (
                     <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-8 text-center">
                         <p className="text-base font-semibold text-slate-100">Ничего не найдено</p>
                         <p className="mt-2 text-sm text-slate-400">Попробуйте изменить фильтры</p>
@@ -198,14 +229,24 @@ export default function KeysCatalog(){
                         <YellowBtn label={`Сбросить фильтры`} onClick={handleReset} className={`!max-w-sm mt-5`} />
                     </div>
                 ) : (
-                    <div className="space-y-4">
-                        {filteredKeys.map(key => (
-                            <KeyCard
-                                key={key.id}
-                                keyData={key}
-                                isAdmin={isAdmin}
+                    <div className="space-y-6">
+                        <div className="space-y-4">
+                            {paginatedItems.map(key => (
+                                <KeyCard
+                                    key={key.id}
+                                    keyData={key}
+                                    isAdmin={isAdmin}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="pt-2">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={goToListPage}
                             />
-                        ))}
+                        </div>
                     </div>
                 )}
             </div>

@@ -11,6 +11,7 @@ export default function useGameKeys() {
         error
     } = useQuery<KeyListData[] | undefined>({
         queryKey: ['keys'],
+        staleTime: 60000 * 15,
         queryFn: getKeysList,
     });
 

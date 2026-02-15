@@ -3,6 +3,8 @@
 import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {ReviewListStructure} from "@/types/review";
 import {reviewCategorys} from "@/lib/data";
+import usePagination from "@/lib/hooks/usePagination";
+import Pagination from "@/components/UI/Pagination";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -13,7 +15,22 @@ const stats = [
 const ratings = [2, 5, 10, 24, 59] as const;
 
 export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
-    const getCategoryLabel = (tag: string) => reviewCategorys.find((item) => item.value === tag)?.label;
+
+    const getCategoryLabel = (tag: string) => {
+        return reviewCategorys.find((item) => item.value === tag)?.label
+    }
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems,
+        goToPage,
+        listRef,
+    } = usePagination({
+        items: reviews,
+        itemsPerPage: 6,
+        scrollOnPageChange: true,
+    });
 
     return (
         <section className="w-full">
@@ -40,14 +57,14 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                     ))}
                 </div>
 
-                <div className="mt-10 grid gap-8 lg:grid-cols-[1.6fr_1fr]">
+                <div ref={listRef} className="mt-10 grid gap-8 lg:grid-cols-[1.6fr_1fr]">
                     <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">
                         <h2 className="text-lg font-semibold text-slate-50">Последние отзывы</h2>
 
                         <div className="mt-5 grid gap-4">
-                            {reviews.map((review) => (
-                                <article key={review.id} className="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-5">
-                                    <div className="flex flex-wrap items-center justify-between gap-2">
+                            {paginatedItems.map((review) => (
+                                <article key={review.id} className="overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-950/40 p-5">
+                                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                                         <div>
                                             <p className="text-sm font-semibold text-slate-100">
                                                 {review.userName}
@@ -55,7 +72,7 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
 
                                             <p className="text-xs text-slate-400">{review.date}</p>
                                         </div>
-                                        <span className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-xs text-slate-300">
+                                        <span className="inline-flex w-fit max-w-full rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-xs text-slate-300">
                                             {getCategoryLabel(review.tag)}
                                         </span>
                                     </div>
@@ -75,6 +92,15 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                                 </article>
                             ))}
                         </div>
+
+                        <div className="overflow-x-auto pt-5">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={goToPage}
+                                className="min-w-max sm:min-w-0"
+                            />
+                        </div>
                     </div>
 
                     <div className="flex flex-col gap-6">
@@ -91,7 +117,7 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
                                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-800">
                                             <div
                                                 className="h-full rounded-full bg-amber-400/80"
-                                                style={{ width: rating * 5 }}
+                                                style={{ width: `${rating}%` }}
                                             />
                                         </div>
                                         <span className="w-10 text-right text-xs text-slate-400">
