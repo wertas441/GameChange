@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import {validateUserEmail, validateUserName, validateUserPassword} from "../lib/validators/user";
 import {ApiResponse} from "../types";
 import {showBackendError} from "../lib/indexUtils";
-import {LoginRequest, PurchaseCreateItem, RegisterRequest} from "../types/user";
+import {LoginRequest, RegisterRequest} from "../types/user";
 import {UserModel} from "../models/User";
 import { config } from '../config';
 import jwt from 'jsonwebtoken';
@@ -27,7 +27,6 @@ router.post('/registration', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        // Проверка существования пользователя по email и userName
         const existingByEmail = await UserModel.findByEmail(email);
         if (existingByEmail) {
             const response: ApiResponse = {
@@ -46,16 +45,11 @@ router.post('/registration', async (req, res) => {
             return res.status(409).json(response);
         }
 
-        // Хеширование пароля
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Создание пользователя в базе данных
         await UserModel.create({ email, userName, hashedPassword});
 
-        const response: ApiResponse = {
-            success: true,
-            message: 'Пользователь успешно зарегистрирован',
-        };
+        const response: ApiResponse = { success: true };
 
         res.status(200).json(response);
     } catch (error) {
@@ -80,7 +74,6 @@ router.post('/login', async (req, res) => {
             return res.status(400).json(response);
         }
 
-        // Проверка пользователя в базе данных
         const existingUser = await UserModel.findByEmail(email);
         if (!existingUser) {
             const response: ApiResponse = {
@@ -90,7 +83,6 @@ router.post('/login', async (req, res) => {
             return res.status(401).json(response);
         }
 
-        // Проверка пароля
         const isPasswordValid = await bcrypt.compare(password, (existingUser as any).password);
         if (!isPasswordValid) {
             const response: ApiResponse = {
@@ -100,7 +92,6 @@ router.post('/login', async (req, res) => {
             return res.status(401).json(response);
         }
 
-        // Генерация JWT токена
         const token = jwt.sign({ userId: (existingUser as any).id }, config.jwtSecret as string, {
             expiresIn: rememberMe ? '60d' : '1d'
         });
@@ -200,7 +191,7 @@ router.post('/purchases', authMiddleware, async (req, res) => {
 router.post('/change-password', authMiddleware, async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
-        const userId = (req as any).userId as number;
+        const userId:number = (req as any).userId;
 
         const currentPasswordError:boolean = validateUserPassword(currentPassword);
         const newPasswordError:boolean = validateUserPassword(newPassword);

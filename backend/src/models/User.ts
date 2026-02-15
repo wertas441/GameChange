@@ -10,29 +10,22 @@ import bcrypt from "bcryptjs";
 
 export class UserModel {
 
-    // Создание нового пользователя
-    static async create(userData: UserCreateRequest): Promise<User> {
+    static async create(userData: UserCreateRequest): Promise<boolean> {
+
         const query = `
         INSERT INTO users (email, username, password_hash, created_at, updated_at)
         VALUES ($1, $2, $3, NOW(), NOW())
-        RETURNING id, email, username, created_at, updated_at
-        `;
+        RETURNING id`;
 
         const values = [userData.email, userData.userName, userData.hashedPassword];
-        const result = await pool.query(query, values);
-        const row = result.rows[0];
 
-        return {
-            id: row.id,
-            email: row.email,
-            userName: row.username,
-            createdAt: row.created_at,
-            updatedAt: row.updated_at,
-        } as User;
+        const result = await pool.query(query, values);
+
+        return !!result.rows?.length;
     }
 
-    // Поиск пользователя по email
     static async findByEmail(email: string): Promise<User | null> {
+
         const query = `
         SELECT  id, 
                 email, 
@@ -41,11 +34,12 @@ export class UserModel {
                 created_at, 
                 updated_at 
         FROM users 
-        WHERE email = $1
-        `;
+        WHERE email = $1`;
 
         const result = await pool.query(query, [email]);
+
         const row = result.rows[0];
+
         if (!row) return null;
 
         return {
@@ -58,8 +52,8 @@ export class UserModel {
         } as User;
     }
 
-    // Поиск пользователя по ID
     static async findById(id: number): Promise<UserProfileResponse | null> {
+
         const query = `
         SELECT  public_id, 
                 email, 
@@ -67,8 +61,7 @@ export class UserModel {
                 created_at,
                 is_admin AS "isAdmin"
         FROM users 
-        WHERE id = $1
-        `;
+        WHERE id = $1`;
 
         const result = await pool.query(query, [id]);
 
@@ -84,8 +77,8 @@ export class UserModel {
         } as UserProfileResponse;
     }
 
-    // Поиск пользователя по userName
     static async findByUserName(userName: string): Promise<User | null> {
+
         const query = `
         SELECT  id, 
                 email, 
@@ -94,11 +87,11 @@ export class UserModel {
                 created_at, 
                 updated_at 
         FROM users 
-        WHERE username = $1`
-        ;
+        WHERE username = $1`;
 
         const result = await pool.query(query, [userName]);
         const row = result.rows[0];
+
         if (!row) return null;
 
         return {
@@ -112,6 +105,7 @@ export class UserModel {
     }
 
     static async getPurchases(userId: number): Promise<PurchasesItem[]> {
+
         const query = `
             SELECT
                 p.key_id AS "keyId",
@@ -147,6 +141,7 @@ export class UserModel {
                 if (!item?.keyId || !item.count || item.count <= 0) {
                     continue;
                 }
+
                 await client.query(insertQuery, [userId, item.keyId, item.price, item.count]);
             }
 
@@ -190,7 +185,7 @@ export class UserModel {
             throw error;
         }
 
-        return userRow; // Возвращаем данные
+        return userRow
     }
 
     static async changePassword(userId: number, currentPassword: string, newPassword: string)  {

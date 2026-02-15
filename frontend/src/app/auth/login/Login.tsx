@@ -56,7 +56,7 @@ export default function Login() {
                 }
 
                 router.replace('/');
-            }, 3000)
+            }, 2000)
 
         } catch (err) {
             const message:string = getServerErrorMessage(err)
@@ -94,11 +94,13 @@ export default function Login() {
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Вход в аккаунт
                         </p>
+
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Добро пожаловать в{' '}
                             <span className="bg-amber-400 bg-clip-text text-transparent">
                                 GameChange
                             </span>
                         </h2>
+
                         <p className="mt-2 text-sm text-slate-400">
                             Введите данные аккаунта, чтобы продолжить покупки и управлять своими цифровыми продуктами
                         </p>

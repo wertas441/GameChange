@@ -16,6 +16,7 @@ import {
     validateUserPassword
 } from "@/lib/validators/user";
 import PixelBlast from "@/components/PixelBlast";
+import Link from "next/link";
 
 interface RegistrationFormValues {
     userName: string;
@@ -26,7 +27,7 @@ interface RegistrationFormValues {
 
 export default function Registration(){
 
-    const {register, handleSubmit, getValues, formState: { errors }} = useForm<RegistrationFormValues>();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<RegistrationFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
@@ -80,11 +81,13 @@ export default function Registration(){
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Регистрация
                         </p>
+
                         <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Добро пожаловать в{' '}
                             <span className="bg-amber-400 bg-clip-text text-transparent">
                                 GameChange
                             </span>
                         </h2>
+
                         <p className="mt-2 text-sm text-slate-400">
                             Придумайте данные для аккаунта, чтобы продолжить покупки и управлять своими цифровыми продуктами
                         </p>
@@ -134,12 +137,12 @@ export default function Registration(){
 
                     <p className="mt-7 text-center text-sm text-slate-400">
                         Уже есть аккаунт?{' '}
-                        <a
+                        <Link
                             href="/auth/login"
                             className="font-medium text-sky-300 hover:text-sky-200"
                         >
                             Войти
-                        </a>
+                        </Link>
                     </p>
                 </section>
             </div>
