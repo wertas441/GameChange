@@ -7,6 +7,19 @@ export function validateUserEmail(email: string): string | null {
     return null;
 }
 
+export function validateUserConfirmEmail(newEmail: string, confirmEmail: string): string | null {
+    if (!confirmEmail.trim()){
+        return ('Пожалуйста, подтвердите ваш email');
+    }
+
+    if (confirmEmail.trim() !== newEmail.trim()){
+        return ('Почты не совпадают');
+    }
+
+    return null;
+}
+
+
 export function validateUserName(userName: string): string | null {
     if(!userName.trim()){
         return ('Пожалуйста, введите имя пользователя')
@@ -56,6 +69,31 @@ export function validateUserConfirmPassword(password: string, confirmPassword: s
 
     if (password != confirmPassword){
         return ('Пароль не совпадает с тем, что вы ввели ранее')
+    }
+
+    return null;
+}
+
+export function validateNewPassword(newPassword: string, oldPassword: string): string | null {
+    if (!newPassword.trim()){
+        return ('Пожалуйста, введите ваш новый пароль');
+    }
+
+    if (newPassword.length < 8)  {
+        return (`Новый пароль должен содержать минимум 8 символов (сейчас ${newPassword.length})`);
+    }
+
+    if (newPassword.length > 25){
+        return (`Новый пароль может быть максимум 25 символов (сейчас ${newPassword.length})`);
+    }
+
+    const passwordRegex = /^[a-zA-Z0-9!@#$%^&*.]+$/;
+    if(!passwordRegex.test(newPassword)) {
+        return ('Новый пароль может содержать только латинские буквы, цифры и некоторые спец.символы')
+    }
+
+    if (oldPassword === newPassword) {
+        return 'Ваш новый пароль совпадает со старым';
     }
 
     return null;

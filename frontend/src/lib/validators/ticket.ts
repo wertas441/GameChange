@@ -1,9 +1,17 @@
-import {TicketCategory, TicketType} from "@/types/support";
 
-export function validateTicketType(type: TicketType): string | null {
-    const allowed: TicketType[] = ['Вопрос', 'Жалоба'];
 
-    const validateResult =  allowed.includes(type);
+
+export function validateTicketType(type: string[]): string | null {
+
+    const allowed = ['question', 'complaint'];
+
+    const selected = type?.[0];
+
+    if (!selected) {
+        return 'Пожалуйста, укажите правильный тип для обращения';
+    }
+
+    const validateResult =  allowed.includes(selected);
 
     if (!validateResult) {
         return 'Пожалуйста, укажите правильный тип для обращения';
@@ -12,17 +20,23 @@ export function validateTicketType(type: TicketType): string | null {
     return null;
 }
 
-export function validateTicketCategory(category: TicketCategory): string | null {
-    const allowed: TicketCategory[] = [
-        'Пополнение сервисов',
-        'Покупка подписки',
-        'Получение товара',
-        'Оплата',
-        'Сервис',
-        'Другое',
+export function validateTicketCategory(category: string[]): string | null {
+    const allowed = [
+        'services-balance',
+        'subscription',
+        'get-product',
+        'payment',
+        'service',
+        'other',
     ];
 
-    const validateResult =  allowed.includes(category);
+    const selected = category?.[0];
+
+    if (!selected) {
+        return 'Пожалуйста, укажите правильную категорию для обращения';
+    }
+
+    const validateResult =  allowed.includes(selected);
 
     if (!validateResult) {
         return 'Пожалуйста, укажите правильную категорию для обращения';
@@ -53,7 +67,7 @@ export function validateTicketDescription(description: string): string | null {
     const trimmedValue = description.trim();
 
     if (!trimmedValue) {
-        return 'Пожалуйста, введите заголовок для обращения';
+        return 'Пожалуйста, введите описание для обращения';
     }
 
     if (trimmedValue.length < 10) {

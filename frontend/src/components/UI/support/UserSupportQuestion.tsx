@@ -15,9 +15,11 @@ export default function UserSupportQuestion({type, title, description}: IProps) 
                         {type}
                     </span>
                 </div>
+
                 <h2 className="text-xl font-semibold text-slate-50">
                     {title}
                 </h2>
+
                 <p className="text-sm leading-relaxed text-slate-300">
                     {description}
                 </p>

@@ -16,31 +16,13 @@ import {
     validateServiceAmount,
     validateSteamLogin
 } from "@/lib/validators/service";
+import {steamFeatures, steamHowItWork, steamText} from "@/app/services/(all)/data";
 
 interface SteamFormValues {
     steamLogin: string;
     amount: number;
     promoCode: string;
 }
-
-const features = ["Быстрое зачисление без ожиданий", "Прозрачная комиссия и итоговая сумма", "Безопасный ввод данных", "Поддержка популярных способов оплаты"];
-
-const howItWork = [
-    {
-        title: "Введите логин",
-        text: "Укажите свой Steam логин или никнейм.",
-    },
-    {
-        title: "Выберите сумму",
-        text: "Сумма пополнения от 100 ₽ и выше.",
-    },
-    {
-        title: "Подтвердите оплату",
-        text: "После оплаты баланс обновится автоматически.",
-    },
-];
-
-const text = `Мы никогда не запрашиваем пароль от Steam. Достаточно логина или публичного никнейма. Если возникнут сложности, служба поддержки поможет в чате или по почте.`
 
 export default function Steam() {
 
@@ -130,11 +112,11 @@ export default function Steam() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={features} />
+                    <Features data={steamFeatures} />
 
-                    <HowItWork data={howItWork} />
+                    <HowItWork data={steamHowItWork} />
 
-                    <NeedToKnow text={text} />
+                    <NeedToKnow text={steamText} />
                 </div>
             </div>
         </section>

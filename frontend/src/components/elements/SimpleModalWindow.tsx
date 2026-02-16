@@ -39,6 +39,7 @@ function SimpleModalWindow(
     return (
         <div className={`fixed inset-0 z-50 p-4 flex items-center justify-center ${isExiting ? 'plx-modal-exit' : 'plx-modal-enter'}`}>
             <div className="plx-modal-overlay absolute inset-0 bg-gray-950/85" />
+
             <div
                 ref={modalRef}
                 className={`${secondColorTheme} plx-modal-dialog relative z-10  rounded-lg border border-gray-300 shadow-xl p-6 w-full max-w-2xl`}
@@ -47,11 +48,11 @@ function SimpleModalWindow(
                 aria-labelledby="delete-modal-title"
                 aria-describedby="delete-modal-description"
             >
-                <h3 id="delete-modal-title" className="text-lg font-semibold leading-6 text-gray-900 dark:text-white">
+                <h3 id="delete-modal-title" className="text-lg font-semibold leading-6 text-white">
                     {windowLabel}
                 </h3>
                 <div className="mt-3">
-                    <p id="delete-modal-description" className="text-sm text-gray-600 dark:text-gray-400">
+                    <p id="delete-modal-description" className="text-sm text-gray-400">
                         {windowText}
                     </p>
                 </div>

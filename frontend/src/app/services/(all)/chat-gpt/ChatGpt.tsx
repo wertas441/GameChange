@@ -1,6 +1,6 @@
 'use client'
 
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
 import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
@@ -15,6 +15,7 @@ import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode} from "@/lib/validators/service";
 import {validateUserEmail} from "@/lib/validators/user";
+import {chatGptFeatures, chatGptPlans, chatGptReceive, chatGptText, chatGptTiers} from "@/app/services/(all)/data";
 
 interface ChatGptFormValues {
     email: string;
@@ -22,79 +23,18 @@ interface ChatGptFormValues {
     promoCode: string;
 }
 
-const plans = [
-    {
-        id: "plus-1",
-        label: "ChatGPT Plus",
-        duration: "1 месяц",
-        price: 1990,
-        description: "Доступ к GPT‑5 и приоритетные ответы",
-    },
-    {
-        id: "plus-3",
-        label: "ChatGPT Plus",
-        duration: "3 месяца",
-        price: 5490,
-        description: "Скидка при оплате пакетом",
-    },
-    {
-        id: "team-1",
-        label: "ChatGPT Team",
-        duration: "1 месяц",
-        price: 7990,
-        description: "Командная подписка с общими рабочими пространствами",
-    },
-    {
-        id: "team-12",
-        label: "ChatGPT Team",
-        duration: "12 месяцев",
-        price: 76900,
-        description: "Годовая подписка для команды",
-    },
-] as const;
-
-const tiers = ["ChatGPT Plus", "ChatGPT Team"] as const;
-
-const features = [
-    "Оплата в рублях без иностранных карт",
-    "Активация подписки после оплаты",
-    "Поддержка 24/7 в чате",
-    "Безопасная передача данных",
-];
-
-const receive = [
-    {
-        title: "GPT‑5",
-        text: "Более точные ответы и расширенные возможности.",
-    },
-    {
-        title: "Приоритетный доступ",
-        text: "Быстрее ответы даже в часы пик.",
-    },
-    {
-        title: "Высокие лимиты",
-        text: "Больше запросов и расширенные функции.",
-    },
-    {
-        title: "Командная работа",
-        text: "Общие рабочие пространства для команды.",
-    },
-];
-
-const text = `Мы не запрашиваем пароль от аккаунта OpenAI. Достаточно почты, на которую зарегистрирован ChatGPT, чтобы активировать подписку.`
-
 export default function ChatGpt() {
 
-    const [activePlanId, setActivePlanId] = useState<string>(plans[0].id);
+    const [activePlanId, setActivePlanId] = useState<string>(chatGptPlans[0].id);
 
     const activePlan = useMemo(
-        () => plans.find((plan) => plan.id === activePlanId) ?? plans[0],
+        () => chatGptPlans.find((plan) => plan.id === activePlanId) ?? chatGptPlans[0],
         [activePlanId]
     );
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<ChatGptFormValues>({
         defaultValues: {
-            planId: plans[0].id,
+            planId: chatGptPlans[0].id,
         },
     });
 
@@ -124,6 +64,11 @@ export default function ChatGpt() {
             setIsSubmitting(false);
         }
     };
+
+    const onClick = useCallback((id: string) => {
+        setActivePlanId(id);
+        setValue("planId", id, { shouldValidate: true });
+    }, [setValue])
 
     return (
         <section className="w-full">
@@ -156,29 +101,23 @@ export default function ChatGpt() {
                         />
 
                         <div className="space-y-4">
-                            {tiers.map((tier) => (
+                            {chatGptTiers.map((tier) => (
                                 <div key={tier}>
                                     <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
                                         {tier}
                                     </p>
-                                    <div className="grid gap-3 sm:grid-cols-2">
-                                        {plans.filter((plan) => plan.label === tier).map((plan) => {
-                                            const onClick = () => {
-                                                setActivePlanId(plan.id);
-                                                setValue("planId", plan.id, { shouldValidate: true });
-                                            }
 
-                                            return (
-                                                <ProductBtn
-                                                    key={plan.id}
-                                                    label={plan.duration}
-                                                    onClick={onClick}
-                                                    isActive={plan.id === activePlanId}
-                                                    price={plan.price}
-                                                    description={plan.description}
-                                                />
-                                            );
-                                        })}
+                                    <div className="grid gap-3 sm:grid-cols-2">
+                                        {chatGptPlans.filter((plan) => plan.label === tier).map((plan) => (
+                                            <ProductBtn
+                                                key={plan.id}
+                                                label={plan.duration}
+                                                onClick={() => onClick(plan.id)}
+                                                isActive={plan.id === activePlanId}
+                                                price={plan.price}
+                                                description={plan.description}
+                                            />
+                                        ))}
                                     </div>
                                 </div>
                             ))}
@@ -207,11 +146,11 @@ export default function ChatGpt() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={features} />
+                    <Features data={chatGptFeatures} />
 
-                    <Receive label={`Что вы получаете с GPT Plus`} data={receive} />
+                    <Receive label={`Что вы получаете с GPT Plus`} data={chatGptReceive} />
 
-                    <NeedToKnow text={text} />
+                    <NeedToKnow text={chatGptText} />
                 </div>
             </div>
         </section>

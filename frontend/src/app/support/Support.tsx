@@ -9,6 +9,8 @@ import SupportRow from "@/components/elements/SupportRow";
 import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
+import usePagination from "@/lib/hooks/usePagination";
+import Pagination from "@/components/UI/Pagination";
 
 export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
@@ -20,6 +22,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
     const normalizedTickets = useMemo(() => {
         if (isAdmin) return ticketList;
+
         return ticketList.map((ticket, index) => {
             if (index > 1) return ticket;
             return {
@@ -31,8 +34,21 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
+
         return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
+
+    const {
+        currentPage,
+        totalPages,
+        paginatedItems,
+        goToPage: goToListPage,
+        listRef,
+    } = usePagination({
+        items: visibleTickets,
+        itemsPerPage: 8,
+        scrollOnPageChange: true,
+    });
 
     if (!userData) {
         return <ServerErrorState />
@@ -44,9 +60,11 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Поддержка</p>
+
                         <h1 className="mt-2 text-2xl font-semibold text-slate-50">
                             {isAdmin ? 'Центр обработки обращений' : 'Ваши обращения в поддержку'}
                         </h1>
+
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Отслеживайте активные обращения и отвечайте пользователям'
@@ -77,32 +95,43 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                         <h2 className="text-xl font-semibold text-slate-50">Активные обращения</h2>
+
                         <p className="mt-1 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Все обращения, ожидающие действий'
                                 : 'Ваши открытые запросы в поддержку'}
                         </p>
                     </div>
-                    <p className="text-sm text-slate-400">
-                        Показано: {visibleTickets.length}
-                    </p>
+
+                    <p className="text-sm text-slate-400">Показано: {visibleTickets.length}</p>
                 </div>
 
-                {visibleTickets.length !== 0 ? (
-                    <div className="space-y-5">
-                        {visibleTickets.map((ticket) => (
-                            <SupportRow
-                                key={ticket.id}
-                                ticket={ticket}
-                                isAdmin={isAdmin}
+                {paginatedItems.length !== 0 ? (
+                    <div ref={listRef} className="space-y-5">
+                        <div className="space-y-4">
+                            {paginatedItems.map((ticket) => (
+                                <SupportRow
+                                    key={ticket.id}
+                                    ticket={ticket}
+                                    isAdmin={isAdmin}
+                                />
+                            ))}
+                        </div>
+
+                        <div className="pt-2">
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={goToListPage}
                             />
-                        ))}
+                        </div>
                     </div>
                 ) : (
                     <div className="rounded-2xl border border-dashed border-slate-800/80 bg-slate-900/40 p-6 text-center">
                         <p className="text-lg font-semibold text-slate-200">
                             Пока нет активных обращений
                         </p>
+
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Здесь появятся новые обращения пользователей.'

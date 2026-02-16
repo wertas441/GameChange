@@ -16,12 +16,10 @@ function MainInput(
 
     return (
         <div className="space-y-1.5">
-            <label
-                htmlFor={id}
-                className={`block text-xs ml-2 font-medium tracking-wide text-slate-200`}
-            >
+            <label htmlFor={id} className={`block text-xs ml-2 font-medium tracking-wide text-slate-200`}>
                 {label}
             </label>
+
             <div className="relative">
                 <input
                     id={id}

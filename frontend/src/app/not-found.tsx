@@ -17,7 +17,7 @@ const cardBlocks = [
         description: "Узнайте, что думают о GameChange другие пользователи.",
         href: "/reviews",
     },
-];
+] as const;
 
 export default function NotFound() {
 
@@ -41,7 +41,7 @@ export default function NotFound() {
                             </p>
                         </div>
 
-                            <LinkYellowBtn label="На главную" href="/" className="mt-0 w-full px-6 py-3 sm:w-auto"/>
+                        <LinkYellowBtn label="На главную" href="/" className="mt-0 w-full px-6 py-3 sm:w-auto"/>
                     </div>
 
                     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,4 +1,4 @@
-import {ElementType} from "react";
+import {ElementType, memo} from "react";
 import SpotlightCard from "@/components/UI/modern/SpotlightCard";
 
 interface IProps {
@@ -9,7 +9,7 @@ interface IProps {
     spotlightColor?: `rgba(${number}, ${number}, ${number}, ${number})`;
 }
 
-export default function PrivilegeCard(
+function PrivilegeCard(
     {
         IconComponent,
         title,
@@ -19,10 +19,7 @@ export default function PrivilegeCard(
     }: IProps) {
 
     return (
-        <SpotlightCard
-            className={`p-8 text-center ${className}`}
-            spotlightColor={spotlightColor}
-        >
+        <SpotlightCard className={`p-8 text-center ${className}`} spotlightColor={spotlightColor}>
             <IconComponent className="h-12 w-12 text-amber-400 mx-auto mb-4" />
 
             <h3 className="text-xl text-slate-50 font-semibold mb-2">{title}</h3>
@@ -31,3 +28,5 @@ export default function PrivilegeCard(
         </SpotlightCard>
     )
 }
+
+export default memo(PrivilegeCard);

@@ -14,6 +14,7 @@ import Features from "@/components/UI/servicesUI/Features";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode, validatePSNLogin} from "@/lib/validators/service";
+import {psPlusFeatures, psPlusPlans, psPlusReceive, psPlusText, psPlusTiers} from "@/app/services/(all)/data";
 
 interface PSPlusFormValues {
     psnLogin: string;
@@ -21,93 +22,18 @@ interface PSPlusFormValues {
     promoCode: string;
 }
 
-const plans = [
-    {
-        id: "essential-1",
-        label: "Essential",
-        duration: "1 месяц",
-        price: 499,
-        description: "Онлайн, облачные сохранения, скидки",
-    },
-    {
-        id: "essential-12",
-        label: "Essential",
-        duration: "12 месяцев",
-        price: 3990,
-        description: "Максимальная выгода за год",
-    },
-    {
-        id: "extra-1",
-        label: "Extra",
-        duration: "1 месяц",
-        price: 799,
-        description: "Каталог из сотен игр",
-    },
-    {
-        id: "extra-12",
-        label: "Extra",
-        duration: "12 месяцев",
-        price: 6990,
-        description: "Лучший выбор по цене",
-    },
-    {
-        id: "deluxe-1",
-        label: "Deluxe",
-        duration: "1 месяц",
-        price: 1090,
-        description: "Классика и пробные версии",
-    },
-    {
-        id: "deluxe-12",
-        label: "Deluxe",
-        duration: "12 месяцев",
-        price: 9290,
-        description: "Полный доступ без ограничений",
-    },
-];
-
-const tiers = ["Essential", "Extra", "Deluxe"] as const;
-
-const receive = [
-    {
-        title: "Онлайн мультиплеер",
-        text: "Играйте с друзьями без ограничений.",
-    },
-    {
-        title: "Ежемесячные игры",
-        text: "Получайте новые игры каждый месяц.",
-    },
-    {
-        title: "Облачные сохранения",
-        text: "Резервные копии всегда под рукой.",
-    },
-    {
-        title: "Эксклюзивные скидки",
-        text: "Специальные цены в PlayStation Store.",
-    },
-];
-
-const features = [
-    "Активация подписки после оплаты",
-    "Поддержка разных регионов аккаунта",
-    "Безопасная передача данных",
-    "Поддержка 24/7 в чате",
-];
-
-const text = `Мы не запрашиваем пароль от PSN. Достаточно логина или почты, чтобы активировать подписку. Все платежи проходят через защищённые каналы.`
-
 export default function PSPlus() {
 
-    const [activePlanId, setActivePlanId] = useState<string>(plans[0].id);
+    const [activePlanId, setActivePlanId] = useState<string>(psPlusPlans[0].id);
 
     const activePlan = useMemo(
-        () => plans.find((plan) => plan.id === activePlanId) ?? plans[0],
+        () => psPlusPlans.find((plan) => plan.id === activePlanId) ?? psPlusPlans[0],
         [activePlanId]
     );
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<PSPlusFormValues>({
         defaultValues: {
-            planId: plans[0].id,
+            planId: psPlusPlans[0].id,
         },
     });
 
@@ -172,14 +98,14 @@ export default function PSPlus() {
                         />
 
                         <div className="space-y-4">
-                            {tiers.map((tier) => (
+                            {psPlusTiers.map((tier) => (
                                 <div key={tier}>
                                     <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
                                         {tier}
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {plans.filter((plan) => plan.label === tier).map((plan) => (
+                                        {psPlusPlans.filter((plan) => plan.label === tier).map((plan) => (
                                             <ProductBtn
                                                 key={plan.id}
                                                 label={plan.duration}
@@ -216,11 +142,11 @@ export default function PSPlus() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={features} />
+                    <Features data={psPlusFeatures} />
 
-                    <Receive label={`Что входит в PS Plus`} data={receive} />
+                    <Receive label={`Что входит в PS Plus`} data={psPlusReceive} />
 
-                    <NeedToKnow text={text} />
+                    <NeedToKnow text={psPlusText} />
                 </div>
             </div>
         </section>

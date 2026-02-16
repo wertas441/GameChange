@@ -4,6 +4,7 @@ import {ReviewBaseStructure, ReviewListStructure} from "../types/review";
 export class ReviewModel {
 
     static async getList(): Promise<ReviewListStructure[] | undefined> {
+
         const query = `
             SELECT
                 r.id AS id,

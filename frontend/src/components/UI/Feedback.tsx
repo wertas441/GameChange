@@ -22,6 +22,7 @@ export default function Feedback({ feedBackData }: {feedBackData: FeedBackStruct
                     <h2 className="text-3xl font-semibold text-slate-50 sm:text-4xl">
                         Что говорят наши клиенты
                     </h2>
+
                     <p className="text-sm text-slate-400 sm:text-base">
                         Реальные отзывы о скорости, цене и поддержке. Мы читаем каждый комментарий.
                     </p>

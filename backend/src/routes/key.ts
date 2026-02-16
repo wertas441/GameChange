@@ -80,7 +80,7 @@ router.post('/key', adminMiddleware, async (req, res) => {
         if (!validationResult) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка добавления нового ключа, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка добавления нового ключа, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -106,7 +106,7 @@ router.put('/key', adminMiddleware, async (req, res) => {
         if (!validationResult) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка изменения существующего ключа, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка изменения существующего ключа, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -130,7 +130,7 @@ router.delete('/key', adminMiddleware, async (req, res) => {
         if (!Number.isInteger(keyId) || keyId <= 0) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Некорректный id ключа.'
+                error: 'Некорректный id ключа'
             };
             return res.status(400).json(response);
         }

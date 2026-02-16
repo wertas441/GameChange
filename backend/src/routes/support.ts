@@ -6,6 +6,7 @@ import {TicketModel} from "../models/Ticket";
 import {validateTicketData} from "../lib/validators/ticket";
 import {UserModel} from "../models/User";
 import {TicketBackendBaseStructure} from "../types/support";
+import {adminMiddleware} from "../middleware/adminMiddleware";
 
 const router = Router();
 
@@ -19,7 +20,7 @@ router.post('/ticket', authMiddleware, async (req, res) => {
         if (!validationResult) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка добавления нового обращения, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка добавления нового обращения, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -29,7 +30,7 @@ router.post('/ticket', authMiddleware, async (req, res) => {
         if (!result) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка добавления нового обращения, пожалуйста попробуйте позже.'
+                error: 'Ошибка добавления нового обращения, пожалуйста попробуйте позже'
             };
             return res.status(400).json(response);
         }
@@ -125,7 +126,7 @@ router.get('/ticket', authMiddleware, async (req, res) => {
         if (!ticketDetails) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка при получении данных обращения, пожалуйста попробуйте позже.'
+                error: 'Ошибка при получении данных обращения, пожалуйста попробуйте позже'
             };
             return res.status(400).json(response);
         }
@@ -143,10 +144,9 @@ router.get('/ticket', authMiddleware, async (req, res) => {
     }
 });
 
-router.post('/ticket/answer', authMiddleware, async (req, res) => {
+router.post('/ticket/answer', adminMiddleware, async (req, res) => {
     try {
         const requestData = req.body;
-        const userId:number = (req as any).userId;
 
         if (!requestData) {
             const response: ApiResponse = {
@@ -157,23 +157,12 @@ router.post('/ticket/answer', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const isAdmin = await UserModel.isAdmin(userId);
-
-        if (!isAdmin) {
-            const response: ApiResponse = {
-                success: false,
-                message: 'Это действие может выполнить только администратор'
-            };
-
-            return res.status(403).json(response);
-        }
-
         const result = await TicketModel.gaveAnswer(requestData.ticketId, requestData.answer);
 
         if (!result) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка при обновлении обращения, пожалуйста попробуйте позже.'
+                error: 'Ошибка при обновлении обращения, пожалуйста попробуйте позже'
             };
             return res.status(400).json(response);
         }
@@ -188,10 +177,9 @@ router.post('/ticket/answer', authMiddleware, async (req, res) => {
     }
 });
 
-router.delete('/ticket', authMiddleware, async (req, res) => {
+router.delete('/ticket', adminMiddleware, async (req, res) => {
     try {
         const ticketId = req.body.ticketId;
-        const userId:number = (req as any).userId;
 
         if (!ticketId) {
             const response: ApiResponse = {
@@ -202,23 +190,12 @@ router.delete('/ticket', authMiddleware, async (req, res) => {
             return res.status(400).json(response);
         }
 
-        const isAdmin = await UserModel.isAdmin(userId);
-
-        if (!isAdmin) {
-            const response: ApiResponse = {
-                success: false,
-                message: 'Это действие может выполнить только администратор'
-            };
-
-            return res.status(403).json(response);
-        }
-
         const result = await TicketModel.delete(ticketId);
 
         if (!result) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка при удалении обращения, пожалуйста попробуйте позже.'
+                error: 'Ошибка при удалении обращения, пожалуйста попробуйте позже'
             };
             return res.status(400).json(response);
         }

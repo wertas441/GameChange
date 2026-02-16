@@ -4,8 +4,6 @@ import { ReactNode, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export default function QueryProvider({ children }: {children: ReactNode}) {
-    // Создаем QueryClient один раз на весь жизненный цикл приложения.
-    // useState гарантирует, что клиент не будет пересоздаваться на каждом рендере.
     const [queryClient] = useState(
         () =>
             new QueryClient({

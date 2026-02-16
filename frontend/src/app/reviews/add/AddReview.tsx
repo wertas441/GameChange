@@ -11,6 +11,12 @@ import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {reviewCategorys} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
 import InputError from "@/components/errors/InputError";
+import {
+    validateReviewCategory,
+    validateReviewDescription,
+    validateReviewRating,
+} from "@/lib/validators/review";
+import PixelBlast from "@/components/PixelBlast";
 
 interface AddReviewFormValues {
     category: string[];
@@ -34,6 +40,8 @@ export default function AddReview() {
             description: values.description,
         };
 
+        console.log(payload)
+
         try {
             await serverApi.post<BackendApiResponse>(`/review/review`, payload);
 
@@ -50,12 +58,31 @@ export default function AddReview() {
 
     return (
         <div className={`min-h-full  text-slate-50 flex items-center justify-center`}>
+
+            <div className="absolute inset-0 z-0">
+                <PixelBlast
+                    variant="square"
+                    pixelSize={3}
+                    color="#d2e826"
+                    patternScale={2}
+                    patternDensity={1}
+                    enableRipples
+                    rippleSpeed={0.5}
+                    rippleThickness={0.1}
+                    rippleIntensityScale={1}
+                    speed={0.7}
+                    transparent
+                    edgeFade={0.5}
+                />
+            </div>
+
             <div className="relative z-10 w-full max-w-3xl items-center">
                 <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Оставить отзыв о магазине
                         </h2>
@@ -68,6 +95,7 @@ export default function AddReview() {
                         <Controller
                             control={control}
                             name="category"
+                            rules={{validate: (value) => validateReviewCategory(value) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="categorys"
@@ -84,6 +112,7 @@ export default function AddReview() {
                         <Controller
                             control={control}
                             name="rating"
+                            rules={{validate: (value) => validateReviewRating(value) || true}}
                             render={({field, fieldState}) => (
                                 <div className="space-y-2">
                                     <label
@@ -112,9 +141,7 @@ export default function AddReview() {
                                             );
                                         })}
 
-                                        <span className="text-sm text-slate-400">
-                                            {field.value ? `${field.value} из 5` : ""}
-                                        </span>
+                                        <span className="text-sm text-slate-400">{field.value ? `${field.value} из 5` : ""}</span>
                                     </div>
 
                                     <InputError error={fieldState.error?.message} />
@@ -126,7 +153,7 @@ export default function AddReview() {
                             id="description"
                             label="Описание"
                             error={errors.description?.message}
-                            {...register('description')}
+                            {...register('description', {validate: (value) => validateReviewDescription(value) || true })}
                         />
 
                         <SubmitYellowBtn

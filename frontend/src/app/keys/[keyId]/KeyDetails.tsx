@@ -44,9 +44,11 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                 <h2 className="mb-3 border-b border-slate-800/80 pb-2 text-2xl font-bold text-slate-50">
                                     Об игре
                                 </h2>
+
                                 <p className="mb-6 leading-relaxed text-slate-300">
                                     {keyData.description}
                                 </p>
+
                                 <div className="flex flex-wrap gap-2">
                                     {keyData.genres.map(genre => {
                                         const matchedGenre = genreOptions.find((option) => option.value === genre);
@@ -84,6 +86,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
                             <div>
                                 <h2 className="mb-4 text-2xl font-bold text-slate-50">Системные требования</h2>
+
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     <PCRequirements label={`Минимальные`} requirements={keyData.systemRequirements.minimal}/>
 
@@ -96,6 +99,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                             <div className="flex flex-col gap-5 rounded-2xl border border-slate-800/80 bg-slate-950/40 p-6">
                                 <div className="text-center">
                                     <p className="text-sm text-slate-400">Цена</p>
+
                                     <p className="my-3 text-5xl font-extrabold tracking-tighter text-slate-50">
                                         {keyData.price} ₽
                                     </p>
@@ -109,14 +113,17 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                             <dt className="text-slate-400">Разработчик</dt>
                                             <dd className="font-medium text-slate-100">{keyData.developer}</dd>
                                         </div>
+
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Издатель</dt>
                                             <dd className="font-medium text-slate-100">{keyData.publisher}</dd>
                                         </div>
+
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Дата выхода</dt>
                                             <dd className="font-medium text-slate-100">{keyData.releaseDate}</dd>
                                         </div>
+
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Платформы</dt>
                                             <dd className="flex gap-3">
@@ -127,6 +134,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                                 ))}
                                             </dd>
                                         </div>
+
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Активация</dt>
                                             <dd className="flex gap-3">

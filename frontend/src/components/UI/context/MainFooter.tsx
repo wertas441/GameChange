@@ -12,6 +12,7 @@ function MainFooter() {
                         <h2 className="text-2xl font-semibold text-amber-400 mb-2">
                             GameChange
                         </h2>
+
                         <p className="max-w-xs text-sm text-slate-400 mb-6">
                             Надежный портал в мир цифровых товаров и подписок.
                         </p>
@@ -21,7 +22,9 @@ function MainFooter() {
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">Магазин</h3>
                         <ul className="mt-4 space-y-4">
                             <FooterNavItem text={'Игровые ключи'} link={'/keys/catalog'} />
+
                             <FooterNavItem text={'Пополнение сервисов'} link={'/services'} />
+
                             <FooterNavItem text={'Ваша корзина'} link={'/cart'} />
                         </ul>
                     </div>
@@ -30,7 +33,9 @@ function MainFooter() {
                         <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-100">Информация</h3>
                         <ul className="mt-4 space-y-4">
                             <FooterNavItem text={'Отзывы'} link={'/reviews'} />
+
                             <FooterNavItem text={'О нас'} link={'/about'} />
+
                             <FooterNavItem text={'История покупок'} link={'/user/purchases'} />
                         </ul>
                     </div>

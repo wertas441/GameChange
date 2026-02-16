@@ -10,9 +10,7 @@ export const metadata: Metadata = {
 }
 
 export interface IParams {
-    params: Promise<{
-        ticketId: string;
-    }>
+    params: Promise<{ ticketId: string }>
 }
 
 export default async function AnswerToTicketPage({params}: IParams) {

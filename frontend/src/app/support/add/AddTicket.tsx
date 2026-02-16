@@ -1,7 +1,6 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {TicketCategory, TicketType} from "@/types/support";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
@@ -18,10 +17,11 @@ import {
     validateTicketTitle,
     validateTicketType
 } from "@/lib/validators/ticket";
+import PixelBlast from "@/components/PixelBlast";
 
 interface AddTicketFormValues {
-    type: TicketType;
-    category: TicketCategory;
+    type: string[];
+    category: string[];
     title: string;
     description: string;
 }
@@ -59,12 +59,31 @@ export default function AddTicket() {
 
     return (
         <div className={`min-h-full  text-slate-50 flex items-center justify-center`}>
+
+            <div className="absolute inset-0 z-0">
+                <PixelBlast
+                    variant="square"
+                    pixelSize={3}
+                    color="#d2e826"
+                    patternScale={2}
+                    patternDensity={1}
+                    enableRipples
+                    rippleSpeed={0.5}
+                    rippleThickness={0.1}
+                    rippleIntensityScale={1}
+                    speed={0.7}
+                    transparent
+                    edgeFade={0.5}
+                />
+            </div>
+
             <div className="relative z-10 w-full max-w-3xl items-center">
                 <section className={`relative rounded-3xl border ${secondColorTheme} px-6 py-8 `}>
                     <header className="mb-6">
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Создать новое обращение в поддержку магазина
                         </h2>
@@ -77,7 +96,7 @@ export default function AddTicket() {
                         <Controller
                             control={control}
                             name="type"
-                            rules={{validate: (value) => validateTicketType(value) || true}}
+                            rules={{validate: (value) => validateTicketType(value as string[]) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="type"
@@ -94,7 +113,7 @@ export default function AddTicket() {
                         <Controller
                             control={control}
                             name="category"
-                            rules={{validate: (value) => validateTicketCategory(value) || true}}
+                            rules={{validate: (value) => validateTicketCategory(value as string[]) || true}}
                             render={({field, fieldState}) => (
                                 <MultiSelectInput
                                     id="categorys"

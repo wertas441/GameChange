@@ -36,7 +36,7 @@ const catalogItems = [
     },
 ] as const;
 
-export default function MainHeader() {
+export default function MainHeader({className}: {className?: string}) {
 
     const [modalWindow, setModalWindow] = useState(false);
     const [query, setQuery] = useState<string>('');
@@ -57,15 +57,15 @@ export default function MainHeader() {
 
     const toggleModalWindow = useCallback(() => setModalWindow(prevState => !prevState), []);
 
-    const onSearchInputFocus = () => {
+    const onSearchInputFocus = useCallback(() => {
         setIsSearchOpen(true);
         setModalWindow(false);
-    }
+    }, [])
 
-    const onModalButtonClick = () => {
+    const onModalButtonClick = useCallback(() => {
         toggleModalWindow();
         setIsSearchOpen(false);
-    }
+    }, [toggleModalWindow])
 
     const cartBadgeValue = cartItemsCount > 99 ? '99+' : String(cartItemsCount);
 
@@ -117,15 +117,17 @@ export default function MainHeader() {
     }, []);
 
     return (
-        <header className={`${secondColorTheme} relative mb-23 top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur`}>
+        <header className={`${secondColorTheme} relative top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur ${className}`}>
             <div className="mx-auto w-full px-4 py-3 sm:px-6 md:px-12">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between gap-3">
                         <button
                             onClick={() => goToPage('/')}
-                            className="text-amber-400 cursor-pointer font-semibold text-2xl tracking-wide leading-none"
+                            className="text-amber-400 flex items-center gap-3 cursor-pointer font-semibold text-2xl tracking-wide leading-none"
                         >
-                            GameChange
+                          {useMemo(() => <Image src={'/pacman.png'} alt={'mainLogo'} width={35} height={35} />, [])}
+
+                          GameChange
                         </button>
 
                         <div className="flex items-center gap-2 lg:hidden">

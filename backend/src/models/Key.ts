@@ -4,6 +4,7 @@ import {AddKeyData, KeyDetailsData, KeyListData,} from "../types/key";
 export class KeyModel {
 
     static async getList(): Promise<KeyListData[] | undefined> {
+
         const query = `
             SELECT
                 k.id AS id,
@@ -12,7 +13,6 @@ export class KeyModel {
                 k.price::text AS price,
                 k.main_picture_url AS "mainPicture",
                 to_char(k.release_date, 'DD.MM.YYYY') AS "releaseDate",
-            
                 COALESCE(
                     (
                         SELECT json_agg(os.os ORDER BY os.os)
@@ -47,6 +47,7 @@ export class KeyModel {
     }
 
     static async getDetails(keyUrl: string): Promise<KeyDetailsData | undefined> {
+
         const query = `
             SELECT
                 k.id AS id,
@@ -58,7 +59,6 @@ export class KeyModel {
                 k.main_picture_url AS "mainPicture",
                 k.developer AS developer,
                 k.publisher AS publisher,
-
                 COALESCE(
                     (
                         SELECT json_agg(ki.url ORDER BY ki.sort_order)

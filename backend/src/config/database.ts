@@ -36,11 +36,5 @@ export const testConnection = async (): Promise<boolean> => {
     }
 };
 
-// Функция для закрытия пула соединений
-export const closePool = async (): Promise<void> => {
-    await pool.end();
-    console.log('Пул соединений PostgreSQL закрыт');
-};
-
 export default pool;
 

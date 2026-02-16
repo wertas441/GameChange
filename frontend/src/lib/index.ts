@@ -7,7 +7,6 @@ export function getTokenHeaders(token: string) {
     return {Cookie: `token=${token}`};
 }
 
-
 export const serverApi = axios.create({
     baseURL: 'http://localhost:3003/api',
     withCredentials: true,
@@ -26,7 +25,6 @@ export const clientApi = axios.create({
     }
 });
 
-
 export function getServerErrorMessage(err: unknown){
     let message:string = 'Не удалось связаться с сервером. Пожалуйста, проверьте интернет или попробуйте позже.';
 
@@ -43,7 +41,6 @@ export const formatDateForProfile = (value: string) => {
     if (Number.isNaN(parsed.getTime())) return value;
     return parsed.toLocaleDateString('ru-RU', { day: '2-digit', month: 'long', year: 'numeric' });
 };
-
 
 export function getDateInputFormat(date: string | Date | null | undefined): string {
     if (!date) return '';

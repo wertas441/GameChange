@@ -12,36 +12,13 @@ import HowItWork from "@/components/UI/servicesUI/HowItWork";
 import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/lib/validators/service";
+import {psStoreFeatures, psStoreHowItWork, psStoreText} from "@/app/services/(all)/data";
 
 interface PSStoreFormValues {
     psnLogin: string;
     amount: number;
     promoCode: string;
 }
-
-const features = [
-    "Быстрое зачисление на баланс PS Store",
-    "Поддержка популярных способов оплаты",
-    "Безопасный ввод данных без пароля",
-    "Поддержка 24/7 при любых вопросах",
-];
-
-const howItWork = [
-    {
-        title: "Введите PSN логин",
-        text: "Укажите никнейм или почту от аккаунта PlayStation.",
-    },
-    {
-        title: "Выберите сумму",
-        text: "Сумма пополнения от 100 ₽ и выше.",
-    },
-    {
-        title: "Оплатите",
-        text: "Баланс обновится автоматически после оплаты.",
-    },
-] ;
-
-const text = `Мы не запрашиваем пароль от PSN. Достаточно логина или почты. Если возникнут вопросы, поддержка поможет в чате или по почте.`
 
 export default function PSStore() {
 
@@ -130,11 +107,11 @@ export default function PSStore() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={features} />
+                    <Features data={psStoreFeatures} />
 
-                    <HowItWork data={howItWork} />
+                    <HowItWork data={psStoreHowItWork} />
 
-                    <NeedToKnow text={text} />
+                    <NeedToKnow text={psStoreText} />
                 </div>
             </div>
         </section>
