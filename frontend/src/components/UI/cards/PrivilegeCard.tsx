@@ -19,10 +19,7 @@ function PrivilegeCard(
     }: IProps) {
 
     return (
-        <SpotlightCard
-            className={`p-8 text-center ${className}`}
-            spotlightColor={spotlightColor}
-        >
+        <SpotlightCard className={`p-8 text-center ${className}`} spotlightColor={spotlightColor}>
             <IconComponent className="h-12 w-12 text-amber-400 mx-auto mb-4" />
 
             <h3 className="text-xl text-slate-50 font-semibold mb-2">{title}</h3>

@@ -82,6 +82,7 @@ export default function AddReview() {
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Оставить отзыв о магазине
                         </h2>
@@ -140,9 +141,7 @@ export default function AddReview() {
                                             );
                                         })}
 
-                                        <span className="text-sm text-slate-400">
-                                            {field.value ? `${field.value} из 5` : ""}
-                                        </span>
+                                        <span className="text-sm text-slate-400">{field.value ? `${field.value} из 5` : ""}</span>
                                     </div>
 
                                     <InputError error={fieldState.error?.message} />

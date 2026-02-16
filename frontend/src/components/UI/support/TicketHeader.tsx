@@ -24,34 +24,42 @@ export default function TicketHeader({id, createdAt, answeredAt, ownerName,  cat
             <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                 <div>
                     <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Поддержка</p>
+
                     <h1 className="mt-2 text-xl md:text-2xl font-semibold text-slate-50">
                         Обращение #{id}
                     </h1>
+
                     <p className="mt-2 text-sm text-slate-400">
-                        Подробная информация по вашему запросу в службу поддержки.
+                        Подробная информац ия по вашему запросу в службу поддержки.
                     </p>
+
                     <h3 className="text-sm  mt-4 font-semibold uppercase tracking-[0.2em] text-slate-400">
                         Детали
                     </h3>
+
                     <div className="flex-row md:flex space-y-4 md:space-y-0 mt-4 gap-3 text-sm text-slate-300">
                         <div className="flex items-center gap-2">
                             <Clock className="h-4 w-4 text-amber-300" />
                             <span>Создан: {createdAt}</span>
                         </div>
+
                         <div className="flex items-center gap-2">
                             <MessageSquare className="h-4 w-4 text-amber-300" />
                             {answeredAt ? `Ответ получен: ${answeredAt}` : 'Ожидает ответа администратора'}
                         </div>
+
                         <div className="flex items-center gap-2">
                             <UserCircle className="h-4 w-4 text-amber-300" />
                             <span>Автор: {ownerName}</span>
                         </div>
+
                         <div className="flex items-center gap-2">
                             <Tag className="h-4 w-4 text-amber-300" />
                             <span>Категория: {category}</span>
                         </div>
                     </div>
                 </div>
+
                 <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${getCorrectStyle()}`}>
                     {status}
                 </span>

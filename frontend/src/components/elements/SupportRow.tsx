@@ -22,6 +22,7 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                         <span className={`rounded-full border px-3 py-1 text-xs font-semibold ${statusStyles[ticket.status]}`}>
                             {ticket.status}
                         </span>
+
                         <span className="rounded-full border border-slate-700/70 bg-slate-950/40 px-3 py-1 text-xs text-slate-300">
                             {ticket.category}
                         </span>
@@ -38,10 +39,12 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                             <Clock className="h-3.5 w-3.5 text-amber-300" />
                             Создан: {ticket.createdAt}
                         </span>
-                            <span className="inline-flex items-center gap-2">
+
+                        <span className="inline-flex items-center gap-2">
                                 <MessageSquare className="h-3.5 w-3.5 text-amber-300" />
-                                {ticket.answeredAt ? `Ответ получен: ${ticket.answeredAt}` : 'Ожидает ответа администратора'}
-                            </span>
+                            {ticket.answeredAt ? `Ответ получен: ${ticket.answeredAt}` : 'Ожидает ответа администратора'}
+                        </span>
+
                         {isAdmin && (
                             <span className="inline-flex items-center gap-2">
                                 <User className="h-3.5 w-3.5 text-amber-300" />
@@ -61,6 +64,7 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                                 Подробности
                                 <ArrowUpRight className="h-4 w-4" />
                             </Link>
+
                             <Link
                                 href={`/support/${ticket.id}/answer`}
                                 className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"

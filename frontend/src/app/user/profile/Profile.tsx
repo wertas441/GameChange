@@ -40,11 +40,13 @@ export default function Profile() {
                         <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-slate-800/70 bg-slate-950/40 text-xl font-semibold text-amber-300">
                             {getInitials(userName, email)}
                         </div>
+
                         <div>
                             <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Ваш аккаунт</p>
                             <h1 className="mt-1 text-2xl font-semibold text-slate-50">
                                 {userName}
                             </h1>
+
                             <p className="mt-1 text-sm text-slate-400">{email}</p>
                         </div>
                     </div>
@@ -68,15 +70,20 @@ export default function Profile() {
             <div className="grid grid-cols-1 gap-6">
                 <section className="lg:col-span-2 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8">
                     <h2 className="text-xl font-semibold text-slate-50">Данные профиля</h2>
+
                     <p className="mt-2 text-sm text-slate-400">
                         Управляйте персональными данными и настройками безопасности вашего аккаунта.
                     </p>
 
                     <dl className="mt-6 space-y-4">
                         <ProfileDataLine IconComponent={User} label={`Имя пользователя`} data={userName} />
+
                         <ProfileDataLine IconComponent={Mail} label={`Email`} data={email} />
+
                         <ProfileDataLine IconComponent={IdCard} label={`ID аккаунта`} data={publicId} />
+
                         <ProfileDataLine IconComponent={Calendar} label={`Дата регистрации`} data={createdAtLabel} />
+
                         <ProfileDataLine IconComponent={Shield} label={`Роль`} data={isAdmin ? 'Администратор' : 'Пользователь'} />
                     </dl>
                 </section>

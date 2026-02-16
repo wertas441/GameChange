@@ -24,6 +24,7 @@ export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {
         <div className="space-y-6">
             <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
                 <h1 className="text-2xl font-semibold text-slate-50">История покупок</h1>
+
                 <p className="mt-2 text-sm text-slate-400">
                     Здесь собраны все ваши покупки.
                 </p>
@@ -53,12 +54,15 @@ export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {
                                             {item.name}
                                         </h2>
                                     </Link>
+
                                     <p className="mt-1 text-sm text-slate-400">Дата покупки: {item.date}</p>
                                 </div>
 
                                 <div className="flex flex-col items-center lg:items-end w-full lg:w-auto shrink-0">
                                     <p className="text-sm text-slate-400">Количество: {item.count}</p>
+
                                     <p className="text-sm text-slate-400">Цена за шт: {item.price} ₽</p>
+
                                     <p className="mt-2 text-2xl font-bold text-slate-50">
                                         {item.price * item.count} ₽
                                     </p>

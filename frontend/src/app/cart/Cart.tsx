@@ -20,17 +20,13 @@ export default function Cart(){
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
-    const {isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef} = useSimpleModalWindow();
+    const { isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef } = useSimpleModalWindow();
 
-    const { router } = usePageUtils();
+    const { goToPage } = usePageUtils();
 
     const clearCartBtn = () => {
         makeClearCart();
         toggleModalWindow();
-    }
-
-    const goToBuyPage = () => {
-        router.push(`/cart/payment`)
     }
 
     return (
@@ -40,7 +36,6 @@ export default function Cart(){
 
                 {cartItems.length !== 0 ? (
                     <div className="flex flex-col gap-8 md:gap-12 lg:flex-row">
-                        {/* Список товаров */}
                         <div className="lg:w-2/3">
                             <ul role="list" className="space-y-4 md:space-y-5">
                                 {cartItems.map((item) => (
@@ -101,15 +96,18 @@ export default function Cart(){
 
                                 <GrayBtn label={`Очистить корзину`} onClick={toggleModalWindow} className={`!w-auto`} />
                             </div>
+
                             <div className="mt-6 space-y-4">
                                 <div className="flex items-center justify-between">
                                     <p className="text-sm text-slate-300">Товаров ({totalItemsCount} шт.)</p>
                                     <p className="text-sm font-medium text-slate-50">{totalPrice.toFixed(2)} ₽</p>
                                 </div>
+
                                 <div className="flex items-center justify-between">
                                     <p className="text-sm text-slate-300">Скидка</p>
                                     <p className="text-sm font-medium text-emerald-400">- 0.00 ₽</p>
                                 </div>
+
                                 <div className="flex items-center justify-between border-t border-slate-800/70 pt-4">
                                     <p className="text-base font-medium text-slate-50">Итого к оплате</p>
                                     <p className="text-base font-medium text-slate-50">{totalPrice.toFixed(2)} ₽</p>
@@ -118,7 +116,7 @@ export default function Cart(){
 
                             <YellowBtn
                                 label={`Перейти к оформлению`}
-                                onClick={goToBuyPage}
+                                onClick={() => goToPage(`/cart/payment`)}
                                 className={`mt-5`}
                             />
                         </aside>
@@ -126,7 +124,9 @@ export default function Cart(){
                 ) : (
                     <div className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-8 text-center">
                         <p className="text-base font-semibold text-slate-100">Корзина пуста</p>
+
                         <p className="mt-2 text-sm text-slate-400">Добавьте товары из каталога</p>
+
                         <div className="mt-3">
                             <LinkYellowBtn label="Перейти в каталог" href="/keys/catalog" className="max-w-md mt-0 w-auto px-6 py-3" />
                         </div>

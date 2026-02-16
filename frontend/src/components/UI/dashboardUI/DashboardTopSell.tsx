@@ -39,6 +39,7 @@ export default function DashboardTopSell() {
                     <h2 className="text-3xl font-semibold text-slate-50 sm:text-4xl">
                         Сейчас в топе продаж
                     </h2>
+
                     <p className="text-sm text-slate-400 sm:text-base">
                         Подборка самых популярных ключей и кошельков с выгодными ценами.
                     </p>
@@ -74,8 +75,8 @@ export default function DashboardTopSell() {
                                                 transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40">
                                     <Image src={game.mainPicture} alt={game.name} width={1920} height={1080}
                                            className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"/>
-                                    <div
-                                        className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
+                                    <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
+
                                     <div className="absolute bottom-0 left-0 w-full p-4">
                                         <Link href={`/keys/${game.keyUrl}`}>
                                             <h1 className="text-xl font-semibold text-slate-50 transition-colors hover:text-amber-400">

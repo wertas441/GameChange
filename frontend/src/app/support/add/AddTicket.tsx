@@ -83,6 +83,7 @@ export default function AddTicket() {
                         <p className="text-xs font-medium uppercase tracking-[0.2em] text-sky-300/80">
                             Добавление
                         </p>
+
                         <h2 className="mt-2 text-xl sm:text-3xl font-semibold tracking-tight text-slate-50">
                             Создать новое обращение в поддержку магазина
                         </h2>

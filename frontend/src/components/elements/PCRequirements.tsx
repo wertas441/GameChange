@@ -10,6 +10,7 @@ export default function PCRequirements({requirements, label}: IProps) {
     return (
         <div className="rounded-xl border border-slate-800/80 bg-slate-950/40 p-5">
             <h3 className="mb-4 text-lg font-semibold text-slate-50">{label}</h3>
+
             <dl className="space-y-3">
                 <div className="flex justify-between text-sm">
                     <dt className="text-slate-400">CPU</dt>

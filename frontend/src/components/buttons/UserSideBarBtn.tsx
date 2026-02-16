@@ -1,5 +1,5 @@
 import {ElementType, memo} from "react";
-import {useRouter} from "next/navigation";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 interface IProps {
     link: string;
@@ -10,15 +10,11 @@ interface IProps {
 
 function UserSideBarBtn({link, label, IconComponent, active}: IProps) {
 
-    const router = useRouter();
-
-    const goToPage = () => {
-        router.push(link);
-    }
+    const { goToPage } = usePageUtils();
 
     return (
         <button
-            onClick={goToPage}
+            onClick={() => goToPage(link)}
             className={`group w-full flex items-center gap-3 py-2.5 cursor-pointer px-3 rounded-xl border transition text-left ${
                 active
                     ? 'border-amber-400/50 bg-amber-400/10 text-amber-200 shadow-sm shadow-amber-500/10'
@@ -28,6 +24,7 @@ function UserSideBarBtn({link, label, IconComponent, active}: IProps) {
             <IconComponent
                 className={`h-5 w-5 transition ${active ? 'text-amber-300' : 'text-slate-400 group-hover:text-amber-200'}`}
             />
+
             <span className="text-sm font-medium">{label}</span>
         </button>
     )

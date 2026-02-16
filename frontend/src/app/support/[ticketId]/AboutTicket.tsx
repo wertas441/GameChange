@@ -30,6 +30,7 @@ export default function AboutTicket({ticketData}: {ticketData: Ticket}) {
                         <ShieldCheck className="h-4 w-4 text-amber-300" />
                         Ответ поддержки
                     </div>
+
                     <p className="mt-4 text-sm leading-relaxed text-slate-300">
                         {ticketData.answer ? ticketData.answer : 'Ответ пока не получен. Мы обязательно вернемся к вам как можно скорее.'}
                     </p>

@@ -6,7 +6,7 @@ export async function getReviewsList() {
     try {
         const { data } = await serverApi.get<BackendApiResponse<{ reviews: ReviewListStructure[] }>>(`/review/reviews`);
 
-        return data.data?.reviews ?? [];
+        return data.data?.reviews ?? undefined;
     } catch (error) {
         if (showErrorMessage) console.error('get reviews list error:', error);
 

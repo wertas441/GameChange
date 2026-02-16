@@ -125,7 +125,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
         } catch (error) {
             setIsDeleting(false);
 
-            console.error("key delete error:", error);
+            console.error("delete key error:", error);
 
             setServerError("Не удалось удалить ключ. Попробуйте ещё раз позже.");
         }
@@ -236,18 +236,21 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                 <div className="flex items-center justify-between gap-3">
                                     <div className="w-full space-y-4">
                                         <h1 className={`mb-3 ml-2 text-base`}>Минимальные</h1>
+
                                         <MainInput
                                             id={`minimalCPU`}
                                             label={`Процессор`}
                                             error={errors.systemRequirements?.minimal?.CPU?.message}
                                             {...register('systemRequirements.minimal.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                         />
+
                                         <MainInput
                                             id={`minimalGPU`}
                                             label={`Видеокарта`}
                                             error={errors.systemRequirements?.minimal?.GPU?.message}
                                             {...register('systemRequirements.minimal.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                         />
+
                                         <MainInput
                                             id={`minimalRAM`}
                                             label={`ОЗУ`}
@@ -255,6 +258,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                             {...register('systemRequirements.minimal.RAM', {validate: (value) => validateKeyRAM(value) || true})}
 
                                         />
+
                                         <MainInput
                                             id={`minimalMemory`}
                                             label={`Память`}
@@ -265,24 +269,28 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
 
                                     <div className="w-full space-y-4">
                                         <h1 className={`mb-3 ml-2 text-base`}>Рекомендованные</h1>
+
                                         <MainInput
                                             id={`recommendedCPU`}
                                             label={`Процессор`}
                                             error={errors.systemRequirements?.recommended?.CPU?.message}
                                             {...register('systemRequirements.recommended.CPU', {validate: (value) => validateKeyCPU(value) || true})}
                                         />
+
                                         <MainInput
                                             id={`recommendedGPU`}
                                             label={`Видеокарта`}
                                             error={errors.systemRequirements?.recommended?.GPU?.message}
                                             {...register('systemRequirements.recommended.GPU', {validate: (value) => validateKeyGPU(value) || true})}
                                         />
+
                                         <MainInput
                                             id={`recommendedRAM`}
                                             label={`ОЗУ`}
                                             error={errors.systemRequirements?.recommended?.RAM?.message}
                                             {...register('systemRequirements.recommended.RAM', {validate: (value) => validateKeyRAM(value) || true})}
                                         />
+
                                         <MainInput
                                             id={`recommendedMemory`}
                                             label={`Память`}

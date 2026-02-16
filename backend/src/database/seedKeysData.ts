@@ -72,7 +72,6 @@ export async function seedKeysData(): Promise<void> {
                 throw new Error(`Не удалось вставить ключ (игру): "${item.name}"`);
             }
 
-            // Доп. картинки
             for (const [idx, url] of (item.otherPictures).entries()) {
                 await client.query(
                     `
@@ -84,7 +83,6 @@ export async function seedKeysData(): Promise<void> {
                 );
             }
 
-            // ОС
             for (const os of item.operationSystem) {
                 await client.query(
                     `
@@ -96,7 +94,6 @@ export async function seedKeysData(): Promise<void> {
                 );
             }
 
-            // Платформы активации
             for (const platform of item.activationPlatform) {
                 await client.query(
                     `
@@ -108,7 +105,6 @@ export async function seedKeysData(): Promise<void> {
                 );
             }
 
-            // Жанры
             for (const genre of item.genres) {
                 await client.query(
                     `
@@ -120,7 +116,6 @@ export async function seedKeysData(): Promise<void> {
                 );
             }
 
-            // Системные требования
             const minimal = item.systemRequirements.minimal;
             if (minimal) {
                 await client.query(

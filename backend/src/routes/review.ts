@@ -54,7 +54,7 @@ router.post('/review', authMiddleware, async (req, res) => {
         if (!result) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка добавления нового отзыва, пожалуйста попробуйте позже.'
+                error: 'Ошибка добавления нового отзыва, пожалуйста попробуйте позже'
             };
             return res.status(400).json(response);
         }

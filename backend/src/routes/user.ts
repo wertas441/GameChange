@@ -22,7 +22,7 @@ router.post('/registration', async (req, res) => {
         if (!nameError || !emailError || !passwordError) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка регистрации пользователя, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка регистрации пользователя, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -31,7 +31,7 @@ router.post('/registration', async (req, res) => {
         if (existingByEmail) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Пользователь с таким email уже существует.'
+                error: 'Пользователь с таким email уже существует'
             };
             return res.status(409).json(response);
         }
@@ -40,7 +40,7 @@ router.post('/registration', async (req, res) => {
         if (existingByUserName) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Пользователь с таким именем уже существует.'
+                error: 'Пользователь с таким именем уже существует'
             };
             return res.status(409).json(response);
         }
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
         if (!emailError || !userPassword) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка авторизации пользователя, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка авторизации пользователя, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -78,7 +78,7 @@ router.post('/login', async (req, res) => {
         if (!existingUser) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Неверное имя пользователя или пароль.'
+                error: 'Неверное имя пользователя или пароль'
             };
             return res.status(401).json(response);
         }
@@ -187,7 +187,6 @@ router.post('/purchases', authMiddleware, async (req, res) => {
     }
 });
 
-
 router.post('/change-password', authMiddleware, async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body;
@@ -199,7 +198,7 @@ router.post('/change-password', authMiddleware, async (req, res) => {
         if (!currentPasswordError || !newPasswordError) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка смены пароля, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка смены пароля, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -215,7 +214,7 @@ router.post('/change-password', authMiddleware, async (req, res) => {
         if (err?.code === 'INVALID_CURRENT_PASSWORD') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Текущий пароль указан неверно.'
+                error: 'Текущий пароль указан неверно'
             };
             return res.status(400).json(response);
         }
@@ -223,7 +222,7 @@ router.post('/change-password', authMiddleware, async (req, res) => {
         if (err?.code === 'USER_NOT_FOUND') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Пользователь не найден.'
+                error: 'Пользователь не найден'
             };
             return res.status(404).json(response);
         }
@@ -245,7 +244,7 @@ router.post('/change-email', authMiddleware, async (req, res) => {
         if (!currentEmailError || !passwordError) {
             const response: ApiResponse = {
                 success: false,
-                error: 'Ошибка смены почты, пожалуйста проверьте введенные вами данные.'
+                error: 'Ошибка смены почты, пожалуйста проверьте введенные вами данные'
             };
             return res.status(400).json(response);
         }
@@ -261,7 +260,7 @@ router.post('/change-email', authMiddleware, async (req, res) => {
         if (err?.code === 'INVALID_CURRENT_PASSWORD') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Текущий пароль указан неверно.'
+                error: 'Текущий пароль указан неверно'
             };
             return res.status(400).json(response);
         }
@@ -269,7 +268,7 @@ router.post('/change-email', authMiddleware, async (req, res) => {
         if (err?.code === 'USER_NOT_FOUND') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Пользователь не найден.'
+                error: 'Пользователь не найден'
             };
             return res.status(404).json(response);
         }
@@ -277,7 +276,7 @@ router.post('/change-email', authMiddleware, async (req, res) => {
         if (err?.code === 'EMAIL_ALREADY_IN_USE') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Указанная почта уже используется другим аккаунтом.'
+                error: 'Указанная почта уже используется другим аккаунтом'
             };
             return res.status(400).json(response);
         }
@@ -285,7 +284,7 @@ router.post('/change-email', authMiddleware, async (req, res) => {
         if (err?.code === 'EMAIL_SAME_AS_CURRENT') {
             const response: ApiResponse = {
                 success: false,
-                error: 'Новый email совпадает с текущим.'
+                error: 'Новый email совпадает с текущим'
             };
             return res.status(400).json(response);
         }

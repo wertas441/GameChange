@@ -60,9 +60,11 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                 <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
                     <div>
                         <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Поддержка</p>
+
                         <h1 className="mt-2 text-2xl font-semibold text-slate-50">
                             {isAdmin ? 'Центр обработки обращений' : 'Ваши обращения в поддержку'}
                         </h1>
+
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Отслеживайте активные обращения и отвечайте пользователям'
@@ -93,15 +95,15 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                         <h2 className="text-xl font-semibold text-slate-50">Активные обращения</h2>
+
                         <p className="mt-1 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Все обращения, ожидающие действий'
                                 : 'Ваши открытые запросы в поддержку'}
                         </p>
                     </div>
-                    <p className="text-sm text-slate-400">
-                        Показано: {visibleTickets.length}
-                    </p>
+
+                    <p className="text-sm text-slate-400">Показано: {visibleTickets.length}</p>
                 </div>
 
                 {paginatedItems.length !== 0 ? (
@@ -129,6 +131,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                         <p className="text-lg font-semibold text-slate-200">
                             Пока нет активных обращений
                         </p>
+
                         <p className="mt-2 text-sm text-slate-400">
                             {isAdmin
                                 ? 'Здесь появятся новые обращения пользователей.'

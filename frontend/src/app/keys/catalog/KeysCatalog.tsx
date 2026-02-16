@@ -86,8 +86,8 @@ export default function KeysCatalog(){
 
             if (operationSystem.length > 0 && !hasIntersection(operationSystem, key.operationSystem)) return false;
 
-            return true;
-        });
+            return true
+        })
     }, [activationPlatform, genres, keysData, maxPrice, minPrice, operationSystem]);
 
     const {

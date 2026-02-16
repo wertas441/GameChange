@@ -22,7 +22,7 @@ interface PaymentFormValues {
 
 export default function Payment({token}: {token: string}) {
 
-    const {register, handleSubmit, formState: { errors }} = useForm<PaymentFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<PaymentFormValues>();
 
     const cartItems = useCartStore(getCartItems);
     const makeClearCart = useCartStore(clearCart);
@@ -53,9 +53,11 @@ export default function Payment({token}: {token: string}) {
         return (
             <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-8 text-center">
                 <h1 className="text-2xl font-semibold text-slate-50">Оплата недоступна</h1>
+
                 <p className="mt-2 text-sm text-slate-400">
                     Ваша корзина пуста. Добавьте товары, чтобы перейти к оплате.
                 </p>
+
                 <div className="mt-4 flex justify-center">
                     <LinkYellowBtn label="Перейти в каталог" href="/keys/catalog" className="w-auto px-6" />
                 </div>
@@ -66,19 +68,20 @@ export default function Payment({token}: {token: string}) {
     return (
         <div className="space-y-6">
             <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
-                <div>
-                    <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Оплата заказа</p>
-                    <h1 className="mt-2 text-2xl font-semibold text-slate-50">Завершите покупку</h1>
-                    <p className="mt-2 text-sm text-slate-400">
-                        Проверьте данные заказа и выберите удобный способ оплаты
-                    </p>
-                </div>
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Оплата заказа</p>
+
+                <h1 className="mt-2 text-2xl font-semibold text-slate-50">Завершите покупку</h1>
+
+                <p className="mt-2 text-sm text-slate-400">
+                    Проверьте данные заказа и выберите удобный способ оплаты
+                </p>
             </section>
 
             <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
                 <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8">
                     <div>
                         <h2 className="text-xl font-semibold text-slate-50">Данные карты</h2>
+
                         <p className="text-sm text-slate-400">
                             Мы не сохраняем данные карты — платеж проходит через защищённый шлюз.
                         </p>
@@ -132,22 +135,22 @@ export default function Payment({token}: {token: string}) {
                 <aside className="space-y-6">
                     <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8">
                         <div className="flex items-center justify-between border-b border-slate-800/70 pb-4">
-                            <div>
-                                <h3 className="text-lg font-semibold text-slate-50">Итоги заказа</h3>
-                                <p className="text-sm text-slate-400">Проверьте состав и сумму</p>
-                            </div>
-                        </div>
+                            <h3 className="text-lg font-semibold text-slate-50">Итоги заказа</h3>
 
+                            <p className="text-sm text-slate-400">Проверьте состав и сумму</p>
+                        </div>
 
                         <div className="mt-6 space-y-4">
                             <div className="flex items-center justify-between">
                                 <p className="text-sm text-slate-300">Товаров ({totalItemsCount} шт.)</p>
                                 <p className="text-sm font-medium text-slate-50">{totalPrice.toFixed(2)} ₽</p>
                             </div>
+
                             <div className="flex items-center justify-between">
                                 <p className="text-sm text-slate-300">Скидка</p>
                                 <p className="text-sm font-medium text-emerald-400">- 0.00 ₽</p>
                             </div>
+
                             <div className="flex items-center justify-between border-t border-slate-800/70 pt-4">
                                 <p className="text-base font-medium text-slate-50">Итого к оплате</p>
                                 <p className="text-base font-medium text-slate-50">{totalPrice.toFixed(2)} ₽</p>
@@ -157,14 +160,13 @@ export default function Payment({token}: {token: string}) {
 
                     <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8">
                         <h4 className="text-lg font-semibold text-slate-50">Возникли вопросы?</h4>
+
                         <p className="mt-2 text-sm text-slate-400">
                             Мы готовы помочь с оплатой, возвратами и выдачей ключей.
                         </p>
+
                         <div className="mt-4">
-                            <Link
-                                href="/user/profile"
-                                className="text-sm font-medium text-sky-300 hover:text-sky-200 transition-colors"
-                            >
+                            <Link href="/user/profile" className="text-sm font-medium text-sky-300 hover:text-sky-200 transition-colors">
                                 Перейти в центр поддержки
                             </Link>
                         </div>
@@ -174,9 +176,11 @@ export default function Payment({token}: {token: string}) {
 
             <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8">
                 <h2 className="text-lg font-semibold text-slate-50">Состав заказа</h2>
+
                 <p className="mt-2 text-sm text-slate-400">
                     Вы получите ключи сразу после подтверждения оплаты.
                 </p>
+
                 <ul role="list" className="mt-6 space-y-4">
                     {cartItems.map((item) => (
                         <li
@@ -202,6 +206,7 @@ export default function Payment({token}: {token: string}) {
                                 >
                                     {item.name}
                                 </Link>
+
                                 <p className="text-sm text-slate-400">Количество: {item.count}</p>
                             </div>
 

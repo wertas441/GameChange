@@ -39,6 +39,7 @@ function SimpleModalWindow(
     return (
         <div className={`fixed inset-0 z-50 p-4 flex items-center justify-center ${isExiting ? 'plx-modal-exit' : 'plx-modal-enter'}`}>
             <div className="plx-modal-overlay absolute inset-0 bg-gray-950/85" />
+
             <div
                 ref={modalRef}
                 className={`${secondColorTheme} plx-modal-dialog relative z-10  rounded-lg border border-gray-300 shadow-xl p-6 w-full max-w-2xl`}

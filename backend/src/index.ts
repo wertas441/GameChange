@@ -25,7 +25,7 @@ const PORT = config.port;
 let server: http.Server | null = null;
 
 // Middleware
-app.use(helmet()); // Безопасность
+app.use(helmet());
 
 app.use(cors({
     origin: config.frontendUrl,
@@ -54,13 +54,14 @@ app.use((req, res) => {
 // Обработка ошибок
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
     const isDev = process.env.NODE_ENV !== 'production';
-    // Расширенное логирование в консоль
+
     console.error('Глобальная ошибка:', {
         path: req.originalUrl,
         method: req.method,
         message: err?.message,
         stack: isDev ? err?.stack : undefined
     });
+
     res.status(500).json({
         error: 'Внутренняя ошибка сервера',
         message: isDev ? (err?.message || 'Неизвестная ошибка') : 'Что-то пошло не так'
@@ -80,12 +81,9 @@ const startServer = async () => {
             await initDatabase();
         }
 
-        // Запускаем HTTP сервер
         server = http.createServer(app);
 
-        server.listen(PORT, () => {
-            console.log(`Сервер запущен на порту ${PORT}`);
-        });
+        server.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));
     } catch (error) {
         console.error('Ошибка при запуске сервера:', error);
         process.exit(1);
@@ -109,6 +107,7 @@ const gracefulShutdown = async (signal: string) => {
                         console.error('Ошибка при остановке HTTP сервера:', err);
                         return reject(err);
                     }
+
                     console.log('HTTP сервер корректно остановлен');
                     resolve();
                 });

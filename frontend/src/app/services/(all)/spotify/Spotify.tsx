@@ -1,6 +1,6 @@
 'use client'
 
-import {useMemo, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
 import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
@@ -14,6 +14,7 @@ import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
 import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
 import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode, validateSpotifyLogin} from "@/lib/validators/service";
+import {spotifyFeatures, spotifyPlans, spotifyReceive, spotifyText} from "@/app/services/(all)/data";
 
 interface SpotifyFormValues {
     spotifyLogin: string;
@@ -21,73 +22,18 @@ interface SpotifyFormValues {
     promoCode: string;
 }
 
-const plans = [
-    {
-        id: "month",
-        label: "1 месяц",
-        price: 399,
-        description: "Для быстрого старта",
-    },
-    {
-        id: "3months",
-        label: "3 месяца",
-        price: 999,
-        description: "Экономия до 15%",
-    },
-    {
-        id: "6months",
-        label: "6 месяцев",
-        price: 1890,
-        description: "Оптимальный вариант",
-    },
-    {
-        id: "year",
-        label: "12 месяцев",
-        price: 3490,
-        description: "Максимальная выгода",
-    },
-];
-
-const features = [
-    "Официальная подписка Spotify Premium",
-    "Моментальная активация после оплаты",
-    "Поддержка любых регионов аккаунта",
-    "Поддержка 24/7 в чате",
-];
-
-const receive = [
-    {
-        title: "Без рекламы",
-        text: "Слушайте музыку и подкасты без пауз и баннеров.",
-    },
-    {
-        title: "Офлайн режим",
-        text: "Скачивайте треки и слушайте без интернета.",
-    },
-    {
-        title: "Высокое качество",
-        text: "Максимальное качество звука для ваших устройств.",
-    },
-    {
-        title: "Любые устройства",
-        text: "Телефон, ПК, планшет и смарт-колонки.",
-    },
-];
-
-const text = `Оплата безопасна: мы не запрашиваем пароль от аккаунта. Достаточно логина или почты, на которую зарегистрирован Spotify.`
-
 export default function Spotify() {
 
-    const [activePlanId, setActivePlanId] = useState<string>(plans[0].id);
+    const [activePlanId, setActivePlanId] = useState<string>(spotifyPlans[0].id);
 
     const activePlan = useMemo(
-        () => plans.find((plan) => plan.id === activePlanId) ?? plans[0],
+        () => spotifyPlans.find((plan) => plan.id === activePlanId) ?? spotifyPlans[0],
         [activePlanId]
     );
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<SpotifyFormValues>({
         defaultValues: {
-            planId: plans[0].id,
+            planId: spotifyPlans[0].id,
         },
     });
 
@@ -116,6 +62,11 @@ export default function Spotify() {
             setIsSubmitting(false);
         }
     };
+
+    const onClick = useCallback((id: string) => {
+        setActivePlanId(id);
+        setValue("planId", id, { shouldValidate: true });
+    }, [setValue])
 
     return (
         <section className="w-full">
@@ -152,23 +103,16 @@ export default function Spotify() {
                             </p>
 
                             <div className="grid gap-3 sm:grid-cols-2">
-                                {plans.map((plan) => {
-                                    const onClick = () => {
-                                        setActivePlanId(plan.id);
-                                        setValue("planId", plan.id, { shouldValidate: true });
-                                    }
-
-                                    return (
-                                        <ProductBtn
-                                            key={plan.id}
-                                            label={plan.label}
-                                            onClick={onClick}
-                                            isActive={plan.id === activePlanId}
-                                            price={plan.price}
-                                            description={plan.description}
-                                        />
-                                    );
-                                })}
+                                {spotifyPlans.map((plan) => (
+                                    <ProductBtn
+                                        key={plan.id}
+                                        label={plan.label}
+                                        onClick={() => onClick(plan.id)}
+                                        isActive={plan.id === activePlanId}
+                                        price={plan.price}
+                                        description={plan.description}
+                                    />
+                                ))}
                             </div>
 
                             <input type="hidden" {...register("planId")} />
@@ -195,11 +139,11 @@ export default function Spotify() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={features} />
+                    <Features data={spotifyFeatures} />
 
-                    <Receive label={`Что входит в Spotify Premium`} data={receive} />
+                    <Receive label={`Что входит в Spotify Premium`} data={spotifyReceive} />
 
-                    <NeedToKnow text={text} />
+                    <NeedToKnow text={spotifyText} />
                 </div>
             </div>
         </section>
