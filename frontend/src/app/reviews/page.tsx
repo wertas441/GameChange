@@ -1,7 +1,5 @@
 import Reviews from "@/app/reviews/Reviews";
 import {Metadata} from "next";
-import {getReviewsList} from "@/lib/controllers/review";
-import ServerErrorState from "@/components/errors/ServerErrorState";
 
 export const metadata: Metadata = {
     title: "Отзывы | GameChange",
@@ -10,11 +8,5 @@ export const metadata: Metadata = {
 
 export default async function ReviewsPage() {
 
-    const reviews = await getReviewsList();
-
-    if (!reviews) {
-        return <ServerErrorState />
-    }
-
-    return <Reviews reviews={reviews} />
+    return <Reviews />
 }

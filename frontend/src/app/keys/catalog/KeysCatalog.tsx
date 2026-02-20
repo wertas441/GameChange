@@ -14,7 +14,7 @@ import {useCallback, useMemo, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
 import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import ServerErrorState from "@/components/errors/ServerErrorState";
-import useGameKeys from "@/lib/hooks/useGameKeys";
+import useGameKeys from "@/lib/hooks/data/useGameKeys";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
