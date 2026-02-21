@@ -11,7 +11,7 @@ import ShopNavBarItem from "@/components/elements/ShopNavBarItem";
 import {checkAuth, useUserStore} from "@/lib/store/userStore";
 import {useCartStore} from "@/lib/store/cartStore";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import useGameKeys from "@/lib/hooks/useGameKeys";
+import useGameKeys from "@/lib/hooks/data/useGameKeys";
 
 const catalogItems = [
     {

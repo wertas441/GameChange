@@ -1,10 +1,12 @@
 'use client'
 
 import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
-import {ReviewListStructure} from "@/types/review";
 import {reviewCategorys} from "@/lib/data";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
+import useUserReviews from "@/lib/hooks/data/useUserReviews";
+import SpinnerLoader from "@/components/errors/SpinnerLoader";
+import ServerErrorState from "@/components/errors/ServerErrorState";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -14,11 +16,9 @@ const stats = [
 
 const ratings = [2, 5, 10, 24, 59] as const;
 
-export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
+export default function Reviews() {
 
-    const getCategoryLabel = (tag: string) => {
-        return reviewCategorys.find((item) => item.value === tag)?.label
-    }
+    const { userReviews, isLoading, isError, error } = useUserReviews();
 
     const {
         currentPage,
@@ -27,10 +27,23 @@ export default function Reviews({reviews} : {reviews: ReviewListStructure[]}) {
         goToPage,
         listRef,
     } = usePagination({
-        items: reviews,
+        items: userReviews ? userReviews : [],
         itemsPerPage: 6,
         scrollOnPageChange: true,
     });
+
+    if (isLoading) {
+        return <SpinnerLoader text="Загрузка отзывов..." />;
+    }
+
+    if (isError || userReviews === undefined) {
+        console.log(error)
+        return <ServerErrorState />;
+    }
+
+    const getCategoryLabel = (tag: string) => {
+        return reviewCategorys.find((item) => item.value === tag)?.label
+    }
 
     return (
         <section className="w-full">
