@@ -29,7 +29,7 @@
 - `Next.js 16` (App Router)
 - `React 19` + `TypeScript`
 - `Tailwind CSS 4`
-- `TanStack React Query`
+- `TanStack Query`
 - `React Hook Form`
 - `Zustand`
 - `Axios`
