@@ -6,9 +6,8 @@ import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
 import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
+import {showErrorMessage} from "@/lib";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {BackendApiResponse} from "@/types";
 import DropDownContent from "@/components/UI/DropDownContent";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {
@@ -25,12 +24,15 @@ import {
     validateKeyUrl
 } from "@/lib/validators/key";
 import PixelBlast from "@/components/PixelBlast";
+import {useCreateKeyMutation} from "@/lib/hooks/mutation/key";
 
 export default function AddNewKey(){
 
     const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+
+    const createKeyMutation = useCreateKeyMutation();
 
     const onSubmit = async (values: KeyFormValues) => {
         setServerError(null);
@@ -65,18 +67,17 @@ export default function AddNewKey(){
             }
         };
 
-        try {
-            await serverApi.post<BackendApiResponse>(`/key/key`, payload);
+        createKeyMutation.mutate(payload, {
+            onSuccess: () => router.push("/keys/catalog"),
 
-            router.push('/keys/catalog');
-        } catch (err) {
-            const message:string = getServerErrorMessage(err)
+            onError: (err) => {
+                const message = err instanceof Error ? err.message : "Не удалось добавить ключ. Попробуйте ещё раз.";
 
-            setServerError(message);
-            if (showErrorMessage) console.error('AddNewKey error:', err);
-
-            setIsSubmitting(false)
-        }
+                setServerError(message);
+                if (showErrorMessage) console.error('add key error:', err);
+                setIsSubmitting(false)
+            },
+        });
     };
 
     return (

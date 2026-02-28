@@ -2,8 +2,7 @@
 
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
+import {showErrorMessage} from "@/lib";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
@@ -17,6 +16,7 @@ import {
     validateReviewRating,
 } from "@/lib/validators/review";
 import PixelBlast from "@/components/PixelBlast";
+import {useCreateReviewMutation} from "@/lib/hooks/mutation/review";
 
 interface AddReviewFormValues {
     category: string[];
@@ -30,6 +30,8 @@ export default function AddReview() {
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
+    const createReviewMutation = useCreateReviewMutation();
+
     const onSubmit = async (values: AddReviewFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
@@ -40,20 +42,17 @@ export default function AddReview() {
             description: values.description,
         };
 
-        console.log(payload)
+        createReviewMutation.mutate(payload, {
+            onSuccess: () => router.push("/reviews"),
 
-        try {
-            await serverApi.post<BackendApiResponse>(`/review/review`, payload);
+            onError: (err) => {
+                const message = err instanceof Error ? err.message : "Не удалось добавить отзыв. Попробуйте ещё раз.";
 
-            router.push('/reviews');
-        } catch (err) {
-            const message:string = getServerErrorMessage(err)
-
-            setServerError(message);
-            if (showErrorMessage) console.error('Add new review error:', err);
-
-            setIsSubmitting(false)
-        }
+                setServerError(message);
+                if (showErrorMessage) console.error('add review error:', err);
+                setIsSubmitting(false)
+            },
+        });
     };
 
     return (
@@ -121,6 +120,7 @@ export default function AddReview() {
                                     >
                                         Оценка
                                     </label>
+
                                     <div className="flex flex-wrap items-center gap-2">
                                         {[1, 2, 3, 4, 5].map((value) => {
                                             const isActive = value <= (field.value ?? 0);

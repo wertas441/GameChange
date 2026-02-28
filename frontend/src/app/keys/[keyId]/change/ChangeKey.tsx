@@ -3,8 +3,7 @@
 import {KeyDetailsData, KeyFormValues} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {serverApi, getDateInputFormat, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
+import {getDateInputFormat, showErrorMessage} from "@/lib";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import DropDownContent from "@/components/UI/DropDownContent";
@@ -16,7 +15,6 @@ import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
 import YellowBtn from "@/components/buttons/yellow/YellowBtn";
 import {useCallback} from "react";
-import {deleteKey} from "@/lib/controllers/key";
 import {
     validateKeyCPU,
     validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU,
@@ -26,6 +24,7 @@ import {
     validateKeyPlatforms, validateKeyUrl
 } from "@/lib/validators/key";
 import MainTextarea from "@/components/inputs/MainTextArea";
+import {useChangeKeyMutation, useDeleteKeyMutation} from "@/lib/hooks/mutation/key";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 
@@ -66,6 +65,9 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
 
     const { isRendered, isProcess, isExiting, toggleModalWindow, windowModalRef } = useSimpleModalWindow();
 
+    const changeKeyMutation = useChangeKeyMutation();
+    const deleteKeyMutation = useDeleteKeyMutation();
+
     const onSubmit = async (values: KeyFormValues) => {
         setServerError(null);
         setIsSubmitting(true);
@@ -100,36 +102,41 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
             }
         };
 
-        try {
-            await serverApi.put<BackendApiResponse>(`/key/key`, payload);
+        changeKeyMutation.mutate(payload, {
+            onSuccess: () => router.replace("/keys/catalog"),
 
-            router.push('/keys/catalog');
-        } catch (err) {
-            const message:string = getServerErrorMessage(err)
+            onError: (err: unknown) => {
+                const message = err instanceof Error ? err.message : "Не удалось изменить ключ. Попробуйте ещё раз.";
 
-            setServerError(message);
-            if (showErrorMessage) console.error('ChangeKey error:', err);
+                setServerError(message);
+                if (showErrorMessage) console.error('change key error:', err);
 
-            setIsSubmitting(false)
-        }
+                setIsSubmitting(false)
+            },
+        });
     };
 
     const deleteKeyBtn = useCallback(async () => {
         setServerError(null);
         setIsDeleting(true);
 
-        try {
-            await deleteKey(token, keyData.id);
-
-            router.replace("/keys/catalog");
-        } catch (error) {
-            setIsDeleting(false);
-
-            console.error("delete key error:", error);
-
-            setServerError("Не удалось удалить ключ. Попробуйте ещё раз позже.");
+        const payload = {
+            tokenValue: token,
+            keyId: keyData.id,
         }
-    }, [keyData.id, router, setIsDeleting, setServerError, token])
+        
+        deleteKeyMutation.mutate(payload, {
+            onSuccess: () => router.replace("/keys/catalog"),
+
+            onError: (err: unknown) => {
+                console.error("delete key error:", err);
+
+                setServerError("Не удалось удалить ключ. Попробуйте ещё раз позже.");
+                setIsDeleting(false);
+
+            },
+        })
+    }, [deleteKeyMutation, keyData.id, router, setIsDeleting, setServerError, token])
 
     return (
         <>

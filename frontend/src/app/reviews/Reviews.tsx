@@ -4,7 +4,7 @@ import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {reviewCategorys} from "@/lib/data";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
-import useUserReviews from "@/lib/hooks/data/useUserReviews";
+import useUserReviews from "@/lib/hooks/data/review";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 

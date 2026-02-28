@@ -1,6 +1,11 @@
-import {serverApi, getTokenHeaders, showErrorMessage} from "@/lib";
+import {serverApi, getTokenHeaders, showErrorMessage, getServerErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import {KeyDetailsData, KeyListData} from "@/types/key";
+import {AddKeyData, KeyDetailsData, KeyListData} from "@/types/key";
+
+interface DeleteKeyPayload {
+    tokenValue: string;
+    keyId: number;
+}
 
 export async function getKeysList() {
     try {
@@ -26,20 +31,53 @@ export async function getKeyDetails(keyUrl: string) {
     }
 }
 
-export async function deleteKey(tokenValue: string, keyId: number):Promise<void> {
-
-    const payload = {
-        headers: getTokenHeaders(tokenValue),
-        data: { keyId },
-    };
-
+export async function createKey(payload: AddKeyData):Promise<void> {
     try {
-        await serverApi.delete<BackendApiResponse>(`/key/key`, payload);
+        const { data } = await serverApi.post<BackendApiResponse>('/key/key', payload);
+
+        if (!data.success) throw new Error(data.message || 'Не удалось добавить ключ');
 
         return;
-    } catch (error) {
-        if (showErrorMessage) console.error('delete key error:', error);
+    } catch (err) {
+        const message = getServerErrorMessage(err) || "Ошибка добавления ключа";
 
-        return ;
+        console.error(message);
+        throw new Error(message);
+    }
+}
+
+export async function updateKey(payload: AddKeyData):Promise<void> {
+    try {
+        const { data } = await serverApi.put<BackendApiResponse>('/key/key', payload);
+
+        if (!data.success) throw new Error(data.message || 'Не удалось изменить ключ');
+
+        return;
+    } catch (err) {
+        const message = getServerErrorMessage(err) || "Ошибка изменения ключа";
+
+        console.error(message);
+        throw new Error(message);
+    }
+}
+
+export async function deleteKey(payload: DeleteKeyPayload):Promise<void> {
+
+    const requestConfig = {
+        headers: getTokenHeaders(payload.tokenValue),
+        data: { keyId: payload.keyId },
+    }
+
+    try {
+        const { data } = await serverApi.delete<BackendApiResponse>(`/key/key`, requestConfig);
+
+        if (!data.success) throw new Error(data.message || "Не удалось удалить ключ");
+
+        return;
+    } catch (err) {
+        const message = getServerErrorMessage(err) || "Ошибка удаления ключа";
+
+        console.error(message);
+        throw new Error(message);
     }
 }
