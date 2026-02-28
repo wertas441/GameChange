@@ -5,7 +5,7 @@ import {Navigation} from "swiper/modules";
 import Image from "next/image";
 import Link from "next/link";
 import {ArrowLeft, ArrowRight, ShoppingCart} from "lucide-react";
-import useGameKeys from "@/lib/hooks/data/useGameKeys";
+import useGameKeys from "@/lib/hooks/data/key";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";

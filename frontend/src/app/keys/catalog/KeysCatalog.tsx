@@ -14,7 +14,7 @@ import {useCallback, useMemo, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
 import GrayBtn from "@/components/buttons/gray/GrayBtn";
 import ServerErrorState from "@/components/errors/ServerErrorState";
-import useGameKeys from "@/lib/hooks/data/useGameKeys";
+import useGameKeys from "@/lib/hooks/data/key";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
@@ -51,13 +51,7 @@ export default function KeysCatalog(){
 
     const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
 
-    const {
-        minPrice,
-        maxPrice,
-        genres = [],
-        activationPlatform = [],
-        operationSystem = [],
-    } = appliedFilters;
+    const { minPrice, maxPrice, genres, activationPlatform, operationSystem } = appliedFilters;
 
     const normalizePrice = (value: string) => {
         const trimmed = value.trim();
@@ -160,7 +154,7 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="genres"
                                     label="Жанры"
-                                    value={genreOptions.filter((opt) => field.value.includes(opt.value))}
+                                    value={genreOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
                                     options={genreOptions}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Выберите жанры"
@@ -176,7 +170,7 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="activationPlatform"
                                     label="Платформа активации"
-                                    value={activationPlatformOptions.filter((opt) => field.value.includes(opt.value))}
+                                    value={activationPlatformOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
                                     options={activationPlatformOptions}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Steam, Epic Games..."
@@ -192,7 +186,7 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="operationSystem"
                                     label="Операционная система"
-                                    value={operationSystemOptions.filter((opt) => field.value.includes(opt.value))}
+                                    value={operationSystemOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
                                     options={operationSystemOptions}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Windows, macOS..."
