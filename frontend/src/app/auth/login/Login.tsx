@@ -14,7 +14,7 @@ import {validateUserEmail, validateUserPassword} from "@/lib/validators/user";
 import {useEffect} from "react";
 import PixelBlast from "@/components/PixelBlast";
 
-interface LoginFormValues {
+interface LoginForm {
     email: string;
     password: string;
     rememberMe: boolean;
@@ -22,7 +22,7 @@ interface LoginFormValues {
 
 export default function Login() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
@@ -33,7 +33,7 @@ export default function Login() {
         void clearStore();
     }, [clearStore])
 
-    const onSubmit = async (values: LoginFormValues) => {
+    const onSubmit = async (values: LoginForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -51,7 +51,9 @@ export default function Login() {
                 const userData = useUserStore.getState().userData;
                 if (!userData) {
                     setServerError("Не удалось получить данные пользователя после входа. Попробуйте обновить страницу.");
+
                     setIsSubmitting(false);
+
                     return;
                 }
 

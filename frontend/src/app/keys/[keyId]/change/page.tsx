@@ -21,9 +21,8 @@ export default async function ChangeKeyPage({params}: KeyMetadataParams){
     const keyData = await getKeyDetails(keyId);
     const tokenValue = (await cookies()).get('token')?.value;
 
-    if (!keyData || !tokenValue) {
-        return <ServerErrorState />
-    }
+    if (!keyData || !tokenValue) return <ServerErrorState />
+
 
     return <ChangeKey keyData={keyData} token={tokenValue} />
 }

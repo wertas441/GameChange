@@ -13,7 +13,7 @@ import ServerFormError from "@/components/errors/ServerFormError";
 import {validateUserEmail} from "@/lib/validators/user";
 import {validateCardCVC, validateCardDate, validateCardNumber} from "@/lib/validators/purchases";
 
-interface PaymentFormValues {
+interface PaymentForm {
     email: string;
     cardNumber: string;
     cardDate: string;
@@ -22,7 +22,7 @@ interface PaymentFormValues {
 
 export default function Payment({token}: {token: string}) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<PaymentFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<PaymentForm>();
 
     const cartItems = useCartStore(getCartItems);
     const makeClearCart = useCartStore(clearCart);
@@ -36,6 +36,7 @@ export default function Payment({token}: {token: string}) {
 
         if (cartItems.length === 0) {
             setServerError('На данный момент ваша корзина пуста, выберите товары для продолжения оплаты')
+
             return;
         }
 
@@ -43,6 +44,7 @@ export default function Payment({token}: {token: string}) {
 
         if (response) {
             makeClearCart();
+
             return alert(`Покупка успешно оформлена`);
         }
 

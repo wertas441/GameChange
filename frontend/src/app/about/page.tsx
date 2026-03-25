@@ -33,9 +33,17 @@ export default function AboutPage() {
                             </p>
 
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-                                <LinkYellowBtn href="/keys/catalog" label="Перейти в каталог" className={`w-auto!`} />
+                                <LinkYellowBtn
+                                    href="/keys/catalog"
+                                    label="Перейти в каталог"
+                                    className={`w-auto!`}
+                                />
 
-                                <LinkYellowBtn href="/services" label="Посмотреть сервисы для пополнения" className={`w-auto!`}/>
+                                <LinkYellowBtn
+                                    href="/services"
+                                    label="Посмотреть сервисы для пополнения"
+                                    className={`w-auto!`}
+                                />
                             </div>
                         </div>
 
@@ -64,9 +72,13 @@ export default function AboutPage() {
                     <div className="grid gap-4 lg:col-span-2 sm:grid-cols-2">
                         {aboutFeatures.map((feature) => (
                             <div key={feature.title} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5">
-                                <h3 className="text-lg font-semibold text-slate-50">{feature.title}</h3>
+                                <h3 className="text-lg font-semibold text-slate-50">
+                                    {feature.title}
+                                </h3>
 
-                                <p className="mt-2 text-sm text-slate-400">{feature.description}</p>
+                                <p className="mt-2 text-sm text-slate-400">
+                                    {feature.description}
+                                </p>
                             </div>
                         ))}
                     </div>
@@ -112,11 +124,11 @@ export default function AboutPage() {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-center gap-6">
-                        {aboutPartnerLogos.map((logo) => (
-                            <div key={logo.alt} className="flex h-12 w-28 items-center justify-center rounded-2xl border border-slate-800/70 bg-slate-900/60 p-2">
+                        {aboutPartnerLogos.map(({src, alt}) => (
+                            <div key={alt} className="flex h-12 w-28 items-center justify-center rounded-2xl border border-slate-800/70 bg-slate-900/60 p-2">
                                 <Image
-                                    src={logo.src}
-                                    alt={logo.alt}
+                                    src={src}
+                                    alt={alt}
                                     width={96}
                                     height={48}
                                     className="h-full w-full object-contain"

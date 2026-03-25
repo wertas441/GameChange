@@ -26,6 +26,7 @@ export default function Cart(){
 
     const clearCartBtn = () => {
         makeClearCart();
+
         toggleModalWindow();
     }
 
@@ -141,7 +142,6 @@ export default function Cart(){
                 windowLabel={'Подтверждение очистки'}
                 windowText={`Вы действительно хотите удалить все элементы из своей корзины? Это действие необратимо.`}
                 error={null}
-                cancelButtonLabel={'Отмена'}
                 cancelFunction={toggleModalWindow}
                 confirmButtonLabel={'Очистить'}
                 confirmFunction={clearCartBtn}

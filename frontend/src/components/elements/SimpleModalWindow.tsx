@@ -8,7 +8,6 @@ interface IProps {
     windowLabel: string;
     windowText: string;
     error?: string | null;
-    cancelButtonLabel: string;
     cancelFunction: () => void;
     confirmButtonLabel: string;
     confirmFunction: () => void;
@@ -24,7 +23,6 @@ function SimpleModalWindow(
         windowLabel,
         windowText,
         error,
-        cancelButtonLabel,
         cancelFunction,
         confirmButtonLabel,
         confirmFunction,
@@ -32,9 +30,7 @@ function SimpleModalWindow(
         isRendered,
     }: IProps) {
 
-    if (!isRendered) {
-        return null;
-    }
+    if (!isRendered) return null;
 
     return (
         <div className={`fixed inset-0 z-50 p-4 flex items-center justify-center ${isExiting ? 'plx-modal-exit' : 'plx-modal-enter'}`}>
@@ -51,6 +47,7 @@ function SimpleModalWindow(
                 <h3 id="delete-modal-title" className="text-lg font-semibold leading-6 text-white">
                     {windowLabel}
                 </h3>
+
                 <div className="mt-3">
                     <p id="delete-modal-description" className="text-sm text-gray-400">
                         {windowText}
@@ -65,7 +62,7 @@ function SimpleModalWindow(
 
                 <div className="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-3 space-y-3 space-y-reverse sm:space-y-0">
                     <YellowBtn
-                        label={cancelButtonLabel}
+                        label={'Отмена'}
                         disabled={isProcess}
                         onClick={cancelFunction}
                     />

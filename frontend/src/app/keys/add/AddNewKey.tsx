@@ -30,7 +30,7 @@ export default function AddNewKey(){
 
     const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
     const createKeyMutation = useCreateKeyMutation();
 
@@ -68,7 +68,7 @@ export default function AddNewKey(){
         };
 
         createKeyMutation.mutate(payload, {
-            onSuccess: () => router.push("/keys/catalog"),
+            onSuccess: () => goToPage("/keys/catalog"),
 
             onError: (err) => {
                 const message = err instanceof Error ? err.message : "Не удалось добавить ключ. Попробуйте ещё раз.";

@@ -12,9 +12,7 @@ export default async function PaymentPage() {
 
     const tokenValue = (await cookies()).get('token')?.value;
 
-    if (!tokenValue) {
-        return <ServerErrorState />
-    }
+    if (!tokenValue) return <ServerErrorState />
 
     return <Payment token={tokenValue} />
 }

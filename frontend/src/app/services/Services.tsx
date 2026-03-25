@@ -53,20 +53,20 @@ export default function Services() {
                 </div>
 
                 <div className="mt-8 md:mt-6 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-                    {tags.map((tag) => {
-                        const isActive = tag.value === activeTag;
+                    {tags.map(({value, label}) => {
+                        const isActive = value === activeTag;
                         return (
                             <button
-                                key={tag.value}
+                                key={value}
                                 type="button"
-                                onClick={() => setActiveTag(tag.value)}
+                                onClick={() => setActiveTag(value)}
                                 className={`rounded-full cursor-pointer border px-4 py-2 text-sm transition ${
                                     isActive
                                         ? "border-amber-400/70 bg-amber-400/10 text-amber-300"
                                         : "border-slate-800/70 bg-slate-950/40 text-slate-300 hover:border-amber-400/40 hover:text-amber-300"
                                 }`}
                             >
-                                {tag.label}
+                                {label}
                             </button>
                         );
                     })}

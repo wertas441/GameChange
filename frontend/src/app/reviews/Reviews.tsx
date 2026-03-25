@@ -32,12 +32,12 @@ export default function Reviews() {
         scrollOnPageChange: true,
     });
 
-    if (isLoading) {
-        return <SpinnerLoader text="Загрузка отзывов..." />;
-    }
+    if (isLoading) return <SpinnerLoader text="Загрузка отзывов..." />;
+
 
     if (isError || userReviews === undefined) {
         console.log(error)
+
         return <ServerErrorState />;
     }
 
@@ -60,11 +60,11 @@ export default function Reviews() {
                 </div>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {stats.map((item) => (
-                        <div key={item.label} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 text-center shadow-lg shadow-black/30">
-                            <p className="text-sm text-slate-400">{item.label}</p>
+                    {stats.map(({label, value}) => (
+                        <div key={label} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 text-center shadow-lg shadow-black/30">
+                            <p className="text-sm text-slate-400">{label}</p>
 
-                            <p className="mt-2 text-2xl font-semibold text-slate-50">{item.value}</p>
+                            <p className="mt-2 text-2xl font-semibold text-slate-50">{value}</p>
                         </div>
                     ))}
                 </div>

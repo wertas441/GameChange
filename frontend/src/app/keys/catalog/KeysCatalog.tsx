@@ -21,7 +21,7 @@ import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
 
-interface KeysFilterFormValues {
+interface KeysFilterForm {
     minPrice: string;
     maxPrice: string;
     genres: string[];
@@ -29,7 +29,7 @@ interface KeysFilterFormValues {
     operationSystem: string[];
 }
 
-const defaultFilters: KeysFilterFormValues = {
+const defaultFilters: KeysFilterForm = {
     minPrice: '',
     maxPrice: '',
     genres: [],
@@ -41,7 +41,7 @@ export default function KeysCatalog(){
 
     const { keysData, isLoading, isError } = useGameKeys()
 
-    const { control, register, reset, handleSubmit } = useForm<KeysFilterFormValues>({
+    const { control, register, reset, handleSubmit } = useForm<KeysFilterForm>({
         defaultValues: defaultFilters,
     });
 
@@ -49,7 +49,7 @@ export default function KeysCatalog(){
 
     const isAdmin = useUserStore(getUserStatus)
 
-    const [appliedFilters, setAppliedFilters] = useState<KeysFilterFormValues>(defaultFilters);
+    const [appliedFilters, setAppliedFilters] = useState<KeysFilterForm>(defaultFilters);
 
     const { minPrice, maxPrice, genres, activationPlatform, operationSystem } = appliedFilters;
 
@@ -61,7 +61,9 @@ export default function KeysCatalog(){
         return Number(trimmed);
     };
 
-    const hasIntersection = (values: string[], target: string[]) => values.some((value) => target.includes(value));
+    const hasIntersection = (values: string[], target: string[]) => {
+        return values.some((value) => target.includes(value));
+    }
 
     const filteredKeys = useMemo(() => {
         if (!keysData) return [];
@@ -105,19 +107,15 @@ export default function KeysCatalog(){
         resetPage();
     }, [reset, resetPage]);
 
-    const handleApplyFilters = useCallback((values: KeysFilterFormValues) => {
+    const handleApplyFilters = useCallback((values: KeysFilterForm) => {
         setAppliedFilters(values);
 
         resetPage();
     }, [resetPage]);
 
-    if (isLoading) {
-        return <SpinnerLoader text="Загрузка списка игр..." />;
-    }
+    if (isLoading) return <SpinnerLoader text="Загрузка списка игр..." />;
 
-    if (isError || keysData === undefined) {
-        return <ServerErrorState />;
-    }
+    if (isError || keysData === undefined) return <ServerErrorState />;
 
     return (
         <div className="flex flex-col gap-6 lg:flex-row">
@@ -218,6 +216,7 @@ export default function KeysCatalog(){
                 {paginatedItems.length === 0 ? (
                     <div className="rounded-2xl border border-slate-800/80 bg-slate-900/50 p-8 text-center">
                         <p className="text-base font-semibold text-slate-100">Ничего не найдено</p>
+
                         <p className="mt-2 text-sm text-slate-400">Попробуйте изменить фильтры</p>
 
                         <YellowBtn label={`Сбросить фильтры`} onClick={handleReset} className={`!max-w-sm mt-5`} />
