@@ -1,8 +1,8 @@
 import {Metadata} from "next";
 import AnswerToTicket from "@/app/support/[ticketId]/answer/AnswerToTicket";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/components/errors/ServerErrorState";
-import {getTicketDetails} from "@/lib/controllers/ticket";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import {getTicketDetails} from "@/entities/support/model/controller";
 
 export const metadata: Metadata = {
     title: 'Ответить на обращение | GameChange',

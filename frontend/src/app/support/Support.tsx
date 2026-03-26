@@ -1,16 +1,16 @@
 'use client'
 
 import {History, Plus} from "lucide-react";
-import {getUserData, useUserStore} from "@/lib/store/userStore";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {getUserData, useUserStore} from "@/entities/user/model/store";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
 import {useMemo} from "react";
-import {Ticket} from "@/types/support";
-import SupportRow from "@/components/elements/SupportRow";
-import GrayBtn from "@/components/buttons/GrayBtn";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import YellowGlassBtn from "@/components/buttons/YellowGlassBtn";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
+import {Ticket} from "@/entities/support/model/type";
+import SupportRow from "@/entities/support/UI/SupportRow";
+import GrayBtn from "@/shared/UI-kit/buttons/GrayBtn";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import YellowGlassBtn from "@/shared/UI-kit/buttons/YellowGlassBtn";
+import usePagination from "@/shared/hooks/usePagination";
+import Pagination from "@/widgets/Pagination";
 
 export default function Support({ticketList} : {ticketList: Ticket[]}) {
 

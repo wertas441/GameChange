@@ -1,22 +1,23 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MainInput from "@/components/inputs/MainInput";
-import YellowBtn from "@/components/buttons/YellowBtn";
-import HideInput from "@/components/inputs/HideInput";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {serverApi, showErrorMessage} from "@/shared";
+import {BackendApiResponse} from "@/shared/type";
+import {secondColorTheme} from "@/shared/styles/styles";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import HideInput from "@/shared/UI-kit/inputs/HideInput";
 import {
     validateUserConfirmPassword,
     validateUserEmail,
     validateUserName,
     validateUserPassword
-} from "@/lib/validators/user";
-import PixelBlast from "@/components/PixelBlast";
+} from "@/entities/user/model/validation";
+import PixelBlast from "@/widgets/PixelBlast";
 import Link from "next/link";
+import {getServerErrorMessage} from "@/features/server";
 
 interface RegistrationForm {
     userName: string;

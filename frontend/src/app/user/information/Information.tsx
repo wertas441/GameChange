@@ -1,7 +1,7 @@
 'use client'
 
-import YellowBtn from "@/components/buttons/YellowBtn";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
 
 const stackInformation = [
     'Frontend: Next.js (App Router), React, TypeScript, Tailwind CSS.',

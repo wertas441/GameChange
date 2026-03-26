@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import {ArrowUpRight, History, User} from "lucide-react";
-import {getUserData, useUserStore} from "@/lib/store/userStore";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {getUserData, useUserStore} from "@/entities/user/model/store";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
 import {useMemo} from "react";
-import {Ticket} from "@/types/support";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
+import {Ticket} from "@/entities/support/model/type";
+import usePagination from "@/shared/hooks/usePagination";
+import Pagination from "@/widgets/Pagination";
 
 export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 

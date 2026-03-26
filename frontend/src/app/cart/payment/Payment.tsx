@@ -2,15 +2,15 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
+import {clearCart, getCartItems, useCartStore} from "@/entities/cart/model/store";
 import {useForm} from "react-hook-form";
-import MainInput from "@/components/inputs/MainInput";
-import YellowBtn from "@/components/buttons/YellowBtn";
-import {addPurchases} from "@/lib/controllers/user";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import ServerFormError from "@/components/errors/ServerFormError";
-import {validateUserEmail} from "@/lib/validators/user";
-import {validateCardCVC, validateCardDate, validateCardNumber} from "@/lib/validators/purchases";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import {addPurchases} from "@/entities/user/model/controller";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import {validateUserEmail} from "@/entities/user/model/validation";
+import {validateCardCVC, validateCardDate, validateCardNumber} from "@/entities/cart/model/validation";
 
 interface PaymentForm {
     email: string;

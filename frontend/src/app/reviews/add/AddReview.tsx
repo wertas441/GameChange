@@ -1,22 +1,22 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/lib";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {reviewCategorys} from "@/lib/data";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import InputError from "@/components/errors/InputError";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {showErrorMessage} from "@/shared";
+import {secondColorTheme} from "@/shared/styles/styles";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
+import {reviewCategorys} from "@/shared/data";
+import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
+import InputError from "@/shared/UI-kit/errors/InputError";
 import {
     validateReviewCategory,
     validateReviewDescription,
     validateReviewRating,
-} from "@/lib/validators/review";
-import PixelBlast from "@/components/PixelBlast";
-import {useCreateReviewMutation} from "@/lib/hooks/mutation/review";
-import YellowBtn from "@/components/buttons/YellowBtn";
+} from "@/entities/review/model/validation";
+import PixelBlast from "@/widgets/PixelBlast";
+import {useCreateReviewMutation} from "@/entities/review/model/mutation";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
 
 interface AddReviewForm {
     category: string[];

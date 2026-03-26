@@ -1,18 +1,18 @@
 'use client'
 
-import {KeyDetailsData, KeyFormValues} from "@/types/key";
+import {KeyDetailsData, KeyFormValues} from "@/entities/key/model/type";
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {getDateInputFormat, showErrorMessage} from "@/lib";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import DropDownContent from "@/components/UI/DropDownContent";
-import MainInput from "@/components/inputs/MainInput";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
-import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
-import YellowBtn from "@/components/buttons/YellowBtn";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {showErrorMessage} from "@/shared";
+import {secondColorTheme} from "@/shared/styles/styles";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import DropDownContent from "@/entities/key/UI/DropDownContent";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
+import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/shared/data";
+import {useSimpleModalWindow} from "@/shared/hooks/useSimpleModalWindow";
+import SimpleModalWindow from "@/shared/UI-kit/SimpleModalWindow";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
 import {useCallback} from "react";
 import {
     validateKeyCPU,
@@ -31,9 +31,10 @@ import {
     validateKeyReleaseDate,
     validateKeyPlatforms,
     validateKeyUrl
-} from "@/lib/validators/key";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import {useChangeKeyMutation, useDeleteKeyMutation} from "@/lib/hooks/mutation/key";
+} from "@/entities/key/model/validator";
+import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
+import {useChangeKeyMutation, useDeleteKeyMutation} from "@/entities/key/model/mutation";
+import {getDateInputFormat} from "@/features";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 

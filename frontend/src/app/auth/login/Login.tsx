@@ -1,18 +1,19 @@
 'use client'
 
 import { useForm } from 'react-hook-form';
-import {serverApi, getServerErrorMessage, showErrorMessage} from '@/lib';
-import { usePageUtils } from '@/lib/hooks/usePageUtils';
-import MainInput from '@/components/inputs/MainInput';
-import {BackendApiResponse} from "@/types";
-import ServerFormError from "@/components/errors/ServerFormError";
-import YellowBtn from "@/components/buttons/YellowBtn";
-import {secondColorTheme} from "@/styles/styles";
+import {serverApi, showErrorMessage} from '@/shared';
+import { usePageUtils } from '@/shared/hooks/usePageUtils';
+import MainInput from '@/shared/UI-kit/inputs/MainInput';
+import {BackendApiResponse} from "@/shared/type";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import {secondColorTheme} from "@/shared/styles/styles";
 import Link from "next/link";
-import {makeInitUserData, makeClear, useUserStore} from "@/lib/store/userStore";
-import {validateUserEmail, validateUserPassword} from "@/lib/validators/user";
+import {makeInitUserData, makeClear, useUserStore} from "@/entities/user/model/store";
+import {validateUserEmail, validateUserPassword} from "@/entities/user/model/validation";
 import {useEffect} from "react";
-import PixelBlast from "@/components/PixelBlast";
+import PixelBlast from "@/widgets/PixelBlast";
+import {getServerErrorMessage} from "@/features/server";
 
 interface LoginForm {
     email: string;

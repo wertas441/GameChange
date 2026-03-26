@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
 
 export default async function SupportLayout({children}: {children: ReactNode}) {
 

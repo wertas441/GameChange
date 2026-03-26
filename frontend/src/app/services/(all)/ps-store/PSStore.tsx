@@ -1,18 +1,19 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import YellowBtn from "@/components/buttons/YellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import HowItWork from "@/components/UI/servicesUI/HowItWork";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/lib/validators/service";
+import {serverApi, showErrorMessage} from "@/shared";
+import {BackendApiResponse} from "@/shared/type";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import Features from "@/entities/services/UI/ServiceFeatures";
+import HowItWork from "@/entities/services/UI/ServiceHowItWork";
+import NeedToKnow from "@/entities/services/UI/ServiceNeedToKnow";
+import ServiceHeader from "@/entities/services/UI/ServiceHeader";
+import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/entities/services/model/validation";
 import {psStoreFeatures, psStoreHowItWork, psStoreText} from "@/app/services/(all)/data";
+import {getServerErrorMessage} from "@/features/server";
 
 interface PSStoreForm {
     login: string;

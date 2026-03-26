@@ -2,19 +2,20 @@
 
 import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import YellowBtn from "@/components/buttons/YellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import Receive from "@/components/UI/servicesUI/Receive";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode} from "@/lib/validators/service";
-import {validateUserEmail} from "@/lib/validators/user";
+import {serverApi, showErrorMessage} from "@/shared";
+import {getServerErrorMessage} from "@/features/server";
+import {BackendApiResponse} from "@/shared/type";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import Features from "@/entities/services/UI/ServiceFeatures";
+import Receive from "@/entities/services/UI/ServiceReceive";
+import NeedToKnow from "@/entities/services/UI/ServiceNeedToKnow";
+import ProductBtn from "@/entities/services/UI/ServiceProductBtn";
+import ServiceHeader from "@/entities/services/UI/ServiceHeader";
+import {validatePromoCode} from "@/entities/services/model/validation";
+import {validateUserEmail} from "@/entities/user/model/validation";
 import {chatGptFeatures, chatGptPlans, chatGptReceive, chatGptText, chatGptTiers} from "@/app/services/(all)/data";
 
 interface ChatGptForm {

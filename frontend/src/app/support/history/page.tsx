@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import TicketHistory from "@/app/support/history/TicketHistory";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/components/errors/ServerErrorState";
-import {getTicketHistory} from "@/lib/controllers/ticket";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import {getTicketHistory} from "@/entities/support/model/controller";
 
 export const metadata: Metadata = {
     title: 'История обращений | GameChange',

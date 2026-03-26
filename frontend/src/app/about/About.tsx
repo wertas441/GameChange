@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import {aboutFeatures, aboutPartnerLogos, aboutStats, aboutSteps} from "@/app/about/data";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import YellowBtn from "@/components/buttons/YellowBtn";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
 
 export default function About() {
 

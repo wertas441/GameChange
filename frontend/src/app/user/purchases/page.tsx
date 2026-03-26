@@ -1,8 +1,8 @@
 import {Metadata} from "next";
 import Purchases from "@/app/user/purchases/Purchases";
-import {getPurchases} from "@/lib/controllers/user";
+import {getPurchases} from "@/entities/user/model/controller";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
 
 export const metadata: Metadata = {
     title: 'Game Change',

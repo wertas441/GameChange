@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {PurchaseItem} from "@/types";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
+import {PurchaseItem} from "@/shared/type";
+import usePagination from "@/shared/hooks/usePagination";
+import Pagination from "@/widgets/Pagination";
 
 export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {
 

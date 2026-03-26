@@ -1,30 +1,30 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData, KeyFormValues} from "@/types/key";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MainInput from "@/components/inputs/MainInput";
-import {showErrorMessage} from "@/lib";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import DropDownContent from "@/components/UI/DropDownContent";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
+import {AddKeyData, KeyFormValues} from "@/entities/key/model/type";
+import {secondColorTheme} from "@/shared/styles/styles";
+import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import {showErrorMessage} from "@/shared";
+import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import DropDownContent from "@/entities/key/UI/DropDownContent";
+import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
 import {
     activationPlatformOptions,
     genreOptions,
     operationSystemOptions
-} from "@/lib/data";
-import MainTextarea from "@/components/inputs/MainTextArea";
+} from "@/shared/data";
+import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
 import {
     validateKeyCPU,
     validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
     validateKeyName, validateKeyOS, validateKeyOtherPicture,
     validateKeyPlatforms, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
     validateKeyUrl
-} from "@/lib/validators/key";
-import PixelBlast from "@/components/PixelBlast";
-import {useCreateKeyMutation} from "@/lib/hooks/mutation/key";
-import YellowBtn from "@/components/buttons/YellowBtn";
+} from "@/entities/key/model/validator";
+import PixelBlast from "@/widgets/PixelBlast";
+import {useCreateKeyMutation} from "@/entities/key/model/mutation";
+import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
 
 export default function AddNewKey(){
 
