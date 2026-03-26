@@ -5,8 +5,7 @@ import Image from "next/image";
 import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
 import {useForm} from "react-hook-form";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import {addPurchases} from "@/lib/controllers/user";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import ServerFormError from "@/components/errors/ServerFormError";
@@ -30,7 +29,7 @@ export default function Payment({token}: {token: string}) {
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
-    const { serverError, setServerError, isSubmitting } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, goToPage } = usePageUtils();
 
     const onSubmit = async () => {
 
@@ -61,7 +60,11 @@ export default function Payment({token}: {token: string}) {
                 </p>
 
                 <div className="mt-4 flex justify-center">
-                    <LinkYellowBtn label="Перейти в каталог" href="/keys/catalog" className="w-auto px-6" />
+                    <YellowBtn
+                        label="Перейти в каталог"
+                        onClick={() => goToPage("/keys/catalog")}
+                        className="w-auto px-6"
+                    />
                 </div>
             </section>
         );
@@ -127,8 +130,9 @@ export default function Payment({token}: {token: string}) {
                             />
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оплатить заказ' : 'Проводим оплату…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

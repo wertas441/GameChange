@@ -5,7 +5,6 @@ import {AddKeyData, KeyFormValues} from "@/types/key";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import {showErrorMessage} from "@/lib";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import DropDownContent from "@/components/UI/DropDownContent";
@@ -25,6 +24,7 @@ import {
 } from "@/lib/validators/key";
 import PixelBlast from "@/components/PixelBlast";
 import {useCreateKeyMutation} from "@/lib/hooks/mutation/key";
+import YellowBtn from "@/components/buttons/YellowBtn";
 
 export default function AddNewKey(){
 
@@ -319,8 +319,9 @@ export default function AddNewKey(){
                             )}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Добавить ключ' : 'Добавление…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

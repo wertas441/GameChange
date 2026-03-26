@@ -37,7 +37,7 @@ export default function usePagination<T, TElement extends HTMLElement = HTMLDivE
         setCurrentPage((prev) => clampPage(prev, totalPages));
     }, [totalPages]);
 
-    const goToPage = useCallback((page: number) => {
+    const goToSelectPage = useCallback((page: number) => {
         setCurrentPage(clampPage(page, totalPages));
     }, [totalPages]);
 
@@ -82,8 +82,8 @@ export default function usePagination<T, TElement extends HTMLElement = HTMLDivE
         paginatedItems,
         canGoPrev,
         canGoNext,
-        setCurrentPage: goToPage,
-        goToPage,
+        setCurrentPage,
+        goToSelectPage,
         nextPage,
         prevPage,
         resetPage,

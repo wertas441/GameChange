@@ -7,7 +7,7 @@ import {BackendApiResponse} from "@/types";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import HideInput from "@/components/inputs/HideInput";
 import {
     validateUserConfirmPassword,
@@ -129,8 +129,9 @@ export default function Registration(){
                             })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Зарегистрироваться' : 'Регистрируем…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

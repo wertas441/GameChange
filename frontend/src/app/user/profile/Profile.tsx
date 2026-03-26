@@ -6,7 +6,7 @@ import {formatDateForProfile} from "@/lib";
 import ProfileDataLine from "@/components/elements/ProfileDataLine";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import GrayBtn from "@/components/buttons/GrayBtn";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();

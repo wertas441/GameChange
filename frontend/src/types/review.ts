@@ -1,5 +1,4 @@
 
-
 export interface ReviewBaseStructure {
     tag: string;
     rating: number;

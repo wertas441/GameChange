@@ -9,7 +9,7 @@ import ServerFormError from "@/components/errors/ServerFormError";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {ticketCategorys, ticketTypes} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import MainInput from "@/components/inputs/MainInput";
 import {
     validateTicketCategory,
@@ -142,8 +142,9 @@ export default function AddTicket() {
                             {...register('description', {validate: (value) => validateTicketDescription(value) || true })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оставить обращение' : 'Процесс…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

@@ -2,7 +2,7 @@
 
 import {useForm} from "react-hook-form";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {validateUserConfirmEmail, validateUserEmail, validateUserPassword} from "@/lib/validators/user";
@@ -36,7 +36,8 @@ export default function ChangeEmail() {
         try {
             await serverApi.post<BackendApiResponse>(`/user/change-email`, payload);
 
-            makeChangeEmail(values.newEmail)
+            makeChangeEmail(values.newEmail);
+
             router.replace('/user/profile');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
@@ -97,8 +98,9 @@ export default function ChangeEmail() {
                             {...register('password', {validate: (value) => validateUserPassword(value) || true})}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Сохранить новый email' : 'Сохраняем…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

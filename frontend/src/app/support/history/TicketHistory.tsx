@@ -38,7 +38,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
         items: visibleTickets,
@@ -136,7 +136,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToPage}
+                                onPageChange={goToSelectPage}
                             />
                         </div>
                     </div>

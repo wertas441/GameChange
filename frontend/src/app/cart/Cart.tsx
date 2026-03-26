@@ -3,10 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
+import GrayBtn from "@/components/buttons/GrayBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
@@ -129,7 +128,11 @@ export default function Cart(){
                         <p className="mt-2 text-sm text-slate-400">Добавьте товары из каталога</p>
 
                         <div className="mt-3">
-                            <LinkYellowBtn label="Перейти в каталог" href="/keys/catalog" className="max-w-md mt-0 w-auto px-6 py-3" />
+                            <YellowBtn
+                                label="Перейти в каталог"
+                                onClick={() => goToPage("/keys/catalog")}
+                                className="max-w-md mt-0 w-auto px-6 py-3"
+                            />
                         </div>
                     </div>
                 )}

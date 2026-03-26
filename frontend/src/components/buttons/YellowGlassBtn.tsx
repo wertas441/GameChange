@@ -1,11 +1,13 @@
-import {FuncButtonTypes} from "@/types";
 import {memo} from "react";
+import {ButtonProps} from "@/types";
 
-function YellowGlassBtn({label, className = '', IconComponent, onClick}: FuncButtonTypes) {
+function YellowGlassBtn({label, disabled = false, className = '', type = 'button', IconComponent, onClick}: ButtonProps) {
 
     return (
         <button
             onClick={onClick}
+            type={type}
+            disabled={disabled}
             className={`inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 
                 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70
                 hover:bg-amber-500/20 cursor-pointer ${className}`}

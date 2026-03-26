@@ -11,8 +11,7 @@ import {
 import {KeyListData} from "@/types/key";
 import {addNewItem, useCartStore} from "@/lib/store/cartStore";
 import {Pencil} from 'lucide-react'
-import IconYellowBtn from "@/components/buttons/yellow/IconYellowBtn";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import {memo} from "react";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
@@ -116,7 +115,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
 
                     <div className="flex gap-3">
                         {isAdmin && (
-                            <IconYellowBtn
+                            <YellowBtn
                                 IconComponent={Pencil}
                                 onClick={() => goToPage(`/keys/${keyData.keyUrl}/change`)}
                                 className="w-auto! mt-0! bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"

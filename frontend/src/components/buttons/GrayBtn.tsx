@@ -1,12 +1,13 @@
-import {FuncButtonTypes} from "@/types";
 import {memo, useMemo} from "react";
+import {ButtonProps} from "@/types";
 
-function GrayBtn({label, className = '', IconComponent, onClick}: FuncButtonTypes) {
+function GrayBtn({label, type = 'button', disabled = false, className = '', IconComponent, onClick}: ButtonProps) {
 
     return (
         <button
-            type="button"
+            type={type}
             onClick={onClick}
+            disabled={disabled}
             className={`inline-flex w-full md:w-auto justify-center items-center gap-2 rounded-2xl border border-slate-800/70 
             bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 
             hover:bg-slate-800/60 cursor-pointer ${className}`}

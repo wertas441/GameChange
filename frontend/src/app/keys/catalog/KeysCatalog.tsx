@@ -9,15 +9,15 @@ import {
     genreOptions,
     operationSystemOptions
 } from "@/lib/data";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import {useCallback, useMemo, useState} from "react";
 import {getUserStatus, useUserStore} from "@/lib/store/userStore";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import GrayBtn from "@/components/buttons/GrayBtn";
 import ServerErrorState from "@/components/errors/ServerErrorState";
 import useGameKeys from "@/lib/hooks/data/key";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
-import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
+import YellowGlassBtn from "@/components/buttons/YellowGlassBtn";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
 
@@ -90,7 +90,7 @@ export default function KeysCatalog(){
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage: goToListPage,
+        goToSelectPage,
         resetPage,
         listRef
     } = usePagination({
@@ -237,7 +237,7 @@ export default function KeysCatalog(){
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToListPage}
+                                onPageChange={goToSelectPage}
                             />
                         </div>
                     </div>

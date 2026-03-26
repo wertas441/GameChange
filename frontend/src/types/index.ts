@@ -1,6 +1,5 @@
 import {ElementType, InputHTMLAttributes} from "react";
 
-
 export interface BackendApiResponse<T = any> {
     success: boolean;
     data?: T;
@@ -8,24 +7,13 @@ export interface BackendApiResponse<T = any> {
     error?: string;
 }
 
-export interface FuncButtonTypes {
-    label: string;
-    IconComponent?: ElementType;
+export interface ButtonProps {
+    label?: string;
+    type?: `button` | `submit` | `reset`;
+    disabled?: boolean;
+    className?: string;
     onClick?: () => void;
-    disabled?: boolean;
-    className?: string;
-}
-
-export interface SubmitButtonTypes {
-    label: string;
-    disabled?: boolean;
-    className?: string;
-}
-
-export interface LinkButtonTypes {
-    label: string;
-    href: string;
-    className?: string;
+    IconComponent?: ElementType;
 }
 
 export interface IconBtnTypes {

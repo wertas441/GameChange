@@ -9,7 +9,7 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainTextarea from "@/components/inputs/MainTextArea";
 import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import {validateTicketAnswer} from "@/lib/validators/ticket";
 
@@ -84,8 +84,9 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
                         {...register('answer', {validate: (value) => validateTicketAnswer(value) || true })}
                     />
 
-                    <SubmitYellowBtn
+                    <YellowBtn
                         label={!isSubmitting ? 'Ответить' : 'Процесс…'}
+                        type={`submit`}
                         disabled={isSubmitting}
                     />
                 </form>

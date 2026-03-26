@@ -1,6 +1,7 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 const stackInformation = [
     'Frontend: Next.js (App Router), React, TypeScript, Tailwind CSS.',
@@ -20,6 +21,8 @@ const funcInformation = [
 ] as const;
 
 export function Information() {
+
+    const { goToPage } = usePageUtils();
 
     return (
         <div className="space-y-6">
@@ -65,9 +68,9 @@ export function Information() {
                     </p>
                 </div>
 
-                <LinkYellowBtn
+                <YellowBtn
                     label={`Перейти на GitHub`}
-                    href="https://github.com/wertas441/GameChange"
+                    onClick={() => goToPage("https://github.com/wertas441/GameChange")}
                     className="mt-3 w-full px-4 py-2 sm:w-auto"
                 />
             </section>

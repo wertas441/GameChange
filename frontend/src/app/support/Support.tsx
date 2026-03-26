@@ -6,9 +6,9 @@ import ServerErrorState from "@/components/errors/ServerErrorState";
 import {useMemo} from "react";
 import {Ticket} from "@/types/support";
 import SupportRow from "@/components/elements/SupportRow";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import GrayBtn from "@/components/buttons/GrayBtn";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
+import YellowGlassBtn from "@/components/buttons/YellowGlassBtn";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
 
@@ -43,7 +43,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage: goToListPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
         items: visibleTickets,
@@ -121,7 +121,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToListPage}
+                                onPageChange={goToSelectPage}
                             />
                         </div>
                     </div>

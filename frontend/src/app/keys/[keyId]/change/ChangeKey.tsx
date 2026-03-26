@@ -10,18 +10,27 @@ import DropDownContent from "@/components/UI/DropDownContent";
 import MainInput from "@/components/inputs/MainInput";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
 import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import {useCallback} from "react";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU,
-    validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOS,
-    validateKeyOtherPicture, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
-    validateKeyPlatforms, validateKeyUrl
+    validateKeyDescription,
+    validateKeyDeveloper,
+    validateKeyGenres,
+    validateKeyGPU,
+    validateKeyMainPicture,
+    validateKeyMemory,
+    validateKeyName,
+    validateKeyOS,
+    validateKeyOtherPicture,
+    validateKeyPrice,
+    validateKeyPublisher,
+    validateKeyRAM,
+    validateKeyReleaseDate,
+    validateKeyPlatforms,
+    validateKeyUrl
 } from "@/lib/validators/key";
 import MainTextarea from "@/components/inputs/MainTextArea";
 import {useChangeKeyMutation, useDeleteKeyMutation} from "@/lib/hooks/mutation/key";
@@ -360,8 +369,9 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                             />
 
                             <div className="flex-row md:flex gap-4 space-y-3 md:space-y-0 ">
-                                <SubmitYellowBtn
+                                <YellowBtn
                                     label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
+                                    type={`submit`}
                                     disabled={isSubmitting || isDeleting}
                                 />
 

@@ -2,8 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
-import IconYellowBtn from "@/components/buttons/yellow/IconYellowBtn";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {CircleUser, Search, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/styles/styles";
@@ -12,6 +10,7 @@ import {checkAuth, useUserStore} from "@/lib/store/userStore";
 import {useCartStore} from "@/lib/store/cartStore";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import useGameKeys from "@/lib/hooks/data/key";
+import YellowBtn from "@/components/buttons/YellowBtn";
 
 const catalogItems = [
     {
@@ -132,7 +131,7 @@ export default function MainHeader({className}: {className?: string}) {
 
                         <div className="flex items-center gap-2 lg:hidden">
                             <div className="relative">
-                                <IconYellowBtn
+                                <YellowBtn
                                     IconComponent={ShoppingCart}
                                     onClick={() => goToPage('/cart')}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
@@ -146,13 +145,13 @@ export default function MainHeader({className}: {className?: string}) {
                             </div>
 
                             {!isAuth ? (
-                                <LinkYellowBtn
+                                <YellowBtn
                                     label="Войти"
-                                    href={'/auth/login'}
+                                    onClick={() => goToPage('/auth/login')}
                                     className="mt-0 w-auto px-4 py-2.5 text-sm"
                                 />
                             ) : (
-                                <IconYellowBtn
+                                <YellowBtn
                                     IconComponent={CircleUser}
                                     onClick={() => goToPage('/user/profile')}
                                     className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
@@ -272,7 +271,7 @@ export default function MainHeader({className}: {className?: string}) {
                     <div className="relative shrink-0 hidden lg:flex">
                         <div className="flex items-center gap-3">
                             <div className="relative">
-                                <IconYellowBtn
+                                <YellowBtn
                                     IconComponent={ShoppingCart}
                                     onClick={() => goToPage('/cart')}
                                     className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
@@ -285,13 +284,13 @@ export default function MainHeader({className}: {className?: string}) {
                             </div>
 
                             {!isAuth ? (
-                                <LinkYellowBtn
+                                <YellowBtn
                                     label="Войти"
-                                    href={'/auth/login'}
+                                    onClick={() => goToPage('/auth/login')}
                                     className="mt-0 w-auto px-5 py-3"
                                 />
                             ) : (
-                                <IconYellowBtn
+                                <YellowBtn
                                     IconComponent={CircleUser}
                                     onClick={() => goToPage('/user/profile')}
                                     className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"

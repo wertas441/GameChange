@@ -5,7 +5,6 @@ import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import {showErrorMessage} from "@/lib";
 import {secondColorTheme} from "@/styles/styles";
 import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
 import MultiSelectInput from "@/components/inputs/MultiSelectInput";
 import {reviewCategorys} from "@/lib/data";
 import MainTextarea from "@/components/inputs/MainTextArea";
@@ -17,6 +16,7 @@ import {
 } from "@/lib/validators/review";
 import PixelBlast from "@/components/PixelBlast";
 import {useCreateReviewMutation} from "@/lib/hooks/mutation/review";
+import YellowBtn from "@/components/buttons/YellowBtn";
 
 interface AddReviewForm {
     category: string[];
@@ -156,8 +156,9 @@ export default function AddReview() {
                             {...register('description', {validate: (value) => validateReviewDescription(value) || true })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оставить отзыв' : 'Процесс…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

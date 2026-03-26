@@ -12,7 +12,7 @@ export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage,
+        goToSelectPage,
         listRef
     } = usePagination({
         items: purchases,
@@ -76,7 +76,7 @@ export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {
                     <Pagination
                         currentPage={currentPage}
                         totalPages={totalPages}
-                        onPageChange={goToPage}
+                        onPageChange={goToSelectPage}
                     />
                 </div>
             </div>

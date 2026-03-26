@@ -1,5 +1,4 @@
 import Link from "next/link";
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 
 const cardBlocks = [
     {
@@ -40,18 +39,19 @@ export default function NotFound() {
                                 на главную или выберите один из популярных разделов ниже.
                             </p>
                         </div>
-
-                        <LinkYellowBtn label="На главную" href="/" className="mt-0 w-full px-6 py-3 sm:w-auto"/>
                     </div>
 
                     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {cardBlocks.map((block) => (
-                            <Link key={block.href} href={block.href} className="group rounded-2xl border border-slate-800/70
-                            bg-slate-950/40 p-5 text-left transition hover:-translate-y-1 hover:border-amber-400/40 hover:bg-slate-900/80"
+                        {cardBlocks.map(({href, title, description}) => (
+                            <Link
+                                key={href}
+                                href={href}
+                                className="group rounded-2xl border border-slate-800/70bg-slate-950/40 p-5 text-left
+                                 transition hover:-translate-y-1 hover:border-amber-400/40 hover:bg-slate-900/80"
                             >
                                 <div className="flex items-center justify-between">
                                     <h2 className="text-lg font-semibold text-slate-50 transition-colors group-hover:text-amber-400">
-                                        {block.title}
+                                        {title}
                                     </h2>
 
                                     <span className="text-amber-400 transition group-hover:translate-x-1">
@@ -59,7 +59,7 @@ export default function NotFound() {
                                     </span>
                                 </div>
 
-                                <p className="mt-2 text-sm text-slate-400">{block.description}</p>
+                                <p className="mt-2 text-sm text-slate-400">{description}</p>
                             </Link>
                         ))}
                     </div>

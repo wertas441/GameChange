@@ -6,7 +6,7 @@ import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
 import {BackendApiResponse} from "@/types";
 import {usePageUtils} from "@/lib/hooks/usePageUtils";
 import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import ServerFormError from "@/components/errors/ServerFormError";
 import Features from "@/components/UI/servicesUI/Features";
 import Receive from "@/components/UI/servicesUI/Receive";
@@ -140,8 +140,9 @@ export default function ChatGpt() {
                             <span className="font-semibold text-slate-100">{activePlan.price} ₽</span>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

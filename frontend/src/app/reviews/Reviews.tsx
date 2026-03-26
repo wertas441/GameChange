@@ -1,12 +1,13 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
 import {reviewCategorys} from "@/lib/data";
 import usePagination from "@/lib/hooks/usePagination";
 import Pagination from "@/components/UI/Pagination";
 import useUserReviews from "@/lib/hooks/data/review";
 import SpinnerLoader from "@/components/errors/SpinnerLoader";
 import ServerErrorState from "@/components/errors/ServerErrorState";
+import YellowBtn from "@/components/buttons/YellowBtn";
+import {usePageUtils} from "@/lib/hooks/usePageUtils";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -24,13 +25,15 @@ export default function Reviews() {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
         items: data ? data : [],
         itemsPerPage: 6,
         scrollOnPageChange: true,
     });
+
+    const { goToPage } = usePageUtils();
 
     if (isLoading) return <SpinnerLoader text="Загрузка отзывов..." />;
 
@@ -106,7 +109,7 @@ export default function Reviews() {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToPage}
+                                onPageChange={goToSelectPage}
                                 className="min-w-max sm:min-w-0"
                             />
                         </div>
@@ -135,7 +138,10 @@ export default function Reviews() {
                             </div>
                         </div>
 
-                        <LinkYellowBtn label={`Оставить отзыв`} href={`/reviews/add`} />
+                        <YellowBtn
+                            label={`Оставить отзыв`}
+                            onClick={() => goToPage(`/reviews/add`)}
+                        />
                     </div>
                 </div>
             </div>

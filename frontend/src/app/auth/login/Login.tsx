@@ -6,7 +6,7 @@ import { usePageUtils } from '@/lib/hooks/usePageUtils';
 import MainInput from '@/components/inputs/MainInput';
 import {BackendApiResponse} from "@/types";
 import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
+import YellowBtn from "@/components/buttons/YellowBtn";
 import {secondColorTheme} from "@/styles/styles";
 import Link from "next/link";
 import {makeInitUserData, makeClear, useUserStore} from "@/lib/store/userStore";
@@ -145,8 +145,9 @@ export default function Login() {
                             </button>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Войти в аккаунт' : 'Входим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
