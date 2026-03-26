@@ -24,9 +24,7 @@ export default function Profile() {
 
     const userData = useUserStore(getUserData);
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
+    if (!userData) return <ServerErrorState />
 
     const { userName, email, createdAt, isAdmin, publicId } = userData;
 

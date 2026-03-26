@@ -16,8 +16,8 @@ import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode, validateXboxLogin} from "@/lib/validators/service";
 import {xboxFeatures, xboxPlans, xboxReceive, xboxText, xboxTiers} from "@/app/services/(all)/data";
 
-interface XboxFormValues {
-    xboxLogin: string;
+interface XboxForm {
+    login: string;
     planId: string;
     promoCode: string;
 }
@@ -26,25 +26,24 @@ export default function Xbox() {
 
     const [activePlanId, setActivePlanId] = useState<string>(xboxPlans[0].id);
 
-    const activePlan = useMemo(
-        () => xboxPlans.find((plan) => plan.id === activePlanId) ?? xboxPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return xboxPlans.find((plan) => plan.id === activePlanId) ?? xboxPlans[0]
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<XboxFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<XboxForm>({
         defaultValues: {
             planId: xboxPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: XboxFormValues) => {
+    const onSubmit = async (values: XboxForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            xboxLogin: values.xboxLogin,
+            login: values.login,
             planId: values.planId,
             promoCode: values.promoCode,
             price: activePlan.price,
@@ -53,7 +52,7 @@ export default function Xbox() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/xbox`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -66,6 +65,7 @@ export default function Xbox() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -92,10 +92,10 @@ export default function Xbox() {
 
                     <form className="mt-5 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
-                            id="xboxLogin"
+                            id="login"
                             label="Xbox логин"
-                            error={errors.xboxLogin?.message}
-                            {...register('xboxLogin', {validate: (value) => validateXboxLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validateXboxLogin(value) || true })}
                         />
 
                         <div className="space-y-4">
@@ -106,14 +106,16 @@ export default function Xbox() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {xboxPlans.filter((plan) => plan.label === tier).map((plan) => (
+                                        {xboxPlans
+                                            .filter(({label}) => label === tier)
+                                            .map(({id, duration, price, description}) => (
                                             <ProductBtn
-                                                key={plan.id}
-                                                label={plan.duration}
-                                                onClick={() => onClick(plan.id)}
-                                                isActive={plan.id === activePlanId}
-                                                price={plan.price}
-                                                description={plan.description}
+                                                key={id}
+                                                label={duration}
+                                                onClick={() => onClick(id)}
+                                                isActive={id === activePlanId}
+                                                price={price}
+                                                description={description}
                                             />
                                         ))}
                                     </div>

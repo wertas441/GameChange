@@ -19,7 +19,7 @@ import {
 } from "@/lib/validators/ticket";
 import PixelBlast from "@/components/PixelBlast";
 
-interface AddTicketFormValues {
+interface AddTicketForm {
     type: string[];
     category: string[];
     title: string;
@@ -28,11 +28,11 @@ interface AddTicketFormValues {
 
 export default function AddTicket() {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddTicketFormValues>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<AddTicketForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: AddTicketFormValues) => {
+    const onSubmit = async (values: AddTicketForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -46,7 +46,7 @@ export default function AddTicket() {
         try {
             await serverApi.post<BackendApiResponse>(`/support/ticket`, payload);
 
-            router.push('/support');
+            goToPage('/support');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 

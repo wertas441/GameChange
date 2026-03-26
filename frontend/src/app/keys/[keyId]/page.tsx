@@ -3,8 +3,9 @@ import {KeyMetadataParams} from "@/types/key";
 import {generateMetadataKeyName} from "@/lib";
 import {getKeyDetails} from "@/lib/controllers/key";
 import ServerErrorState from "@/components/errors/ServerErrorState";
+import {Metadata} from "next";
 
-export async function generateMetadata({params}: KeyMetadataParams) {
+export async function generateMetadata({params}: KeyMetadataParams): Promise<Metadata> {
     const {keyId} = await params;
 
     const keyName = generateMetadataKeyName(keyId);

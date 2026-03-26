@@ -18,24 +18,24 @@ import {
 } from "@/lib/validators/service";
 import {steamFeatures, steamHowItWork, steamText} from "@/app/services/(all)/data";
 
-interface SteamFormValues {
-    steamLogin: string;
+interface SteamForm {
+    login: string;
     amount: number;
     promoCode: string;
 }
 
 export default function Steam() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<SteamFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<SteamForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: SteamFormValues) => {
+    const onSubmit = async (values: SteamForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            steamLogin: values.steamLogin,
+            steamLogin: values.login,
             amount: values.amount,
             promoCode: values.promoCode,
         };
@@ -43,7 +43,7 @@ export default function Steam() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/steam`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
@@ -78,8 +78,8 @@ export default function Steam() {
                         <MainInput
                             id="steamLogin"
                             label="Логин Steam"
-                            error={errors.steamLogin?.message}
-                            {...register('steamLogin', {validate: (value) => validateSteamLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validateSteamLogin(value) || true })}
 
                         />
 

@@ -17,7 +17,7 @@ import {validatePromoCode} from "@/lib/validators/service";
 import {validateUserEmail} from "@/lib/validators/user";
 import {chatGptFeatures, chatGptPlans, chatGptReceive, chatGptText, chatGptTiers} from "@/app/services/(all)/data";
 
-interface ChatGptFormValues {
+interface ChatGptForm {
     email: string;
     planId: string;
     promoCode: string;
@@ -27,20 +27,19 @@ export default function ChatGpt() {
 
     const [activePlanId, setActivePlanId] = useState<string>(chatGptPlans[0].id);
 
-    const activePlan = useMemo(
-        () => chatGptPlans.find((plan) => plan.id === activePlanId) ?? chatGptPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return chatGptPlans.find((plan) => plan.id === activePlanId) ?? chatGptPlans[0];
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ChatGptFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ChatGptForm>({
         defaultValues: {
             planId: chatGptPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: ChatGptFormValues) => {
+    const onSubmit = async (values: ChatGptForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -54,7 +53,7 @@ export default function ChatGpt() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/chat-gpt`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -67,6 +66,7 @@ export default function ChatGpt() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -108,14 +108,16 @@ export default function ChatGpt() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {chatGptPlans.filter((plan) => plan.label === tier).map((plan) => (
+                                        {chatGptPlans
+                                            .filter(({label}) => label === tier)
+                                            .map(({id, duration, price, description}) => (
                                             <ProductBtn
-                                                key={plan.id}
-                                                label={plan.duration}
-                                                onClick={() => onClick(plan.id)}
-                                                isActive={plan.id === activePlanId}
-                                                price={plan.price}
-                                                description={plan.description}
+                                                key={id}
+                                                label={duration}
+                                                onClick={() => onClick(id)}
+                                                isActive={id === activePlanId}
+                                                price={price}
+                                                description={description}
                                             />
                                         ))}
                                     </div>

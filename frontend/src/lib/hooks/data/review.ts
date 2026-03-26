@@ -4,7 +4,7 @@ import {getReviewsList} from "@/lib/controllers/review";
 
 export default function useUserReviews() {
 
-    const { data: userReviews, isLoading, error, isError, refetch, isFetching } = useQuery<ReviewListStructure[]>({
+    const { data, isLoading, error, isError, refetch, isFetching } = useQuery<ReviewListStructure[]>({
         queryKey: ['reviews'],
 
         queryFn: async () => {
@@ -18,5 +18,5 @@ export default function useUserReviews() {
         staleTime: 60000 * 15,
     });
 
-    return { userReviews, isLoading, error, isError, refetch, isFetching }
+    return { data, isLoading, error, isError, refetch, isFetching }
 }

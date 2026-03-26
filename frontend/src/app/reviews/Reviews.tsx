@@ -18,7 +18,7 @@ const ratings = [2, 5, 10, 24, 59] as const;
 
 export default function Reviews() {
 
-    const { userReviews, isLoading, isError, error } = useUserReviews();
+    const { data, isLoading, isError, error } = useUserReviews();
 
     const {
         currentPage,
@@ -27,15 +27,14 @@ export default function Reviews() {
         goToPage,
         listRef,
     } = usePagination({
-        items: userReviews ? userReviews : [],
+        items: data ? data : [],
         itemsPerPage: 6,
         scrollOnPageChange: true,
     });
 
     if (isLoading) return <SpinnerLoader text="Загрузка отзывов..." />;
 
-
-    if (isError || userReviews === undefined) {
+    if (isError || data === undefined) {
         console.log(error)
 
         return <ServerErrorState />;

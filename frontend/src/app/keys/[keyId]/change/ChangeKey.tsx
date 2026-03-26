@@ -382,7 +382,6 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                 windowLabel={'Подтверждение удаления'}
                 windowText={`Вы действительно хотите удалить ключ ${keyData.name}? Это действие необратимо.`}
                 error={serverError}
-                cancelButtonLabel={'Отмена'}
                 cancelFunction={toggleModalWindow}
                 confirmButtonLabel={'Удалить'}
                 confirmFunction={deleteKeyBtn}

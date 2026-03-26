@@ -16,8 +16,8 @@ import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
 import {validatePromoCode, validateSpotifyLogin} from "@/lib/validators/service";
 import {spotifyFeatures, spotifyPlans, spotifyReceive, spotifyText} from "@/app/services/(all)/data";
 
-interface SpotifyFormValues {
-    spotifyLogin: string;
+interface SpotifyForm {
+    login: string;
     planId: string;
     promoCode: string;
 }
@@ -26,25 +26,24 @@ export default function Spotify() {
 
     const [activePlanId, setActivePlanId] = useState<string>(spotifyPlans[0].id);
 
-    const activePlan = useMemo(
-        () => spotifyPlans.find((plan) => plan.id === activePlanId) ?? spotifyPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return spotifyPlans.find((plan) => plan.id === activePlanId) ?? spotifyPlans[0];
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<SpotifyFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<SpotifyForm>({
         defaultValues: {
             planId: spotifyPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: SpotifyFormValues) => {
+    const onSubmit = async (values: SpotifyForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            spotifyLogin: values.spotifyLogin,
+            spotifyLogin: values.login,
             planId: values.planId,
             promoCode: values.promoCode,
             price: activePlan.price,
@@ -53,7 +52,7 @@ export default function Spotify() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/spotify`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -65,6 +64,7 @@ export default function Spotify() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -91,10 +91,10 @@ export default function Spotify() {
 
                     <form className="mt-5 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
-                            id="spotifyLogin"
+                            id="login"
                             label="Логин Spotify"
-                            error={errors.spotifyLogin?.message}
-                            {...register('spotifyLogin', {validate: (value) => validateSpotifyLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validateSpotifyLogin(value) || true })}
                         />
 
                         <div>
@@ -103,14 +103,14 @@ export default function Spotify() {
                             </p>
 
                             <div className="grid gap-3 sm:grid-cols-2">
-                                {spotifyPlans.map((plan) => (
+                                {spotifyPlans.map(({id, label, price, description}) => (
                                     <ProductBtn
-                                        key={plan.id}
-                                        label={plan.label}
-                                        onClick={() => onClick(plan.id)}
-                                        isActive={plan.id === activePlanId}
-                                        price={plan.price}
-                                        description={plan.description}
+                                        key={id}
+                                        label={label}
+                                        onClick={() => onClick(id)}
+                                        isActive={id === activePlanId}
+                                        price={price}
+                                        description={description}
                                     />
                                 ))}
                             </div>

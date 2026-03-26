@@ -20,6 +20,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 
         return ticketData.map((ticket, index) => {
             if (index > 0) return ticket;
+
             return {
                 ...ticket,
                 ownerName: ticket.ownerName,
@@ -30,7 +31,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
 
-        return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
+        return normalizedTickets.filter(({ownerName}) => ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
 
     const {
@@ -45,9 +46,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
         scrollOnPageChange: true,
     });
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
+    if (!userData) return <ServerErrorState />
 
     return (
         <div className="space-y-6">
