@@ -1,5 +1,5 @@
 
-export default function ServerFormError({error}: {error: string | null}) {
+export function ServerFormError({error}: {error: string | null}) {
 
     if (!error) {
         return null;

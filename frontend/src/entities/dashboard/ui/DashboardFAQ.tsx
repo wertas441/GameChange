@@ -1,7 +1,7 @@
 import FAQSection from "@/entities/dashboard/ui/FAQSection";
 import {dashboardFaqData} from "@/entities/dashboard/model/dashboardData";
 
-export default function DashboardFAQ() {
+export function DashboardFAQ() {
 
     return (
         <div className="mx-auto max-w-7xl px-6 md:px-12">

@@ -44,6 +44,7 @@ export default function Header({className}: {className?: string}) {
     const searchBoxRef = useRef<HTMLDivElement | null>(null);
 
     const isAuth = useUserStore(checkAuth);
+
     const cartItemsCount = useCartStore((state) => state.cartItemsCount);
 
     const { router } = usePageUtils();
@@ -51,6 +52,7 @@ export default function Header({className}: {className?: string}) {
 
     const goToPage = useCallback((url: string) => {
         router.push(url);
+
         setModalWindow(false);
     }, [router]);
 
@@ -58,11 +60,13 @@ export default function Header({className}: {className?: string}) {
 
     const onSearchInputFocus = useCallback(() => {
         setIsSearchOpen(true);
+
         setModalWindow(false);
     }, [])
 
     const onModalButtonClick = useCallback(() => {
         toggleModalWindow();
+
         setIsSearchOpen(false);
     }, [toggleModalWindow])
 
@@ -79,10 +83,7 @@ export default function Header({className}: {className?: string}) {
     }, [keysData, normalizedQuery]);
 
     useEffect(() => {
-        if (normalizedQuery.length === 0) {
-            setIsSearchOpen(false);
-        }
-
+        if (normalizedQuery.length === 0) setIsSearchOpen(false);
     }, [normalizedQuery]);
 
     useEffect(() => {
@@ -301,20 +302,23 @@ export default function Header({className}: {className?: string}) {
                 </div>
             </div>
 
-            <div className={`absolute left-0 right-0 top-full z-50 transition-opacity duration-200 ${modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
-                 aria-hidden={!modalWindow} onClick={toggleModalWindow}
+            <div
+                className={`absolute left-0 right-0 top-full z-50 transition-opacity duration-200 ${modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+                aria-hidden={!modalWindow}
+                onClick={toggleModalWindow}
             >
                 <div className="h-screen">
-                    <div className={` ${secondColorTheme} w-full bg-slate-900/70 border-b border-slate-800/70 px-4 py-4 sm:px-6 md:px-12 shadow-xl shadow-black/30 
-                    transition-all duration-200 ease-out ${modalWindow ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}
+                    <div
+                        className={` ${secondColorTheme} w-full bg-slate-900/70 border-b border-slate-800/70 px-4 py-4 sm:px-6 md:px-12 shadow-xl shadow-black/30 
+                        transition-all duration-200 ease-out ${modalWindow ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}
                         onClick={(event) => event.stopPropagation()}
                     >
                         <div className="flex flex-wrap  items-center gap-3 justify-start md:justify-center">
-                            {catalogItems.map((item, index) => (
+                            {catalogItems.map(({text, href}) => (
                                 <ShopNavBarItem
-                                    key={index}
-                                    text={item.text}
-                                    href={item.href}
+                                    key={text}
+                                    text={text}
+                                    href={href}
                                     toggle={toggleModalWindow}
                                 />
                             ))}

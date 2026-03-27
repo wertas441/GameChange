@@ -12,16 +12,15 @@ import {addNewItem, useCartStore} from "@/entities/cart/model/store";
 
 export default function DashboardTopSell() {
 
-    const {keysData, isLoading, isError, error} = useGameKeys();
+    const { keysData, isLoading, isError, error } = useGameKeys();
 
     const addToCart = useCartStore(addNewItem)
 
-    if (isLoading) {
-        return <SpinnerLoader />;
-    }
+    if (isLoading) return <SpinnerLoader />;
 
     if (isError || keysData === undefined) {
-        console.log(error)
+        console.log(error);
+        
         return <ServerErrorState />;
     }
 
@@ -58,40 +57,48 @@ export default function DashboardTopSell() {
                             1024: {slidesPerView: 4, spaceBetween: 32},
                         }}
                 >
-                    {keysData.map(game => {
+                    {keysData.map(({id, keyUrl, name, price, mainPicture}) => {
                         const addData = {
-                            id: game.id,
-                            keyUrl: game.keyUrl,
-                            name: game.name,
-                            price: game.price,
-                            mainPicture: game.mainPicture,
+                            id: id,
+                            keyUrl: keyUrl,
+                            name: name,
+                            price: price,
+                            mainPicture: mainPicture,
                             count: 0,
                         }
 
                         return (
-                            <SwiperSlide key={game.id}>
+                            <SwiperSlide key={id}>
                                 <div className="group relative h-full overflow-hidden rounded-2xl mt-10
-                                                border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
-                                                transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40">
-                                    <Image src={game.mainPicture} alt={game.name} width={1920} height={1080}
-                                           className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"/>
+                                     border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
+                                     transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40"
+                                >
+                                    <Image 
+                                        src={mainPicture} 
+                                        alt={name} 
+                                        width={1920} 
+                                        height={1080}
+                                        className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"
+                                    />
                                     <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
 
                                     <div className="absolute bottom-0 left-0 w-full p-4">
-                                        <Link href={`/keys/${game.keyUrl}`}>
+                                        <Link href={`/keys/${keyUrl}`}>
                                             <h1 className="text-xl font-semibold text-slate-50 transition-colors hover:text-amber-400">
-                                                {game.name}
+                                                {name}
                                             </h1>
                                         </Link>
 
-                                        <p className="text-2xl font-semibold text-amber-400">{game.price} ₽</p>
+                                        <p className="text-2xl font-semibold text-amber-400">{price} ₽</p>
 
-                                        <button className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950
-                                                transition-all duration-300 hover:bg-amber-300 flex items-center justify-center gap-2 opacity-0
-                                                group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
-                                                onClick={() => addToCart(addData)}
+                                        <button
+                                            className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950
+                                            transition-all duration-300 hover:bg-amber-300 flex items-center justify-center gap-2 opacity-0
+                                            group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
+                                            onClick={() => addToCart(addData)}
                                         >
                                             <ShoppingCart className="h-5 w-5"/>
+
                                             В корзину
                                         </button>
                                     </div>
@@ -102,8 +109,9 @@ export default function DashboardTopSell() {
                 </Swiper>
             </div>
 
-            <div className={`swiper-button-next-sell mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                   text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
+            <div className={`swiper-button-next-sell mt-25 transform z-10 cursor-pointer rounded-full border 
+                 border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300
+                 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
             >
                 <ArrowRight className="h-10 w-10"/>
             </div>

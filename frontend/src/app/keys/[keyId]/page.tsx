@@ -1,9 +1,8 @@
 import KeyDetails from "@/app/keys/[keyId]/KeyDetails";
-import {KeyMetadataParams} from "@/entities/key/model/type";
-import {getKeyDetails} from "@/entities/key/model/controller";
-import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
+import {getKeyDetails, KeyMetadataParams} from "@/entities/key";
+import {ServerErrorState} from "@/shared/ui-kit/server";
 import {Metadata} from "next";
-import {generateMetadataKeyName} from "@/shared/lib";
+import {generateMetadataKeyName} from "@/shared/lib/server";
 
 export async function generateMetadata({params}: KeyMetadataParams): Promise<Metadata> {
     const {keyId} = await params;

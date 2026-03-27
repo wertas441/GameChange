@@ -7,7 +7,7 @@ import {
     operationSystemIcon,
     ActivationPlatform,
     OperationSystem, genreOptions
-} from "@/shared/lib/data";
+} from "@/shared/lib/data/global";
 import {KeyListData} from "@/entities/key/model/type";
 import {addNewItem, useCartStore} from "@/entities/cart/model/store";
 import {Pencil} from 'lucide-react'
@@ -76,11 +76,13 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                     <div className="flex flex-wrap justify-center lg:justify-start items-center gap-x-4 gap-y-2 mt-3">
 
                         <div className="flex items-center gap-3">
-                            {activationPlatform.filter(isActivationPlatform).map(app => {
-                                const iconSrc = activationPlatformIcons[app];
-                                return iconSrc
-                                    ? <Image key={app} src={iconSrc} width={23} height={23} alt={`${app} Icon`} title={app} />
-                                    : null;
+                            {activationPlatform
+                                .filter(isActivationPlatform)
+                                .map(app => {
+                                    const iconSrc = activationPlatformIcons[app];
+                                    return iconSrc
+                                        ? <Image key={app} src={iconSrc} width={23} height={23} alt={`${app} Icon`} title={app} />
+                                        : null;
                             })}
                         </div>
 
@@ -89,16 +91,18 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                         )}
 
                         <div className="flex items-center gap-2">
-                            {operationSystem.filter(isOperationSystem).map(platform => {
-                                const iconSrc = operationSystemIcon[platform];
-                                return iconSrc
-                                    ? <Image key={platform} src={iconSrc} width={23} height={23} alt={`${platform} Icon`} title={platform} />
-                                    : null;
+                            {operationSystem
+                                .filter(isOperationSystem)
+                                .map(platform => {
+                                    const iconSrc = operationSystemIcon[platform];
+                                    return iconSrc
+                                        ? <Image key={platform} src={iconSrc} width={23} height={23} alt={`${platform} Icon`} title={platform} />
+                                        :null;
                             })}
                         </div>
 
                         {genres.map(genre => {
-                            const matchedGenre = genreOptions.find((option) => option.value === genre);
+                            const matchedGenre = genreOptions.find(({value}) => value === genre);
                             return (
                                 <p key={genre} className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-1 text-xs text-slate-300">
                                     {matchedGenre?.label}

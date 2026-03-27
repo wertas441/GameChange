@@ -1,22 +1,27 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {showErrorMessage} from "@/shared";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import Receive from "@/entities/services/ui/ServiceReceive";
-import NeedToKnow from "@/entities/services/ui/ServiceNeedToKnow";
-import Features from "@/entities/services/ui/ServiceFeatures";
-import ProductBtn from "@/entities/services/ui/ServiceProductBtn";
-import ServiceHeader from "@/entities/services/ui/ServiceHeader";
-import {validatePromoCode, validatePSNLogin} from "@/entities/services/model/validation";
-import {psPlusFeatures, psPlusPlans, psPlusReceive, psPlusText, psPlusTiers} from "@/app/services/(all)/data";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validatePSNLogin,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    psPlusFeatures,
+    psPlusPlans,
+    psPlusReceive,
+    psPlusText,
+    psPlusTiers,
+} from "@/app/services/(all)/data";
+import {useCallback, useMemo, useState} from "react";
 
 interface PSPlusForm {
     login: string;
@@ -110,7 +115,7 @@ export default function PSPlus() {
                                         {psPlusPlans
                                             .filter(({label}) => label === tier)
                                             .map(({id, description, duration, price}) => (
-                                            <ProductBtn
+                                            <ServiceProductBtn
                                                 key={id}
                                                 label={duration}
                                                 onClick={() => onClick(id)}
@@ -147,11 +152,11 @@ export default function PSPlus() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={psPlusFeatures} />
+                    <ServiceFeatures data={psPlusFeatures} />
 
-                    <Receive label={`Что входит в PS Plus`} data={psPlusReceive} />
+                    <ServiceReceive label={`Что входит в PS Plus`} data={psPlusReceive} />
 
-                    <NeedToKnow text={psPlusText} />
+                    <ServiceNeedToKnow text={psPlusText} />
                 </div>
             </div>
         </section>

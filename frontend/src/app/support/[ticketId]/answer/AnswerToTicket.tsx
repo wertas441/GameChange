@@ -1,19 +1,12 @@
 'use client'
 
-import {Ticket} from "@/entities/support/model/type";
-import TicketHeader from "@/entities/support/ui/TicketHeader";
-import UserSupportQuestion from "@/entities/support/ui/UserSupportQuestion";
+import {TicketHeader, Ticket, UserSupportQuestion, validateTicketAnswer} from "@/entities/support";
 import {ShieldCheck} from "lucide-react";
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
-import {showErrorMessage} from "@/shared";
+import {usePageUtils, getServerErrorMessage} from "@/shared/lib/client";
+import {MainTextArea, ServerFormError, YellowBtn} from "@/shared/ui-kit/client";
 import {BackendApiResponse} from "@/shared/type";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import {validateTicketAnswer} from "@/entities/support/model/validation";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
 interface AnswerToTicketForm {
     answer: string;
@@ -79,7 +72,7 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
 
                     <ServerFormError error={serverError} />
 
-                    <MainTextarea
+                    <MainTextArea
                         id="answer"
                         label="Ответ для пользовтеля"
                         error={errors.answer?.message}

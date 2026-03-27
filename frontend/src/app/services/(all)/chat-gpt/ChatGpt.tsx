@@ -1,23 +1,27 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {showErrorMessage} from "@/shared";
-import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import Features from "@/entities/services/ui/ServiceFeatures";
-import Receive from "@/entities/services/ui/ServiceReceive";
-import NeedToKnow from "@/entities/services/ui/ServiceNeedToKnow";
-import ProductBtn from "@/entities/services/ui/ServiceProductBtn";
-import ServiceHeader from "@/entities/services/ui/ServiceHeader";
-import {validatePromoCode} from "@/entities/services/model/validation";
-import {validateUserEmail} from "@/entities/user/model/validation";
-import {chatGptFeatures, chatGptPlans, chatGptReceive, chatGptText, chatGptTiers} from "@/app/services/(all)/data";
-import {serverApi} from "@/shared/api";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    chatGptFeatures,
+    chatGptPlans,
+    chatGptReceive,
+    chatGptText,
+    chatGptTiers,
+} from "@/app/services/(all)/data";
+import {useCallback, useMemo, useState} from "react";
+import {validateUserEmail} from "@/entities/user";
 
 interface ChatGptForm {
     email: string;
@@ -113,7 +117,7 @@ export default function ChatGpt() {
                                         {chatGptPlans
                                             .filter(({label}) => label === tier)
                                             .map(({id, duration, price, description}) => (
-                                            <ProductBtn
+                                            <ServiceProductBtn
                                                 key={id}
                                                 label={duration}
                                                 onClick={() => onClick(id)}
@@ -151,11 +155,11 @@ export default function ChatGpt() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={chatGptFeatures} />
+                    <ServiceFeatures data={chatGptFeatures} />
 
-                    <Receive label={`Что вы получаете с GPT Plus`} data={chatGptReceive} />
+                    <ServiceReceive label={`Что вы получаете с GPT Plus`} data={chatGptReceive} />
 
-                    <NeedToKnow text={chatGptText} />
+                    <ServiceNeedToKnow text={chatGptText} />
                 </div>
             </div>
         </section>

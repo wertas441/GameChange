@@ -1,18 +1,9 @@
 'use client'
 
-import {KeyDetailsData, KeyFormValues} from "@/entities/key/model/type";
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/shared";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import DropDownContent from "@/entities/key/ui/DropDownContent";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/shared/lib/data";
-import {useSimpleModalWindow} from "@/shared/lib/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import {activationPlatformOptions, genreOptions, operationSystemOptions, useSimpleModalWindow, usePageUtils, getDateInputFormat} from "@/shared/lib/client";
+import {SimpleModalWindow, MultiSelectInput, MainInput, ServerFormError, MainTextArea, YellowBtn} from "@/shared/ui-kit/client";
 import {useCallback} from "react";
 import {
     validateKeyCPU,
@@ -30,11 +21,14 @@ import {
     validateKeyRAM,
     validateKeyReleaseDate,
     validateKeyPlatforms,
-    validateKeyUrl
-} from "@/entities/key/model/validator";
-import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
-import {useChangeKeyMutation, useDeleteKeyMutation} from "@/entities/key/model/mutation";
-import {getDateInputFormat} from "@/shared/lib";
+    validateKeyUrl,
+    KeyDetailsData,
+    KeyFormValues,
+    DropDownContent,
+    useChangeKeyMutation,
+    useDeleteKeyMutation,
+} from "@/entities/key";
+import {showErrorMessage} from "@/shared/utils";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 
@@ -189,7 +183,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                     {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                                 />
 
-                                <MainTextarea
+                                <MainTextArea
                                     id={`description`}
                                     label={`Описание`}
                                     error={errors.description?.message}

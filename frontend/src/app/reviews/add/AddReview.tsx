@@ -1,22 +1,17 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/shared";
+import {usePageUtils, reviewCategorys} from "@/shared/lib/client";
+import {showErrorMessage} from "@/shared/utils";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
-import {reviewCategorys} from "@/shared/lib/data";
-import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
-import InputError from "@/shared/ui-kit/errors/InputError";
+import {ServerFormError, MultiSelectInput, MainTextArea, YellowBtn, InputError} from "@/shared/ui-kit/client";
 import {
     validateReviewCategory,
     validateReviewDescription,
     validateReviewRating,
-} from "@/entities/review/model/validation";
-import PixelBlast from "@/widgets/PixelBlast";
-import {useCreateReviewMutation} from "@/entities/review/model/mutation";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+    useCreateReviewMutation,
+} from "@/entities/review";
+import {PixelBlast} from "@/widgets";
 
 interface AddReviewForm {
     category: string[];
@@ -149,7 +144,7 @@ export default function AddReview() {
                             )}
                         />
 
-                        <MainTextarea
+                        <MainTextArea
                             id="description"
                             label="Описание"
                             error={errors.description?.message}

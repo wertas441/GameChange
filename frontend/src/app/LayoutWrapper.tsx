@@ -1,9 +1,8 @@
 'use client'
 
 import {ReactNode} from "react";
-import Header from "@/widgets/Header";
+import {Header, Footer} from "@/widgets";
 import {usePathname} from "next/navigation";
-import MainFooter from "@/widgets/Footer";
 
 export default function LayoutWrapper({children}: {children: ReactNode}) {
 
@@ -28,7 +27,7 @@ export default function LayoutWrapper({children}: {children: ReactNode}) {
             )}
 
             {!isAuthPage && (
-                <MainFooter />
+                <Footer />
             )}
         </div>
     )

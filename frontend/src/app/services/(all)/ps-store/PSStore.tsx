@@ -1,20 +1,24 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {showErrorMessage} from "@/shared";
-import {serverApi} from "@/shared/api";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import Features from "@/entities/services/ui/ServiceFeatures";
-import HowItWork from "@/entities/services/ui/ServiceHowItWork";
-import NeedToKnow from "@/entities/services/ui/ServiceNeedToKnow";
-import ServiceHeader from "@/entities/services/ui/ServiceHeader";
-import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/entities/services/model/validation";
-import {psStoreFeatures, psStoreHowItWork, psStoreText} from "@/app/services/(all)/data";
-import {getServerErrorMessage} from "@/shared/lib/server";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validatePSNLogin,
+    validateServiceAmount,
+    ServiceHowItWork,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    psStoreFeatures,
+    psStoreHowItWork,
+    psStoreText,
+} from "@/app/services/(all)/data";
 
 interface PSStoreForm {
     login: string;
@@ -110,11 +114,11 @@ export default function PSStore() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={psStoreFeatures} />
+                    <ServiceFeatures data={psStoreFeatures} />
 
-                    <HowItWork data={psStoreHowItWork} />
+                    <ServiceHowItWork data={psStoreHowItWork} />
 
-                    <NeedToKnow text={psStoreText} />
+                    <ServiceNeedToKnow text={psStoreText} />
                 </div>
             </div>
         </section>

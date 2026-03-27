@@ -1,22 +1,21 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {showErrorMessage} from "@/shared";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import Features from "@/entities/services/ui/ServiceFeatures";
-import Receive from "@/entities/services/ui/ServiceReceive";
-import NeedToKnow from "@/entities/services/ui/ServiceNeedToKnow";
-import ProductBtn from "@/entities/services/ui/ServiceProductBtn";
-import ServiceHeader from "@/entities/services/ui/ServiceHeader";
-import {validatePromoCode, validateSpotifyLogin} from "@/entities/services/model/validation";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validateSpotifyLogin,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {useCallback, useMemo, useState} from "react";
 import {spotifyFeatures, spotifyPlans, spotifyReceive, spotifyText} from "@/app/services/(all)/data";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
 
 interface SpotifyForm {
     login: string;
@@ -106,7 +105,7 @@ export default function Spotify() {
 
                             <div className="grid gap-3 sm:grid-cols-2">
                                 {spotifyPlans.map(({id, label, price, description}) => (
-                                    <ProductBtn
+                                    <ServiceProductBtn
                                         key={id}
                                         label={label}
                                         onClick={() => onClick(id)}
@@ -142,11 +141,11 @@ export default function Spotify() {
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={spotifyFeatures} />
+                    <ServiceFeatures data={spotifyFeatures} />
 
-                    <Receive label={`Что входит в Spotify Premium`} data={spotifyReceive} />
+                    <ServiceReceive label={`Что входит в Spotify Premium`} data={spotifyReceive} />
 
-                    <NeedToKnow text={spotifyText} />
+                    <ServiceNeedToKnow text={spotifyText} />
                 </div>
             </div>
         </section>

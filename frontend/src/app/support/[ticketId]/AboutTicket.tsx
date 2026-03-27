@@ -1,9 +1,7 @@
 'use client'
 
-import {Ticket} from "@/entities/support/model/type";
 import {ShieldCheck} from "lucide-react";
-import TicketHeader from "@/entities/support/ui/TicketHeader";
-import UserSupportQuestion from "@/entities/support/ui/UserSupportQuestion";
+import {TicketHeader, Ticket, UserSupportQuestion} from "@/entities/support";
 
 export default function AboutTicket({ticketData}: {ticketData: Ticket}) {
 

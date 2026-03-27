@@ -3,12 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
-import {clearCart, getCartItems, useCartStore} from "@/entities/cart/model/store";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import GrayBtn from "@/shared/ui-kit/buttons/GrayBtn";
-import {useSimpleModalWindow} from "@/shared/lib/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import {clearCart, getCartItems, useCartStore} from "@/entities/cart";
+import {useSimpleModalWindow, usePageUtils} from "@/shared/lib/client";
+import {SimpleModalWindow, GrayBtn, YellowBtn } from "@/shared/ui-kit/client";
 
 export default function Cart(){
 

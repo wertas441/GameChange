@@ -15,11 +15,11 @@ function ServiceReceive({label, data} : IProps) {
             <h2 className="text-lg font-semibold text-slate-50">{label}</h2>
 
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                {data.map((item) => (
-                    <div key={item.title} className="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-4">
-                        <h3 className="text-sm font-semibold text-slate-100">{item.title}</h3>
+                {data.map(({title, text}) => (
+                    <div key={title} className="rounded-2xl border border-slate-800/70 bg-slate-950/40 p-4">
+                        <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
 
-                        <p className="mt-2 text-xs text-slate-400">{item.text}</p>
+                        <p className="mt-2 text-xs text-slate-400">{text}</p>
                     </div>
                 ))}
             </div>

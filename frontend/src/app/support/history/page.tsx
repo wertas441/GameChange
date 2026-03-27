@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import TicketHistory from "@/app/support/history/TicketHistory";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
-import {getTicketHistory} from "@/entities/support/model/controller";
+import {ServerErrorState} from "@/shared/ui-kit/server";
+import {getTicketHistory} from "@/entities/support";
 
 export const metadata: Metadata = {
     title: 'История обращений | GameChange',
@@ -24,9 +24,7 @@ export default async function SupportHistoryPage() {
 
     const data =  await getTicketHistory(tokenValue);
 
-    if (!data) {
-        return <ServerErrorState />
-    }
+    if (!data) return <ServerErrorState />
 
     return <TicketHistory ticketData={data} />
 }

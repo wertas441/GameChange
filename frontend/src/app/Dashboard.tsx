@@ -4,10 +4,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {dashboardFeedBackData} from "@/entities/dashboard/model/dashboardData";
-import Feedback from "@/entities/dashboard/ui/Feedback";
-import DashboardHero from "@/entities/dashboard/ui/DashboardHero";
-import DashboardFAQ from "@/entities/dashboard/ui/DashboardFAQ";
-import DashboardPrivileges from "@/entities/dashboard/ui/DashboardPrivileges";
+import {Feedback} from "@/entities/dashboard";
+import {DashboardHero} from "@/entities/dashboard";
+import {DashboardFAQ} from "@/entities/dashboard";
+import {DashboardPrivileges} from "@/entities/dashboard";
 import DashboardTopSell from "@/entities/dashboard/ui/DashboardTopSell";
 
 export default function Dashboard(){

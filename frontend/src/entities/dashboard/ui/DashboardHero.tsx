@@ -1,7 +1,7 @@
 import Link from "next/link";
 import PixelBlast from "@/widgets/PixelBlast";
 
-export default function DashboardHero() {
+export function DashboardHero() {
 
     return (
         <div className="relative min-h-screen flex items-center justify-center overflow-hidden">

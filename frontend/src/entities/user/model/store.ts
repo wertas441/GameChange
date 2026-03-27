@@ -4,7 +4,7 @@ import {create, StateCreator} from 'zustand'
 import {BackendApiResponse} from "@/shared/type";
 import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
 import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi, clientApi} from "@/shared/api";
+import {clientApi, serverApi} from "@/shared/utils";
 
 const noopStorage: StateStorage = {
     getItem: () => null,
@@ -91,7 +91,6 @@ const userStore: StateCreator<UserStore> = (set, get) => ({
         }
     },
 });
-
 
 export const useUserStore = create<UserStore>()(
     persist(userStore, {

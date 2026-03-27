@@ -1,16 +1,11 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import {validateUserConfirmEmail, validateUserEmail, validateUserPassword} from "@/entities/user/model/validation";
-import {showErrorMessage} from "@/shared";
+import {MainInput, YellowBtn, ServerFormError} from "@/shared/ui-kit/client";
+import {validateUserConfirmEmail, validateUserEmail, validateUserPassword, changeEmail, useUserStore} from "@/entities/user";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
 import {BackendApiResponse} from "@/shared/type";
-import {changeEmail, useUserStore} from "@/entities/user/model/store";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
 interface ChangeEmailValues {
     newEmail: string;

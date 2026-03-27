@@ -1,16 +1,11 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import HideInput from "@/shared/ui-kit/inputs/HideInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import {validateNewPassword, validateUserConfirmPassword, validateUserPassword} from "@/entities/user/model/validation";
-import {showErrorMessage} from "@/shared";
+import {YellowBtn, HideInput, ServerFormError, MainInput} from "@/shared/ui-kit/client";
+import {usePageUtils, getServerErrorMessage} from "@/shared/lib/client";
+import {validateNewPassword, validateUserConfirmPassword, validateUserPassword} from "@/entities/user";
+import {showErrorMessage, serverApi} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
 
 interface ChangePasswordValues {
     currentPassword: string;

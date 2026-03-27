@@ -27,21 +27,20 @@ const cartStore: StateCreator<CartStore> = (set, get) => ({
     cartItemsCount: 0,
 
     addKey: (item: CartItem) => {
-        set((state) => {
-            const existingIndex = state.cartState.findIndex((entry) => entry.id === item.id);
-            let nextCart = state.cartState;
+        set(({cartState}) => {
+            const existingIndex = cartState.findIndex((entry) => entry.id === item.id);
 
             if (existingIndex === -1) {
-                nextCart = [...state.cartState, { ...item, count: 1 }];
+                cartState = [...cartState, { ...item, count: 1 }];
             } else {
-                nextCart = state.cartState.map((entry, index) =>
-                    index === existingIndex ? { ...entry, count: entry.count + 1 } : entry
-                );
+                cartState = cartState.map((entry, index) => {
+                    return index === existingIndex ? { ...entry, count: entry.count + 1 } : entry
+                })
             }
 
             return {
-                cartState: nextCart,
-                cartItemsCount: getItemsCount(nextCart)
+                cartState,
+                cartItemsCount: getItemsCount(cartState)
             };
         });
     },
@@ -49,6 +48,7 @@ const cartStore: StateCreator<CartStore> = (set, get) => ({
     removeKey: (keyId: number) => {
         set((state) => {
             const removeIndex = state.cartState.findIndex((entry) => entry.id === keyId);
+
             if (removeIndex === -1) {
                 return {
                     cartState: state.cartState,
@@ -57,15 +57,12 @@ const cartStore: StateCreator<CartStore> = (set, get) => ({
             }
 
             const targetItem = state.cartState[removeIndex];
-            const nextCart =
-                targetItem.count > 1
-                    ? state.cartState.map((entry, index) =>
-                          index === removeIndex ? { ...entry, count: entry.count - 1 } : entry
-                      )
-                    : [
-                          ...state.cartState.slice(0, removeIndex),
-                          ...state.cartState.slice(removeIndex + 1),
-                      ];
+            const nextCart = targetItem.count > 1 ? state.cartState.map((entry, index) => {
+                return index === removeIndex ? { ...entry, count: entry.count - 1 } : entry
+            }) : [
+                ...state.cartState.slice(0, removeIndex),
+                ...state.cartState.slice(removeIndex + 1),
+            ];
 
             return {
                 cartState: nextCart,

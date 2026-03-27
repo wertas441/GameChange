@@ -10,7 +10,7 @@ interface IProps {
     tag: string;
 }
 
-export default function ServicesSideBarRow({id, href, isActive, logo, tag, title}: IProps) {
+export function ServicesSideBarRow({id, href, isActive, logo, tag, title}: IProps) {
 
     return (
         <Link

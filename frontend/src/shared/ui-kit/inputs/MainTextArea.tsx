@@ -9,7 +9,7 @@ export interface TextAreaInputProps extends TextareaHTMLAttributes<HTMLTextAreaE
     className?: string;
 }
 
-function MainTextarea(
+function MainTextArea(
     {
         label,
         id,
@@ -44,7 +44,7 @@ function MainTextarea(
     )
 }
 
-export default memo(MainTextarea);
+export default memo(MainTextArea);
 
 
 

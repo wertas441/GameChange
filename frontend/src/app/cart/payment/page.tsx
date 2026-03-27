@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import Payment from "@/app/cart/payment/Payment";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
+import {ServerErrorState} from "@/shared/ui-kit/server";
 
 export const metadata: Metadata = {
     title: "Оплата заказа | GameChange",

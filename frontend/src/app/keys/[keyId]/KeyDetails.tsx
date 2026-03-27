@@ -1,11 +1,10 @@
 'use client'
 
-import {KeyDetailsData} from "@/entities/key/model/type";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/shared/lib/data";
+import {YellowBtn} from "@/shared/ui-kit/client";
+import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/shared/lib/client";
 import Image from "next/image";
-import {addNewItem, useCartStore} from "@/entities/cart/model/store";
-import PCRequirements from "@/entities/key/ui/PCRequirements";
+import {addNewItem, useCartStore} from "@/entities/cart";
+import {PCRequirements, KeyDetailsData} from "@/entities/key";
 
 export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 

@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const showErrorMessage:boolean = true;
+
 export function getTokenHeaders(token: string) {
     return {Cookie: `token=${token}`};
 }

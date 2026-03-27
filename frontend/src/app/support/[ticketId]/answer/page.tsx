@@ -1,8 +1,8 @@
 import {Metadata} from "next";
 import AnswerToTicket from "@/app/support/[ticketId]/answer/AnswerToTicket";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
-import {getTicketDetails} from "@/entities/support/model/controller";
+import {ServerErrorState} from "@/shared/ui-kit/server";
+import {getTicketDetails} from "@/entities/support";
 
 export const metadata: Metadata = {
     title: 'Ответить на обращение | GameChange',
@@ -18,15 +18,11 @@ export default async function AnswerToTicketPage({params}: IParams) {
 
     const tokenValue = (await cookies()).get('token')?.value;
 
-    if (!tokenValue) {
-        return <ServerErrorState />
-    }
+    if (!tokenValue) return <ServerErrorState />
 
     const data = await getTicketDetails(ticketId, tokenValue);
 
-    if (!data) {
-        return <ServerErrorState />
-    }
+    if (!data) return <ServerErrorState />
 
     return <AnswerToTicket ticketData={data} />
 }

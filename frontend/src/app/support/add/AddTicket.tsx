@@ -1,25 +1,18 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/shared";
+import {showErrorMessage, serverApi} from "@/shared/utils";
 import {BackendApiResponse} from "@/shared/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
-import {ticketCategorys, ticketTypes} from "@/shared/lib/data";
-import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import {MultiSelectInput, ServerFormError, MainTextArea, YellowBtn, MainInput} from "@/shared/ui-kit/client";
 import {
     validateTicketCategory,
     validateTicketDescription,
     validateTicketTitle,
     validateTicketType
-} from "@/entities/support/model/validation";
-import PixelBlast from "@/widgets/PixelBlast";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+} from "@/entities/support";
+import {PixelBlast} from "@/widgets";
+import {getServerErrorMessage, ticketTypes, ticketCategorys, usePageUtils} from "@/shared/lib/client";
 
 interface AddTicketForm {
     type: string[];
@@ -137,7 +130,7 @@ export default function AddTicket() {
 
                         />
 
-                        <MainTextarea
+                        <MainTextArea
                             id="description"
                             label="Описание"
                             error={errors.description?.message}

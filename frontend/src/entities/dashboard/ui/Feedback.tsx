@@ -6,7 +6,7 @@ import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css/pagination';
 import {FeedBackStructure} from "@/shared/type";
 
-export default function Feedback({ feedBackData }: {feedBackData: FeedBackStructure[] }) {
+export function Feedback({ feedBackData }: {feedBackData: FeedBackStructure[] }) {
 
     return (
         <div className="flex items-center justify-center px-3 md:px-15">
@@ -46,28 +46,29 @@ export default function Feedback({ feedBackData }: {feedBackData: FeedBackStruct
                         1280: { slidesPerView: 3, spaceBetween: 32 },
                     }}
                 >
-                    {feedBackData.map((data) => (
-                        <SwiperSlide key={data.id} className="h-auto! mt-10">
-                            <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30
-                                               flex h-full flex-col transition-all duration-300"
+                    {feedBackData.map(({id, name, game, rating, description }) => (
+                        <SwiperSlide key={id} className="h-auto! mt-10">
+                            <div
+                                className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg
+                                shadow-black/30 flex h-full flex-col transition-all duration-300"
                             >
                                 <div className="grow">
                                     <div className={`flex-row md:flex items-center justify-between`}>
-                                        <p className="font-semibold text-slate-50">{data.name}</p>
-                                        <p className="text-sm text-slate-400">Покупка: {data.game}</p>
+                                        <p className="font-semibold text-slate-50">{name}</p>
+
+                                        <p className="text-sm text-slate-400">Покупка: {game}</p>
                                     </div>
 
                                     <div className="mt-3 text-amber-400">
                                         {Array.from({ length: 5 }).map((_, index) => (
-                                            <span key={`${data.id}-star-${index}`}>
-                                                    {index < data.rating ? "★" : ""}
-                                                </span>
+                                            <span key={`${id}-star-${index}`}>
+                                                {index < rating ? "★" : ""}
+                                            </span>
                                         ))}
                                     </div>
 
                                     <blockquote className="mt-1 text-slate-300 italic">
-                                        {/* Ограничиваем количество строк для предсказуемого вида */}
-                                        <p className="line-clamp-4 text-lg">“{data.description}”</p>
+                                        <p className="line-clamp-4 text-lg">“{description}”</p>
                                     </blockquote>
                                 </div>
                             </div>
@@ -75,16 +76,17 @@ export default function Feedback({ feedBackData }: {feedBackData: FeedBackStruct
                     ))}
                     <div
                         className="swiper-pagination-feedback mt-6 flex justify-center gap-2 md:hidden
-                                   [&_.swiper-pagination-bullet]:h-2 [&_.swiper-pagination-bullet]:w-2
-                                   [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-slate-600/70
-                                   [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet-active]:bg-amber-400"
+                        [&_.swiper-pagination-bullet]:h-2 [&_.swiper-pagination-bullet]:w-2
+                        [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-slate-600/70
+                        [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet-active]:bg-amber-400"
                         slot="container-end"
                     />
                 </Swiper>
             </div>
 
-            <div className={`swiper-button-next-feedback mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                   text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
+            <div className={`swiper-button-next-feedback mt-25 transform z-10 cursor-pointer rounded-full border 
+                 border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300 
+                 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
             >
                 <ArrowRight className="h-10 w-10"/>
             </div>

@@ -1,7 +1,7 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {createReview} from "@/entities/review/model/controller";
 
-export function useCreateReviewMutation() {
+export default function useCreateReviewMutation() {
     const queryClient = useQueryClient();
 
     return useMutation({

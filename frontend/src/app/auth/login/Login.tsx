@@ -1,20 +1,15 @@
 'use client'
 
 import { useForm } from 'react-hook-form';
-import {showErrorMessage} from '@/shared';
-import { usePageUtils } from '@/shared/lib/hooks/usePageUtils';
-import MainInput from '@/shared/ui-kit/inputs/MainInput';
 import {BackendApiResponse} from "@/shared/type";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import {ServerFormError, YellowBtn, MainInput} from "@/shared/ui-kit/client";
 import {secondColorTheme} from "@/shared/styles/styles";
 import Link from "next/link";
-import {makeInitUserData, makeClear, useUserStore} from "@/entities/user/model/store";
-import {validateUserEmail, validateUserPassword} from "@/entities/user/model/validation";
+import {validateUserEmail, validateUserPassword, makeInitUserData, makeClear, useUserStore} from "@/entities/user";
 import {useEffect} from "react";
 import PixelBlast from "@/widgets/PixelBlast";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
 interface LoginForm {
     email: string;

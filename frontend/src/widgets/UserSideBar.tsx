@@ -23,7 +23,7 @@ const settingsMenuItems = [
     { id: 'projectInformation', link: '/user/information', label: 'Информация о проекте', icon: Info },
 ] as const;
 
-export default function UserSideBar() {
+export function UserSideBar() {
 
     const pathname = usePathname()
 
@@ -35,6 +35,7 @@ export default function UserSideBar() {
 
     const logOutButton = async () => {
         await logout();
+        
         router.replace("/auth/login");
     }
 
@@ -42,13 +43,13 @@ export default function UserSideBar() {
         <>
             <aside className="w-full lg:w-100">
                 <nav className="space-y-4 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-3 shadow-lg shadow-black/20">
-                    {settingsMenuItems.map((item) => (
+                    {settingsMenuItems.map(({id, label, link, icon}) => (
                         <UserSideBarBtn
-                            key={item.id}
-                            label={item.label}
-                            link={item.link}
-                            IconComponent={item.icon}
-                            active={pathname === item.link}
+                            key={id}
+                            label={label}
+                            link={link}
+                            IconComponent={icon}
+                            active={pathname === link}
                         />
                     ))}
 

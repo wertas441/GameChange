@@ -1,3 +1,5 @@
+'use client'
+
 import InputError from "@/shared/ui-kit/errors/InputError";
 import {inputColorTheme} from "@/shared/styles/styles";
 import {MainInputProps} from "@/shared/type";

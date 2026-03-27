@@ -1,30 +1,38 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData, KeyFormValues} from "@/entities/key/model/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import {showErrorMessage} from "@/shared";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import DropDownContent from "@/entities/key/ui/DropDownContent";
-import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
+import {usePageUtils} from "@/shared/lib/client";
 import {
     activationPlatformOptions,
     genreOptions,
     operationSystemOptions
-} from "@/shared/lib/data";
-import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
+} from "@/shared/lib/data/global";
+import {MainTextArea, YellowBtn, MultiSelectInput, MainInput, ServerFormError } from "@/shared/ui-kit/client";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOS, validateKeyOtherPicture,
-    validateKeyPlatforms, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
-    validateKeyUrl
-} from "@/entities/key/model/validator";
+    validateKeyDescription,
+    validateKeyDeveloper,
+    validateKeyGenres,
+    validateKeyGPU,
+    validateKeyMainPicture,
+    validateKeyMemory,
+    validateKeyName,
+    validateKeyOS,
+    validateKeyOtherPicture,
+    validateKeyPlatforms,
+    validateKeyPrice,
+    validateKeyPublisher,
+    validateKeyRAM,
+    validateKeyReleaseDate,
+    validateKeyUrl,
+    useCreateKeyMutation,
+    DropDownContent,
+    AddKeyData,
+    KeyFormValues,
+} from "@/entities/key";
 import PixelBlast from "@/widgets/PixelBlast";
-import {useCreateKeyMutation} from "@/entities/key/model/mutation";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import {showErrorMessage} from "@/shared/utils";
 
 export default function AddNewKey(){
 
@@ -138,7 +146,7 @@ export default function AddNewKey(){
                                 {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                             />
 
-                            <MainTextarea
+                            <MainTextArea
                                 id={`description`}
                                 label={`Описание`}
                                 error={errors.description?.message}

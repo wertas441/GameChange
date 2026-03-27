@@ -1,24 +1,19 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/shared";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
 import {BackendApiResponse} from "@/shared/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
-import MainInput from "@/shared/ui-kit/inputs/MainInput";
-import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
-import HideInput from "@/shared/ui-kit/inputs/HideInput";
+import {YellowBtn, MainInput, ServerFormError, HideInput} from "@/shared/ui-kit/client";
 import {
     validateUserConfirmPassword,
     validateUserEmail,
     validateUserName,
     validateUserPassword
-} from "@/entities/user/model/validation";
+} from "@/entities/user";
 import PixelBlast from "@/widgets/PixelBlast";
 import Link from "next/link";
-import {getServerErrorMessage} from "@/shared/lib/server";
-import {serverApi} from "@/shared/api";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
 interface RegistrationForm {
     userName: string;

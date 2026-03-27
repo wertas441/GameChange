@@ -12,7 +12,7 @@ interface IProps {
     triggerClassName?: string;
 }
 
-export default function DropDownContent(
+export function DropDownContent(
     {
         children,
         label,

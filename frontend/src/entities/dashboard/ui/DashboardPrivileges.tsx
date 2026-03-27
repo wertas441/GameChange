@@ -1,7 +1,7 @@
 import {dashboardPrivileges} from "@/entities/dashboard/model/dashboardData";
 import PrivilegeCard from "@/entities/dashboard/ui/PrivilegeCard";
 
-export default function DashboardPrivileges() {
+export function DashboardPrivileges() {
 
     return (
         <div className="mx-auto w-full px-6 md:px-12">
@@ -14,12 +14,12 @@ export default function DashboardPrivileges() {
             </div>
 
             <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {dashboardPrivileges.map(privilege => (
+                {dashboardPrivileges.map(({title, icon, text}) => (
                     <PrivilegeCard
-                        key={privilege.title}
-                        title={privilege.title}
-                        IconComponent={privilege.icon}
-                        text={privilege.text}
+                        key={title}
+                        title={title}
+                        IconComponent={icon}
+                        text={text}
                     />
                 ))}
             </div>
