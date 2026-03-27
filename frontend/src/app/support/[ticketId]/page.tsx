@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import AboutTicket from "@/app/support/[ticketId]/AboutTicket";
-import {getTicketDetails} from "@/lib/controllers/ticket";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {getTicketDetails} from "@/entities/support";
+import {ServerErrorState} from "@/shared/ui-kit/server";
 import {cookies} from "next/headers";
 
 export const metadata: Metadata = {
@@ -18,15 +18,11 @@ export default async function AboutTicketPage({params}: IParams) {
 
     const tokenValue = (await cookies()).get('token')?.value;
 
-    if (!tokenValue) {
-        return <ServerErrorState />
-    }
+    if (!tokenValue) return <ServerErrorState />
 
     const data = await getTicketDetails(ticketId, tokenValue);
 
-    if (!data) {
-        return <ServerErrorState />
-    }
+    if (!data) return <ServerErrorState />
 
     return <AboutTicket ticketData={data} />
 }

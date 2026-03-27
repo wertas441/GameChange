@@ -1,30 +1,34 @@
 'use client'
 
-import {KeyDetailsData, KeyFormValues} from "@/types/key";
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {getDateInputFormat, showErrorMessage} from "@/lib";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import DropDownContent from "@/components/UI/DropDownContent";
-import MainInput from "@/components/inputs/MainInput";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/lib/data";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import {useSimpleModalWindow} from "@/lib/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/components/elements/SimpleModalWindow";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
+import {secondColorTheme} from "@/shared/styles/styles";
+import {activationPlatformOptions, genreOptions, operationSystemOptions, useSimpleModalWindow, usePageUtils, getDateInputFormat} from "@/shared/lib/client";
+import {SimpleModalWindow, MultiSelectInput, MainInput, ServerFormError, MainTextArea, YellowBtn} from "@/shared/ui-kit/client";
 import {useCallback} from "react";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU,
-    validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOS,
-    validateKeyOtherPicture, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
-    validateKeyPlatforms, validateKeyUrl
-} from "@/lib/validators/key";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import {useChangeKeyMutation, useDeleteKeyMutation} from "@/lib/hooks/mutation/key";
+    validateKeyDescription,
+    validateKeyDeveloper,
+    validateKeyGenres,
+    validateKeyGPU,
+    validateKeyMainPicture,
+    validateKeyMemory,
+    validateKeyName,
+    validateKeyOS,
+    validateKeyOtherPicture,
+    validateKeyPrice,
+    validateKeyPublisher,
+    validateKeyRAM,
+    validateKeyReleaseDate,
+    validateKeyPlatforms,
+    validateKeyUrl,
+    KeyDetailsData,
+    KeyFormValues,
+    DropDownContent,
+    useChangeKeyMutation,
+    useDeleteKeyMutation,
+} from "@/entities/key";
+import {showErrorMessage} from "@/shared/utils";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 
@@ -179,7 +183,7 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                     {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                                 />
 
-                                <MainTextarea
+                                <MainTextArea
                                     id={`description`}
                                     label={`Описание`}
                                     error={errors.description?.message}
@@ -360,8 +364,9 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                             />
 
                             <div className="flex-row md:flex gap-4 space-y-3 md:space-y-0 ">
-                                <SubmitYellowBtn
+                                <YellowBtn
                                     label={!isSubmitting ? 'Изменить ключ' : 'Изменение…'}
+                                    type={`submit`}
                                     disabled={isSubmitting || isDeleting}
                                 />
 
@@ -382,7 +387,6 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                 windowLabel={'Подтверждение удаления'}
                 windowText={`Вы действительно хотите удалить ключ ${keyData.name}? Это действие необратимо.`}
                 error={serverError}
-                cancelButtonLabel={'Отмена'}
                 cancelFunction={toggleModalWindow}
                 confirmButtonLabel={'Удалить'}
                 confirmFunction={deleteKeyBtn}

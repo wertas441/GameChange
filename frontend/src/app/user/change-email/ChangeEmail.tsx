@@ -1,14 +1,11 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {validateUserConfirmEmail, validateUserEmail, validateUserPassword} from "@/lib/validators/user";
-import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {changeEmail, useUserStore} from "@/lib/store/userStore";
+import {MainInput, YellowBtn, ServerFormError} from "@/shared/ui-kit/client";
+import {validateUserConfirmEmail, validateUserEmail, validateUserPassword, changeEmail, useUserStore} from "@/entities/user";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {BackendApiResponse} from "@/shared/type";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
 interface ChangeEmailValues {
     newEmail: string;
@@ -36,7 +33,8 @@ export default function ChangeEmail() {
         try {
             await serverApi.post<BackendApiResponse>(`/user/change-email`, payload);
 
-            makeChangeEmail(values.newEmail)
+            makeChangeEmail(values.newEmail);
+
             router.replace('/user/profile');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
@@ -97,8 +95,9 @@ export default function ChangeEmail() {
                             {...register('password', {validate: (value) => validateUserPassword(value) || true})}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Сохранить новый email' : 'Сохраняем…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

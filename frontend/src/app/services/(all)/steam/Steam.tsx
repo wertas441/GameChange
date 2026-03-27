@@ -1,41 +1,38 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import HowItWork from "@/components/UI/servicesUI/HowItWork";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
+import {serverApi, showErrorMessage} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
 import {
+    ServiceNeedToKnow,
     validatePromoCode,
-    validateServiceAmount,
-    validateSteamLogin
-} from "@/lib/validators/service";
+    ServiceFeatures,
+    ServiceHeader,
+    validateSteamLogin,
+    validateServiceAmount, ServiceHowItWork,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
 import {steamFeatures, steamHowItWork, steamText} from "@/app/services/(all)/data";
 
-interface SteamFormValues {
-    steamLogin: string;
+interface SteamForm {
+    login: string;
     amount: number;
     promoCode: string;
 }
 
 export default function Steam() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<SteamFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<SteamForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: SteamFormValues) => {
+    const onSubmit = async (values: SteamForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            steamLogin: values.steamLogin,
+            steamLogin: values.login,
             amount: values.amount,
             promoCode: values.promoCode,
         };
@@ -43,7 +40,7 @@ export default function Steam() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/steam`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
@@ -78,8 +75,8 @@ export default function Steam() {
                         <MainInput
                             id="steamLogin"
                             label="Логин Steam"
-                            error={errors.steamLogin?.message}
-                            {...register('steamLogin', {validate: (value) => validateSteamLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validateSteamLogin(value) || true })}
 
                         />
 
@@ -104,19 +101,20 @@ export default function Steam() {
                             с условиями сервиса.
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={steamFeatures} />
+                    <ServiceFeatures data={steamFeatures} />
 
-                    <HowItWork data={steamHowItWork} />
+                    <ServiceHowItWork data={steamHowItWork} />
 
-                    <NeedToKnow text={steamText} />
+                    <ServiceNeedToKnow text={steamText} />
                 </div>
             </div>
         </section>

@@ -1,36 +1,44 @@
 'use client'
 
 import {useForm, Controller} from "react-hook-form";
-import {AddKeyData, KeyFormValues} from "@/types/key";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import {showErrorMessage} from "@/lib";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import DropDownContent from "@/components/UI/DropDownContent";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
+import {secondColorTheme} from "@/shared/styles/styles";
+import {usePageUtils} from "@/shared/lib/client";
 import {
     activationPlatformOptions,
     genreOptions,
     operationSystemOptions
-} from "@/lib/data";
-import MainTextarea from "@/components/inputs/MainTextArea";
+} from "@/shared/lib/data/global";
+import {MainTextArea, YellowBtn, MultiSelectInput, MainInput, ServerFormError } from "@/shared/ui-kit/client";
 import {
     validateKeyCPU,
-    validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
-    validateKeyName, validateKeyOS, validateKeyOtherPicture,
-    validateKeyPlatforms, validateKeyPrice, validateKeyPublisher, validateKeyRAM, validateKeyReleaseDate,
-    validateKeyUrl
-} from "@/lib/validators/key";
-import PixelBlast from "@/components/PixelBlast";
-import {useCreateKeyMutation} from "@/lib/hooks/mutation/key";
+    validateKeyDescription,
+    validateKeyDeveloper,
+    validateKeyGenres,
+    validateKeyGPU,
+    validateKeyMainPicture,
+    validateKeyMemory,
+    validateKeyName,
+    validateKeyOS,
+    validateKeyOtherPicture,
+    validateKeyPlatforms,
+    validateKeyPrice,
+    validateKeyPublisher,
+    validateKeyRAM,
+    validateKeyReleaseDate,
+    validateKeyUrl,
+    useCreateKeyMutation,
+    DropDownContent,
+    AddKeyData,
+    KeyFormValues,
+} from "@/entities/key";
+import PixelBlast from "@/widgets/PixelBlast";
+import {showErrorMessage} from "@/shared/utils";
 
 export default function AddNewKey(){
 
     const { register, handleSubmit, control, formState: { errors } } = useForm<KeyFormValues>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
     const createKeyMutation = useCreateKeyMutation();
 
@@ -68,7 +76,7 @@ export default function AddNewKey(){
         };
 
         createKeyMutation.mutate(payload, {
-            onSuccess: () => router.push("/keys/catalog"),
+            onSuccess: () => goToPage("/keys/catalog"),
 
             onError: (err) => {
                 const message = err instanceof Error ? err.message : "Не удалось добавить ключ. Попробуйте ещё раз.";
@@ -138,7 +146,7 @@ export default function AddNewKey(){
                                 {...register('price', {validate: (value) => validateKeyPrice(value) || true})}
                             />
 
-                            <MainTextarea
+                            <MainTextArea
                                 id={`description`}
                                 label={`Описание`}
                                 error={errors.description?.message}
@@ -319,8 +327,9 @@ export default function AddNewKey(){
                             )}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Добавить ключ' : 'Добавление…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

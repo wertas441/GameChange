@@ -1,4 +1,4 @@
-import Information from "@/app/user/information/Information";
+import {Information} from "@/app/user/information/Information";
 import {Metadata} from "next";
 
 export const metadata: Metadata = {

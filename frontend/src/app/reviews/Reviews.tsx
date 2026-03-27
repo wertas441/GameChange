@@ -1,12 +1,9 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
-import {reviewCategorys} from "@/lib/data";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
-import useUserReviews from "@/lib/hooks/data/review";
-import SpinnerLoader from "@/components/errors/SpinnerLoader";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {reviewCategorys, usePagination, usePageUtils} from "@/shared/lib/client";
+import {Pagination} from "@/widgets";
+import {useUserReviews} from "@/entities/review";
+import {ServerErrorState, SpinnerLoader, YellowBtn} from "@/shared/ui-kit/client";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },
@@ -18,26 +15,27 @@ const ratings = [2, 5, 10, 24, 59] as const;
 
 export default function Reviews() {
 
-    const { userReviews, isLoading, isError, error } = useUserReviews();
+    const { data, isLoading, isError, error } = useUserReviews();
 
     const {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
-        items: userReviews ? userReviews : [],
+        items: data ? data : [],
         itemsPerPage: 6,
         scrollOnPageChange: true,
     });
 
-    if (isLoading) {
-        return <SpinnerLoader text="Загрузка отзывов..." />;
-    }
+    const { goToPage } = usePageUtils();
 
-    if (isError || userReviews === undefined) {
+    if (isLoading) return <SpinnerLoader text="Загрузка отзывов..." />;
+
+    if (isError || data === undefined) {
         console.log(error)
+
         return <ServerErrorState />;
     }
 
@@ -60,11 +58,11 @@ export default function Reviews() {
                 </div>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {stats.map((item) => (
-                        <div key={item.label} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 text-center shadow-lg shadow-black/30">
-                            <p className="text-sm text-slate-400">{item.label}</p>
+                    {stats.map(({label, value}) => (
+                        <div key={label} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 text-center shadow-lg shadow-black/30">
+                            <p className="text-sm text-slate-400">{label}</p>
 
-                            <p className="mt-2 text-2xl font-semibold text-slate-50">{item.value}</p>
+                            <p className="mt-2 text-2xl font-semibold text-slate-50">{value}</p>
                         </div>
                     ))}
                 </div>
@@ -107,7 +105,7 @@ export default function Reviews() {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToPage}
+                                onPageChange={goToSelectPage}
                                 className="min-w-max sm:min-w-0"
                             />
                         </div>
@@ -136,7 +134,10 @@ export default function Reviews() {
                             </div>
                         </div>
 
-                        <LinkYellowBtn label={`Оставить отзыв`} href={`/reviews/add`} />
+                        <YellowBtn
+                            label={`Оставить отзыв`}
+                            onClick={() => goToPage(`/reviews/add`)}
+                        />
                     </div>
                 </div>
             </div>

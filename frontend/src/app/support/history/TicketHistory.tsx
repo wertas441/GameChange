@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import {ArrowUpRight, History, User} from "lucide-react";
-import {getUserData, useUserStore} from "@/lib/store/userStore";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {getUserData, useUserStore} from "@/entities/user";
+import {ServerErrorState} from "@/shared/ui-kit/client";
 import {useMemo} from "react";
-import {Ticket} from "@/types/support";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
+import {Ticket} from "@/entities/support";
+import {usePagination} from "@/shared/lib/client";
+import {Pagination} from "@/widgets";
 
 export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 
@@ -20,6 +20,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
 
         return ticketData.map((ticket, index) => {
             if (index > 0) return ticket;
+
             return {
                 ...ticket,
                 ownerName: ticket.ownerName,
@@ -30,14 +31,14 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
 
-        return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
+        return normalizedTickets.filter(({ownerName}) => ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
 
     const {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
         items: visibleTickets,
@@ -45,9 +46,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
         scrollOnPageChange: true,
     });
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
+    if (!userData) return <ServerErrorState />
 
     return (
         <div className="space-y-6">
@@ -137,7 +136,7 @@ export default function TicketHistory({ticketData} : {ticketData: Ticket[]}) {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToPage}
+                                onPageChange={goToSelectPage}
                             />
                         </div>
                     </div>

@@ -1,23 +1,29 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import Receive from "@/components/UI/servicesUI/Receive";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode} from "@/lib/validators/service";
-import {validateUserEmail} from "@/lib/validators/user";
-import {chatGptFeatures, chatGptPlans, chatGptReceive, chatGptText, chatGptTiers} from "@/app/services/(all)/data";
+import {serverApi, showErrorMessage} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    chatGptFeatures,
+    chatGptPlans,
+    chatGptReceive,
+    chatGptText,
+    chatGptTiers,
+} from "@/app/services/(all)/data";
+import {useCallback, useMemo, useState} from "react";
+import {validateUserEmail} from "@/entities/user";
 
-interface ChatGptFormValues {
+interface ChatGptForm {
     email: string;
     planId: string;
     promoCode: string;
@@ -27,20 +33,19 @@ export default function ChatGpt() {
 
     const [activePlanId, setActivePlanId] = useState<string>(chatGptPlans[0].id);
 
-    const activePlan = useMemo(
-        () => chatGptPlans.find((plan) => plan.id === activePlanId) ?? chatGptPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return chatGptPlans.find((plan) => plan.id === activePlanId) ?? chatGptPlans[0];
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ChatGptFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<ChatGptForm>({
         defaultValues: {
             planId: chatGptPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: ChatGptFormValues) => {
+    const onSubmit = async (values: ChatGptForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -54,7 +59,7 @@ export default function ChatGpt() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/chat-gpt`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -67,6 +72,7 @@ export default function ChatGpt() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -108,14 +114,16 @@ export default function ChatGpt() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {chatGptPlans.filter((plan) => plan.label === tier).map((plan) => (
-                                            <ProductBtn
-                                                key={plan.id}
-                                                label={plan.duration}
-                                                onClick={() => onClick(plan.id)}
-                                                isActive={plan.id === activePlanId}
-                                                price={plan.price}
-                                                description={plan.description}
+                                        {chatGptPlans
+                                            .filter(({label}) => label === tier)
+                                            .map(({id, duration, price, description}) => (
+                                            <ServiceProductBtn
+                                                key={id}
+                                                label={duration}
+                                                onClick={() => onClick(id)}
+                                                isActive={id === activePlanId}
+                                                price={price}
+                                                description={description}
                                             />
                                         ))}
                                     </div>
@@ -138,19 +146,20 @@ export default function ChatGpt() {
                             <span className="font-semibold text-slate-100">{activePlan.price} ₽</span>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={chatGptFeatures} />
+                    <ServiceFeatures data={chatGptFeatures} />
 
-                    <Receive label={`Что вы получаете с GPT Plus`} data={chatGptReceive} />
+                    <ServiceReceive label={`Что вы получаете с GPT Plus`} data={chatGptReceive} />
 
-                    <NeedToKnow text={chatGptText} />
+                    <ServiceNeedToKnow text={chatGptText} />
                 </div>
             </div>
         </section>

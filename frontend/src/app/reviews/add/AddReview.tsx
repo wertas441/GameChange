@@ -1,24 +1,19 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {showErrorMessage} from "@/lib";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {reviewCategorys} from "@/lib/data";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import InputError from "@/components/errors/InputError";
+import {usePageUtils, reviewCategorys} from "@/shared/lib/client";
+import {showErrorMessage} from "@/shared/utils";
+import {secondColorTheme} from "@/shared/styles/styles";
+import {ServerFormError, MultiSelectInput, MainTextArea, YellowBtn, InputError} from "@/shared/ui-kit/client";
 import {
     validateReviewCategory,
     validateReviewDescription,
     validateReviewRating,
-} from "@/lib/validators/review";
-import PixelBlast from "@/components/PixelBlast";
-import {useCreateReviewMutation} from "@/lib/hooks/mutation/review";
+    useCreateReviewMutation,
+} from "@/entities/review";
+import {PixelBlast} from "@/widgets";
 
-interface AddReviewFormValues {
+interface AddReviewForm {
     category: string[];
     rating: number;
     description: string;
@@ -26,13 +21,13 @@ interface AddReviewFormValues {
 
 export default function AddReview() {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddReviewFormValues>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<AddReviewForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
     const createReviewMutation = useCreateReviewMutation();
 
-    const onSubmit = async (values: AddReviewFormValues) => {
+    const onSubmit = async (values: AddReviewForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -43,7 +38,7 @@ export default function AddReview() {
         };
 
         createReviewMutation.mutate(payload, {
-            onSuccess: () => router.push("/reviews"),
+            onSuccess: () => goToPage("/reviews"),
 
             onError: (err) => {
                 const message = err instanceof Error ? err.message : "Не удалось добавить отзыв. Попробуйте ещё раз.";
@@ -149,15 +144,16 @@ export default function AddReview() {
                             )}
                         />
 
-                        <MainTextarea
+                        <MainTextArea
                             id="description"
                             label="Описание"
                             error={errors.description?.message}
                             {...register('description', {validate: (value) => validateReviewDescription(value) || true })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оставить отзыв' : 'Процесс…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

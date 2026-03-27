@@ -1,20 +1,36 @@
 'use client'
 
-import {KeyDetailsData} from "@/types/key";
-import YellowBtn from "@/components/buttons/yellow/YellowBtn";
-import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/lib/data";
+import {YellowBtn} from "@/shared/ui-kit/client";
+import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/shared/lib/client";
 import Image from "next/image";
-import {addNewItem, useCartStore} from "@/lib/store/cartStore";
-import PCRequirements from "@/components/elements/PCRequirements";
+import {addNewItem, useCartStore} from "@/entities/cart";
+import {PCRequirements, KeyDetailsData} from "@/entities/key";
 
 export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
+    const {
+        id,
+        name,
+        price,
+        keyUrl,
+        mainPicture,
+        description,
+        genres,
+        otherPictures,
+        systemRequirements,
+        developer,
+        publisher,
+        releaseDate,
+        operationSystem,
+        activationPlatform,
+    } = keyData;
+    
     const addData = {
-        id: keyData.id,
-        keyUrl: keyData.keyUrl,
-        name: keyData.name,
-        price: keyData.price,
-        mainPicture: keyData.mainPicture,
+        id,
+        keyUrl,
+        name,
+        price,
+        mainPicture,
         count: 0,
     }
 
@@ -25,8 +41,8 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
             <main className="overflow-hidden rounded-2xl border border-slate-800/80 bg-slate-900/60 shadow-2xl shadow-black/40">
                 <div className="relative w-full aspect-video md:aspect-[2.6/0.8]">
                     <Image
-                        src={keyData.mainPicture}
-                        alt={`${keyData.name} cover art`}
+                        src={mainPicture}
+                        alt={`${name} cover art`}
                         fill
                         priority
                         className="object-cover"
@@ -35,7 +51,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
                 <div className="p-6 md:p-8 lg:p-10">
                     <h1 className="mb-4 text-3xl font-extrabold tracking-tight text-slate-50 md:text-4xl lg:text-5xl">
-                        {keyData.name}
+                        {name}
                     </h1>
 
                     <div className="mt-6 grid grid-cols-1 gap-y-10 lg:grid-cols-3 lg:gap-x-8 xl:gap-x-12">
@@ -46,11 +62,11 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                 </h2>
 
                                 <p className="mb-6 leading-relaxed text-slate-300">
-                                    {keyData.description}
+                                    {description}
                                 </p>
 
                                 <div className="flex flex-wrap gap-2">
-                                    {keyData.genres.map(genre => {
+                                    {genres.map(genre => {
                                         const matchedGenre = genreOptions.find((option) => option.value === genre);
                                         return (
                                             <span
@@ -67,7 +83,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                             <div>
                                 <h2 className="mb-4 text-2xl font-bold text-slate-50">Галерея</h2>
                                 <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                                    {keyData.otherPictures.map((src, index) => (
+                                    {otherPictures.map((src, index) => (
                                         <div
                                             key={index}
                                             className="group relative aspect-video overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/30"
@@ -88,9 +104,9 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                 <h2 className="mb-4 text-2xl font-bold text-slate-50">Системные требования</h2>
 
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                    <PCRequirements label={`Минимальные`} requirements={keyData.systemRequirements.minimal}/>
+                                    <PCRequirements label={`Минимальные`} requirements={systemRequirements.minimal}/>
 
-                                    <PCRequirements label={`Рекомендуемые`} requirements={keyData.systemRequirements.recommended}/>
+                                    <PCRequirements label={`Рекомендуемые`} requirements={systemRequirements.recommended}/>
                                 </div>
                             </div>
                         </div>
@@ -101,7 +117,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                     <p className="text-sm text-slate-400">Цена</p>
 
                                     <p className="my-3 text-5xl font-extrabold tracking-tighter text-slate-50">
-                                        {keyData.price} ₽
+                                        {price} ₽
                                     </p>
                                 </div>
 
@@ -111,23 +127,23 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                     <dl className={`space-y-2`}>
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Разработчик</dt>
-                                            <dd className="font-medium text-slate-100">{keyData.developer}</dd>
+                                            <dd className="font-medium text-slate-100">{developer}</dd>
                                         </div>
 
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Издатель</dt>
-                                            <dd className="font-medium text-slate-100">{keyData.publisher}</dd>
+                                            <dd className="font-medium text-slate-100">{publisher}</dd>
                                         </div>
 
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Дата выхода</dt>
-                                            <dd className="font-medium text-slate-100">{keyData.releaseDate}</dd>
+                                            <dd className="font-medium text-slate-100">{releaseDate}</dd>
                                         </div>
 
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Платформы</dt>
                                             <dd className="flex gap-3">
-                                                {keyData.operationSystem.map(p => (
+                                                {operationSystem.map(p => (
                                                     operationSystemIcon[p] && (
                                                         <Image key={p} src={operationSystemIcon[p]} width={20} height={20} alt={p} title={p} />
                                                     )
@@ -138,7 +154,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                         <div className="flex items-center justify-between py-1 text-sm">
                                             <dt className="text-slate-400">Активация</dt>
                                             <dd className="flex gap-3">
-                                                {keyData.activationPlatform.map(app => (
+                                                {activationPlatform.map(app => (
                                                     activationPlatformIcons[app] && (
                                                         <Image key={app} src={activationPlatformIcons[app]} width={20} height={20} alt={app} title={app} />
                                                     )

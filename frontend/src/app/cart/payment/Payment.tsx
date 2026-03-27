@@ -2,18 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {clearCart, getCartItems, useCartStore} from "@/lib/store/cartStore";
 import {useForm} from "react-hook-form";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
-import {addPurchases} from "@/lib/controllers/user";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import ServerFormError from "@/components/errors/ServerFormError";
-import {validateUserEmail} from "@/lib/validators/user";
-import {validateCardCVC, validateCardDate, validateCardNumber} from "@/lib/validators/purchases";
+import {addPurchases, validateUserEmail} from "@/entities/user";
+import {usePageUtils} from "@/shared/lib/client";
+import {MainInput, ServerFormError, YellowBtn} from "@/shared/ui-kit/client";
+import {validateCardCVC, validateCardDate, validateCardNumber, clearCart, getCartItems, useCartStore} from "@/entities/cart";
 
-interface PaymentFormValues {
+interface PaymentForm {
     email: string;
     cardNumber: string;
     cardDate: string;
@@ -22,7 +17,7 @@ interface PaymentFormValues {
 
 export default function Payment({token}: {token: string}) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<PaymentFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<PaymentForm>();
 
     const cartItems = useCartStore(getCartItems);
     const makeClearCart = useCartStore(clearCart);
@@ -30,12 +25,13 @@ export default function Payment({token}: {token: string}) {
     const totalItemsCount = cartItems.reduce((sum, item) => sum + item.count, 0);
     const totalPrice = cartItems.reduce((sum, item) => sum + Number(item.price || 0) * item.count, 0);
 
-    const { serverError, setServerError, isSubmitting } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, goToPage } = usePageUtils();
 
     const onSubmit = async () => {
 
         if (cartItems.length === 0) {
             setServerError('На данный момент ваша корзина пуста, выберите товары для продолжения оплаты')
+
             return;
         }
 
@@ -43,6 +39,7 @@ export default function Payment({token}: {token: string}) {
 
         if (response) {
             makeClearCart();
+
             return alert(`Покупка успешно оформлена`);
         }
 
@@ -59,7 +56,11 @@ export default function Payment({token}: {token: string}) {
                 </p>
 
                 <div className="mt-4 flex justify-center">
-                    <LinkYellowBtn label="Перейти в каталог" href="/keys/catalog" className="w-auto px-6" />
+                    <YellowBtn
+                        label="Перейти в каталог"
+                        onClick={() => goToPage("/keys/catalog")}
+                        className="w-auto px-6"
+                    />
                 </div>
             </section>
         );
@@ -125,8 +126,9 @@ export default function Payment({token}: {token: string}) {
                             />
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оплатить заказ' : 'Проводим оплату…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

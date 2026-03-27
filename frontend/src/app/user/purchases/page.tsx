@@ -1,8 +1,8 @@
 import {Metadata} from "next";
 import Purchases from "@/app/user/purchases/Purchases";
-import {getPurchases} from "@/lib/controllers/user";
+import {getPurchases} from "@/entities/user";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {ServerErrorState} from "@/shared/ui-kit/server";
 
 export const metadata: Metadata = {
     title: 'Game Change',
@@ -13,15 +13,11 @@ export default async function PurchasesPage() {
 
     const tokenValue = (await cookies()).get('token')?.value;
 
-    if (!tokenValue) {
-        return <ServerErrorState />
-    }
+    if (!tokenValue) return <ServerErrorState />
 
     const purchasesList = await getPurchases(tokenValue);
 
-    if (typeof purchasesList === "undefined") {
-        return <ServerErrorState />
-    }
+    if (typeof purchasesList === "undefined") return <ServerErrorState />
 
     if (!purchasesList?.length) {
         return (

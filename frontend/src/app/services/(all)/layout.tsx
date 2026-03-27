@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import ServicesSideBar from "@/components/UI/context/ServicesSideBar";
+import {ServicesSideBar} from "@/widgets";
 
 export default function ServicesLayout({children}: {children: ReactNode}) {
 

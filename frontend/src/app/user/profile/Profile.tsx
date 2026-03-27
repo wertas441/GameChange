@@ -1,12 +1,9 @@
 'use client'
 
 import {Calendar, IdCard, Mail, Shield, User, KeyRound} from "lucide-react";
-import {getUserData, useUserStore} from "@/lib/store/userStore";
-import {formatDateForProfile} from "@/lib";
-import ProfileDataLine from "@/components/elements/ProfileDataLine";
-import ServerErrorState from "@/components/errors/ServerErrorState";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
+import {getUserData, useUserStore} from "@/entities/user";
+import {ProfileDataLine, GrayBtn, ServerErrorState} from "@/shared/ui-kit/client";
+import {formatDateForProfile, usePageUtils} from "@/shared/lib/client";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();
@@ -24,9 +21,7 @@ export default function Profile() {
 
     const userData = useUserStore(getUserData);
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
+    if (!userData) return <ServerErrorState />
 
     const { userName, email, createdAt, isAdmin, publicId } = userData;
 

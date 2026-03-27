@@ -1,16 +1,12 @@
 'use client'
 
 import {History, Plus} from "lucide-react";
-import {getUserData, useUserStore} from "@/lib/store/userStore";
-import ServerErrorState from "@/components/errors/ServerErrorState";
+import {getUserData, useUserStore} from "@/entities/user";
+import {ServerErrorState, GrayBtn, YellowGlassBtn} from "@/shared/ui-kit/client";
 import {useMemo} from "react";
-import {Ticket} from "@/types/support";
-import SupportRow from "@/components/elements/SupportRow";
-import GrayBtn from "@/components/buttons/gray/GrayBtn";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import YellowGlassBtn from "@/components/buttons/yellowGlass/YellowGlassBtn";
-import usePagination from "@/lib/hooks/usePagination";
-import Pagination from "@/components/UI/Pagination";
+import {SupportRow, Ticket} from "@/entities/support";
+import {usePageUtils, usePagination} from "@/shared/lib/client";
+import {Pagination} from "@/widgets";
 
 export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
@@ -25,6 +21,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
 
         return ticketList.map((ticket, index) => {
             if (index > 1) return ticket;
+
             return {
                 ...ticket,
                 ownerName: userName,
@@ -35,14 +32,14 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
     const visibleTickets = useMemo(() => {
         if (isAdmin) return normalizedTickets;
 
-        return normalizedTickets.filter((ticket) => ticket.ownerName === userName);
+        return normalizedTickets.filter(({ownerName}) => ownerName === userName);
     }, [isAdmin, normalizedTickets, userName]);
 
     const {
         currentPage,
         totalPages,
         paginatedItems,
-        goToPage: goToListPage,
+        goToSelectPage,
         listRef,
     } = usePagination({
         items: visibleTickets,
@@ -50,9 +47,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
         scrollOnPageChange: true,
     });
 
-    if (!userData) {
-        return <ServerErrorState />
-    }
+    if (!userData) return <ServerErrorState />
 
     return (
         <div className="space-y-6">
@@ -122,7 +117,7 @@ export default function Support({ticketList} : {ticketList: Ticket[]}) {
                             <Pagination
                                 currentPage={currentPage}
                                 totalPages={totalPages}
-                                onPageChange={goToListPage}
+                                onPageChange={goToSelectPage}
                             />
                         </div>
                     </div>

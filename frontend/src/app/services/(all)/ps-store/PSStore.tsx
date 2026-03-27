@@ -1,37 +1,43 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import HowItWork from "@/components/UI/servicesUI/HowItWork";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode, validatePSNLogin, validateServiceAmount} from "@/lib/validators/service";
-import {psStoreFeatures, psStoreHowItWork, psStoreText} from "@/app/services/(all)/data";
+import {serverApi, showErrorMessage} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validatePSNLogin,
+    validateServiceAmount,
+    ServiceHowItWork,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    psStoreFeatures,
+    psStoreHowItWork,
+    psStoreText,
+} from "@/app/services/(all)/data";
 
-interface PSStoreFormValues {
-    psnLogin: string;
+interface PSStoreForm {
+    login: string;
     amount: number;
     promoCode: string;
 }
 
 export default function PSStore() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<PSStoreFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<PSStoreForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: PSStoreFormValues) => {
+    const onSubmit = async (values: PSStoreForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            psnLogin: values.psnLogin,
+            psnLogin: values.login,
             amount: values.amount,
             promoCode: values.promoCode,
         };
@@ -39,7 +45,7 @@ export default function PSStore() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/ps-store`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -73,10 +79,10 @@ export default function PSStore() {
 
                     <form className="mt-5 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
-                            id="psnLogin"
+                            id="login"
                             label="PSN логин"
-                            error={errors.psnLogin?.message}
-                            {...register('psnLogin', {validate: (value) => validatePSNLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validatePSNLogin(value) || true })}
                         />
 
                         <MainInput
@@ -99,19 +105,20 @@ export default function PSStore() {
                             с условиями сервиса.
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={psStoreFeatures} />
+                    <ServiceFeatures data={psStoreFeatures} />
 
-                    <HowItWork data={psStoreHowItWork} />
+                    <ServiceHowItWork data={psStoreHowItWork} />
 
-                    <NeedToKnow text={psStoreText} />
+                    <ServiceNeedToKnow text={psStoreText} />
                 </div>
             </div>
         </section>

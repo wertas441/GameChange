@@ -1,41 +1,38 @@
 'use client'
 
-import {Ticket} from "@/types/support";
-import TicketHeader from "@/components/UI/support/TicketHeader";
-import UserSupportQuestion from "@/components/UI/support/UserSupportQuestion";
+import {TicketHeader, Ticket, UserSupportQuestion, validateTicketAnswer} from "@/entities/support";
 import {ShieldCheck} from "lucide-react";
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import {validateTicketAnswer} from "@/lib/validators/ticket";
+import {usePageUtils, getServerErrorMessage} from "@/shared/lib/client";
+import {MainTextArea, ServerFormError, YellowBtn} from "@/shared/ui-kit/client";
+import {BackendApiResponse} from "@/shared/type";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
-interface AnswerToTicketFormValues {
+interface AnswerToTicketForm {
     answer: string;
 }
 
 export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<AnswerToTicketFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<AnswerToTicketForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: AnswerToTicketFormValues) => {
+    const { id, description, ownerName, title, type, answeredAt, createdAt, category, status } = ticketData;
+
+    const onSubmit = async (values: AnswerToTicketForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            ticketId: ticketData.id,
+            ticketId: id,
             answer: values.answer,
         };
 
         try {
             await serverApi.post<BackendApiResponse>(`/support/ticket/answer`, payload);
 
-            router.push('/support');
+            goToPage('/support');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
@@ -45,24 +42,23 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
             setIsSubmitting(false)
         }
     };
-
-
+    
     return (
         <div className="space-y-6">
             <TicketHeader
-                id={ticketData.id}
-                createdAt={ticketData.createdAt}
-                answeredAt={ticketData.answeredAt}
-                ownerName={ticketData.ownerName}
-                category={ticketData.category}
-                status={ticketData.status}
+                id={id}
+                createdAt={createdAt}
+                answeredAt={answeredAt}
+                ownerName={ownerName}
+                category={category}
+                status={status}
             />
 
             <section className="grid gap-6 lg:grid-cols-[2fr,1fr]">
                 <UserSupportQuestion
-                    type={ticketData.type}
-                    title={ticketData.title}
-                    description={ticketData.description}
+                    type={type}
+                    title={title}
+                    description={description}
                 />
 
                 <form
@@ -76,15 +72,16 @@ export default function AnswerToTicket({ticketData}: {ticketData: Ticket}) {
 
                     <ServerFormError error={serverError} />
 
-                    <MainTextarea
+                    <MainTextArea
                         id="answer"
                         label="Ответ для пользовтеля"
                         error={errors.answer?.message}
                         {...register('answer', {validate: (value) => validateTicketAnswer(value) || true })}
                     />
 
-                    <SubmitYellowBtn
+                    <YellowBtn
                         label={!isSubmitting ? 'Ответить' : 'Процесс…'}
+                        type={`submit`}
                         disabled={isSubmitting}
                     />
                 </form>

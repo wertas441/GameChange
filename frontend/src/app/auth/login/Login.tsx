@@ -1,20 +1,17 @@
 'use client'
 
 import { useForm } from 'react-hook-form';
-import {serverApi, getServerErrorMessage, showErrorMessage} from '@/lib';
-import { usePageUtils } from '@/lib/hooks/usePageUtils';
-import MainInput from '@/components/inputs/MainInput';
-import {BackendApiResponse} from "@/types";
-import ServerFormError from "@/components/errors/ServerFormError";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import {secondColorTheme} from "@/styles/styles";
+import {BackendApiResponse} from "@/shared/type";
+import {ServerFormError, YellowBtn, MainInput} from "@/shared/ui-kit/client";
+import {secondColorTheme} from "@/shared/styles/styles";
 import Link from "next/link";
-import {makeInitUserData, makeClear, useUserStore} from "@/lib/store/userStore";
-import {validateUserEmail, validateUserPassword} from "@/lib/validators/user";
+import {validateUserEmail, validateUserPassword, makeInitUserData, makeClear, useUserStore} from "@/entities/user";
 import {useEffect} from "react";
-import PixelBlast from "@/components/PixelBlast";
+import PixelBlast from "@/widgets/PixelBlast";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
-interface LoginFormValues {
+interface LoginForm {
     email: string;
     password: string;
     rememberMe: boolean;
@@ -22,7 +19,7 @@ interface LoginFormValues {
 
 export default function Login() {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>();
 
     const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
 
@@ -33,7 +30,7 @@ export default function Login() {
         void clearStore();
     }, [clearStore])
 
-    const onSubmit = async (values: LoginFormValues) => {
+    const onSubmit = async (values: LoginForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -51,7 +48,9 @@ export default function Login() {
                 const userData = useUserStore.getState().userData;
                 if (!userData) {
                     setServerError("Не удалось получить данные пользователя после входа. Попробуйте обновить страницу.");
+
                     setIsSubmitting(false);
+
                     return;
                 }
 
@@ -143,8 +142,9 @@ export default function Login() {
                             </button>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Войти в аккаунт' : 'Входим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

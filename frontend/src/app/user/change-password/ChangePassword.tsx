@@ -1,14 +1,11 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import HideInput from "@/components/inputs/HideInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import {validateNewPassword, validateUserConfirmPassword, validateUserPassword} from "@/lib/validators/user";
-import {getServerErrorMessage, serverApi, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
+import {YellowBtn, HideInput, ServerFormError, MainInput} from "@/shared/ui-kit/client";
+import {usePageUtils, getServerErrorMessage} from "@/shared/lib/client";
+import {validateNewPassword, validateUserConfirmPassword, validateUserPassword} from "@/entities/user";
+import {showErrorMessage, serverApi} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
 
 interface ChangePasswordValues {
     currentPassword: string;
@@ -95,8 +92,9 @@ export default function ChangePassword() {
                             })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Сохранить изменения' : 'Сохраняем…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

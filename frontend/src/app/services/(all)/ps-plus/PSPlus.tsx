@@ -1,23 +1,30 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Receive from "@/components/UI/servicesUI/Receive";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import Features from "@/components/UI/servicesUI/Features";
-import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode, validatePSNLogin} from "@/lib/validators/service";
-import {psPlusFeatures, psPlusPlans, psPlusReceive, psPlusText, psPlusTiers} from "@/app/services/(all)/data";
+import {serverApi, showErrorMessage} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validatePSNLogin,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {
+    psPlusFeatures,
+    psPlusPlans,
+    psPlusReceive,
+    psPlusText,
+    psPlusTiers,
+} from "@/app/services/(all)/data";
+import {useCallback, useMemo, useState} from "react";
 
-interface PSPlusFormValues {
-    psnLogin: string;
+interface PSPlusForm {
+    login: string;
     planId: string;
     promoCode: string;
 }
@@ -26,25 +33,24 @@ export default function PSPlus() {
 
     const [activePlanId, setActivePlanId] = useState<string>(psPlusPlans[0].id);
 
-    const activePlan = useMemo(
-        () => psPlusPlans.find((plan) => plan.id === activePlanId) ?? psPlusPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return psPlusPlans.find((plan) => plan.id === activePlanId) ?? psPlusPlans[0];
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<PSPlusFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<PSPlusForm>({
         defaultValues: {
             planId: psPlusPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: PSPlusFormValues) => {
+    const onSubmit = async (values: PSPlusForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            psnLogin: values.psnLogin,
+            psnLogin: values.login,
             planId: values.planId,
             promoCode: values.promoCode,
             price: activePlan.price,
@@ -53,7 +59,7 @@ export default function PSPlus() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/ps-plus`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -66,6 +72,7 @@ export default function PSPlus() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -91,10 +98,10 @@ export default function PSPlus() {
 
                     <form className="mt-5 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
-                            id="psnLogin"
+                            id="login"
                             label="PSN логин"
-                            error={errors.psnLogin?.message}
-                            {...register('psnLogin', {validate: (value) => validatePSNLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validatePSNLogin(value) || true })}
                         />
 
                         <div className="space-y-4">
@@ -105,14 +112,16 @@ export default function PSPlus() {
                                     </p>
 
                                     <div className="grid gap-3 sm:grid-cols-2">
-                                        {psPlusPlans.filter((plan) => plan.label === tier).map((plan) => (
-                                            <ProductBtn
-                                                key={plan.id}
-                                                label={plan.duration}
-                                                onClick={() => onClick(plan.id)}
-                                                isActive={plan.id === activePlanId}
-                                                price={plan.price}
-                                                description={plan.description}
+                                        {psPlusPlans
+                                            .filter(({label}) => label === tier)
+                                            .map(({id, description, duration, price}) => (
+                                            <ServiceProductBtn
+                                                key={id}
+                                                label={duration}
+                                                onClick={() => onClick(id)}
+                                                isActive={id === activePlanId}
+                                                price={price}
+                                                description={description}
                                             />
                                         ))}
                                     </div>
@@ -134,19 +143,20 @@ export default function PSPlus() {
                             <span className="font-semibold text-slate-100">{activePlan.price} ₽</span>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={psPlusFeatures} />
+                    <ServiceFeatures data={psPlusFeatures} />
 
-                    <Receive label={`Что входит в PS Plus`} data={psPlusReceive} />
+                    <ServiceReceive label={`Что входит в PS Plus`} data={psPlusReceive} />
 
-                    <NeedToKnow text={psPlusText} />
+                    <ServiceNeedToKnow text={psPlusText} />
                 </div>
             </div>
         </section>

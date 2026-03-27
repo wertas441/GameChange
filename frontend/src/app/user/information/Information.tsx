@@ -1,6 +1,7 @@
 'use client'
 
-import LinkYellowBtn from "@/components/buttons/yellow/LinkYellowBtn";
+import {YellowBtn} from "@/shared/ui-kit/client";
+import {usePageUtils} from "@/shared/lib/client";
 
 const stackInformation = [
     'Frontend: Next.js (App Router), React, TypeScript, Tailwind CSS.',
@@ -19,15 +20,19 @@ const funcInformation = [
     'Админ‑режим для добавления и изменения ключей.',
 ] as const;
 
-export default function Information() {
+export function Information() {
+
+    const { goToPage } = usePageUtils();
 
     return (
         <div className="space-y-6">
-            <section className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
+            <section
+                className="rounded-2xl border border-slate-800/80 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">
                 <h1 className="text-2xl font-semibold text-slate-50">О проекте</h1>
 
                 <p className="mt-2 text-sm text-slate-400">
-                    GameChange — это магазин цифровых товаров. Я разработал его в целях улучшения своих навыков как fullstack разработчик.
+                    GameChange — это магазин цифровых товаров. Я разработал его в целях улучшения своих навыков как
+                    fullstack разработчик.
                 </p>
             </section>
 
@@ -58,13 +63,14 @@ export default function Information() {
                     </div>
 
                     <p>
-                        Репозиторий проекта и исходный код доступны на GitHub — буду рад обратной связи и предложениям по улучшениям.
+                        Репозиторий проекта и исходный код доступны на GitHub — буду рад обратной связи и предложениям
+                        по улучшениям.
                     </p>
                 </div>
 
-                <LinkYellowBtn
+                <YellowBtn
                     label={`Перейти на GitHub`}
-                    href="https://github.com/wertas441/GameChange"
+                    onClick={() => goToPage("https://github.com/wertas441/GameChange")}
                     className="mt-3 w-full px-4 py-2 sm:w-auto"
                 />
             </section>

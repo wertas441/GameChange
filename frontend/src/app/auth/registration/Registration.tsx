@@ -1,24 +1,21 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import HideInput from "@/components/inputs/HideInput";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {BackendApiResponse} from "@/shared/type";
+import {secondColorTheme} from "@/shared/styles/styles";
+import {YellowBtn, MainInput, ServerFormError, HideInput} from "@/shared/ui-kit/client";
 import {
     validateUserConfirmPassword,
     validateUserEmail,
     validateUserName,
     validateUserPassword
-} from "@/lib/validators/user";
-import PixelBlast from "@/components/PixelBlast";
+} from "@/entities/user";
+import PixelBlast from "@/widgets/PixelBlast";
 import Link from "next/link";
+import {serverApi, showErrorMessage} from "@/shared/utils";
 
-interface RegistrationFormValues {
+interface RegistrationForm {
     userName: string;
     email: string;
     password: string;
@@ -27,11 +24,11 @@ interface RegistrationFormValues {
 
 export default function Registration(){
 
-    const { register, handleSubmit, getValues, formState: { errors } } = useForm<RegistrationFormValues>();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<RegistrationForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: RegistrationFormValues) => {
+    const onSubmit = async (values: RegistrationForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -44,7 +41,7 @@ export default function Registration(){
         try {
             await serverApi.post<BackendApiResponse>(`/user/registration`, payload);
 
-            router.push('/auth/login');
+            goToPage('/auth/login');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
@@ -129,8 +126,9 @@ export default function Registration(){
                             })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Зарегистрироваться' : 'Регистрируем…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>

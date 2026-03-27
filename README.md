@@ -105,7 +105,7 @@ JWT_SECRET=your-jwt-secret
 ```
 
 Важно:
-- frontend в текущей реализации ходит на `http://localhost:3003/api`, если хотите изменить порт backend - измените его и в `/frontend/lib/index.ts`;
+- frontend в текущей реализации ходит на `http://localhost:3003/api`, если хотите изменить порт backend - измените его и в `/frontend/lib/api.ts`;
 - При первом запуске поставьте флаг `DB_AUTO_INIT = true`, таким образом отработает скрипты для загрузки тестовых данных. 
 - После первого успешного запуска поставьте флажок `DB_AUTO_INIT = false`
 

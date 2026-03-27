@@ -1,23 +1,24 @@
 'use client'
 
-import {useCallback, useMemo, useState} from "react";
 import {useForm} from "react-hook-form";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import MainInput from "@/components/inputs/MainInput";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import ServerFormError from "@/components/errors/ServerFormError";
-import Features from "@/components/UI/servicesUI/Features";
-import Receive from "@/components/UI/servicesUI/Receive";
-import NeedToKnow from "@/components/UI/servicesUI/NeedToKnow";
-import ProductBtn from "@/components/UI/servicesUI/ProductBtn";
-import ServiceHeader from "@/components/UI/servicesUI/ServiceHeader";
-import {validatePromoCode, validateSpotifyLogin} from "@/lib/validators/service";
+import {serverApi, showErrorMessage} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {MainInput, YellowBtn, ServerFormError, } from "@/shared/ui-kit/client";
+import {
+    ServiceNeedToKnow,
+    validatePromoCode,
+    ServiceFeatures,
+    ServiceHeader,
+    validateSpotifyLogin,
+    ServiceProductBtn,
+    ServiceReceive,
+} from "@/entities/services";
+import {getServerErrorMessage, usePageUtils} from "@/shared/lib/client";
+import {useCallback, useMemo, useState} from "react";
 import {spotifyFeatures, spotifyPlans, spotifyReceive, spotifyText} from "@/app/services/(all)/data";
 
-interface SpotifyFormValues {
-    spotifyLogin: string;
+interface SpotifyForm {
+    login: string;
     planId: string;
     promoCode: string;
 }
@@ -26,25 +27,24 @@ export default function Spotify() {
 
     const [activePlanId, setActivePlanId] = useState<string>(spotifyPlans[0].id);
 
-    const activePlan = useMemo(
-        () => spotifyPlans.find((plan) => plan.id === activePlanId) ?? spotifyPlans[0],
-        [activePlanId]
-    );
+    const activePlan = useMemo(() => {
+        return spotifyPlans.find((plan) => plan.id === activePlanId) ?? spotifyPlans[0];
+    }, [activePlanId]);
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<SpotifyFormValues>({
+    const { register, handleSubmit, setValue, formState: { errors } } = useForm<SpotifyForm>({
         defaultValues: {
             planId: spotifyPlans[0].id,
         },
     });
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: SpotifyFormValues) => {
+    const onSubmit = async (values: SpotifyForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
         const payload = {
-            spotifyLogin: values.spotifyLogin,
+            spotifyLogin: values.login,
             planId: values.planId,
             promoCode: values.promoCode,
             price: activePlan.price,
@@ -53,7 +53,7 @@ export default function Spotify() {
         try {
             await serverApi.post<BackendApiResponse>(`/services/spotify`, payload);
 
-            router.push('/services');
+            goToPage('/services');
         } catch (err) {
             const message: string = getServerErrorMessage(err);
             setServerError(message);
@@ -65,6 +65,7 @@ export default function Spotify() {
 
     const onClick = useCallback((id: string) => {
         setActivePlanId(id);
+
         setValue("planId", id, { shouldValidate: true });
     }, [setValue])
 
@@ -91,10 +92,10 @@ export default function Spotify() {
 
                     <form className="mt-5 space-y-5" onSubmit={handleSubmit(onSubmit)}>
                         <MainInput
-                            id="spotifyLogin"
+                            id="login"
                             label="Логин Spotify"
-                            error={errors.spotifyLogin?.message}
-                            {...register('spotifyLogin', {validate: (value) => validateSpotifyLogin(value) || true })}
+                            error={errors.login?.message}
+                            {...register('login', {validate: (value) => validateSpotifyLogin(value) || true })}
                         />
 
                         <div>
@@ -103,14 +104,14 @@ export default function Spotify() {
                             </p>
 
                             <div className="grid gap-3 sm:grid-cols-2">
-                                {spotifyPlans.map((plan) => (
-                                    <ProductBtn
-                                        key={plan.id}
-                                        label={plan.label}
-                                        onClick={() => onClick(plan.id)}
-                                        isActive={plan.id === activePlanId}
-                                        price={plan.price}
-                                        description={plan.description}
+                                {spotifyPlans.map(({id, label, price, description}) => (
+                                    <ServiceProductBtn
+                                        key={id}
+                                        label={label}
+                                        onClick={() => onClick(id)}
+                                        isActive={id === activePlanId}
+                                        price={price}
+                                        description={description}
                                     />
                                 ))}
                             </div>
@@ -131,19 +132,20 @@ export default function Spotify() {
                             <span className="font-semibold text-slate-100">{activePlan.price} ₽</span>
                         </div>
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Перейти к оплате' : 'Переходим…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
                 </div>
 
                 <div className="flex flex-col gap-6">
-                    <Features data={spotifyFeatures} />
+                    <ServiceFeatures data={spotifyFeatures} />
 
-                    <Receive label={`Что входит в Spotify Premium`} data={spotifyReceive} />
+                    <ServiceReceive label={`Что входит в Spotify Premium`} data={spotifyReceive} />
 
-                    <NeedToKnow text={spotifyText} />
+                    <ServiceNeedToKnow text={spotifyText} />
                 </div>
             </div>
         </section>

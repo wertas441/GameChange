@@ -1,25 +1,20 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/lib/hooks/usePageUtils";
-import {serverApi, getServerErrorMessage, showErrorMessage} from "@/lib";
-import {BackendApiResponse} from "@/types";
-import {secondColorTheme} from "@/styles/styles";
-import ServerFormError from "@/components/errors/ServerFormError";
-import MultiSelectInput from "@/components/inputs/MultiSelectInput";
-import {ticketCategorys, ticketTypes} from "@/lib/data";
-import MainTextarea from "@/components/inputs/MainTextArea";
-import SubmitYellowBtn from "@/components/buttons/yellow/SubmitYellowBtn";
-import MainInput from "@/components/inputs/MainInput";
+import {showErrorMessage, serverApi} from "@/shared/utils";
+import {BackendApiResponse} from "@/shared/type";
+import {secondColorTheme} from "@/shared/styles/styles";
+import {MultiSelectInput, ServerFormError, MainTextArea, YellowBtn, MainInput} from "@/shared/ui-kit/client";
 import {
     validateTicketCategory,
     validateTicketDescription,
     validateTicketTitle,
     validateTicketType
-} from "@/lib/validators/ticket";
-import PixelBlast from "@/components/PixelBlast";
+} from "@/entities/support";
+import {PixelBlast} from "@/widgets";
+import {getServerErrorMessage, ticketTypes, ticketCategorys, usePageUtils} from "@/shared/lib/client";
 
-interface AddTicketFormValues {
+interface AddTicketForm {
     type: string[];
     category: string[];
     title: string;
@@ -28,11 +23,11 @@ interface AddTicketFormValues {
 
 export default function AddTicket() {
 
-    const { register, handleSubmit, control, formState: { errors } } = useForm<AddTicketFormValues>();
+    const { register, handleSubmit, control, formState: { errors } } = useForm<AddTicketForm>();
 
-    const { serverError, setServerError, isSubmitting, setIsSubmitting, router } = usePageUtils();
+    const { serverError, setServerError, isSubmitting, setIsSubmitting, goToPage } = usePageUtils();
 
-    const onSubmit = async (values: AddTicketFormValues) => {
+    const onSubmit = async (values: AddTicketForm) => {
         setServerError(null);
         setIsSubmitting(true);
 
@@ -46,7 +41,7 @@ export default function AddTicket() {
         try {
             await serverApi.post<BackendApiResponse>(`/support/ticket`, payload);
 
-            router.push('/support');
+            goToPage('/support');
         } catch (err) {
             const message:string = getServerErrorMessage(err)
 
@@ -135,15 +130,16 @@ export default function AddTicket() {
 
                         />
 
-                        <MainTextarea
+                        <MainTextArea
                             id="description"
                             label="Описание"
                             error={errors.description?.message}
                             {...register('description', {validate: (value) => validateTicketDescription(value) || true })}
                         />
 
-                        <SubmitYellowBtn
+                        <YellowBtn
                             label={!isSubmitting ? 'Оставить обращение' : 'Процесс…'}
+                            type={`submit`}
                             disabled={isSubmitting}
                         />
                     </form>
