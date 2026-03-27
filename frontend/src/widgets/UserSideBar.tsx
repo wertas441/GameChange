@@ -8,11 +8,11 @@ import {
     Info,
     LogOut,
 } from 'lucide-react'
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 import {makeLogout, useUserStore} from "@/entities/user/model/store";
-import {useSimpleModalWindow} from "@/shared/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/shared/UI-kit/SimpleModalWindow";
-import UserSideBarBtn from "@/shared/UI-kit/buttons/UserSideBarBtn";
+import {useSimpleModalWindow} from "@/shared/lib/hooks/useSimpleModalWindow";
+import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
+import UserSideBarBtn from "@/shared/ui-kit/buttons/UserSideBarBtn";
 import {usePathname} from "next/navigation";
 
 const settingsMenuItems = [

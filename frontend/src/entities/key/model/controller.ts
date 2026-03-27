@@ -1,7 +1,8 @@
-import {serverApi, getTokenHeaders, showErrorMessage} from "@/shared";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {AddKeyData, KeyDetailsData, KeyListData} from "@/entities/key/model/type";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi, getTokenHeaders} from "@/shared/api";
 
 interface DeleteKeyPayload {
     tokenValue: string;

@@ -1,7 +1,8 @@
-import {serverApi, showErrorMessage} from "@/shared";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {ReviewListStructure} from "@/entities/review/model/type";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi} from "@/shared/api";
 
 interface CreateReviewPayload {
     tag: string;

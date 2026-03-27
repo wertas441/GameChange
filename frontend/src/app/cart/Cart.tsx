@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import {X} from "lucide-react";
 import {clearCart, getCartItems, useCartStore} from "@/entities/cart/model/store";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import GrayBtn from "@/shared/UI-kit/buttons/GrayBtn";
-import {useSimpleModalWindow} from "@/shared/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/shared/UI-kit/SimpleModalWindow";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import GrayBtn from "@/shared/ui-kit/buttons/GrayBtn";
+import {useSimpleModalWindow} from "@/shared/lib/hooks/useSimpleModalWindow";
+import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
 export default function Cart(){
 

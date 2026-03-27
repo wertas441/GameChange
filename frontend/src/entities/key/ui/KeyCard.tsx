@@ -7,13 +7,13 @@ import {
     operationSystemIcon,
     ActivationPlatform,
     OperationSystem, genreOptions
-} from "@/shared/data";
+} from "@/shared/lib/data";
 import {KeyListData} from "@/entities/key/model/type";
 import {addNewItem, useCartStore} from "@/entities/cart/model/store";
 import {Pencil} from 'lucide-react'
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {memo} from "react";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
 function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
 

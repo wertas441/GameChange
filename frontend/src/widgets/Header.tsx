@@ -5,12 +5,12 @@ import Image from "next/image";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {CircleUser, Search, ShoppingCart, TextAlignJustify} from 'lucide-react'
 import {inputColorTheme, secondColorTheme} from "@/shared/styles/styles";
-import ShopNavBarItem from "@/shared/UI-kit/elements/ShopNavBarItem";
+import ShopNavBarItem from "@/shared/ui-kit/elements/ShopNavBarItem";
 import {checkAuth, useUserStore} from "@/entities/user/model/store";
 import {useCartStore} from "@/entities/cart/model/store";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 import useGameKeys from "@/entities/key/model/data";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 
 const catalogItems = [
     {

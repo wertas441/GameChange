@@ -1,5 +1,5 @@
 import {ElementType, memo} from "react";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
 interface IProps {
     link: string;

@@ -1,23 +1,24 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {serverApi, showErrorMessage} from "@/shared";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
-import Features from "@/entities/services/UI/ServiceFeatures";
-import HowItWork from "@/entities/services/UI/ServiceHowItWork";
-import NeedToKnow from "@/entities/services/UI/ServiceNeedToKnow";
-import ServiceHeader from "@/entities/services/UI/ServiceHeader";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
+import Features from "@/entities/services/ui/ServiceFeatures";
+import HowItWork from "@/entities/services/ui/ServiceHowItWork";
+import NeedToKnow from "@/entities/services/ui/ServiceNeedToKnow";
+import ServiceHeader from "@/entities/services/ui/ServiceHeader";
 import {
     validatePromoCode,
     validateServiceAmount,
     validateSteamLogin
 } from "@/entities/services/model/validation";
 import {steamFeatures, steamHowItWork, steamText} from "@/app/services/(all)/data";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi} from "@/shared/api";
 
 interface SteamForm {
     login: string;

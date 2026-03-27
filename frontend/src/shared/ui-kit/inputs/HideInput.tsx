@@ -1,6 +1,6 @@
 import {MainInputProps} from "@/shared/type";
 import {inputColorTheme} from "@/shared/styles/styles";
-import InputError from "@/shared/UI-kit/errors/InputError";
+import InputError from "@/shared/ui-kit/errors/InputError";
 import {useState} from "react";
 import {Eye, EyeOff} from 'lucide-react';
 

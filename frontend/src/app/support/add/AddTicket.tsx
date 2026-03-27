@@ -1,16 +1,16 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import {serverApi, showErrorMessage} from "@/shared";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
-import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
-import {ticketCategorys, ticketTypes} from "@/shared/data";
-import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
+import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
+import {ticketCategorys, ticketTypes} from "@/shared/lib/data";
+import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
 import {
     validateTicketCategory,
     validateTicketDescription,
@@ -18,7 +18,8 @@ import {
     validateTicketType
 } from "@/entities/support/model/validation";
 import PixelBlast from "@/widgets/PixelBlast";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi} from "@/shared/api";
 
 interface AddTicketForm {
     type: string[];

@@ -1,7 +1,7 @@
 import AddReview from "@/app/reviews/add/AddReview";
 import {Metadata} from "next";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 
 export const metadata: Metadata = {
     title: "Оставить отзыв | GameChange",

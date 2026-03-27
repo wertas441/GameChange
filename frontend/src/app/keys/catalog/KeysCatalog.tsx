@@ -1,24 +1,24 @@
 'use client'
 
-import KeyCard from "@/entities/key/UI/KeyCard";
+import KeyCard from "@/entities/key/ui/KeyCard";
 import {useForm, Controller} from "react-hook-form";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
-import MultiSelectInput, {OptionType} from "@/shared/UI-kit/inputs/MultiSelectInput";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import MultiSelectInput, {OptionType} from "@/shared/ui-kit/inputs/MultiSelectInput";
 import {
     activationPlatformOptions,
     genreOptions,
     operationSystemOptions
-} from "@/shared/data";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+} from "@/shared/lib/data";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {useCallback, useMemo, useState} from "react";
 import {getUserStatus, useUserStore} from "@/entities/user/model/store";
-import GrayBtn from "@/shared/UI-kit/buttons/GrayBtn";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import GrayBtn from "@/shared/ui-kit/buttons/GrayBtn";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 import useGameKeys from "@/entities/key/model/data";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import SpinnerLoader from "@/shared/UI-kit/errors/SpinnerLoader";
-import YellowGlassBtn from "@/shared/UI-kit/buttons/YellowGlassBtn";
-import usePagination from "@/shared/hooks/usePagination";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import SpinnerLoader from "@/shared/ui-kit/errors/SpinnerLoader";
+import YellowGlassBtn from "@/shared/ui-kit/buttons/YellowGlassBtn";
+import usePagination from "@/shared/lib/hooks/usePagination";
 import Pagination from "@/widgets/Pagination";
 
 interface KeysFilterForm {

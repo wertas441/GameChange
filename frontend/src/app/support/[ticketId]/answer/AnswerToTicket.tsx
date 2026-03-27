@@ -1,18 +1,19 @@
 'use client'
 
 import {Ticket} from "@/entities/support/model/type";
-import TicketHeader from "@/entities/support/UI/TicketHeader";
-import UserSupportQuestion from "@/entities/support/UI/UserSupportQuestion";
+import TicketHeader from "@/entities/support/ui/TicketHeader";
+import UserSupportQuestion from "@/entities/support/ui/UserSupportQuestion";
 import {ShieldCheck} from "lucide-react";
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
-import {serverApi, showErrorMessage} from "@/shared";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
 import {validateTicketAnswer} from "@/entities/support/model/validation";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi} from "@/shared/api";
 
 interface AnswerToTicketForm {
     answer: string;

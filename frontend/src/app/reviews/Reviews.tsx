@@ -1,13 +1,13 @@
 'use client'
 
-import {reviewCategorys} from "@/shared/data";
-import usePagination from "@/shared/hooks/usePagination";
+import {reviewCategorys} from "@/shared/lib/data";
+import usePagination from "@/shared/lib/hooks/usePagination";
 import Pagination from "@/widgets/Pagination";
 import useUserReviews from "@/entities/review/model/data";
-import SpinnerLoader from "@/shared/UI-kit/errors/SpinnerLoader";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import SpinnerLoader from "@/shared/ui-kit/errors/SpinnerLoader";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
 const stats = [
     { label: "Средняя оценка", value: "4.9/5" },

@@ -2,8 +2,8 @@
 
 import {Ticket} from "@/entities/support/model/type";
 import {ShieldCheck} from "lucide-react";
-import TicketHeader from "@/entities/support/UI/TicketHeader";
-import UserSupportQuestion from "@/entities/support/UI/UserSupportQuestion";
+import TicketHeader from "@/entities/support/ui/TicketHeader";
+import UserSupportQuestion from "@/entities/support/ui/UserSupportQuestion";
 
 export default function AboutTicket({ticketData}: {ticketData: Ticket}) {
 

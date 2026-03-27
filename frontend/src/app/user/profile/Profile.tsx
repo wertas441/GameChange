@@ -2,11 +2,11 @@
 
 import {Calendar, IdCard, Mail, Shield, User, KeyRound} from "lucide-react";
 import {getUserData, useUserStore} from "@/entities/user/model/store";
-import ProfileDataLine from "@/shared/UI-kit/elements/ProfileDataLine";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import GrayBtn from "@/shared/UI-kit/buttons/GrayBtn";
-import {formatDateForProfile} from "@/features";
+import ProfileDataLine from "@/shared/ui-kit/elements/ProfileDataLine";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import GrayBtn from "@/shared/ui-kit/buttons/GrayBtn";
+import {formatDateForProfile} from "@/shared/lib";
 
 const getInitials = (name?: string, email?: string) => {
     const source = (name || email || '').trim();

@@ -1,7 +1,7 @@
 import {ReactNode} from "react";
 import UserSideBar from "@/widgets/UserSideBar";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 
 export default async function UserLayout({children}:{children: ReactNode}) {
 

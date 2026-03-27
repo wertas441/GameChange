@@ -1,4 +1,4 @@
-import FooterNavItem from "@/shared/UI-kit/elements/FooterNavItem";
+import FooterNavItem from "@/shared/ui-kit/elements/FooterNavItem";
 import {memo} from "react";
 
 function Footer() {

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {PurchaseItem} from "@/shared/type";
-import usePagination from "@/shared/hooks/usePagination";
+import usePagination from "@/shared/lib/hooks/usePagination";
 import Pagination from "@/widgets/Pagination";
 
 export default function Purchases({purchases}:{purchases: PurchaseItem[]}) {

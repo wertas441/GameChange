@@ -1,9 +1,9 @@
 'use client'
 
 import Image from "next/image";
-import {aboutFeatures, aboutPartnerLogos, aboutStats, aboutSteps} from "@/app/about/data";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import {aboutFeatures, aboutPartnerLogos, aboutStats, aboutSteps} from "@/shared/lib/data/about";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 
 export default function About() {
 

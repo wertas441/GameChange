@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import AboutTicket from "@/app/support/[ticketId]/AboutTicket";
 import {getTicketDetails} from "@/entities/support/model/controller";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 import {cookies} from "next/headers";
 
 export const metadata: Metadata = {

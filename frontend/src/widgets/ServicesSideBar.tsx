@@ -1,8 +1,8 @@
 'use client'
 
 import {usePathname} from "next/navigation";
-import {services} from "@/shared/data";
-import ServicesSideBarRow from "@/entities/services/UI/ServicesSideBarRow";
+import {services} from "@/shared/lib/data";
+import ServicesSideBarRow from "@/entities/services/ui/ServicesSideBarRow";
 
 export default function ServicesSideBar() {
 

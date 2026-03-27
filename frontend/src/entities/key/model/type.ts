@@ -1,4 +1,4 @@
-import {ActivationPlatform, OperationSystem} from "@/shared/data";
+import {ActivationPlatform, OperationSystem} from "@/shared/lib/data";
 
 export interface SystemRequirements {
     CPU: string;

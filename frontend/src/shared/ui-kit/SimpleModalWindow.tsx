@@ -1,5 +1,5 @@
 import {memo, Ref} from "react";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {secondColorTheme} from "@/shared/styles/styles";
 
 interface IProps {

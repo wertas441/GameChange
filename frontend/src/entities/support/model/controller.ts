@@ -1,6 +1,7 @@
-import {serverApi, getTokenHeaders, showErrorMessage} from "@/shared";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {Ticket} from "@/entities/support/model/type";
+import {getTokenHeaders, serverApi} from "@/shared/api";
 
 export async function getTicketList(tokenValue: string) {
 

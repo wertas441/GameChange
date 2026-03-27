@@ -1,4 +1,4 @@
-import FAQSection from "@/entities/dashboard/UI/FAQSection";
+import FAQSection from "@/entities/dashboard/ui/FAQSection";
 import {dashboardFaqData} from "@/entities/dashboard/model/dashboardData";
 
 export default function DashboardFAQ() {

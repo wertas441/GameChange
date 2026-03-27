@@ -1,5 +1,5 @@
 import {memo, TextareaHTMLAttributes} from "react";
-import InputError from "@/shared/UI-kit/errors/InputError";
+import InputError from "@/shared/ui-kit/errors/InputError";
 import {inputColorTheme} from "@/shared/styles/styles";
 
 export interface TextAreaInputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {

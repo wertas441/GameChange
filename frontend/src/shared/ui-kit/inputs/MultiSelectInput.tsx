@@ -2,7 +2,7 @@
 
 import Select from "react-select";
 import {memo} from "react";
-import InputError from "@/shared/UI-kit/errors/InputError";
+import InputError from "@/shared/ui-kit/errors/InputError";
 
 export type OptionType = { value: string; label: string };
 

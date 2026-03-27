@@ -2,9 +2,9 @@
 
 import {create, StateCreator} from 'zustand'
 import {BackendApiResponse} from "@/shared/type";
-import {serverApi, clientApi} from "@/shared";
 import { createJSONStorage, persist, type StateStorage } from "zustand/middleware";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi, clientApi} from "@/shared/api";
 
 const noopStorage: StateStorage = {
     getItem: () => null,

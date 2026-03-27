@@ -6,8 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import {ArrowLeft, ArrowRight, ShoppingCart} from "lucide-react";
 import useGameKeys from "@/entities/key/model/data";
-import SpinnerLoader from "@/shared/UI-kit/errors/SpinnerLoader";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import SpinnerLoader from "@/shared/ui-kit/errors/SpinnerLoader";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 import {addNewItem, useCartStore} from "@/entities/cart/model/store";
 
 export default function DashboardTopSell() {

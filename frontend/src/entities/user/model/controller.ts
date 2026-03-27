@@ -1,7 +1,8 @@
-import {serverApi, getTokenHeaders, showErrorMessage} from "@/shared";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {PurchaseItem} from "@/shared/type";
 import {CartItem} from "@/entities/cart/model/store";
+import {serverApi, getTokenHeaders} from "@/shared/api";
 
 export async function getPurchases(tokenValue: string) {
 

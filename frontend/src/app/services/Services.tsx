@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import {services} from "@/shared/data";
+import {services} from "@/shared/lib/data";
 
 const tags = [
     {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import TicketHistory from "@/app/support/history/TicketHistory";
 import {cookies} from "next/headers";
-import ServerErrorState from "@/shared/UI-kit/errors/ServerErrorState";
+import ServerErrorState from "@/shared/ui-kit/errors/ServerErrorState";
 import {getTicketHistory} from "@/entities/support/model/controller";
 
 export const metadata: Metadata = {

@@ -1,14 +1,14 @@
 'use client'
 
 import {useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import {serverApi, showErrorMessage} from "@/shared";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import {showErrorMessage} from "@/shared";
 import {BackendApiResponse} from "@/shared/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
-import HideInput from "@/shared/UI-kit/inputs/HideInput";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import HideInput from "@/shared/ui-kit/inputs/HideInput";
 import {
     validateUserConfirmPassword,
     validateUserEmail,
@@ -17,7 +17,8 @@ import {
 } from "@/entities/user/model/validation";
 import PixelBlast from "@/widgets/PixelBlast";
 import Link from "next/link";
-import {getServerErrorMessage} from "@/features/server";
+import {getServerErrorMessage} from "@/shared/lib/server";
+import {serverApi} from "@/shared/api";
 
 interface RegistrationForm {
     userName: string;

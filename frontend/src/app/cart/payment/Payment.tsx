@@ -4,11 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import {clearCart, getCartItems, useCartStore} from "@/entities/cart/model/store";
 import {useForm} from "react-hook-form";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {addPurchases} from "@/entities/user/model/controller";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
 import {validateUserEmail} from "@/entities/user/model/validation";
 import {validateCardCVC, validateCardDate, validateCardNumber} from "@/entities/cart/model/validation";
 

@@ -1,5 +1,5 @@
 import {dashboardPrivileges} from "@/entities/dashboard/model/dashboardData";
-import PrivilegeCard from "@/entities/dashboard/UI/PrivilegeCard";
+import PrivilegeCard from "@/entities/dashboard/ui/PrivilegeCard";
 
 export default function DashboardPrivileges() {
 

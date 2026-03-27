@@ -3,18 +3,18 @@
 import {useForm, Controller} from "react-hook-form";
 import {AddKeyData, KeyFormValues} from "@/entities/key/model/type";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
 import {showErrorMessage} from "@/shared";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
-import DropDownContent from "@/entities/key/UI/DropDownContent";
-import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
+import DropDownContent from "@/entities/key/ui/DropDownContent";
+import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
 import {
     activationPlatformOptions,
     genreOptions,
     operationSystemOptions
-} from "@/shared/data";
-import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
+} from "@/shared/lib/data";
+import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
 import {
     validateKeyCPU,
     validateKeyDescription, validateKeyDeveloper, validateKeyGenres, validateKeyGPU, validateKeyMainPicture, validateKeyMemory,
@@ -24,7 +24,7 @@ import {
 } from "@/entities/key/model/validator";
 import PixelBlast from "@/widgets/PixelBlast";
 import {useCreateKeyMutation} from "@/entities/key/model/mutation";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 
 export default function AddNewKey(){
 

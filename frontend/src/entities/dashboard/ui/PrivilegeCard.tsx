@@ -1,5 +1,5 @@
 import {ElementType, memo} from "react";
-import SpotlightCard from "@/entities/dashboard/UI/SpotlightCard";
+import SpotlightCard from "@/entities/dashboard/ui/SpotlightCard";
 
 interface IProps {
     IconComponent: ElementType;

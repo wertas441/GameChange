@@ -2,17 +2,17 @@
 
 import {KeyDetailsData, KeyFormValues} from "@/entities/key/model/type";
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils} from "@/shared/hooks/usePageUtils";
+import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 import {showErrorMessage} from "@/shared";
 import {secondColorTheme} from "@/shared/styles/styles";
-import ServerFormError from "@/shared/UI-kit/errors/ServerFormError";
-import DropDownContent from "@/entities/key/UI/DropDownContent";
-import MainInput from "@/shared/UI-kit/inputs/MainInput";
-import MultiSelectInput from "@/shared/UI-kit/inputs/MultiSelectInput";
-import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/shared/data";
-import {useSimpleModalWindow} from "@/shared/hooks/useSimpleModalWindow";
-import SimpleModalWindow from "@/shared/UI-kit/SimpleModalWindow";
-import YellowBtn from "@/shared/UI-kit/buttons/YellowBtn";
+import ServerFormError from "@/shared/ui-kit/errors/ServerFormError";
+import DropDownContent from "@/entities/key/ui/DropDownContent";
+import MainInput from "@/shared/ui-kit/inputs/MainInput";
+import MultiSelectInput from "@/shared/ui-kit/inputs/MultiSelectInput";
+import {activationPlatformOptions, genreOptions, operationSystemOptions} from "@/shared/lib/data";
+import {useSimpleModalWindow} from "@/shared/lib/hooks/useSimpleModalWindow";
+import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
+import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {useCallback} from "react";
 import {
     validateKeyCPU,
@@ -32,9 +32,9 @@ import {
     validateKeyPlatforms,
     validateKeyUrl
 } from "@/entities/key/model/validator";
-import MainTextarea from "@/shared/UI-kit/inputs/MainTextArea";
+import MainTextarea from "@/shared/ui-kit/inputs/MainTextArea";
 import {useChangeKeyMutation, useDeleteKeyMutation} from "@/entities/key/model/mutation";
-import {getDateInputFormat} from "@/features";
+import {getDateInputFormat} from "@/shared/lib";
 
 export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, token: string }) {
 
