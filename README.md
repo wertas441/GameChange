@@ -2,6 +2,8 @@
 
 Современный fullstack pet-проект интернет-магазина цифровых игровых товаров: ключи игр, подписки и пополнение популярных сервисов.
 
+Проект работает и доступн по ссылке - https://game-change.shop
+
 Подробная документация всех endpoint'ов доступна в файле  [`API.md`](API.md).
 
 Скриншоты интерфейса по разделам доступны в файле [`SCREENSHOTS.md`](SCREENSHOTS.md).
@@ -48,8 +50,8 @@
 ## Архитектура
 
 Проект разделен на 2 приложения:
-- `frontend/` — клиентский интерфейс (Next.js);
-- `backend/` — API и бизнес-логика (Express + PostgreSQL).
+- `frontend/` - клиентский интерфейс (Next.js);
+- `backend/` -  API и бизнес-логика (Express + PostgreSQL).
 
 ## База данных
 
@@ -136,16 +138,16 @@ password = adminPassword123
 ## Скрипты
 
 ### Frontend (`frontend/package.json`)
-- `yarn dev` — запуск в dev-режиме
-- `yarn build` — production сборка
-- `yarn start` — запуск production билда
-- `yarn lint` — линтинг
+- `yarn dev` - запуск в dev-режиме
+- `yarn build` - production сборка
+- `yarn start` - запуск production билда
+- `yarn lint` - линтинг
 
 ### Backend (`backend/package.json`)
-- `yarn dev` — запуск backend в dev-режиме (`nodemon + tsx`)
-- `yarn build` — компиляция TypeScript
-- `yarn start` — запуск production-сборки
-- `yarn lint` — линтинг
+- `yarn dev` - запуск backend в dev-режиме (`nodemon + tsx`)
+- `yarn build` - компиляция TypeScript
+- `yarn start` - запуск production-сборки
+- `yarn lint` - линтинг
 
 ## Планы на дальнейшее улучшение
 - добавить unit тесты;
