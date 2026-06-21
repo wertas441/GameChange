@@ -7,7 +7,7 @@ import {
     AlarmClockCheck,
 } from 'lucide-react'
 
-export const dashboardFaqData = [
+export const DASHBOARD_FAQ = [
     {
         question: "Как быстро я получу свой ключ после оплаты?",
         answer: "Сразу после подтверждения оплаты. Ключ появится в личном кабинете и придёт на почту."
@@ -34,7 +34,7 @@ export const dashboardFaqData = [
     }
 ];
 
-export const dashboardPrivileges = [
+export const DASHBOARD_PRIVILEGES = [
     {
         icon: BadgePercent,
         title: 'Лучшие цены',
@@ -67,7 +67,7 @@ export const dashboardPrivileges = [
     },
 ];
 
-export const dashboardFeedBackData = [
+export const DASHBOARD_FEED_BACK = [
     {
         id: 1,
         name: 'Alex_Gamer',

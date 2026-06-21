@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-interface IProps {
+interface Props {
     id: string;
     href: string;
     isActive: boolean;
@@ -10,7 +10,7 @@ interface IProps {
     tag: string;
 }
 
-export function ServicesSideBarRow({id, href, isActive, logo, tag, title}: IProps) {
+export function ServicesSideBarRow({id, href, isActive, logo, tag, title}: Props) {
 
     return (
         <Link
@@ -22,7 +22,10 @@ export function ServicesSideBarRow({id, href, isActive, logo, tag, title}: IProp
                     : "border-slate-900/0 text-slate-300 hover:border-amber-400/40 hover:text-amber-300"
             }`}
         >
-            <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border border-slate-900/60 bg-slate-950/50">
+            <div
+                className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg border
+                border-slate-900/60 bg-slate-950/50"
+            >
                 <Image
                     src={logo}
                     alt={`${title} logo`}

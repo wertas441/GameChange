@@ -1,7 +1,7 @@
 import {ChevronLeft, ChevronRight} from "lucide-react";
-import {cn} from "@/shared/lib/utils";
+import {clsx} from "clsx";
 
-interface PaginationProps {
+interface Props {
     currentPage: number;
     totalPages: number;
     onPageChange: (page: number) => void;
@@ -53,18 +53,15 @@ function getPageTokens(currentPage: number, totalPages: number, siblingCount: nu
     return [1, DOTS, ...middleItems, DOTS, totalPages];
 }
 
-export default function Pagination(
-    {
-      currentPage,
-      totalPages,
-      onPageChange,
-      className,
-      siblingCount = 1,
-    }: PaginationProps) {
+export default function Pagination({
+    currentPage,
+    totalPages,
+    onPageChange,
+    className,
+    siblingCount = 1,
+}: Props) {
 
-    if (totalPages <= 1) {
-        return null;
-    }
+    if (totalPages <= 1) return null;
 
     const pageTokens = getPageTokens(currentPage, totalPages, siblingCount);
 
@@ -72,12 +69,15 @@ export default function Pagination(
     const canGoNext = currentPage < totalPages;
 
     return (
-        <nav className={cn("flex flex-wrap items-center justify-center gap-2", className)} aria-label="Пагинация">
+        <nav
+            className={clsx("flex flex-wrap items-center justify-center gap-2", className)}
+            aria-label="Пагинация"
+        >
             <button
                 type="button"
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={!canGoPrev}
-                className={cn(
+                className={clsx(
                     "inline-flex cursor-pointer h-9 w-9 items-center justify-center rounded-xl border border-slate-700/70",
                     "bg-slate-900/70 text-slate-200 transition hover:border-slate-500/80 hover:bg-slate-800/80",
                     "disabled:cursor-not-allowed disabled:opacity-50"
@@ -103,7 +103,7 @@ export default function Pagination(
                         key={token}
                         type="button"
                         onClick={() => onPageChange(token)}
-                        className={cn(
+                        className={clsx(
                             "inline-flex cursor-pointer h-9 min-w-9 items-center justify-center rounded-xl border px-3 text-sm font-semibold transition",
                             isActive
                                 ? "border-amber-400/80 bg-amber-500/20 text-amber-200"
@@ -120,7 +120,7 @@ export default function Pagination(
                 type="button"
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={!canGoNext}
-                className={cn(
+                className={clsx(
                     "inline-flex cursor-pointer h-9 w-9 items-center justify-center rounded-xl border border-slate-700/70",
                     "bg-slate-900/70 text-slate-200 transition hover:border-slate-500/80 hover:bg-slate-800/80",
                     "disabled:cursor-not-allowed disabled:opacity-50"

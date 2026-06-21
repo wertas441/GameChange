@@ -3,7 +3,6 @@ import {ReviewListStructure} from "@/entities/review/model/type";
 import {getReviewsList} from "@/entities/review/model/controller";
 
 export default function useUserReviews() {
-
     const { data, isLoading, error, isError, refetch, isFetching } = useQuery<ReviewListStructure[]>({
         queryKey: ['reviews'],
 

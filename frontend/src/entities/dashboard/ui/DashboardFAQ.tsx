@@ -1,5 +1,5 @@
 import FAQSection from "@/entities/dashboard/ui/FAQSection";
-import {dashboardFaqData} from "@/entities/dashboard/model/dashboardData";
+import {DASHBOARD_FAQ} from "@/entities/dashboard/model/dashboardData";
 
 export function DashboardFAQ() {
 
@@ -13,7 +13,7 @@ export function DashboardFAQ() {
             </div>
 
             <div className="mt-10">
-                <FAQSection faqData={dashboardFaqData} />
+                <FAQSection faqData={DASHBOARD_FAQ} />
             </div>
         </div>
     )

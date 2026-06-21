@@ -1,12 +1,12 @@
 
-export const aboutStats = [
+export const ABOUT_STATS = [
     { value: "25 000+", label: "ключей и подписок" },
     { value: "5 мин", label: "средняя выдача заказа" },
     { value: "98%", label: "положительных отзывов" },
     { value: "24/7", label: "поддержка без выходных" },
 ] as const;
 
-export const aboutFeatures = [
+export const ABOUT_FEATURES = [
     {
         title: "Моментальная доставка",
         description: "Ключи, подписки и пополнения выдаются автоматически сразу после оплаты.",
@@ -25,7 +25,7 @@ export const aboutFeatures = [
     },
 ] as const;
 
-export const aboutSteps = [
+export const ABOUT_STEPS = [
     {
         title: "Выберите продукт",
         description: "Ищите ключи, подписки и сервисы в каталоге или на витрине.",
@@ -40,7 +40,7 @@ export const aboutSteps = [
     },
 ] as const;
 
-export const aboutPartnerLogos = [
+export const ABOUT_PARTNER_LOGOS = [
     { src: "/steamIcon.svg", alt: "Steam" },
     { src: "/epic.svg", alt: "Epic Games" },
     { src: "/gog.svg", alt: "GOG" },

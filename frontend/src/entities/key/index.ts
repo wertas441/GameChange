@@ -43,8 +43,4 @@ export type {
     AddKeyData
 } from './model/type'
 
-export {
-    DropDownContent,
-    KeyCard,
-    PCRequirements
-} from './ui'
+export * from './ui'

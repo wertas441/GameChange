@@ -1,9 +1,8 @@
 'use client'
 
 import Image from "next/image";
-import {aboutFeatures, aboutPartnerLogos, aboutStats, aboutSteps} from "@/shared/lib/server";
 import {YellowBtn} from "@/shared/ui-kit/client";
-import {usePageUtils} from "@/shared/lib/client";
+import {ABOUT_FEATURES, ABOUT_PARTNER_LOGOS, ABOUT_STATS, ABOUT_STEPS, usePageUtils} from "@/shared/lib/client";
 
 export default function About() {
 
@@ -13,11 +12,17 @@ export default function About() {
         <section className="w-full">
             <div className="mx-auto flex w-full space-y-4 flex-col gap-12 px-4 pb-16">
                 <div className="relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/60 p-6 sm:p-10">
-                    <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-amber-400/15 via-transparent to-slate-900/60" />
+                    <div
+                        className="pointer-events-none absolute inset-0 bg-linear-to-br from-amber-400/15 via-transparent
+                        to-slate-900/60"
+                    />
 
                     <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                         <div className="flex flex-col gap-4">
-                            <span className="w-fit text-xs rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-1  font-semibold uppercase tracking-wider text-amber-300">
+                            <span
+                                className="w-fit text-xs rounded-full border border-amber-400/40 bg-amber-400/10 px-4 py-1
+                                font-semibold uppercase tracking-wider text-amber-300"
+                            >
                                 GameChange — магазин для геймеров
                             </span>
 
@@ -47,7 +52,7 @@ export default function About() {
                         </div>
 
                         <div className="grid gap-4 sm:grid-cols-2">
-                            {aboutStats.map(({label, value}) => (
+                            {ABOUT_STATS.map(({label, value}) => (
                                 <div key={label} className="rounded-2xl border border-slate-800/70 bg-slate-950/50 p-4">
                                     <div className="text-2xl font-semibold text-slate-50">{value}</div>
 
@@ -69,7 +74,7 @@ export default function About() {
                     </div>
 
                     <div className="grid gap-4 lg:col-span-2 sm:grid-cols-2">
-                        {aboutFeatures.map(({title, description}) => (
+                        {ABOUT_FEATURES.map(({title, description}) => (
                             <div key={title} className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5">
                                 <h3 className="text-lg font-semibold text-slate-50">
                                     {title}
@@ -96,9 +101,12 @@ export default function About() {
                     </div>
 
                     <div className="flex-row space-y-5 md:space-y-0 md:flex items-center justify-between mt-5">
-                        {aboutSteps.map(({title, description}, index) => (
+                        {ABOUT_STEPS.map(({title, description}, index) => (
                             <div key={title} className="flex gap-4 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4">
-                                <div className="flex w-18 rounded-full h-8 md:h-10 md:w-10 items-center justify-center md:rounded-xl border border-amber-400/40 bg-amber-400/10 text-sm font-semibold text-amber-300">
+                                <div
+                                    className="flex w-18 rounded-full h-8 md:h-10 md:w-10 items-center justify-center
+                                    md:rounded-xl border border-amber-400/40 bg-amber-400/10 text-sm font-semibold text-amber-300"
+                                >
                                     0{index + 1}
                                 </div>
 
@@ -123,8 +131,12 @@ export default function About() {
                     </div>
 
                     <div className="flex flex-wrap items-center justify-center gap-6">
-                        {aboutPartnerLogos.map(({src, alt}) => (
-                            <div key={alt} className="flex h-12 w-28 items-center justify-center rounded-2xl border border-slate-800/70 bg-slate-900/60 p-2">
+                        {ABOUT_PARTNER_LOGOS.map(({src, alt}) => (
+                            <div
+                                key={alt}
+                                className="flex h-12 w-28 items-center justify-center rounded-2xl border border-slate-800/70
+                                bg-slate-900/60 p-2"
+                            >
                                 <Image
                                     src={src}
                                     alt={alt}

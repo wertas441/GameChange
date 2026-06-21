@@ -71,9 +71,7 @@ const cartStore: StateCreator<CartStore> = (set, get) => ({
         });
     },
 
-    clearCart: () => {
-        set({ cartState: [], cartItemsCount: 0 });
-    },
+    clearCart: () => set({ cartState: [], cartItemsCount: 0 }),
 
     hasKey: (keyId: number) => get().cartState.some((entry) => entry.id === keyId),
 });

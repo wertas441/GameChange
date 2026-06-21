@@ -1,6 +1,6 @@
 'use client'
 
-import {reviewCategorys, usePagination, usePageUtils} from "@/shared/lib/client";
+import {REVIEW_CATEGORIS, usePagination, usePageUtils} from "@/shared/lib/client";
 import {Pagination} from "@/widgets";
 import {useUserReviews} from "@/entities/review";
 import {ServerErrorState, SpinnerLoader, YellowBtn} from "@/shared/ui-kit/client";
@@ -40,7 +40,7 @@ export default function Reviews() {
     }
 
     const getCategoryLabel = (tag: string) => {
-        return reviewCategorys.find((item) => item.value === tag)?.label
+        return REVIEW_CATEGORIS.find((item) => item.value === tag)?.label
     }
 
     return (

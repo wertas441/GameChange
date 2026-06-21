@@ -1,7 +1,7 @@
 'use client'
 
 import {Controller, useForm} from "react-hook-form";
-import {usePageUtils, reviewCategorys} from "@/shared/lib/client";
+import {usePageUtils, REVIEW_CATEGORIS} from "@/shared/lib/client";
 import {showErrorMessage} from "@/shared/utils";
 import {secondColorTheme} from "@/shared/styles/styles";
 import {ServerFormError, MultiSelectInput, MainTextArea, YellowBtn, InputError} from "@/shared/ui-kit/client";
@@ -94,8 +94,8 @@ export default function AddReview() {
                                 <MultiSelectInput
                                     id="categorys"
                                     label="Категория"
-                                    options={reviewCategorys}
-                                    value={reviewCategorys.filter(o => (field.value ?? []).includes(o.value as never))}
+                                    options={REVIEW_CATEGORIS}
+                                    value={REVIEW_CATEGORIS.filter(o => (field.value ?? []).includes(o.value as never))}
                                     onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                     isMulti={false}
                                     error={fieldState.error?.message}

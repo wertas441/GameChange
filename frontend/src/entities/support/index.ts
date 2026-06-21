@@ -19,8 +19,4 @@ export type {
     TicketType
 } from './model/type'
 
-export {
-    TicketHeader,
-    UserSupportQuestion,
-    SupportRow
-} from './ui'
+export * from './ui'

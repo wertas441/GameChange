@@ -10,7 +10,8 @@ export async function getPurchases(tokenValue: string) {
     };
 
     try {
-        const { data } = await serverApi.get<BackendApiResponse<{ purchasesList: PurchaseItem[] }>>(`/user/purchases`, payload);
+        const { data } = await serverApi.get<BackendApiResponse<{ purchasesList: PurchaseItem[] }>>
+        (`/user/purchases`, payload);
 
         return data.data?.purchasesList ?? [];
     } catch (error) {

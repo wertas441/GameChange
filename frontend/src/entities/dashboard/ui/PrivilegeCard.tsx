@@ -1,7 +1,7 @@
 import {ElementType, memo} from "react";
 import SpotlightCard from "@/entities/dashboard/ui/SpotlightCard";
 
-interface IProps {
+interface Props {
     IconComponent: ElementType;
     title: string;
     text: string;
@@ -16,7 +16,7 @@ function PrivilegeCard(
         text,
         spotlightColor = "rgba(251, 191, 36, 0.2)",
         className = ''
-    }: IProps) {
+    }: Props) {
 
     return (
         <SpotlightCard className={`p-8 text-center ${className}`} spotlightColor={spotlightColor}>

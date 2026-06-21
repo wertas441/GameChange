@@ -6,15 +6,14 @@ import InputError from "@/shared/ui-kit/errors/InputError";
 import {useState} from "react";
 import {Eye, EyeOff} from 'lucide-react';
 
-export function HideInput(
-    {
-        label,
-        error,
-        id,
-        className = '',
-        placeholder = '',
-        ...rest
-    }: MainInputProps) {
+export function HideInput({
+    label,
+    error,
+    id,
+    className = '',
+    placeholder = '',
+    ...rest
+}: MainInputProps) {
 
     const [showText, setShowText] = useState<boolean>(true);
 

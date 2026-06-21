@@ -9,7 +9,7 @@ export interface OptionType {
     label: string
 }
 
-interface IProps {
+interface Props {
     id: string;
     label?: string;
     value: OptionType[];
@@ -21,18 +21,17 @@ interface IProps {
     isMulti?: boolean;
 }
 
-function MultiSelectInput(
-    {
-        id,
-        label,
-        value,
-        options,
-        onChange,
-        placeholder = "Выберите...",
-        error,
-        noOptionsMessage = () => 'Нет опций',
-        isMulti = true,
-    }: IProps) {
+function MultiSelectInput({
+    id,
+    label,
+    value,
+    options,
+    onChange,
+    placeholder = "Выберите...",
+    error,
+    noOptionsMessage = () => 'Нет опций',
+    isMulti = true,
+}: Props) {
 
     return (
         <div className="space-y-1.5">

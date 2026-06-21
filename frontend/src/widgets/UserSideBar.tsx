@@ -15,7 +15,7 @@ import SimpleModalWindow from "@/shared/ui-kit/SimpleModalWindow";
 import UserSideBarBtn from "@/shared/ui-kit/buttons/UserSideBarBtn";
 import {usePathname} from "next/navigation";
 
-const settingsMenuItems = [
+const MENU_ITEMS = [
     { id: 'profile', link: '/user/profile',  label: 'Профиль', icon: User },
     { id: 'password', link: '/user/change-password', label: 'Сменить пароль', icon: Lock },
     { id: 'email', link: '/user/change-email', label: 'Сменить почту', icon: Mail },
@@ -24,7 +24,6 @@ const settingsMenuItems = [
 ] as const;
 
 export function UserSideBar() {
-
     const pathname = usePathname()
 
     const { router } = usePageUtils();
@@ -43,7 +42,7 @@ export function UserSideBar() {
         <>
             <aside className="w-full lg:w-100">
                 <nav className="space-y-4 rounded-2xl border border-slate-800/80 bg-slate-900/60 p-3 shadow-lg shadow-black/20">
-                    {settingsMenuItems.map(({id, label, link, icon}) => (
+                    {MENU_ITEMS.map(({id, label, link, icon}) => (
                         <UserSideBarBtn
                             key={id}
                             label={label}

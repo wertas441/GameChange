@@ -3,10 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import {
-    activationPlatformIcons,
-    operationSystemIcon,
+    ACTIVATION_PLATFORM_ICONS,
+    OPERATION_SYSTEM_ICONS,
     ActivationPlatform,
-    OperationSystem, genreOptions
+    OperationSystem,
+    GENRE_OPTIONS,
 } from "@/shared/lib/data/global";
 import {KeyListData} from "@/entities/key/model/type";
 import {addNewItem, useCartStore} from "@/entities/cart/model/store";
@@ -15,7 +16,12 @@ import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {memo} from "react";
 import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
-function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean }) {
+type Props = {
+    keyData: KeyListData;
+    isAdmin: boolean;
+};
+
+function KeyCard ({ keyData, isAdmin }: Props) {
 
     const {
         id,
@@ -42,14 +48,17 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
 
     const addToCart = useCartStore(addNewItem)
 
-    const isActivationPlatform = (value: string): value is ActivationPlatform => value in activationPlatformIcons;
-    const isOperationSystem = (value: string): value is OperationSystem => value in operationSystemIcon;
+    const isActivationPlatform = (value: ActivationPlatform) => value in ACTIVATION_PLATFORM_ICONS;
+
+    const isOperationSystem = (value: OperationSystem) => value in OPERATION_SYSTEM_ICONS;
 
     const linkUrl = `/keys/${keyUrl}`
 
     return (
-        <div className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 rounded-2xl border border-slate-800/70 bg-slate-900/60 p-4 md:p-6 shadow-lg shadow-black/30 transition
-            hover:border-amber-400/40 hover:bg-slate-900/80`}
+        <div
+            className={`flex flex-col md:flex-row items-center gap-4 md:gap-6 rounded-2xl border border-slate-800/70 
+            bg-slate-900/60 p-4 md:p-6 shadow-lg shadow-black/30 transition hover:border-amber-400/40 
+            hover:bg-slate-900/80`}
         >
 
             <Link href={linkUrl} className="w-full md:w-48 lg:w-56 shrink-0">
@@ -79,7 +88,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                             {activationPlatform
                                 .filter(isActivationPlatform)
                                 .map(app => {
-                                    const iconSrc = activationPlatformIcons[app];
+                                    const iconSrc = ACTIVATION_PLATFORM_ICONS[app];
                                     return iconSrc
                                         ? <Image key={app} src={iconSrc} width={23} height={23} alt={`${app} Icon`} title={app} />
                                         : null;
@@ -94,7 +103,7 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                             {operationSystem
                                 .filter(isOperationSystem)
                                 .map(platform => {
-                                    const iconSrc = operationSystemIcon[platform];
+                                    const iconSrc = OPERATION_SYSTEM_ICONS[platform];
                                     return iconSrc
                                         ? <Image key={platform} src={iconSrc} width={23} height={23} alt={`${platform} Icon`} title={platform} />
                                         :null;
@@ -102,9 +111,13 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                         </div>
 
                         {genres.map(genre => {
-                            const matchedGenre = genreOptions.find(({value}) => value === genre);
+                            const matchedGenre = GENRE_OPTIONS.find(({value}) => value === genre);
                             return (
-                                <p key={genre} className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-1 text-xs text-slate-300">
+                                <p
+                                    key={genre}
+                                    className="rounded-full border border-slate-700/70 bg-slate-950/40 px-2.5 py-1
+                                     text-xs text-slate-300"
+                                >
                                     {matchedGenre?.label}
                                 </p>
                             );
@@ -122,7 +135,8 @@ function KeyCard ({ keyData, isAdmin }:{ keyData: KeyListData; isAdmin: boolean 
                             <YellowBtn
                                 IconComponent={Pencil}
                                 onClick={() => goToPage(`/keys/${keyData.keyUrl}/change`)}
-                                className="w-auto! mt-0! bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                className="w-auto! mt-0! bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800
+                                text-slate-50"
                             />
                         )}
 

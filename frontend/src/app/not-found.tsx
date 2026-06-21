@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const cardBlocks = [
+const CARD_BLOCKS = [
     {
         title: "Каталог ключей",
         description: "Сотни цифровых ключей для популярных игр.",
@@ -42,7 +42,7 @@ export default function NotFound() {
                     </div>
 
                     <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {cardBlocks.map(({href, title, description}) => (
+                        {CARD_BLOCKS.map(({href, title, description}) => (
                             <Link
                                 key={href}
                                 href={href}

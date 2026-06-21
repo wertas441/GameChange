@@ -1,11 +1,10 @@
 'use client'
 
 import {usePathname} from "next/navigation";
-import {services} from "@/shared/lib/data/global";
+import {SERVICES} from "@/shared/lib/data/global";
 import {ServicesSideBarRow} from "@/entities/services/ui";
 
 export function ServicesSideBar() {
-
     const pathname = usePathname();
 
     return (
@@ -15,7 +14,7 @@ export function ServicesSideBar() {
                     <h2 className="text-lg font-semibold text-slate-50">Сервисы для пополнения</h2>
 
                     <div className="mt-4 grid gap-4">
-                        {services.map(({id, href, logo, title, tag}) => (
+                        {SERVICES.map(({id, href, logo, title, tag}) => (
                             <ServicesSideBarRow
                                 key={id}
                                 id={id}

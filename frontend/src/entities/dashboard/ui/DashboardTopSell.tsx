@@ -27,8 +27,10 @@ export default function DashboardTopSell() {
     return (
         <div className="flex items-center justify-center px-3 md:px-15">
 
-            <div className="swiper-button-prev-sell mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                 text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block"
+            <div
+                className="swiper-button-prev-sell mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70
+                bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90
+                hover:text-slate-950 hidden md:block"
             >
                 <ArrowLeft className="h-10 w-10"/>
             </div>
@@ -44,18 +46,19 @@ export default function DashboardTopSell() {
                     </p>
                 </div>
 
-                <Swiper modules={[Navigation]}
-                        navigation={{
-                            nextEl: '.swiper-button-next-sell',
-                            prevEl: '.swiper-button-prev-sell',
-                        }}
-                        loop={true}
-                        spaceBetween={32}
-                        breakpoints={{
-                            640: {slidesPerView: 1, spaceBetween: 20},
-                            768: {slidesPerView: 2, spaceBetween: 30},
-                            1024: {slidesPerView: 4, spaceBetween: 32},
-                        }}
+                <Swiper
+                    modules={[Navigation]}
+                    navigation={{
+                        nextEl: '.swiper-button-next-sell',
+                        prevEl: '.swiper-button-prev-sell',
+                    }}
+                    loop={true}
+                    spaceBetween={32}
+                    breakpoints={{
+                        640: {slidesPerView: 1, spaceBetween: 20},
+                        768: {slidesPerView: 2, spaceBetween: 30},
+                        1024: {slidesPerView: 4, spaceBetween: 32},
+                    }}
                 >
                     {keysData.map(({id, keyUrl, name, price, mainPicture}) => {
                         const addData = {
@@ -69,18 +72,23 @@ export default function DashboardTopSell() {
 
                         return (
                             <SwiperSlide key={id}>
-                                <div className="group relative h-full overflow-hidden rounded-2xl mt-10
-                                     border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
-                                     transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40"
+                                <div
+                                    className="group relative h-full overflow-hidden rounded-2xl mt-10
+                                    border border-slate-800/70 bg-slate-900/60 shadow-lg shadow-black/30
+                                    transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/40"
                                 >
                                     <Image 
                                         src={mainPicture} 
                                         alt={name} 
                                         width={1920} 
                                         height={1080}
-                                        className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300 group-hover:scale-105"
+                                        className="w-full h-auto object-cover aspect-3/4 transition-transform duration-300
+                                        group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40 to-transparent"></div>
+                                    <div
+                                        className="absolute inset-0 bg-linear-to-t from-slate-950/90 via-slate-950/40
+                                        to-transparent"
+                                    />
 
                                     <div className="absolute bottom-0 left-0 w-full p-4">
                                         <Link href={`/keys/${keyUrl}`}>
@@ -92,9 +100,10 @@ export default function DashboardTopSell() {
                                         <p className="text-2xl font-semibold text-amber-400">{price} ₽</p>
 
                                         <button
-                                            className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm font-semibold text-slate-950
-                                            transition-all duration-300 hover:bg-amber-300 flex items-center justify-center gap-2 opacity-0
-                                            group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0"
+                                            className="mt-6 w-full cursor-pointer rounded-xl bg-amber-400 px-4 py-2 text-sm
+                                            font-semibold text-slate-950 transition-all duration-300 hover:bg-amber-300
+                                            flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transform
+                                            translate-y-4 group-hover:translate-y-0"
                                             onClick={() => addToCart(addData)}
                                         >
                                             <ShoppingCart className="h-5 w-5"/>
@@ -109,9 +118,10 @@ export default function DashboardTopSell() {
                 </Swiper>
             </div>
 
-            <div className={`swiper-button-next-sell mt-25 transform z-10 cursor-pointer rounded-full border 
-                 border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300
-                 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
+            <div
+                className={`swiper-button-next-sell mt-25 transform z-10 cursor-pointer rounded-full border 
+                border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300
+                hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
             >
                 <ArrowRight className="h-10 w-10"/>
             </div>

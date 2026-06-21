@@ -1,7 +1,11 @@
 'use client'
 
 import {YellowBtn} from "@/shared/ui-kit/client";
-import {activationPlatformIcons, genreOptions, operationSystemIcon} from "@/shared/lib/client";
+import {
+    ACTIVATION_PLATFORM_ICONS, ACTIVATION_PLATFORM_OPTIONS,
+    GENRE_OPTIONS,
+    OPERATION_SYSTEM_ICONS
+} from "@/shared/lib/client";
 import Image from "next/image";
 import {addNewItem, useCartStore} from "@/entities/cart";
 import {PCRequirements, KeyDetailsData} from "@/entities/key";
@@ -67,7 +71,7 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
 
                                 <div className="flex flex-wrap gap-2">
                                     {genres.map(genre => {
-                                        const matchedGenre = genreOptions.find((option) => option.value === genre);
+                                        const matchedGenre = GENRE_OPTIONS.find((option) => option.value === genre);
                                         return (
                                             <span
                                                 key={genre}
@@ -144,8 +148,8 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                             <dt className="text-slate-400">Платформы</dt>
                                             <dd className="flex gap-3">
                                                 {operationSystem.map(p => (
-                                                    operationSystemIcon[p] && (
-                                                        <Image key={p} src={operationSystemIcon[p]} width={20} height={20} alt={p} title={p} />
+                                                    OPERATION_SYSTEM_ICONS[p] && (
+                                                        <Image key={p} src={OPERATION_SYSTEM_ICONS[p]} width={20} height={20} alt={p} title={p} />
                                                     )
                                                 ))}
                                             </dd>
@@ -155,8 +159,8 @@ export default function KeyDetails({keyData}: {keyData: KeyDetailsData} ){
                                             <dt className="text-slate-400">Активация</dt>
                                             <dd className="flex gap-3">
                                                 {activationPlatform.map(app => (
-                                                    activationPlatformIcons[app] && (
-                                                        <Image key={app} src={activationPlatformIcons[app]} width={20} height={20} alt={app} title={app} />
+                                                    ACTIVATION_PLATFORM_ICONS[app] && (
+                                                        <Image key={app} src={ACTIVATION_PLATFORM_ICONS[app]} width={20} height={20} alt={app} title={app} />
                                                     )
                                                 ))}
                                             </dd>

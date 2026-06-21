@@ -1,7 +1,7 @@
 import Image from "next/image";
 import {memo} from "react";
 
-interface IProps {
+interface Props {
     label: string;
     text: string;
     imageSrc: string;
@@ -9,12 +9,15 @@ interface IProps {
     imageClassName?: string;
 }
 
-function ServiceHeader({label, text, imageSrc, imageAlt, imageClassName = ''}: IProps) {
+function ServiceHeader({label, text, imageSrc, imageAlt, imageClassName = ''}: Props) {
 
     return (
         <div className="flex flex-col gap-4 text-center sm:text-left">
             <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-start">
-                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/50">
+                <div
+                    className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border
+                    border-slate-800/70 bg-slate-950/50"
+                >
                     <Image
                         src={imageSrc}
                         alt={imageAlt}

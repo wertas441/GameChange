@@ -11,8 +11,10 @@ export function Feedback({ feedBackData }: {feedBackData: FeedBackStructure[] })
     return (
         <div className="flex items-center justify-center px-3 md:px-15">
 
-            <div className="swiper-button-prev-feedback mt-25 transform z-10 cursor-pointer rounded-full border border-slate-800/70 bg-slate-900/70 p-2
-                 text-slate-200 backdrop-blur-sm transition-all duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block"
+            <div
+                className="swiper-button-prev-feedback mt-25 transform z-10 cursor-pointer rounded-full border
+                border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all
+                duration-300 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block"
             >
                 <ArrowLeft className="h-10 w-10"/>
             </div>
@@ -84,9 +86,10 @@ export function Feedback({ feedBackData }: {feedBackData: FeedBackStructure[] })
                 </Swiper>
             </div>
 
-            <div className={`swiper-button-next-feedback mt-25 transform z-10 cursor-pointer rounded-full border 
-                 border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300 
-                 hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
+            <div
+                className={`swiper-button-next-feedback mt-25 transform z-10 cursor-pointer rounded-full border 
+                border-slate-800/70 bg-slate-900/70 p-2 text-slate-200 backdrop-blur-sm transition-all duration-300 
+                hover:bg-amber-400/90 hover:text-slate-950 hidden md:block`}
             >
                 <ArrowRight className="h-10 w-10"/>
             </div>

@@ -22,7 +22,8 @@ export async function getKeysList() {
 
 export async function getKeyDetails(keyUrl: string) {
     try {
-        const { data } = await serverApi.get<BackendApiResponse<{ keyDetails: KeyDetailsData }>>(`/key/key?keyUrl=${encodeURIComponent(keyUrl)}`);
+        const { data } = await serverApi.get<BackendApiResponse<{ keyDetails: KeyDetailsData }>>
+        (`/key/key?keyUrl=${encodeURIComponent(keyUrl)}`);
 
         return data.data?.keyDetails ?? undefined;
     } catch (error){

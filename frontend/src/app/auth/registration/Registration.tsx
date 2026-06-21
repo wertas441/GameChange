@@ -79,7 +79,8 @@ export default function Registration(){
                             Регистрация
                         </p>
 
-                        <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Добро пожаловать в{' '}
+                        <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
+                            Добро пожаловать в{' '}
                             <span className="bg-amber-400 bg-clip-text text-transparent">
                                 GameChange
                             </span>

@@ -9,7 +9,6 @@ export const metadata: Metadata = {
 }
 
 export default async function PaymentPage() {
-
     const tokenValue = (await cookies()).get('token')?.value;
 
     if (!tokenValue) return <ServerErrorState />

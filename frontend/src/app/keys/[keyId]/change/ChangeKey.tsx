@@ -2,7 +2,14 @@
 
 import {Controller, useForm} from "react-hook-form";
 import {secondColorTheme} from "@/shared/styles/styles";
-import {activationPlatformOptions, genreOptions, operationSystemOptions, useSimpleModalWindow, usePageUtils, getDateInputFormat} from "@/shared/lib/client";
+import {
+    ACTIVATION_PLATFORM_OPTIONS,
+    GENRE_OPTIONS,
+    OPERATION_SYSTEM_OPTIONS,
+    useSimpleModalWindow,
+    usePageUtils,
+    getDateInputFormat
+} from "@/shared/lib/client";
 import {SimpleModalWindow, MultiSelectInput, MainInput, ServerFormError, MainTextArea, YellowBtn} from "@/shared/ui-kit/client";
 import {useCallback} from "react";
 import {
@@ -320,8 +327,8 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                     <MultiSelectInput
                                         id="operationSystem"
                                         label="Операционная система"
-                                        options={operationSystemOptions}
-                                        value={operationSystemOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        options={OPERATION_SYSTEM_OPTIONS}
+                                        value={OPERATION_SYSTEM_OPTIONS.filter(o => (field.value ?? []).includes(o.value as never))}
                                         onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                         isMulti={true}
                                         error={fieldState.error?.message}
@@ -337,8 +344,8 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                     <MultiSelectInput
                                         id="activationPlatform"
                                         label="Платформы для активации"
-                                        options={activationPlatformOptions}
-                                        value={activationPlatformOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        options={ACTIVATION_PLATFORM_OPTIONS}
+                                        value={ACTIVATION_PLATFORM_OPTIONS.filter(o => (field.value ?? []).includes(o.value as never))}
                                         onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                         isMulti={true}
                                         error={fieldState.error?.message}
@@ -354,8 +361,8 @@ export default function ChangeKey({keyData, token}: {keyData: KeyDetailsData, to
                                     <MultiSelectInput
                                         id="genres"
                                         label="Жанры"
-                                        options={genreOptions}
-                                        value={genreOptions.filter(o => (field.value ?? []).includes(o.value as never))}
+                                        options={GENRE_OPTIONS}
+                                        value={GENRE_OPTIONS.filter(o => (field.value ?? []).includes(o.value as never))}
                                         onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                         isMulti={true}
                                         error={fieldState.error?.message}

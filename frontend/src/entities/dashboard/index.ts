@@ -1,17 +1,8 @@
 
 export {
-    dashboardFaqData,
-    dashboardFeedBackData,
-    dashboardPrivileges,
+    DASHBOARD_FAQ,
+    DASHBOARD_FEED_BACK,
+    DASHBOARD_PRIVILEGES,
 } from './model/dashboardData'
 
-export {
-    DashboardPrivileges,
-    DashboardFAQ,
-    DashboardHero,
-    DashboardTopSell,
-    Feedback,
-    PrivilegeCard,
-    SpotlightCard,
-    FAQSection,
-} from './ui'
+export * from './ui'

@@ -187,7 +187,8 @@ export default function Payment({token}: {token: string}) {
                     {cartItems.map((item) => (
                         <li
                             key={item.id}
-                            className="flex flex-col gap-4 rounded-2xl border border-slate-800/70 bg-slate-950/40 p-4 sm:flex-row sm:items-center"
+                            className="flex flex-col gap-4 rounded-2xl border border-slate-800/70 bg-slate-950/40 p-4
+                            sm:flex-row sm:items-center"
                         >
                             <div className="w-full shrink-0 sm:w-32">
                                 <div className="aspect-video overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/30">

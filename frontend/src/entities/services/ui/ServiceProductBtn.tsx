@@ -1,6 +1,6 @@
 import {memo} from "react";
 
-interface IProps {
+interface Props {
     onClick: () => void;
     isActive: boolean;
     label: string;
@@ -8,7 +8,7 @@ interface IProps {
     description: string;
 }
 
-function ServiceProductBtn({onClick, isActive, label, price, description}: IProps) {
+function ServiceProductBtn({onClick, isActive, label, price, description}: Props) {
 
     return (
         <button

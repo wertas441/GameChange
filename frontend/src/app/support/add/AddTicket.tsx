@@ -12,7 +12,12 @@ import {
     validateTicketType
 } from "@/entities/support";
 import {PixelBlast} from "@/widgets";
-import {getServerErrorMessage, ticketTypes, ticketCategorys, usePageUtils} from "@/shared/lib/client";
+import {
+    getServerErrorMessage,
+    TICKET_TYPES,
+    TICKET_CATEGORIES,
+    usePageUtils
+} from "@/shared/lib/client";
 
 interface AddTicketForm {
     type: string[];
@@ -96,8 +101,8 @@ export default function AddTicket() {
                                 <MultiSelectInput
                                     id="type"
                                     label="Тип обращения"
-                                    options={ticketTypes}
-                                    value={ticketTypes.filter(o => (field.value ?? []).includes(o.value as never))}
+                                    options={TICKET_TYPES}
+                                    value={TICKET_TYPES.filter(o => (field.value ?? []).includes(o.value as never))}
                                     onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                     isMulti={false}
                                     error={fieldState.error?.message}
@@ -113,8 +118,8 @@ export default function AddTicket() {
                                 <MultiSelectInput
                                     id="categorys"
                                     label="Категория обращения"
-                                    options={ticketCategorys}
-                                    value={ticketCategorys.filter(o => (field.value ?? []).includes(o.value as never))}
+                                    options={TICKET_CATEGORIES}
+                                    value={TICKET_CATEGORIES.filter(o => (field.value ?? []).includes(o.value as never))}
                                     onChange={(vals) => field.onChange(vals.map(v => v.value as never))}
                                     isMulti={false}
                                     error={fieldState.error?.message}

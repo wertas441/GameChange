@@ -1,14 +1,14 @@
 import {ElementType, memo} from "react";
 import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 
-interface IProps {
+interface Props {
     link: string;
     label: string;
     IconComponent: ElementType;
     active: boolean;
 }
 
-function UserSideBarBtn({link, label, IconComponent, active}: IProps) {
+function UserSideBarBtn({link, label, IconComponent, active}: Props) {
 
     const { goToPage } = usePageUtils();
 

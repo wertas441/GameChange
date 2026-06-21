@@ -1,18 +1,18 @@
 export {
-    operationSystemOptions,
-    operationSystemIcon,
-    genreOptions,
-    activationPlatformIcons,
-    activationPlatformOptions,
-    reviewCategorys,
-    services,
-    ticketCategorys,
-    ticketTypes,
+    OPERATION_SYSTEM_OPTIONS,
+    OPERATION_SYSTEM_ICONS,
+    GENRE_OPTIONS,
+    ACTIVATION_PLATFORM_ICONS,
+    ACTIVATION_PLATFORM_OPTIONS,
+    REVIEW_CATEGORIS,
+    SERVICES,
+    TICKET_CATEGORIES,
+    TICKET_TYPES,
 } from './global'
 
 export {
-    aboutFeatures,
-    aboutPartnerLogos,
-    aboutStats,
-    aboutSteps,
+    ABOUT_FEATURES,
+    ABOUT_PARTNER_LOGOS,
+    ABOUT_STATS,
+    ABOUT_STEPS,
 } from './about'

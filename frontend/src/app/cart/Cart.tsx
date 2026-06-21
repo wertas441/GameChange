@@ -36,13 +36,17 @@ export default function Cart(){
                         <div className="lg:w-2/3">
                             <ul role="list" className="space-y-4 md:space-y-5">
                                 {cartItems.map((item) => (
-                                    <li key={item.id}
+                                    <li
+                                        key={item.id}
                                         className="flex  transition hover:border-amber-400/40 flex-col gap-4 rounded-2xl border
-                                     border-slate-800/70 bg-slate-900/60 p-4 sm:flex-row md:p-6"
+                                        border-slate-800/70 bg-slate-900/60 p-4 sm:flex-row md:p-6"
                                     >
 
                                         <div className="w-full shrink-0 self-center sm:w-48 md:w-56">
-                                            <div className="aspect-video overflow-hidden rounded-xl border border-slate-800/70 bg-slate-950/30">
+                                            <div
+                                                className="aspect-video overflow-hidden rounded-xl border border-slate-800/70
+                                                bg-slate-950/30"
+                                            >
                                                 <Image
                                                     src={item.mainPicture}
                                                     alt={item.name}
@@ -63,7 +67,9 @@ export default function Cart(){
                                                 <button
                                                     type="button"
                                                     onClick={() => removeItem(item.id)}
-                                                    className="shrink-0 cursor-pointer rounded-xl border border-slate-800 bg-slate-950/40 p-1.5 text-slate-300 transition hover:text-amber-400 hover:border-amber-400/60"
+                                                    className="shrink-0 cursor-pointer rounded-xl border border-slate-800
+                                                    bg-slate-950/40 p-1.5 text-slate-300 transition hover:text-amber-400
+                                                    hover:border-amber-400/60"
                                                     title="Удалить товар"
                                                 >
                                                     <X className="h-5 w-5 md:h-6 md:w-6" />
@@ -73,7 +79,10 @@ export default function Cart(){
                                             <div className="mt-4 flex flex-1 items-end justify-between">
                                                 <div className="flex items-center gap-3 text-sm text-slate-400">
                                                     <span>Количество:</span>
-                                                    <span className="rounded-full border border-slate-700/70 bg-slate-950/50 px-2 py-0.5 text-sm font-semibold text-slate-200">
+                                                    <span
+                                                        className="rounded-full border border-slate-700/70 bg-slate-950/50
+                                                        px-2 py-0.5 text-sm font-semibold text-slate-200"
+                                                    >
                                                     {item.count}
                                                 </span>
                                                 </div>

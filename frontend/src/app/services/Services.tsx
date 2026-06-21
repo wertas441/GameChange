@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import {services} from "@/shared/lib/client";
+import {SERVICES} from "@/shared/lib/client";
 
 const tags = [
     {
@@ -33,9 +33,9 @@ export default function Services() {
     const [activeTag, setActiveTag] = useState<string>("Все");
 
     const filteredServices = useMemo(() => {
-        if (activeTag === "Все") return services;
+        if (activeTag === "Все") return SERVICES;
 
-        return services.filter((service) => service.tag === activeTag);
+        return SERVICES.filter((service) => service.tag === activeTag);
     }, [activeTag]);
 
     return (

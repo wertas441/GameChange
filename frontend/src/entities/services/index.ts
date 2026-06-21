@@ -8,13 +8,4 @@ export {
     validateXboxLogin,
 } from './model/validation'
 
-export {
-    ServiceHeader,
-
-    ServicesSideBarRow,
-    ServiceFeatures,
-    ServiceHowItWork,
-    ServiceNeedToKnow,
-    ServiceReceive,
-    ServiceProductBtn,
-} from './ui'
+export * from './ui'

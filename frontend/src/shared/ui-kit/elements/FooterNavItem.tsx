@@ -1,13 +1,13 @@
 import Link from "next/link";
 import {memo} from "react";
 
-interface iProps {
+interface Props {
     text: string,
     link: string,
     className?: string,
 }
 
-function FooterNavItem({text, link, className = ''}: iProps) {
+function FooterNavItem({text, link, className = ''}: Props) {
 
     return (
         <li>

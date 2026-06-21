@@ -3,8 +3,7 @@ import {KeyListData} from "@/entities/key/model/type";
 import {getKeysList} from "@/entities/key/model/controller";
 
 export default function useGameKeys() {
-
-    const  {data: keysData, isLoading, error, isError, refetch, isFetching } = useQuery<KeyListData[]>({
+    const {data: keysData, isLoading, error, isError, refetch, isFetching } = useQuery<KeyListData[]>({
         queryKey: ['keys'],
 
         queryFn: async () => {

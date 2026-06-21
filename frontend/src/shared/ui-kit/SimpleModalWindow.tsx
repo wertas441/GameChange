@@ -2,7 +2,7 @@ import {memo, Ref} from "react";
 import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
 import {secondColorTheme} from "@/shared/styles/styles";
 
-interface IProps {
+interface Props {
     isExiting: boolean;
     modalRef: Ref<HTMLDivElement | null>;
     windowLabel: string;
@@ -16,19 +16,18 @@ interface IProps {
 
 }
 
-function SimpleModalWindow(
-    {
-        isExiting,
-        modalRef,
-        windowLabel,
-        windowText,
-        error,
-        cancelFunction,
-        confirmButtonLabel,
-        confirmFunction,
-        isProcess,
-        isRendered,
-    }: IProps) {
+function SimpleModalWindow({
+    isExiting,
+    modalRef,
+    windowLabel,
+    windowText,
+    error,
+    cancelFunction,
+    confirmButtonLabel,
+    confirmFunction,
+    isProcess,
+    isRendered,
+}: Props) {
 
     if (!isRendered) return null;
 
@@ -38,7 +37,8 @@ function SimpleModalWindow(
 
             <div
                 ref={modalRef}
-                className={`${secondColorTheme} plx-modal-dialog relative z-10  rounded-lg border border-gray-300 shadow-xl p-6 w-full max-w-2xl`}
+                className={`${secondColorTheme} plx-modal-dialog relative z-10 rounded-lg border border-gray-300 
+                shadow-xl p-6 w-full max-w-2xl`}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="delete-modal-title"

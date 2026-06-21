@@ -1,11 +1,11 @@
 
-interface IProps {
+interface Props {
     type: string;
     title: string;
     description: string;
 }
 
-export default function UserSupportQuestion({type, title, description}: IProps) {
+export default function UserSupportQuestion({type, title, description}: Props) {
 
     return (
         <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 md:p-8 shadow-lg shadow-black/20">

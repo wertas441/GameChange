@@ -94,7 +94,8 @@ export default function Login() {
                             Вход в аккаунт
                         </p>
 
-                        <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">Добро пожаловать в{' '}
+                        <h2 className="mt-2 text-2xl sm:text-3xl font-semibold tracking-tight text-slate-50">
+                            Добро пожаловать в{' '}
                             <span className="bg-amber-400 bg-clip-text text-transparent">
                                 GameChange
                             </span>
@@ -128,7 +129,8 @@ export default function Login() {
                             <label className="inline-flex cursor-pointer items-center gap-2 text-xs text-slate-300">
                                 <input
                                     type="checkbox"
-                                    className="h-4 w-4 cursor-pointer rounded border-slate-600 bg-slate-900 text-sky-400 focus:ring-sky-400"
+                                    className="h-4 w-4 cursor-pointer rounded border-slate-600 bg-slate-900 text-sky-400
+                                    focus:ring-sky-400"
                                     {...register('rememberMe')}
                                 />
                                 <span>Запомнить меня</span>

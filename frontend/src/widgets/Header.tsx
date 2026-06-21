@@ -11,8 +11,9 @@ import {useCartStore} from "@/entities/cart/model/store";
 import {usePageUtils} from "@/shared/lib/hooks/usePageUtils";
 import useGameKeys from "@/entities/key/model/data";
 import YellowBtn from "@/shared/ui-kit/buttons/YellowBtn";
+import {clsx} from "clsx";
 
-const catalogItems = [
+const CATALOG_ITEMS = [
     {
         text: 'Игровые ключи',
         href: '/keys/catalog',
@@ -36,10 +37,8 @@ const catalogItems = [
 ] as const;
 
 export default function Header({className}: {className?: string}) {
-
     const [modalWindow, setModalWindow] = useState(false);
     const [query, setQuery] = useState<string>('');
-
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const searchBoxRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,13 +59,11 @@ export default function Header({className}: {className?: string}) {
 
     const onSearchInputFocus = useCallback(() => {
         setIsSearchOpen(true);
-
         setModalWindow(false);
     }, [])
 
     const onModalButtonClick = useCallback(() => {
         toggleModalWindow();
-
         setIsSearchOpen(false);
     }, [toggleModalWindow])
 
@@ -113,17 +110,22 @@ export default function Header({className}: {className?: string}) {
         };
 
         document.addEventListener('mousedown', handleClickOutside);
+
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
     return (
-        <header className={`${secondColorTheme} relative top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 backdrop-blur ${className}`}>
+        <header
+            className={`${secondColorTheme} relative top-0 z-50 border-b border-slate-800/80 bg-slate-900/70 
+            backdrop-blur ${className}`}
+        >
             <div className="mx-auto w-full px-4 py-3 sm:px-6 md:px-12">
                 <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
                     <div className="flex items-center justify-between gap-3">
                         <button
                             onClick={() => goToPage('/')}
-                            className="text-amber-400 flex items-center gap-3 cursor-pointer font-semibold text-2xl tracking-wide leading-none"
+                            className="text-amber-400 flex items-center gap-3 cursor-pointer font-semibold text-2xl
+                            tracking-wide leading-none"
                         >
                           {useMemo(() => <Image src={'/pacman.png'} alt={'mainLogo'} width={35} height={35} />, [])}
 
@@ -135,11 +137,15 @@ export default function Header({className}: {className?: string}) {
                                 <YellowBtn
                                     IconComponent={ShoppingCart}
                                     onClick={() => goToPage('/cart')}
-                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border
+                                    border-slate-800 text-slate-50"
                                 />
 
                                 {cartItemsCount > 0 && (
-                                    <span className="absolute -right-1.5 -top-1.5 min-w-[1.35rem] rounded-full bg-amber-400 px-1.5 py-0.5 text-center text-[0.65rem] font-semibold leading-none text-slate-900">
+                                    <span
+                                        className="absolute -right-1.5 -top-1.5 min-w-[1.35rem] rounded-full bg-amber-400
+                                        px-1.5 py-0.5 text-center text-[0.65rem] font-semibold leading-none text-slate-900"
+                                    >
                                         {cartBadgeValue}
                                     </span>
                                 )}
@@ -155,7 +161,8 @@ export default function Header({className}: {className?: string}) {
                                 <YellowBtn
                                     IconComponent={CircleUser}
                                     onClick={() => goToPage('/user/profile')}
-                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                    className="mt-0 w-auto px-2 py-2 bg-slate-950/30 hover:bg-slate-800/60 border
+                                    border-slate-800 text-slate-50"
                                 />
                             )}
                         </div>
@@ -186,14 +193,17 @@ export default function Header({className}: {className?: string}) {
                                     }}
                                     placeholder="Поиск игр, сервисов, подписок..."
                                     aria-label="Поиск"
-                                    className={`${inputColorTheme} block w-full rounded-2xl border bg-slate-950/40 shadow-sm shadow-black/20
-                                    pl-10 pr-4 py-3 text-sm text-slate-50 outline-none ring-0 transition
-                                    hover:bg-slate-950/55
+                                    className={`${inputColorTheme} block w-full rounded-2xl border bg-slate-950/40 
+                                    shadow-sm shadow-black/20 pl-10 pr-4 py-3 text-sm text-slate-50 outline-none 
+                                    ring-0 transition hover:bg-slate-950/55
                                     focus:border-amber-300/70 focus:ring-2 focus:ring-amber-400/20`}
                                 />
 
                                 {isSearchOpen && normalizedQuery.length > 0 && (
-                                    <div className="absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border border-slate-800/80 bg-slate-900/95 p-2 shadow-xl shadow-black/30">
+                                    <div
+                                        className="absolute left-0 right-0 top-full z-40 mt-2 rounded-2xl border
+                                        border-slate-800/80 bg-slate-900/95 p-2 shadow-xl shadow-black/30"
+                                    >
                                         {isLoading && (
                                             <div className="px-3 py-2 text-sm text-slate-300">
                                                 Загрузка списка игр...
@@ -228,9 +238,13 @@ export default function Header({className}: {className?: string}) {
                                                             setIsSearchOpen(false);
                                                             setQuery('');
                                                         }}
-                                                        className="flex items-center gap-3 rounded-xl px-2.5 py-2 transition hover:bg-slate-800/60"
+                                                        className="flex items-center gap-3 rounded-xl px-2.5 py-2 transition
+                                                        hover:bg-slate-800/60"
                                                     >
-                                                        <div className="h-10 w-14 shrink-0 overflow-hidden rounded-lg border border-slate-800/70 bg-slate-950/40">
+                                                        <div
+                                                            className="h-10 w-14 shrink-0 overflow-hidden rounded-lg border
+                                                            border-slate-800/70 bg-slate-950/40"
+                                                        >
                                                             <Image
                                                                 src={key.mainPicture}
                                                                 alt={key.name}
@@ -260,7 +274,9 @@ export default function Header({className}: {className?: string}) {
                             <button
                                 type="button"
                                 onClick={onModalButtonClick}
-                                className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-slate-800 bg-slate-950/30 px-2.5 py-2.5 md:px-3 md:py-3 text-slate-100 shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
+                                className="inline-flex cursor-pointer items-center justify-center rounded-2xl border
+                                border-slate-800 bg-slate-950/30 px-2.5 py-2.5 md:px-3 md:py-3 text-slate-100
+                                shadow-sm shadow-black/20 transition hover:bg-slate-800/60"
                                 aria-label="Открыть меню"
                                 aria-expanded={modalWindow}
                             >
@@ -275,10 +291,14 @@ export default function Header({className}: {className?: string}) {
                                 <YellowBtn
                                     IconComponent={ShoppingCart}
                                     onClick={() => goToPage('/cart')}
-                                    className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                    className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border
+                                    border-slate-800 text-slate-50"
                                 />
                                 {cartItemsCount > 0 && (
-                                    <span className="absolute -right-1.5 top-1 min-w-[1.35rem] rounded-full bg-amber-400 px-1 py-1 text-center text-bold text-xs font-semibold leading-none text-slate-900">
+                                    <span
+                                        className="absolute -right-1.5 top-1 min-w-[1.35rem] rounded-full bg-amber-400
+                                        px-1 py-1 text-center text-bold text-xs font-semibold leading-none text-slate-900"
+                                    >
                                         {cartBadgeValue}
                                     </span>
                                 )}
@@ -294,7 +314,8 @@ export default function Header({className}: {className?: string}) {
                                 <YellowBtn
                                     IconComponent={CircleUser}
                                     onClick={() => goToPage('/user/profile')}
-                                    className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border border-slate-800 text-slate-50"
+                                    className="mt-0 w-auto px-3 py-3 bg-slate-950/30 hover:bg-slate-800/60 border
+                                    border-slate-800 text-slate-50"
                                 />
                             )}
                         </div>
@@ -303,18 +324,25 @@ export default function Header({className}: {className?: string}) {
             </div>
 
             <div
-                className={`absolute left-0 right-0 top-full z-50 transition-opacity duration-200 ${modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0'}`}
+                className={clsx(
+                    'absolute left-0 right-0 top-full z-50 transition-opacity duration-200 ',
+                    modalWindow ? 'opacity-100' : 'pointer-events-none opacity-0',
+                )}
                 aria-hidden={!modalWindow}
                 onClick={toggleModalWindow}
             >
                 <div className="h-screen">
                     <div
-                        className={` ${secondColorTheme} w-full bg-slate-900/70 border-b border-slate-800/70 px-4 py-4 sm:px-6 md:px-12 shadow-xl shadow-black/30 
-                        transition-all duration-200 ease-out ${modalWindow ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'}`}
+                        className={clsx(
+                            'w-full bg-slate-900/70 border-b border-slate-800/70 px-4 py-4 sm:px-6 md:px-12',
+                            'shadow-xl shadow-black/30 transition-all duration-200 ease-out',
+                            modalWindow ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0',
+                            secondColorTheme,
+                        )}
                         onClick={(event) => event.stopPropagation()}
                     >
-                        <div className="flex flex-wrap  items-center gap-3 justify-start md:justify-center">
-                            {catalogItems.map(({text, href}) => (
+                        <div className="flex flex-wrap items-center gap-3 justify-start md:justify-center">
+                            {CATALOG_ITEMS.map(({text, href}) => (
                                 <ShopNavBarItem
                                     key={text}
                                     text={text}

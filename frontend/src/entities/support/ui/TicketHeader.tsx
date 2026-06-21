@@ -1,6 +1,6 @@
 import {Clock, MessageSquare, Tag, UserCircle} from "lucide-react";
 
-interface IProps {
+interface Props {
     id: string;
     createdAt: string;
     answeredAt?: string;
@@ -9,7 +9,7 @@ interface IProps {
     status: string;
 }
 
-export default function TicketHeader({id, createdAt, answeredAt, ownerName,  category, status}: IProps) {
+export default function TicketHeader({id, createdAt, answeredAt, ownerName,  category, status}: Props) {
 
     const getCorrectStyle = () : string => {
         if (status == 'Ожидает ответа') {
@@ -60,7 +60,10 @@ export default function TicketHeader({id, createdAt, answeredAt, ownerName,  cat
                     </div>
                 </div>
 
-                <span className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${getCorrectStyle()}`}>
+                <span
+                    className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs 
+                    font-semibold ${getCorrectStyle()}`}
+                >
                     {status}
                 </span>
             </div>

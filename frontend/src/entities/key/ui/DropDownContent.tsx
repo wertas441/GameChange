@@ -2,8 +2,9 @@
 
 import { ReactNode, useState } from "react";
 import { ChevronDown } from 'lucide-react';
+import {clsx} from "clsx";
 
-interface IProps {
+interface Props {
     children: ReactNode;
     label: string;
     className?: string;
@@ -12,22 +13,24 @@ interface IProps {
     triggerClassName?: string;
 }
 
-export function DropDownContent(
-    {
-        children,
-        label,
-        className = '',
-        defaultOpen = false,
-        contentClassName = '',
-        triggerClassName = '',
-    }: IProps) {
+export function DropDownContent({
+    children,
+    label,
+    className = '',
+    defaultOpen = false,
+    contentClassName = '',
+    triggerClassName = '',
+}: Props) {
 
     const [open, setOpen] = useState<boolean>(defaultOpen);
 
     return (
         <section
-            className={`rounded-2xl border border-slate-800/80 bg-slate-950/30 shadow-sm shadow-black/20 backdrop-blur
-            ${open ? 'ring-2 ring-amber-400/15' : ''} ${className}`}
+            className={clsx(
+                'rounded-2xl border border-slate-800/80 bg-slate-950/30 shadow-sm shadow-black/20 backdrop-blur',
+                open && 'ring-2 ring-amber-400/15',
+                className,
+            )}
         >
             <button
                 type="button"
@@ -43,14 +46,20 @@ export function DropDownContent(
                 </div>
 
                 <ChevronDown
-                    className={`h-5 w-5 shrink-0 text-slate-200 transition-transform duration-200 ${open ? 'rotate-180' : 'rotate-0'}`}
+                    className={clsx(
+                        'h-5 w-5 shrink-0 text-slate-200 transition-transform duration-200',
+                        open ? 'rotate-180' : 'rotate-0',
+                    )}
                     aria-hidden="true"
                 />
             </button>
 
             <div
                 aria-hidden={!open}
-                className={`grid transition-[grid-template-rows,opacity] duration-200 ease-out ${open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+                className={clsx(
+                    'grid transition-[grid-template-rows,opacity] duration-200 ease-out',
+                    open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+                )}
             >
                 <div className="min-h-0 overflow-hidden">
                     <div className={`border-t border-slate-800/70 px-4 py-4 ${contentClassName}`}>

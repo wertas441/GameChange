@@ -1,6 +1,6 @@
 import {memo} from "react";
 
-interface IProps {
+interface Props {
     label: string;
     data: {
         title: string;
@@ -8,7 +8,7 @@ interface IProps {
     }[];
 }
 
-function ServiceReceive({label, data} : IProps) {
+function ServiceReceive({label, data} : Props) {
 
     return (
         <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-6 shadow-lg shadow-black/30">

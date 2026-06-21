@@ -25,7 +25,8 @@ export async function getTicketDetails(ticketId: string, tokenValue: string) {
     };
 
     try {
-        const { data } = await serverApi.get<BackendApiResponse<{ ticketDetails: Ticket }>>(`/support/ticket?ticketId=${encodeURIComponent(ticketId)}`, payload);
+        const { data } = await serverApi.get<BackendApiResponse<{ ticketDetails: Ticket }>>
+        (`/support/ticket?ticketId=${encodeURIComponent(ticketId)}`, payload);
 
         return data.data?.ticketDetails ?? undefined;
     } catch (error){
@@ -41,7 +42,8 @@ export async function getTicketHistory(tokenValue: string) {
     };
 
     try {
-        const { data } = await serverApi.get<BackendApiResponse<{ tickets: Ticket[] }>>(`/support/tickets/history`, payload);
+        const { data } = await serverApi.get<BackendApiResponse<{ tickets: Ticket[] }>>
+        (`/support/tickets/history`, payload);
 
         return data.data?.tickets ?? [];
     } catch (error) {

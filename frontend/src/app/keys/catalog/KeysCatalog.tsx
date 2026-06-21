@@ -12,9 +12,9 @@ import {
     MultiSelectInput
 } from "@/shared/ui-kit/client";
 import {
-    activationPlatformOptions,
-    genreOptions,
-    operationSystemOptions,
+    ACTIVATION_PLATFORM_OPTIONS,
+    GENRE_OPTIONS,
+    OPERATION_SYSTEM_OPTIONS,
     usePageUtils,
     usePagination,
 } from "@/shared/lib/client";
@@ -154,8 +154,8 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="genres"
                                     label="Жанры"
-                                    value={genreOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
-                                    options={genreOptions}
+                                    value={GENRE_OPTIONS.filter((opt) => (field.value ?? []).includes(opt.value))}
+                                    options={GENRE_OPTIONS}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Выберите жанры"
                                     error={undefined}
@@ -170,8 +170,8 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="activationPlatform"
                                     label="Платформа активации"
-                                    value={activationPlatformOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
-                                    options={activationPlatformOptions}
+                                    value={ACTIVATION_PLATFORM_OPTIONS.filter((opt) => (field.value ?? []).includes(opt.value))}
+                                    options={ACTIVATION_PLATFORM_OPTIONS}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Steam, Epic Games..."
                                     error={undefined}
@@ -186,8 +186,8 @@ export default function KeysCatalog(){
                                 <MultiSelectInput
                                     id="operationSystem"
                                     label="Операционная система"
-                                    value={operationSystemOptions.filter((opt) => (field.value ?? []).includes(opt.value))}
-                                    options={operationSystemOptions}
+                                    value={OPERATION_SYSTEM_OPTIONS.filter((opt) => (field.value ?? []).includes(opt.value))}
+                                    options={OPERATION_SYSTEM_OPTIONS}
                                     onChange={(vals: OptionType[]) => field.onChange(vals.map((val) => val.value))}
                                     placeholder="Windows, macOS..."
                                     error={undefined}

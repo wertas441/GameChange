@@ -2,23 +2,22 @@ import {memo, TextareaHTMLAttributes} from "react";
 import InputError from "@/shared/ui-kit/errors/InputError";
 import {inputColorTheme} from "@/shared/styles/styles";
 
-export interface TextAreaInputProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+export interface Props extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     id: string;
     label: string;
     error?: string;
     className?: string;
 }
 
-function MainTextArea(
-    {
-        label,
-        id,
-        required = false,
-        placeholder,
-        error,
-        className = '',
-        ...rest
-    }: TextAreaInputProps) {
+function MainTextArea({
+    label,
+    id,
+    required = false,
+    placeholder,
+    error,
+    className = '',
+    ...rest
+}: Props) {
 
     return (
         <div className="space-y-1.5">
@@ -33,7 +32,8 @@ function MainTextArea(
                     required={required}
                     placeholder={placeholder}
                     rows={4}
-                    className={`${inputColorTheme} textDescriptionArea block w-full resize-y rounded-2xl border px-4 py-3 text-sm outline-none ring-0 transition
+                    className={`${inputColorTheme} textDescriptionArea block w-full resize-y rounded-2xl border 
+                    px-4 py-3 text-sm outline-none ring-0 transition
                     ${error ? 'border-red-500/60 focus:border-red-400' : ''} ${className}`}
                     {...rest}
                 />

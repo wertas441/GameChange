@@ -1,11 +1,11 @@
 import {SystemRequirements} from "@/entities/key/model/type";
 
-interface IProps {
+interface Props {
     requirements: SystemRequirements;
     label: string;
 }
 
-export function PCRequirements({requirements, label}: IProps) {
+export function PCRequirements({ requirements, label }: Props) {
 
     const { CPU, GPU, RAM, memory } = requirements;
 

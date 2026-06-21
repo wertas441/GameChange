@@ -3,7 +3,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import {dashboardFeedBackData} from "@/entities/dashboard/model/dashboardData";
+import {DASHBOARD_FEED_BACK} from "@/entities/dashboard/model/dashboardData";
 import {Feedback} from "@/entities/dashboard";
 import {DashboardHero} from "@/entities/dashboard";
 import {DashboardFAQ} from "@/entities/dashboard";
@@ -20,7 +20,7 @@ export default function Dashboard(){
 
             <DashboardPrivileges />
 
-            <Feedback feedBackData={dashboardFeedBackData} />
+            <Feedback feedBackData={DASHBOARD_FEED_BACK} />
 
             <DashboardFAQ />
         </div>

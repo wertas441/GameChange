@@ -2,7 +2,7 @@ import {ArrowUpRight, Clock, MessageSquare, User} from "lucide-react";
 import Link from "next/link";
 import {Ticket} from "@/entities/support/model/type";
 
-interface IProps {
+interface Props {
     ticket: Ticket;
     isAdmin: boolean;
 }
@@ -12,7 +12,7 @@ const statusStyles = {
     'Ответ получен': 'border-sky-400/40 bg-sky-500/10 text-sky-300',
 };
 
-export default function SupportRow({ticket, isAdmin}: IProps) {
+export default function SupportRow({ticket, isAdmin}: Props) {
 
     return (
         <div className="rounded-2xl border border-slate-800/70 bg-slate-900/60 p-5 md:p-6 shadow-lg shadow-black/20">
@@ -59,7 +59,9 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                         <>
                             <Link
                                 href={`/support/${ticket.id}`}
-                                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
+                                className="inline-flex items-center justify-center gap-2 rounded-2xl border
+                                border-slate-800/70 bg-slate-950/40 px-4 py-2.5 text-sm font-medium
+                                text-slate-200 transition hover:border-slate-600/80 hover:bg-slate-800/60"
                             >
                                 Подробности
                                 <ArrowUpRight className="h-4 w-4" />
@@ -67,7 +69,9 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
 
                             <Link
                                 href={`/support/${ticket.id}/answer`}
-                                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
+                                className="inline-flex items-center justify-center gap-2 rounded-2xl border
+                                border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold
+                                text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
                             >
                                 Ответить
                                 <ArrowUpRight className="h-4 w-4" />
@@ -76,7 +80,9 @@ export default function SupportRow({ticket, isAdmin}: IProps) {
                     ) : (
                         <Link
                             href={`/support/${ticket.id}`}
-                            className="inline-flex items-center justify-center gap-2 rounded-2xl border border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
+                            className="inline-flex items-center justify-center gap-2 rounded-2xl border
+                            border-amber-400/40 bg-amber-500/10 px-4 py-2.5 text-sm font-semibold
+                            text-amber-200 transition hover:border-amber-300/70 hover:bg-amber-500/20"
                         >
                             Подробности
                             <ArrowUpRight className="h-4 w-4" />

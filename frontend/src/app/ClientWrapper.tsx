@@ -4,7 +4,7 @@ import {ReactNode} from "react";
 import {Header, Footer} from "@/widgets";
 import {usePathname} from "next/navigation";
 
-export default function LayoutWrapper({children}: {children: ReactNode}) {
+export default function ClientWrapper({children}: {children: ReactNode}) {
 
     const pathname = usePathname();
     const isAuthPage: boolean = pathname.startsWith('/auth');

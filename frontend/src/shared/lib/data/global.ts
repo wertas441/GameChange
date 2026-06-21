@@ -1,11 +1,11 @@
 
-export const operationSystemOptions = [
+export const OPERATION_SYSTEM_OPTIONS = [
     { value: 'Windows', label: 'Windows' },
     { value: 'macOS', label: 'macOS' },
     { value: 'Linux', label: 'Linux' },
 ];
 
-export const activationPlatformOptions = [
+export const ACTIVATION_PLATFORM_OPTIONS = [
     { value: 'Steam', label: 'Steam' },
     { value: 'Epic Games', label: 'Epic Games' },
     { value: 'EA', label: 'EA' },
@@ -14,7 +14,7 @@ export const activationPlatformOptions = [
     { value: 'Ubisoft', label: 'Ubisoft' },
 ];
 
-export const genreOptions = [
+export const GENRE_OPTIONS = [
     { value: 'action', label: 'Экшен' },
     { value: 'openWorld', label: 'Открытый мир' },
     { value: 'fantasy', label: 'Фэнтези'},
@@ -36,7 +36,7 @@ export const genreOptions = [
     { value: 'indie', label: 'Инди' },
 ];
 
-export const activationPlatformIcons = {
+export const ACTIVATION_PLATFORM_ICONS = {
     'Steam': '/steamIcon.svg',
     'Epic Games': '/epic.svg',
     'GOG': '/gog.svg',
@@ -45,16 +45,16 @@ export const activationPlatformIcons = {
     'Ubisoft Connect': "/ubisoftIcon.svg",
 } ;
 
-export const operationSystemIcon = {
+export const OPERATION_SYSTEM_ICONS = {
     'macOS': '/appleIcon.svg',
     'Windows': '/windowsIcon.svg',
     'Linux': '/linuxIcon.svg',
 };
 
-export type ActivationPlatform = keyof typeof activationPlatformIcons;
-export type OperationSystem = keyof typeof operationSystemIcon;
+export type ActivationPlatform = keyof typeof ACTIVATION_PLATFORM_ICONS;
+export type OperationSystem = keyof typeof OPERATION_SYSTEM_ICONS;
 
-export const services = [
+export const SERVICES = [
     {
         id: "steam",
         title: "Steam",
@@ -111,7 +111,7 @@ export const services = [
     },
 ] as const;
 
-export const reviewCategorys = [
+export const REVIEW_CATEGORIS = [
     { value: 'key', label: 'Покупка ключа' },
     { value: 'chatGPT', label: 'Подписка ChatGPT' },
     { value: 'ps-plus', label: 'Подписка PS Plus' },
@@ -121,12 +121,12 @@ export const reviewCategorys = [
     { value: 'xbox', label: 'Подписка Xbox Game Pass' },
 ];
 
-export const ticketTypes = [
+export const TICKET_TYPES = [
     { value: 'question', label: 'Вопрос' },
     { value: 'complaint', label: 'Жалоба' },
 ];
 
-export const ticketCategorys = [
+export const TICKET_CATEGORIES = [
     { value: 'services-balance', label: 'Пополнение сервисов' },
     { value: 'subscription', label: 'Покупка подписки' },
     { value: 'get-product', label: 'Получение товара' },
